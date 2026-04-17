@@ -1,0 +1,16 @@
+"Marque" "Golfeur" "Dist"
+"A" "Jones" 228.6
+"A" "Smith" 205.74
+"A" "Long" 246.888
+"A" "Carroll" 214.884
+"A" "Reed" 196.596
+"B" "Jones" 233.172
+"B" "Smith" 214.884
+"B" "Long" 257.8608
+"B" "Carroll" 219.456
+"B" "Reed" 201.168
+"C" "Jones" 239.5728
+"C" "Smith" 210.312
+"C" "Long" 260.604
+"C" "Carroll" 224.9424
+"C" "Reed" 203.9112

@@ -1,0 +1,169 @@
+		/* Exercice 1 */
+		
+Q1) 16 caractères car 15 pour les chiffres et . plus 1 pour le \0  (cf TP3)
+
+Q2) 
+char ip[16];
+int j,m,a;
+sscanf(string,"%[^;];%d/%d/%d",ip,&j,&m,&a);
+
+Q3)
+
+void changeformat (char * f_initial, char * f_final){
+
+	char ligne[27];
+	char ip[16];
+	int j,m,a;
+	FILE * monfichier= ouvrirFichier(f_initial,"r",ARRET);
+	File * monfichierfinal=ouvrirFichier(f_final,"w",ARRET);
+	while(!feof(monfichier)){
+		lireLigneFichier(monfichier,ligne,27);
+		sscanf(ligne,"%[^;];%d/%d/%d",ip,&j,&m,&a);
+		fputs(ip,monfichierfinal);
+		fprintf(monfichierfinal,";");
+		fprintf(monfichierfinal,"%d-%d-%d",a,m,j);
+		}
+	fermerFichier(monfichier);
+	fermerFichier(monfichierfinal);
+
+}
+
+
+		/* Exercice 2 */
+		
+Q4) 
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define TAILLE_CHAINE 49
+#define TAILLE_CODE 13
+
+typedef struct{
+	char titre[TAILLE_CHAINE];
+	char nom[TAILLE_CHAINE];
+	int annee;
+	int codeBarre[TAILLE_CODE];
+}Livre;
+
+Q5)
+
+On prends en paramètre un Livre, il n'y a pas besoin de pointeur car on ne modifie pas le livre mais on l'affiche seulement.
+
+Q6)
+
+void afficherLivre(Livre l){
+	int i;
+	printf("Titre: %s\nAuteur: %s\nAnnee de parution: %d\nCode Barre: ",l.titre,l.nom,l.annee);
+	for(i=0;i<TAILLE_CODE;i++){
+		printf("%d",l.codeBarre[i]);
+		}
+	printf("\n");
+}
+
+Q7)
+
+On choisit en paramètre un pointeur de Livre car on veut modifier ce livre donc on a besoin que le livre ne soit pas interne à la fonction et donc en utilisant un pointeur on 
+modifie l'objet qui est pointé par le livre et donc on aura toujours accès à ce livre à la fin de la fonction
+
+Q8)
+
+void saisirLivre(Livre * l){
+	int i;
+
+	printf("Veuillez saisir le titre du livre: ");
+	scanf("%s",l->titre);
+
+	printf("Veuillez saisir l'auteur du livre: ");
+	scanf("%s",l->nom);
+
+	printf("Veuillez saisir l'annee de parution du livre: ");
+	scanf("%d",&(l->annee));
+
+	printf("Veuillez saisir le code barre du livre: ");
+	for(i=0;i<TAILLE_CODE;i++){
+		scanf("%d",l->&(codeBarre[i]));
+		}
+}
+
+Q9)
+
+int main(){
+	Livre l;
+	saisirLivre(&l);
+	afficherLivre(l);
+
+	return 0;
+}
+
+Q10)
+
+int rechercherIndice (char* titre, Livre* s,int taille){
+	int i;
+	for(i=0;i<taille;i++){
+		if(strcmp(s[i].titre,titre)>0){
+			return i;
+		}
+	}
+	return taille;
+
+}
+
+Q11)
+
+void decalerStock(Livre* s, int taille, int indice){
+	int i;
+	for(i=taille;i>indice,i--){
+		s[i]=s[i-1];
+	}
+}
+
+Q12)
+
+int ajouterLivre (Livre *s, int taille, int tailleMax, Livre *l){
+	int indice;
+	if(taille==tailleMax){
+		printf("La bibliothèque est pleine");
+		return taille;
+	}
+	else{
+		indice=rechercherIndice(l->titre,s,taille);
+		decalerStock(s,taille,indice);
+		s[indice]=l;
+		taille++;
+		return taille;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

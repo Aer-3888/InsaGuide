@@ -1,0 +1,88 @@
+
+Todo
+
+{
+    "title": "Devoir",
+    "publicDescription": "Liste 2",
+    "privateDescription": "Encore plus",
+    "categories": ["WORK"]
+}
+
+TodoList
+
+{
+	"name" : "Devoir",
+	"todos" :
+	[
+		{
+		    "title": "Maths",
+		    "publicDescription": "Exo1",
+		    "privateDescription": "Difficle",
+		    "categories": ["WORK"]
+		},
+		{
+		"title": "Info",
+		"publicDescription": "Projet",
+		"privateDescription": "trouver un groupe",
+		"categories": ["WORK"]
+		}
+	]
+}
+ 
+User
+
+{
+	"name" : "Léandre",
+
+	"lists" : 
+		[   
+		    {
+		        "name" : "Devoir",
+				"todos" :
+		        [
+		            {
+		                "title": "Maths",
+		                "publicDescription": "Exo1",
+		                "privateDescription": "Difficle",
+		                "categories": ["WORK"]
+		            },
+		            {
+		            "title": "Info",
+		            "publicDescription": "Projet",
+		            "privateDescription": "trouver un groupe",
+		            "categories": ["WORK"]
+		            }
+		        ]
+		    }
+		]
+}
+
+patchedUser
+
+{
+	"name" : "Romain",
+
+	"lists" : 
+		[   
+		    {
+		        "name" : "Devoir",
+				"todos" :
+		        [
+		            {
+		                "title": "Maths",
+		                "publicDescription": "Exo1",
+		                "privateDescription": "Difficle",
+		                "categories": ["WORK"]
+		            },
+		            {
+		            "title": "Info",
+		            "publicDescription": "Projet",
+		            "privateDescription": "trouver un groupe",
+		            "categories": ["WORK"]
+		            }
+		        ]
+		    }
+		]
+}
+
+

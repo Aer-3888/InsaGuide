@@ -1,0 +1,413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+<style>@media print {#ghostery-tracker-tally {display:none !important}}</style></head>
+<body class="vsc-initialized">
+<meta name="viewport" content="width=device-width, initial-scale=1"> <link rel="stylesheet" href="logique_files/github-markdown.css">
+<style>
+
+    .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+    }
+
+    @media (max-width: 767px) {
+        .markdown-body {
+            padding: 15px;
+        }
+    }
+</style>
+<article class="markdown-body">
+<h1 id="tp-logique">TP Logique</h1>
+<p>Dans ce TP nous allons essayer d'automatiser la résolution d'énigmes logiques avec l'aide d'<code>OCaml</code>. Vous étudierez d'avantage la logique au deuxième semestre pendant le cours d'introduction à la logique qui utilisera <code>OCaml</code> pour décrire les différents algorithmes.</p>
+<h2 id="vue-densemble">Vue d'ensemble</h2>
+<p><a href="https://en.wikipedia.org/wiki/Raymond_Smullyan">Raymond Smullyan</a>
+ était un logicien qui était célèbre pour ses livres d'énigmes logiques.
+ Dans plusieurs de ses livres, Edgar Abercrombie visite une île, l'île 
+des chevaliers et des valets, dans laquelle les habitants sont soit des 
+chevaliers, soit des valets, et les chevaliers disent toujours la vérité
+ tandis que les valets mentent toujours.</p>
+<p>Edgar Abercombrie est un anthropologiste et va donc questioner les 
+habitants de cette île pour en apprendre d'avantage sur leurs us et 
+coutumes.</p>
+<p>Lors d'une visite, Edgar rencontre deux habitants <code>A1</code> et <code>A2</code> et <code>A1</code> lui dit que <code>A1 et A2 sont tous les deux des valets</code>. Edgar voudrait savoir si on peut en déduire le type (chevalier ou valet) de ces deux habitants. Pouvez-vous l'aider ?<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>On voudrait pouvoir automatiser la résolution de ce genre de 
+questions. Pour ce faire, nous allons tout d'abord présenter quelques 
+notions de <a href="https://fr.wikipedia.org/wiki/Calcul_des_propositions">logique propositionnelle</a>.</p>
+<p>Dans la logique propositionnelle, nous considérons deux valeurs, la valeur vraie que nous noterons <code>true</code> ou <span class="math inline">⊤</span>, et la valeur fausse que nous noterons <code>false</code>ou <span class="math inline">⊥</span>.</p>
+<p>Une variable propositionnelle est une variable qui peut ne prendre que deux valeurs : <code>false</code> ou <code>true</code>.</p>
+<p>Les variables propositionnelles sont assemblées grâce aux connecteurs : <span class="math inline">∨</span>, <span class="math inline">∧</span>, <span class="math inline">¬</span>, <span class="math inline">⇒</span>, <span class="math inline">⇔</span><a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>. Les tables suivantes donnent le sens de ces connecteurs.</p>
+<center>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><span class="math inline"><em>p</em></span></th>
+<th align="center"><span class="math inline">¬<em>p</em></span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">false</td>
+<td align="center">true</td>
+</tr>
+<tr class="even">
+<td align="center">true</td>
+<td align="center">false</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><span class="math inline"><em>p</em></span></th>
+<th align="center"><span class="math inline"><em>q</em></span></th>
+<th align="center"><span class="math inline"><em>p</em> ∨ <em>q</em></span></th>
+<th align="center"><span class="math inline"><em>p</em> ∧ <em>q</em></span></th>
+<th align="center"><span class="math inline"><em>p</em> ⇒ <em>q</em></span></th>
+<th align="center"><span class="math inline"><em>p</em> ⇔ <em>q</em></span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">false</td>
+<td align="center">false</td>
+<td align="center">false</td>
+<td align="center">false</td>
+<td align="center">true</td>
+<td align="center">true</td>
+</tr>
+<tr class="even">
+<td align="center">false</td>
+<td align="center">true</td>
+<td align="center">true</td>
+<td align="center">false</td>
+<td align="center">true</td>
+<td align="center">false</td>
+</tr>
+<tr class="odd">
+<td align="center">true</td>
+<td align="center">false</td>
+<td align="center">true</td>
+<td align="center">false</td>
+<td align="center">false</td>
+<td align="center">false</td>
+</tr>
+<tr class="even">
+<td align="center">true</td>
+<td align="center">true</td>
+<td align="center">true</td>
+<td align="center">true</td>
+<td align="center">true</td>
+<td align="center">true</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p>On peut alors évaluer une formule quelconque en évaluant d'abord les sous formules. Par exemple la formule <br><span class="math display">(<em>p</em> ∧ <em>q</em>)⇒<em>p</em></span><br></p>
+<p>s'évalue comme suit.</p>
+<center>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><span class="math inline"><em>p</em></span></th>
+<th align="center"><span class="math inline"><em>q</em></span></th>
+<th align="center"><span class="math inline"><em>p</em> ∧ <em>q</em></span></th>
+<th align="center"><span class="math inline">(<em>p</em> ∧ <em>q</em>)⇒<em>p</em></span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">false</td>
+<td align="center">false</td>
+<td align="center">false</td>
+<td align="center">true</td>
+</tr>
+<tr class="even">
+<td align="center">false</td>
+<td align="center">true</td>
+<td align="center">false</td>
+<td align="center">true</td>
+</tr>
+<tr class="odd">
+<td align="center">true</td>
+<td align="center">false</td>
+<td align="center">false</td>
+<td align="center">true</td>
+</tr>
+<tr class="even">
+<td align="center">true</td>
+<td align="center">true</td>
+<td align="center">true</td>
+<td align="center">true</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p>On peut remarquer que cette formule est vraie pour n'importe quelle valeur de <span class="math inline"><em>p</em></span> et <span class="math inline"><em>q</em></span>, on dit que cette formule est une <strong>tautologie</strong> dans ce cas particulier.</p>
+<p>Revenons maintenant à notre énigme. Nous allons la formaliser dans le langage des propositions.</p>
+<ul>
+<li>Soit <code>c1</code> la proposition qui est vraie si <code>A1</code> est un chevalier et fausse si <code>A1</code> est un valet.</li>
+<li>Soit <code>c2</code> la proposition qui est vraie si <code>A2</code> est un chevalier et fausse si <code>A2</code> est un valet.</li>
+<li>L'énoncé de l'énigme peut se modéliser par la proposition <span class="math inline"><em>c</em>1 ⇔ (¬<em>c</em>1 ∧ ¬<em>c</em>2)</span> qui doit être vraie car c'est la réalité de ce monde qu'elle décrit. L'opérateur <span class="math inline">⇔</span> nous permet d'exprimer que <span class="math inline"><em>c</em>1</span> est vrai si et seulement si ce que dit <span class="math inline"><em>c</em>1</span> : (<span class="math inline">¬<em>c</em>1 ∧ ¬<em>c</em>2</span>) est vrai. Cela représente bien la situation qui nous a été décrite.</li>
+</ul>
+<p>Nous allons maintenant écrire la table de vérité de cette formule et voir si nous obtenons bien la solution de l'énigme.</p>
+<center>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><span class="math inline"><em>c</em>1</span></th>
+<th align="center"><span class="math inline"><em>c</em>2</span></th>
+<th align="center"><span class="math inline">¬<em>c</em>1 ∧ ¬<em>c</em>2</span></th>
+<th align="center"><span class="math inline"><em>c</em>1 ⇔ (¬<em>c</em>1 ∧ ¬<em>c</em>2)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">false</td>
+<td align="center">false</td>
+<td align="center">true</td>
+<td align="center">false</td>
+</tr>
+<tr class="even">
+<td align="center">false</td>
+<td align="center">true</td>
+<td align="center">false</td>
+<td align="center">true</td>
+</tr>
+<tr class="odd">
+<td align="center">true</td>
+<td align="center">false</td>
+<td align="center">false</td>
+<td align="center">false</td>
+</tr>
+<tr class="even">
+<td align="center">true</td>
+<td align="center">true</td>
+<td align="center">false</td>
+<td align="center">false</td>
+</tr>
+</tbody>
+</table>
+</center>
+<p>On peut voir que la seule ligne où notre formule modélisant le problème est vraie est celle où <code>c1 = false</code> et <code>c2 = true</code>. On retrouve bien notre conclusion qui était que <code>A1 est un valet</code> et <code>A2 est un chevalier</code>.</p>
+<h2 id="mise-en-oeuvre">Mise en oeuvre</h2>
+<p>Nous allons maintenant mettre en oeuvre quelques fonctions nous 
+permettant de trouver les valeurs à attribuer aux variables 
+propositionnelles d'une formule logique afin de la rendre vraie. Nous 
+verrons aussi comment essayer de transformer une formule dans une forme 
+équivalente pour la rendre plus lisible.</p>
+<p>Vous pouvez télécharger le fichier <code>logique.ml</code> qui se trouve <a href="https://moodleng.insa-rennes.fr/mod/resource/view.php?id=20960">ici</a>.
+ Ce fichier comporte déjà tout un ensemble de fonctions pour vous aider à
+ lire et écrire des formules logiques et mettre en place des tests 
+unitaires.</p>
+<p>La définition d'une formule logique se trouve à la ligne 136 du fichier <code>logique.ml</code>. Nous la reproduisons ci-dessous.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">type</span> formula =
+  | True
+  | False
+  | P <span class="kw">of</span> <span class="dt">string</span>
+  | Not <span class="kw">of</span> formula
+  | And <span class="kw">of</span> formula * formula
+  | Or <span class="kw">of</span> formula * formula
+  | Imp <span class="kw">of</span> formula * formula
+  | Iff <span class="kw">of</span> formula * formula</code></pre></div>
+<p>Dans ce type, <code>True</code> représente la valeur de vérité <code>true</code>, <code>False</code> la valeur de vérité <code>false</code>, <code>P x</code> représente une variable propositionnelle dont le nom est <code>x</code>, <code>Not</code> représente <span class="math inline">¬</span>, <code>And</code> représente <span class="math inline">∧</span>, <code>Or</code> représente <span class="math inline">∨</span>, <code>Imp</code> représente <span class="math inline">⇒</span> et <code>Iff</code> représente <span class="math inline">⇔</span>. Par exemple, la formule représentant l'énigme s'écrit comme suit.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml">Iff (P <span class="st">"c1"</span>, And (Not (P <span class="st">"c1"</span>), Not (P <span class="st">"c2"</span>)))</code></pre></div>
+<p>Ce n'est pas très pratique d'écrire dans cette représentation. C'est pourquoi nous vous fournissons une fonction <code>string_to_formula</code> définie à la ligne 244 du fichier <code>logique.ml</code>
+ qui vous permet d'écrire plus succintement une formule sous forme de 
+chaîne de caractères. Par exemple, pour écrire la formule de l'énigme on
+ fera</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"># string_to_formula <span class="st">"c1 &lt;=&gt; (~c1 . ~c2)"</span>;;
+- : formula = Iff (P <span class="st">"c1"</span>, And (Not (P <span class="st">"c1"</span>), Not (P <span class="st">"c2"</span>)))</code></pre></div>
+<p>La fonction <code>string_to_formula</code> attend la chaîne <code>"&lt;=&gt;"</code> pour le symbol <span class="math inline">⇔</span>, la chaîne <code>"=&gt;"</code> pour le symbol <span class="math inline">⇒</span>, la chaîne <code>"."</code> pour le symbol <span class="math inline">∧</span>, la chaîne <code>"+"</code> pour le symbol <span class="math inline">∨</span> et la chaîne <code>"~"</code> pour le symbol <span class="math inline">¬</span>.</p>
+<p>On vous fourni aussi une autre fonction <code>formula_to_string</code>, définie à la ligne 250 du fichier <code>logique.ml</code>, qui permet de passer d'une formule à une chaîne de caractères.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"># formula_to_string @@ Iff (P <span class="st">"c1"</span>, And (Not (P <span class="st">"c1"</span>), Not (P <span class="st">"c2"</span>)));;
+- : <span class="dt">string</span> = <span class="st">"c1 ⇔ ¬c1 ∧ ¬c2"</span></code></pre></div>
+<p>Le type suivant (ligne 146 de <code>logique.ml</code>) permet de représenter une valuation, c'est-à-dire une association entre le nom d'une proposition et sa valeur de vérité.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">type</span> valuation = (<span class="dt">string</span> * <span class="dt">bool</span>) <span class="dt">list</span></code></pre></div>
+<p>Par exemple, la valuation suivante permet d'associer la valeur <code>true</code> à la proposition atomique de nom <code>"p"</code> et la valeur <code>false</code> à la proposition atomique de nom <code>"q"</code>.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"># <span class="kw">let</span> v : valuation = Cons((<span class="st">"p"</span>, <span class="kw">true</span>), Cons((<span class="st">"q"</span>, <span class="kw">false</span>),Nil));;
+<span class="kw">val</span> v : valuation = Cons((<span class="st">"p"</span>, <span class="kw">true</span>), Cons((<span class="st">"q"</span>, <span class="kw">false</span>),Nil))</code></pre></div>
+<p>On vous donne la fonction suivante (ligne 252 de <code>logique.ml</code>) qui permet de donner la valeur de vérité associée à une proposition atomique.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">val</span> get_value : <span class="dt">string</span> -&gt; valuation -&gt; <span class="dt">bool</span></code></pre></div>
+<p>Par exemple,</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"># <span class="kw">let</span> v = Cons((<span class="st">"p"</span>, <span class="kw">true</span>), Cons((<span class="st">"q"</span>, <span class="kw">false</span>),Nil));;
+<span class="kw">val</span> v : valuation = Cons((<span class="st">"p"</span>, <span class="kw">true</span>), Cons((<span class="st">"q"</span>, <span class="kw">false</span>),Nil))
+# get_value <span class="st">"p"</span> v;;
+- : <span class="dt">bool</span> = <span class="kw">true</span>
+# get_value <span class="st">"z"</span> v;;
+Exception: <span class="dt">Not_found</span>.</code></pre></div>
+<h3 id="évaluation-dune-formule">Évaluation d'une formule</h3>
+<p>Nous allons automatiser l'évaluation d'une formule grâce à la fonction suivante.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">val</span> eval : formula -&gt; valuation -&gt; <span class="dt">bool</span></code></pre></div>
+<p>Par exemple,</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"># <span class="kw">let</span> fm = string_to_formula <span class="st">"p1 =&gt; ~(p2 + p1 . p3)"</span>;;
+<span class="kw">val</span> fm : formula = Imp (P <span class="st">"p1"</span>, Not (Or (P <span class="st">"p2"</span>, And (P <span class="st">"p1"</span>, P <span class="st">"p3"</span>))))
+# <span class="kw">let</span> v = Cons((<span class="st">"p1"</span>, <span class="kw">false</span>), Cons((<span class="st">"p2"</span>, <span class="kw">false</span>), Cons((<span class="st">"p3"</span>, <span class="kw">true</span>,Nil))));;
+<span class="kw">val</span> v : (<span class="dt">string</span> * <span class="dt">bool</span>) <span class="dt">list</span> = Cons((<span class="st">"p1"</span>, <span class="kw">false</span>), Cons((<span class="st">"p2"</span>, <span class="kw">false</span>), Cons((<span class="st">"p3"</span>, <span class="kw">true</span>,Nil))))
+# eval fm v;;
+- : <span class="dt">bool</span> = <span class="kw">true</span></code></pre></div>
+<p>Une fois que vous avez écrit cette fonction, vous pouvez la tester en exécutant la fonction de test suivante.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"># test_eval ();;</code></pre></div>
+<h3 id="collecte-des-propositions-atomiques-dune-formule">Collecte des propositions atomiques d'une formule</h3>
+<p>Nous allons avoir besoin pour deux des questions suivantes d'obtenir 
+la liste des propositions atomiques d'une formule. Nous allons créer la 
+fonction suivante qui va faire cela.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">val</span> atoms : formula -&gt; <span class="dt">string</span> <span class="dt">list</span></code></pre></div>
+<p>Par exemple,</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"># <span class="kw">let</span> fm = string_to_formula <span class="st">"p1 =&gt; ~(p2 + p1 . p3)"</span>;;
+<span class="kw">val</span> fm : formula = Imp (P <span class="st">"p1"</span>, Not (Or (P <span class="st">"p2"</span>, And (P <span class="st">"p1"</span>, P <span class="st">"p3"</span>))))
+# atoms fm;;
+- : <span class="dt">string</span> <span class="dt">list</span> = Cons(<span class="st">"p1"</span>, Cons(<span class="st">"p2"</span>, Cons(<span class="st">"p3"</span>,Nil)))</code></pre></div>
+<p>Notez que la liste obtenue ne contient pas de doublon. Vous pouvez utiliser la fonction <code>sort_uniq</code> du module <code>LIST</code> avec la fonction générique de comparaison <code>compare</code> pour enlever les doublons.</p>
+<p>Vous pouvez tester votre fonction en exécutant la fonction de test suivante.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"># test_atoms ();;</code></pre></div>
+<h3 id="tautologies">Tautologies</h3>
+<p>Nous voudrions savoir si une formule est une tautologie, c'est-à-dire
+ qu'elle est vraie pour toutes les valuations possibles de ses 
+propositions atomiques. Par exemple, la formule <span class="math inline"><em>p</em> ∨ ¬<em>p</em></span> est une tautologie. Elle est vraie lorsque <span class="math inline"><em>p</em> = <em>f</em><em>a</em><em>l</em><em>s</em><em>e</em></span> et aussi lorsque <span class="math inline"><em>p</em> = <em>t</em><em>r</em><em>u</em><em>e</em></span>. Le prototype de la fonction que vous devez concevoir est donnée ci-dessous.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">val</span> tautology : formula -&gt; <span class="dt">bool</span></code></pre></div>
+<p>Par exemple,</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"># <span class="kw">let</span> fm = string_to_formula <span class="st">"p =&gt; q =&gt; p"</span>;;
+<span class="kw">val</span> fm : formula = Imp (P <span class="st">"p"</span>, Imp (P <span class="st">"q"</span>, P <span class="st">"p"</span>))
+# tautology fm;;
+- : <span class="dt">bool</span> = <span class="kw">true</span></code></pre></div>
+<p>Vous pouvez tester votre fonction en exécutant la fonction de test suivante.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"># test_tautology ();;</code></pre></div>
+<p>Notons que la fonction <code>tautology</code> nous permet de tester 
+facilement si deux formules sont équivalentes, c'est-à-dire qu'elles ont
+ les mêmes valeurs de vérités pour n'importe quelle valuation. Par 
+exemple, si on veut tester si la formule <span class="math inline">¬(<em>p</em> ∧ <em>q</em>)</span> est équivalente à la formule <span class="math inline">¬<em>p</em> ∨ ¬<em>q</em></span>, il suffit d'exécuter les commandes suivantes.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"># <span class="kw">let</span> fm = string_to_formula <span class="st">"~(p . q) &lt;=&gt; ~p + ~q"</span>;;
+<span class="kw">val</span> fm : formula =
+  Iff (Not (And (P <span class="st">"p"</span>, P <span class="st">"q"</span>)), Or (Not (P <span class="st">"p"</span>), Not (P <span class="st">"q"</span>)))
+# tautology fm;;
+- : <span class="dt">bool</span> = <span class="kw">true</span></code></pre></div>
+<h3 id="affichage-des-valuations-qui-rendent-vraie-une-formule">Affichage des valuations qui rendent vraie une formule</h3>
+<p>Nous voudrions maintenant coder une fonction nous permettant 
+d'afficher toutes les valuations qui rendent vraies une formule donnée. 
+Nous pourrons alors nous servir de cette fonction pour résoudre les 
+énigmes de Smullyan.</p>
+<p>Écrire la fonction suivante qui va parcourir toutes les valuations possibles d'une formule et appliquer la fonction <code>f</code> sur chaque valuations qui rendent vraies la formule <code>fm</code>.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">let</span> find_truth (f : valuation -&gt; <span class="dt">unit</span>) -&gt; (fm : formula) : <span class="dt">unit</span> = ...</code></pre></div>
+<p>Vous pouvez tester votre function en utilisant la fonction de test suivante.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"># test_find_truth ();;</code></pre></div>
+<p>Nous vous donnons la fonction suivante (ligne 352 de <code>logique.ml</code>) qui permet d'afficher une valuation donnée.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">val</span> print_valuation : valuation -&gt; <span class="dt">unit</span></code></pre></div>
+<p>Par exemple,</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"># <span class="kw">let</span> v = Cons((<span class="st">"p"</span>, <span class="kw">true</span>), Cons((<span class="st">"q"</span>, <span class="kw">false</span>), Cons((<span class="st">"r"</span>, <span class="kw">true</span>),Nil)));;
+<span class="kw">val</span> v : (<span class="dt">string</span> * <span class="dt">bool</span>) <span class="dt">list</span> = Cons((<span class="st">"p"</span>, <span class="kw">true</span>), Cons((<span class="st">"q"</span>, <span class="kw">false</span>), Cons((<span class="st">"r"</span>, <span class="kw">true</span>),Nil)))
+# print_valuation v;;
+p:<span class="kw">true</span> q:<span class="kw">false</span> r:<span class="kw">true</span>
+- : <span class="dt">unit</span> = ()</code></pre></div>
+<p>On pourra maintenant utiliser <code>find_truth</code> et <code>print_valuation</code> comme suit.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"># <span class="kw">let</span> fm = string_to_formula <span class="st">"c1 &lt;=&gt; ~c1 . ~c2"</span>;;
+<span class="kw">val</span> fm : formula = Iff (P <span class="st">"c1"</span>, And (Not (P <span class="st">"c1"</span>), Not (P <span class="st">"c2"</span>)))
+# find_truth print_valuation fm;;
+c2:<span class="kw">true</span> c1:<span class="kw">false</span>
+- : <span class="dt">unit</span> = ()</code></pre></div>
+<p>Notons que l'ordre dans l'affichage de l'évaluation n'a pas d'importance.</p>
+<p>Vous pouvez maintenant essayer de modéliser les énigmes suivantes et utiliser <code>find_truth</code> et <code>print_valuation</code> pour obtenir les solutions. Notons que chaque énigme n'a qu'une seule réponse possible.</p>
+<hr>
+<p><strong>Si je suis un chevalier alors il y a de l'or sur l'île.</strong></p>
+<p>Pouvez vous trouvez le type de cette personne, et s'il y a de l'or sur l'île ?</p>
+<hr>
+<p><strong>Le natif fait les deux assertions suivantes :</strong></p>
+<ul>
+<li><strong>Il y a de l'or sur l'île.</strong></li>
+<li><strong>S'il y a de l'or ici alors il y a aussi de l'argent.</strong></li>
+</ul>
+<p>Pouvez vous trouvez le type de cette personne, et s'il y a de l'or, de l'argent sur l'île ?</p>
+<hr>
+<p><strong>Il y a un procès sur l'île, et deux témoins A1 et A2 font les déclarations suivantes :</strong></p>
+<ul>
+<li><strong>A1 : Si je suis un chevalier et A2 un valet, alors l'accusé est coupable.</strong></li>
+<li><strong>A2 : Ce n'est pas vrai !</strong></li>
+</ul>
+<p>Pouvez vous trouvez le type de A1 et A2, et si l'accusé est coupable ?</p>
+<hr>
+<h3 id="simplification-de-formules">Simplification de formules</h3>
+<p>Nous avons du mal à comprendre les formules qui contiennent des implications (<span class="math inline">⇒</span>) et des équivalences (<span class="math inline">⇔</span>).
+ Nous n'aimons pas non plus quand les négations ne sont pas collées aux 
+propositions atomiques. Nous voudrions transformer une formule en une 
+forme équivalente, où les opérateurs <span class="math inline">⇒</span> et <span class="math inline">⇔</span> sont supprimés et où les négations sont au plus proche des propositions atomiques.</p>
+<p>Nous connaissons les équivalences suivantes (on peut tester la validité de ces équivalences grâce à notre fonction <code>tautology</code>).</p>
+<ul>
+<li><span class="math inline"><em>p</em> ⇒ <em>q</em></span> est équivalent à <span class="math inline">¬<em>p</em> ∨ <em>q</em></span>.</li>
+<li><span class="math inline"><em>p</em> ⇔ <em>q</em></span> est équivalent à <span class="math inline">(<em>p</em> ∧ <em>q</em>)∨(¬<em>p</em> ∧ ¬<em>q</em>)</span>.</li>
+<li><span class="math inline">¬¬<em>p</em></span> est équivalent à <span class="math inline"><em>p</em></span>.</li>
+<li><span class="math inline">¬(<em>p</em> ∧ <em>q</em>)</span> est équivalent à <span class="math inline">¬<em>p</em> ∨ ¬<em>q</em></span>.</li>
+<li><span class="math inline">¬(<em>p</em> ∨ <em>q</em>)</span> est équivalent à <span class="math inline">¬<em>p</em> ∧ ¬<em>q</em></span>.</li>
+<li><span class="math inline">¬(<em>p</em> ⇒ <em>q</em>)</span> est équivalent à <span class="math inline"><em>p</em> ∧ ¬<em>q</em></span>.</li>
+<li><span class="math inline">¬(<em>p</em> ⇔ <em>q</em>)</span> est équivalent à <span class="math inline">(<em>p</em> ∧ ¬<em>q</em>)∨(¬<em>p</em> ∧ <em>q</em>)</span>.</li>
+</ul>
+<p>Écrivez la fonction suivante qui permet de transformer une formule en une forme équivalente où les opérateurs <span class="math inline">⇒</span> et <span class="math inline">⇔</span> sont supprimés et où les négations sont au plus proche des propositions atomiques<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"><span class="kw">val</span> nnf : formula -&gt; formula</code></pre></div>
+<p>Par exemple,</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"># <span class="kw">let</span> fm = string_to_formula <span class="st">"c1 &lt;=&gt; ~c1 . ~c2"</span>;;
+<span class="kw">val</span> fm : formula = Iff (P <span class="st">"c1"</span>, And (Not (P <span class="st">"c1"</span>), Not (P <span class="st">"c2"</span>)))
+# nnf fm |&gt; formula_to_string;;
+- : <span class="dt">string</span> = <span class="st">"c1 ∧ ¬c1 ∧ ¬c2 ∨ ¬c1 ∧ (c1 ∨ c2)"</span></code></pre></div>
+<p>Vous pouvez tester votre fonction grâce à la fonction de test suivante.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"># test_nnf ();;</code></pre></div>
+<p>On vous fournit la fonction <code>simplify</code> (ligne 432 de <code>logique.ml</code>) qui va permettre de simplifier la formule obtenue à partir de <code>nnf</code>. Par exemple, sur la formule de la toute première énigme on obtient le résultat suivant.</p>
+<div class="sourceCode"><pre class="sourceCode ocaml"><code class="sourceCode ocaml"># <span class="kw">let</span> fm = string_to_formula <span class="st">"c1 &lt;=&gt; ~c1 . ~c2"</span>;;
+<span class="kw">val</span> fm : formula = Iff (P <span class="st">"c1"</span>, And (Not (P <span class="st">"c1"</span>), Not (P <span class="st">"c2"</span>)))
+# nnf fm |&gt; simplify |&gt; formula_to_string;;
+- : <span class="dt">string</span> = <span class="st">"(c1 ∨ c2) ∧ ¬c1"</span></code></pre></div>
+<p>On peut voir assez facilement que pour que cette formule soit vraie, <code>c1</code> doit être égale à <code>false</code> pour que <span class="math inline">¬<em>c</em>1</span> soit vraie, et du coup <code>c2</code> doit être égale à <code>true</code> pour que <span class="math inline">(<em>c</em>1 ∨ <em>c</em>2)</span> soit vraie.</p>
+</article>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Si <code>A1</code> est un chevalier, ce qu'il dit doit être vrai et alors il doit être un valet. <code>A1</code> ne peut donc pas être un chevalier et c'est donc un valet et il ment. Du coup, sa phrase est fausse et <code>A1</code> et <code>A2</code> ne peuvent pas tous les deux être des valets et donc <code>A2</code> est un chevalier.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>Le connecteur <span class="math inline">¬</span> à la plus forte priorité et est associatif à droite, ensuite vient le connecteur <span class="math inline">∧</span> qui est associatif à gauche, puis le connecteur <span class="math inline">∨</span> qui est associatif à gauche, ensuite les connecteurs <span class="math inline">⇒</span> et <span class="math inline">⇔</span> ont la même priorité et sont associatifs à droite.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>Cette forme est appelée forme normale négative de la formule.<a href="#fnref3">↩</a></p></li>
+</ol>
+</div>
+
+
+</body></html>

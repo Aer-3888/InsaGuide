@@ -1,0 +1,16 @@
+<div class='players-list'>
+    <div *ngIf='players.length == 0; else elseBlock'>
+        <p>Nope</p>
+    </div>
+    <ng-template #elseBlock>
+        <app-player *ngFor="let p of players" [player]="p"></app-player>
+    </ng-template>
+</div>
+
+<div style="text-align:center">
+    <h1>
+       Angular Button Click Event Example
+    </h1>
+    <button  (click)="addPlayer(msg)" >Click Me</button>
+    <input type="text" [(ngModel)]="msg" id="playerId"/>
+</div>

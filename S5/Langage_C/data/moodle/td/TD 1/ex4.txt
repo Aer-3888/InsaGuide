@@ -1,0 +1,114 @@
+Q1)
+#include <stdio.h>
+
+/*! \def MYMAXSIZE
+* \brief Nombre d'éléments alloués dans le tableau
+*/
+# define MYMAXSIZE 20
+
+
+/*! \func int main(void)
+* \brief Programme cherchant un élément dans un tableau
+*/
+int main(void)
+{
+    int tab[MYMAXSIZE] = {0,4,7,8,9,5};
+
+    int i ;
+    int nb = 6;	/* Nombre d'éléments réellement utilisés dans le tableau à ce moment-là du programme */
+    int n;		/* Variable qui servira à stocker la valeur à tester*/
+	int indice=-1;
+
+    /*Donner le code pour rechercher n dans le tableau tab. On cherchera en outre à enregistrer sa position(indice) dans le tableau le cas échéant. */
+	printf("La valeur de n est : ");
+	scanf("%d",&n);
+	for(i=0;i<nb;i++){
+		if(tab[i]==n){
+		indice=i;
+		}
+	
+	}
+    
+    /* Si la valeur est trouvée, afficher l'indice de la valeur dans le tableau */
+	if(indice!=-1){
+	printf("Le nombre %d est à l'indice %d dans le tableau",n ,indice);
+	}
+    
+    /* Si elle n'est pas trouvée, afficher le message correspondant*/
+	if(indice==-1){
+	printf("Le nombre %d n'est pas dans le tableau", n);
+    
+    return 0;
+}
+
+Q2)
+int remplirTableau(int tab[], int tailleMax){
+	int nb;
+	printf("Quelle est la taille voulue du tableau");
+	scanf("%d", &nb);
+	for(int i=0;i<nb;i++){
+		int val;
+		printf("Entrez la valeur en position %d",i);
+		scanf("%d",&val);
+		tab[i]=val;
+		}
+	return nb;
+	
+}
+
+Q3)
+
+#include <math.h>
+
+int rechercheDichotomique(){
+	int n,debut,milieu,fin,nb,est_trouve,i;
+	printf("Entrez la taille du tableau");
+	scanf("%d",&nb);
+	int tab[1000];
+	remplirTableau(tab,1000);
+	printf("Quelle valeur recherchez-vous ?");
+	scanf("%d",&n);
+	est_trouve=0;
+	debut=0;
+	fin=nb-1;
+	
+	while(!est_trouve && debut<=fin){
+		milieu=floor((debut+fin)/2);
+		if(tab[milieu]==n){
+			est_trouve==1;
+			i=milieu;
+		}else{
+			if(tab[milieu]<n){
+				debut=milieu+1;
+			}else{
+				fin=milieu-1;
+				}
+	}
+	if(est_trouve){
+	printf("%d est à l'indice %d du tableau",n ,i);
+	}else{
+	printf("%d n'est pas dans le tableau", n);
+	}
+	
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

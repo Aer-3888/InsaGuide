@@ -1,0 +1,27 @@
+protocol NSPK(i,r)
+
+{
+	role i
+	{fresh n: Nonce;
+	var m: Nonce;
+
+	send_1(i,r,{n,i}pk(r));
+	recv_2(r,i,{n,m}pk(i));
+	send_3(i,r,{m}pk(r));
+	claim_4(i, Secret, n);
+	claim_5(i, Secret,m);
+	claim_6(i, Niagree);
+	}
+
+	role r
+	{var n: Nonce;
+	fresh m: Nonce;
+
+	recv_1(i,r,{n,i}pk(r));
+	send_2(r,i,{n,m}pk(i));
+	recv_3(i,r,{m}pk(r));
+	claim_7(r, Secret, n);
+	claim_8(r, Secret,m);
+	claim_9(r, Niagree);
+	}
+}

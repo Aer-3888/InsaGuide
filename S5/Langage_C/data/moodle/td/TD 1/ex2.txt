@@ -1,0 +1,35 @@
+#include <stdio.h>
+int main()
+{
+    /*déclaration des variables*/
+	int i,n,somme;
+    
+    /*saisie au clavier*/
+	printf("entrez la valeur de n : ");
+	scanf("%d",&n);
+	somme=0;
+    
+    /*Somme boucle for*/
+	for(i=1; i<=n;i++){
+	somme+=i;
+	}
+	
+	/*Somme boucle while*/
+	i=1;
+	while(i<n+1){
+	somme+=i;
+	i++;
+	}
+	
+	/*Somme boucle do while*/
+	i=0;
+	do{
+	somme+=i;
+	i++;
+	}while(i<n+1)
+
+    /*affichage du résultat*/
+	printf("Somme des %d premiers entiers vaut: %d\n", n, somme);
+    
+    return 0;
+}

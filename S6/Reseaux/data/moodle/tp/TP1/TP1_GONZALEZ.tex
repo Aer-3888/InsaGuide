@@ -1,0 +1,481 @@
+% vim: set spell:
+% vim: set spell spelllang=fr:
+\documentclass[a4paper,10pt]{article}
+%\usepackage[mathjax]{lwarp}
+%\usepackage{lwarp}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{pifont}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[left=2cm,right=2cm]{geometry}
+
+\newcommand{\blackword}[1]{\texttt{#1}}
+\newcommand{\codeword}[1]{\texttt{\textcolor{gray}{#1}}}
+\newcommand{\blueword}[1]{\texttt{\textcolor{blue}{#1}}}
+\newcommand{\redword}[1]{\texttt{\textcolor{red}{#1}}}
+
+\title{Réseau~: TP1 --- Compte-rendu}
+\author{Amélie González}
+\date{25 Février 2021}
+
+\def\centralruler{\begin{center}\rule{5cm}{.1pt}\end{center}}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section*{Introduction --- Contexte du TP}
+
+Ce TP a été réalisé en salle, et certaines observations répétées sur mon réseau domestique. Entre autre, les IPs données pour la capture de paquet / l'analyse de traffic réseau correspondent à mon réseau domestique, et non pas au réseau créé par le partage de connexion que j'avais pendant le TP en sale. La machine principale depuis lesquelles sont faites les observations est connectée au réseau.
+
+\section{IP et Ethernet}
+
+\subsection{Question 1}
+
+Le nom d'hôte de ma machine est réglé à \codeword{awoobis}.
+Elle a pour IP \blueword{192.168.42.103} et (\blueword{fd69:420::1f1:3} en IPv6) pour l'interface de la carte wifi, et \blueword{10.8.1.135} (et \blueword{fd11:1::135} en IPv6) sur l'interface de son tunnel VPN. L'interface de loopback possède bien les IPs \blueword{127.0.0.1} et \blueword{::1}.
+
+\subsection{Question 2}
+
+La \autoref{tab:mtus} récapitule les valeurs de la \textit{Maximum Transmission Unit} de chaque interface.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{|c|c|c|}
+\bottomrule
+Interface & Nom & MTU \\
+Loopback & \codeword{lo} & 65536\\
+Ethernet & \codeword{enp0s25} & 1500\\
+WiFi & \codeword{wlp3s0} & 1500\\
+VPN & \codeword{tun1} & 1420\\
+LTE & \codeword{wwp0s20u4i6} & 1500\\\toprule
+\end{tabular}
+\caption{Table des MTUs pour mes interfaces}
+\label{tab:mtus}
+\end{table}
+
+\subsection{Question 3}
+
+Voici ma table de routage \codeword{default} en IPv4.
+\begin{lstlisting}
+default via 192.168.42.1 dev wlp3s0 proto dhcp metric 600 
+10.8.1.0/24 dev tun1 proto kernel scope link src 10.8.1.135 
+192.168.42.0/24 dev wlp3s0 proto kernel scope link src 192.168.42.103 metric 600
+\end{lstlisting}
+
+On peut voir que le routage s'effectue par défaut vers la passerelle de mon réseau (\blueword{192.168.42.1}) et que cette route a été configurée par DHCP, que le tunnel VPN est bien configuré sur l'interface \codeword{tun1}, et que toute requête dans le sous-réseau \blueword{192.168.42.0/24} peut sortir par l'interface \codeword{wlp3s0} avec pour IP source \blueword{192.168.42.103}.
+
+Voilà la même table en IPv6. Cette fois ci elle a été obtenue en salle de cours, sans IPv6 (on voit l'absence de la ligne qui routerait \blueword{fd69:420::/64}).
+
+\begin{lstlisting}
+::1 dev lo proto kernel metric 256 pref medium
+fd11:1::/64 dev tun1 proto kernel metric 256 pref medium
+fe80::/64 dev wlp3s0 proto kernel metric 600 pref medium
+default dev tun1 metric 1024 pref medium
+\end{lstlisting}
+
+\subsection{Question 4}
+
+Je me connecte à distance en utilisant la commande \redword{ssh} à un serveur virtuel privé distant.
+
+Son nom d'hôte est \codeword{vulpinecitrus.info} (nécessaire pour la compatibilité de certains services qui fonctionnent dessus).
+
+\subsubsection{Adresses IP, MTU}
+
+Ses adresses IP sont résumées dans \autoref{tab:ips_vc}, ainsi que les MTUs des différentes interfaces. J'y ai omis des interfaces de \texttt{veth} utilisées en interne par Docker. J'ai aussi omis les adresses link-local IPv6 (\codeword{fe80::/64}) des interfaces (elles ne servent qu'à la communication sur un seul lien en IPv6).
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\bottomrule
+Interface & Nom & IPv4 & IPv6 & MTU\\
+Loopback & \codeword{lo} & \blueword{127.0.0.1} & \blueword{::1} & 65536\\
+Ethernet & \codeword{eth0} & \blueword{51.91.58.45} & \blueword{2001:41d0:305:2100::4547} & 1500\\
+VPN & \codeword{tun0} & \blueword{10.8.1.1} & \blueword{fd11:1::1} & 1420\\
+IFB & \codeword{tun0-ifb} & - & - & 1500\\
+Tête du réseau de Docker & \codeword{docker0} & \blueword{172.17.0.1} & - & 1500\\
+Interface de bridge de Docker & \codeword{br-5aa5338f7baf} & \blueword{172.18.0.1} & - & 1500\\\toprule
+\end{tabular}
+\caption{Interfaces, adresses IP et MTU pour les interfaces principales de \texttt{vulpinecitrus.info}}
+\label{tab:ips_vc}
+\end{table}
+
+\subsubsection{Tables de routage}
+
+La table de routage par défaut sur ce serveur est la suivante.
+
+\begin{lstlisting}[basicstyle=\small]
+default via 51.91.56.1 dev eth0 
+10.8.1.0/24 dev tun0 proto kernel scope link src 10.8.1.1 
+51.91.56.1 dev eth0 scope link 
+172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1
+172.18.0.0/16 dev br-5aa5338f7baf proto kernel scope link src 172.18.0.1 linkdown
+\end{lstlisting}
+
+On voit dans l'ordre : la route par défaut vers internet (par une passerelle d'IP \blueword{51.91.56.1}), la route dans le tunnel VPN (via \codeword{tun0} depuis \blueword{10.8.1.1}), la route vers notre passerelle, la route vers un premier sous-réseau de catégorie B pour Docker (\blueword{172.16.0.0/16}), et un deuxième sous-réseau de la même catégorie, toujours pour Docker.
+
+La table par défaut en IPv6 fournit des informations similaires avec l'ajout des liens locaux sur les interfaces omises dans la \autoref{tab:ips_vc}.
+
+\begin{lstlisting}
+::1 dev lo proto kernel metric 256 pref medium
+2001:41d0:305:2100::1 dev eth0 metric 1024 pref medium
+2001:41d0:305:2100::4547 dev eth0 proto kernel metric 256 pref medium
+fd11:1::/64 dev tun0 proto kernel metric 256 pref medium
+fe80::/64 dev tun0-ifb proto kernel metric 256 pref medium
+fe80::/64 dev docker0 proto kernel metric 256 pref medium
+fe80::/64 dev eth0 proto kernel metric 256 pref medium
+fe80::/64 dev vethfec39c6 proto kernel metric 256 pref medium
+fe80::/64 dev vethd8747d2 proto kernel metric 256 pref medium
+fe80::/64 dev veth5986e70 proto kernel metric 256 pref medium
+default via 2001:41d0:305:2100::1 dev eth0 metric 1024 pref medium
+\end{lstlisting}
+
+On voit dans l'ordre le loopback, la passerelle IPv6, mon IPv6, le routage à travers le tunnel, puis les 6 règles de link-local pour l'interface ifb (\textit{Intermediate Functional Block}, généralement utilisé pour de la Quality of Service) sur les interfaces), mon interface ethernet et les interfaces de docker. Enfin, la route par défaut à travers la passerelle IPv6.
+
+\pagebreak
+\section{Analyse ARP et ICMP}
+
+\subsection{Question 5}
+
+Voici ma table ARP, en \autoref{tab:arp}. On y voit effectivement la gateway de mon réseau local, et son adresse MAC.
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\bottomrule
+		Address& HWtype& HWaddress& Flags& Iface\\
+		\blueword{192.168.42.1}& ether& \blueword{b8:27:eb:b5:e4:93}& C&\codeword{wlp3s0}\\
+		\blueword{216.239.32.21}&&(incomplete)&&\codeword{enp0s25}\\
+		\blueword{216.239.34.21}&&(incomplete)&&\codeword{enp0s25}\\
+		\blueword{1.1.1.1}&&(incomplete)&&\codeword{wlp3s0}\\
+		\blueword{216.239.36.21}&&(incomplete)&&\codeword{enp0s25}\\
+		\blueword{216.239.38.21}&&(incomplete)&&\codeword{enp0s25}\\
+		\toprule
+	\end{tabular}
+	\caption{Table ARP de ma machine locale}
+	\label{tab:arp}
+\end{table}
+
+\subsection{Questions 6 à 11}
+
+Je réalise la capture sur mon réseau local. Les résultats de la requête et de la réponse ARP pour \blueword{192.168.42.8} (mon PC fixe en filaire) sont disponibles dans la \autoref{tab:arp_req_rep}.
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{cc}
+		\includegraphics[scale=.4]{assets/ARP_REQ.png}&\includegraphics[scale=.41]{assets/ARP_REP.png}\\
+		ARP Request&ARP Reply\\
+	\end{tabular}
+	\caption{Requête et réponse ARP pour \blueword{192.168.42.8}}
+	\label{tab:arp_req_rep}
+\end{table}
+
+La requête ARP est constituée de 9 champs. Le type de matériel (``hardware type''), toujours à la valeur correspondant à ``Ethernet II'' (valeur \codeword{0x1}), est suivi par le type de protocole pour lequel on cherche une adresse. Ici, il s'agit de ``IPv4'' (valeur \codeword{0x0800}).
+
+Ensuite viennent deux champs, la taille hardware et adresse (taille en octet des adresses hardware et des adresses logiques correspondantes). Pour la requête et la réponse, ces valeurs sont à \codeword{0x6} (6 octets pour une adresse MAC) et \codeword{0x4} (4 octets pour une adresse IPv4).
+
+Le champ suivant est le code d'opération, ou ``opcode''. Il vaut \codeword{0x1} quand on effectue une requête, et \codeword{0x2} pour la réponse.
+
+Ensuite, les champs ``sender'' et ``target'' dupliqués pour les deux types d'adresses. Dans la requête, la MAC de l'envoyeur (mon ordinateur portable) et son IPv4 sont respectivement \blueword{a4:4e:31:08:ac:84} et \blueword{192.168.42.3}. Dans la réponse, ce sont les valeurs de la ``target''. Ensuite, le champ de l'adresse MAC de la cible pour le paquet de requête est nul, ce qui indique que toutes les machines du réseau doivent écouter (personne n'est ciblé), et l'adresse IPv4 est celle que nous recherchons, c'est à dire \blueword{192.168.42.8}. Pour la réponse, l'émetteur est la machine visée de MAC \blueword{24:4b:fe:50:0f:dc}, avec l'IP désirée de \blueword{192.168.42.8}.
+
+\subsection{Questions 12 et 13}
+
+Le ping est réalisé cette fois dans le tunnel VPN pour éviter le bruit sur le réseau. La cible est \blueword{10.8.1.1}, à l'autre bout du tunnel. Les échanges sont capturés et montrés en \autoref{tab:ping_req_rep}.
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{cc}
+		\includegraphics[scale=.53]{assets/PING_REQ.png}&
+		\includegraphics[scale=.55]{assets/PING_REP.png}\\
+		ICMP ECHO Request & ICMP ECHO Reply\\
+	\end{tabular}
+	\caption{Paquets ICMP ECHO Request et Reply}
+	\label{tab:ping_req_rep}
+\end{table}
+
+Le paquet ICMP ECHO contient un premier byte qui indique le type de paquet (\codeword{0x8} pour ECHO REQUEST et \codeword{0x0} pour ECHO REPLY), suivi d'un code (\codeword{0x0} pour tous les paquets ICMP ECHO), puis d'une somme de contrôle sur le contenu du paquet, puis d'une identificateur de la session (montré par wireshark en ``Big Endian'' (BE) et ``Little Endian'' (LE); il vaut ici \codeword{0x1295}), puis un numéro de séquence unique à chaque couple de paquets ECHO PING (pour savoir quelle réponse correspond à quelle requête; ici \codeword{0x1}), puis des données (48 octets ici) qui sont envoyées par la requête, et renvoyées par la réponse.
+
+\pagebreak
+\section{Segmentation TCP}
+
+On effectue la commande \redword{ping -c 1 -s 20000 10.8.1.1} et la sortie est capturée.
+
+\subsection{Question 14}
+Comme montré sur la screenshot \autoref{fig:more_segments}, on peut voir que le bit indiquant que d'autres frames du même paquet TCP vont suivre, est mis à 1. C'est ce bit là qui sert à indiquer qu'il faut encore attendre des segments. Si le segment est le dernier, alors ce bit vaut 0. Si le segment est le premier d'une série, alors le décalage du fragment (``fragment offset'') est nul.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.7]{assets/MORE_FRAGMENTS.png}
+	\caption{Première frame d'un paquet TCP segmenté}
+	\label{fig:more_segments}
+\end{figure}
+
+\subsection{Question 15} Dans le deuxième fragment, l'offset du fragment n'est pas nul. Cependant, comme j'ai accidentellement mis un zéro de trop dans la commande ping, ce n'est pas le dernier segment non plus. Il y en a un total de 15 (et pour le dernier, l'offset est non nul, et le flag ``more segments'' est non initialisé).
+
+\subsection{Question 16} Les trois champs qui varient suivant le segment choisi sont la somme de contrôle (vue que les données ne sont pas les même), l'offset du segment (puisqu'ils se suivent), et enfin le flag ``more segments'' (qui vaut 0 pour le dernier segment et 1 pour les autres).
+
+\pagebreak
+\section{Services Internet}
+
+\subsection{Question 17}
+
+C'est le fichier \blackword{/etc/services} qui contient la correspondance entre les noms de service et les numéros de port udp et tcp.
+
+Quelques services connus sont smtp (25/tcp), ftp (tcp/udp 21 pour le contrôle, tcp/udp 20 pour les données), ssh (tcp/22), telnet (23/tcp), domain (le DNS) (53/udp), www (le web) (80/tcp), pop3 (POP3 mail sans chiffrement) (110/tcp), ntp (network time protocol) (123/tcp), https (web chiffré) (443/tcp), imap (IMAP mail sans chiffrement) (143/tcp), doom (serveur du jeu DOOM; 666/tcp), etc\dots
+
+\subsection{Question 18}
+
+Dans les sessions ouvertes, on peut reconnaître certains sites.
+
+\begin{lstlisting}[basicstyle=\small]
+Proto Recv-Q Send-Q Local Address           Foreign Address         State          
+tcp        0      0 awoobis:35918           lb-140-82-114-25-:https ESTABLISHED    
+tcp        0      0 awoobis:38460           162.159.138.232:https   ESTABLISHED    
+tcp        0      0 awoobis:45032           fra02s18-in-f4.1e:https TIME_WAIT      
+tcp        0      0 awoobis:57082           ec2-54-149-175-5.:https ESTABLISHED    
+tcp        0      0 awoobis:51540           stackoverflow.com:https ESTABLISHED    
+tcp        0      0 awoobis:36828           162.159.136.234:https   ESTABLISHED    
+tcp        0      0 awoobis:55598           151.101.122.167:https   ESTABLISHED    
+tcp        0      0 awoobis:38458           162.159.138.232:https   ESTABLISHED    
+tcp        0      0 awoobis:37322           arctic.vulpine.ow:https ESTABLISHED    
+tcp        0      0 awoobis:37720           arctic.vulpine.ow:https ESTABLISHED    
+tcp        0      0 awoobis:49170           104.244.42.66:https     ESTABLISHED    
+tcp        0      0 awoobis:43616           45.ip-51-91-58.eu:https TIME_WAIT      
+tcp        0      0 awoobis:34266           104.26.5.21:https       ESTABLISHED    
+tcp        0      0 awoobis:59870           aur.archlinux.org:https ESTABLISHED    
+tcp        0      0 awoobis:59676           193.52.94.55:https      ESTABLISHED    
+tcp        0      0 awoobis:42186           mirrors.stuart:www-http ESTABLISHED    
+tcp        0      0 awoobis:60716           193.52.94.55:https      ESTABLISHED    
+tcp        0      0 awoobis:52702           ec2-52-25-93-75.u:https ESTABLISHED    
+tcp        0      0 awoobis:50566           archlinux.org:www-http  TIME_WAIT      
+tcp        0      0 awoobis:37718           arctic.vulpine.ow:https ESTABLISHED    
+tcp        0      0 awoobis:37718           arctic.vulpine.ow:https ESTABLISHED    
+tcp        0      0 awoobis:43630           45.ip-51-91-58.eu:https TIME_WAIT      
+tcp6       0      0 awoobis:49548           2600:1901:1:e52:::https ESTABLISHED    
+tcp6       0    357 awoobis:42790           2001:41d0:305:210:https ESTABLISHED    
+udp        0      0 awoobis:bootpc          _gateway:bootps         ESTABLISHED
+\end{lstlisting}
+
+On reconnait entre autre \blackword{stackoverflow.com}, mon VPS (\blueword{45.ip-51-91-58.eu} ou \codeword{51.91.58.45}), ou encore le site de Arch Linux (\blackword{archlinux.org}).
+
+\pagebreak
+\section{Nommage}
+
+Les mesures de ping pour cette section ont été effectuées de nouveau dans mon réseau local.
+
+\subsection{Question 19}
+
+On effectue la commande \redword{ping} sur les sites de Google, de l'université de recherche scientifique de Namibie (\blackword{nust.na}), et de l'université de Victoria en Nouvelle-Zélande.
+
+On remarque que la réponse est quasiment instantanée pour Google (environ 8ms, aucune perte de paquets), tout comme le site de l'université de Victoria (11ms en moyenne, aucune perte de paquets), mais ce temps est très grand pour le site en Namibie (254ms mais aucune perte de paquets).
+
+On en déduit que le site de Google (dont les serveurs sont situés aux États-Unis) répondent assez vite, car nous y sommes très bien connectés depuis le réseau de mon opérateur. La même chose peut être dite pour le site de l'université de Victoria, car il a été déplacé vers un hébergeur américain. En revanche, le site dont le serveur est situé en Namibie prend beaucoup de temps à atteindre (même si l'intégrité de la connexion est parfaite), probablement car le trajet des paquets est plus long. La question suivante nous permet de le vérifier.
+
+\subsection{Question 20} Pendant que les commandes \redword{ping} respectives tournent, on effectue un traçage de route \redword{traceroute} vers les différents sites. En premier, Google.
+
+\begin{lstlisting}[basicstyle=\tiny]
+traceroute to www.google.com (216.58.201.228), 30 hops max, 60 byte packets
+ 1  _gateway (192.168.42.1)  7.421 ms  9.561 ms  11.771 ms
+ 2  192.168.1.1 (192.168.1.1)  12.115 ms  12.207 ms  15.308 ms
+ 3  80.10.253.17 (80.10.253.17)  15.609 ms  17.009 ms  17.089 ms
+ 4  ae97-0.ncren102.rbci.orange.net (193.251.108.94)  26.895 ms  27.810 ms  29.679 ms
+ 5  ae43-0.niidf302.rbci.orange.net (193.252.159.161)  17.148 ms  19.744 ms  19.794 ms
+ 6  193.252.137.78 (193.252.137.78)  20.758 ms  13.262 ms  12.205 ms
+ 7  72.14.211.234 (72.14.211.234)  10.347 ms  9.485 ms  8.627 ms
+ 8  108.170.231.107 (108.170.231.107)  11.717 ms  16.367 ms  16.539 ms
+ 9  216.239.48.143 (216.239.48.143)  10.012 ms  10.519 ms  10.640 ms
+10  par10s33-in-f4.1e100.net (216.58.201.228)  10.885 ms  11.059 ms  7.844 ms
+\end{lstlisting}
+
+On y voit qu'en seulement 10 sauts, j'ai atteint leur serveur aux États-Unis (en Californie pour être exact).
+
+Pour l'université de Victoria, on a
+
+\begin{lstlisting}[basicstyle=\tiny]
+traceroute to www.victoria.ac.nz (151.101.2.49), 30 hops max, 60 byte packets
+ 1  _gateway (192.168.42.1)  1.337 ms  1.870 ms  2.705 ms
+ 2  192.168.1.1 (192.168.1.1)  4.112 ms  4.433 ms  5.113 ms
+ 3  80.10.253.17 (80.10.253.17)  6.152 ms  6.261 ms  8.504 ms
+ 4  ae97-0.ncren102.rbci.orange.net (193.251.108.94)  8.335 ms  8.632 ms  8.818 ms
+ 5  ae43-0.niidf302.rbci.orange.net (193.252.159.161)  24.194 ms  24.312 ms  24.733 ms
+ 6  193.252.137.78 (193.252.137.78)  13.603 ms  12.662 ms  12.557 ms
+ 7  * * hundredgige0-0-0-14.partr1.paris.opentransit.net (193.251.151.53)  8.711 ms
+ 8  prs-b3-link.ip.twelve99.net (62.115.171.226)  18.597 ms  21.266 ms  21.402 ms
+ 9  prs-bb2-link.ip.twelve99.net (62.115.118.62)  19.048 ms  19.300 ms  21.026 ms
+10  prs-b8-link.ip.twelve99.net (62.115.138.139)  20.205 ms  18.392 ms  18.624 ms
+11  fastly-ic336683-prs-b8.ip.twelve99-cust.net (213.248.97.117)  10.441 ms  10.610 ms  12.018 ms
+12  151.101.2.49 (151.101.2.49)  11.267 ms  10.979 ms  11.262 ms
+\end{lstlisting}
+
+Cette fois, en 12 sauts, j'ai atteint leur hébergeur situé dans l'état de New York.
+
+Enfin, le serveur en Namibie est effectivement situé \textit{très} loin de nous.
+\begin{lstlisting}[basicstyle=\tiny]
+traceroute to www.nust.na (196.216.167.71), 30 hops max, 60 byte packets
+ 1  _gateway (192.168.42.1)  1.038 ms  3.375 ms  3.563 ms
+ 2  192.168.1.1 (192.168.1.1)  3.796 ms  4.050 ms  4.221 ms
+ 3  80.10.253.17 (80.10.253.17)  9.991 ms  10.574 ms  10.705 ms
+ 4  ae97-0.ncren102.rbci.orange.net (193.251.108.94)  11.231 ms  11.977 ms  12.210 ms
+ 5  ae43-0.niidf302.rbci.orange.net (193.252.159.161)  16.535 ms  16.703 ms  19.980 ms
+ 6  193.252.137.78 (193.252.137.78)  18.048 ms  18.170 ms  16.902 ms
+ 7  81.52.200.117 (81.52.200.117)  54.530 ms  44.793 ms  40.555 ms
+ 8  hundredgige0-5-0-30.martr1.marseille.opentransit.net (193.251.243.237)  67.314 ms  68.369 ms  68.570 ms
+ 9  193.251.250.110 (193.251.250.110)  40.646 ms  41.111 ms  41.222 ms
+10  41.181.105.48 (41.181.105.48)  41.341 ms  68.413 ms  67.884 ms
+11  41.181.190.184 (41.181.190.184)  68.233 ms  36.491 ms  39.299 ms
+12  41.181.190.198 (41.181.190.198)  39.507 ms  37.301 ms  37.023 ms
+13  41.181.245.181 (41.181.245.181)  38.221 ms  37.532 ms  38.540 ms
+14  196.44.5.2 (196.44.5.2)  239.030 ms  239.199 ms  238.729 ms
+15  196.44.29.20 (196.44.29.20)  240.032 ms  239.460 ms  240.140 ms
+16  196.20.9.65 (196.20.9.65)  237.348 ms  237.020 ms  236.873 ms
+17  gw3.wdh1.na--cr2.wdh1.na.mtnns.net (196.20.9.7)  239.695 ms  239.423 ms  240.337 ms
+18  196.31.245.27 (196.31.245.27)  241.610 ms  241.508 ms  242.232 ms
+19  196.12.10.249 (196.12.10.249)  258.223 ms  253.009 ms  252.821 ms
+20  196.216.167.71 (196.216.167.71)  253.347 ms  257.286 ms  254.623 ms
+\end{lstlisting}
+
+On remarque que l'on passe par Marseille, ce qui est normal vu que l'on se rend en Afrique. On passe donc par l'Afrique du Nord / le Moyen-Orient.
+
+\subsection{Question 21}
+
+À l'aide des trois commandes, on détermine les adresses IP (v4 et v6) des sites demandés. Ces informations sont situées en \autoref{tab:ips46}.
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\bottomrule
+		Nom de domaine & Adresse Ipv4 & Adresse Ipv6\\
+		\blackword{www.free.fr} & \blueword{212.27.48.10} & \blueword{2a01:e0c:1::1}\\
+		\blackword{www.insa-rennes.fr} & \blueword{193.52.94.51} & -\\
+		\toprule
+	\end{tabular}
+	\caption{Adresses Ipv4 et IPv6 des noms de domaines demandés}
+	\label{tab:ips46}
+\end{table}
+
+On voit bien que le nom de domaine \blackword{www.free.fr} est un vrai nom enregistré avec sa propre IP, mais que \blackword{www.insa-rennes.fr} est un nom canonique (entrée de type ``CNAME'' dans la zone DNS) pour le vrai nom de domaine qui est \blackword{hebergwebtypo01.insa-rennes.fr}.
+
+\pagebreak
+\section{HTTP et TCP}
+
+J'utilise le site \blackword{ipinfo.io}, qui fonctionne en HTTP, et dont le chemin \blackword{/ip} retourne une page contenant uniquement mon IP, pour simplifier au plus les échanges. Les captures sont effectuées dans mon réseau local.
+
+\subsection{Question 22}
+Le client se connecte au port TCP 80 de l'hôte distant. C'est le port well-known pour le service web.
+
+\subsection{Question 23}
+On identifie le paquet qui effectue l'ouverture de la connexion. Une capture d'écran est montrée en \autoref{fig:tcp_handshake_1}.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.7]{assets/handshake_1.png}
+	\caption{Premier paquet du handshake TCP vers \blackword{ipinfo.io}}
+	\label{fig:tcp_handshake_1}
+\end{figure}
+
+La taille de l'en-tête TCP pour ce paquet est de 40 octets, comme indiqué dans l'en-tête en \autoref{fig:tcp_handshake_1}.
+
+\subsection{Question 24}
+Le premier paquet contient 0 octets de données, car il sert simplement à initialiser la connexion. On pourra envoyer des données quand on aura échangé des informations utiles auprès du serveur (taille de la fenêtre, options, etc) et que la connexion sera formellement ouverte.
+
+\subsection{Question 25}
+Le numéro de séquence du premier paquet est 1 en relatif (calculé par wireshark), et 2093179966 en absolu. Le client annonce une taille de fenêtre maximum de 64240 unités (par défaut, des octets). Cela signifie que le client peut recevoir environ 64 kilooctets de données d'un coup sans envoyer d'acquittement.
+
+\subsection{Question 26}
+On identifie le deuxième paquet du handshake. Je vais lister les éléments demandés.
+
+\begin{itemize}
+	\item Les adresses sources et destination pour la trame Ethernet sont respectivement celle de ma gateway/Raspberry Pi (\blueword{b8:27:eb:b5:e4:93}) et celle de la carte wifi de mon ordinateur portable (\blueword{a4:4e:31:08:ac:84}). Le type de paquet contenu est \codeword{0x0800} qui correspond à IPv4. 
+	\item Le paquet IP contient le numéro de protocole \codeword{0x6} qui correspond à TCP, avec pour adresses de source et destination \blueword{192.168.42.103} et \codeword{216.139.34.21} respectivement.
+	\item Le numéro de l'acquittement dans ce paquet est 2093179967.
+	\item La taille du segment TCP est de 0 (encore une fois, aucune information n'est transmise).
+	\item Le numéro de séquence initial du serveur vers le client est 850512762.
+	\item La valeur de la fenêtre TCP est de 65535 octets.
+\end{itemize}
+
+La \autoref{fig:handshake_2} résume ces informations.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.7]{assets/handshake_2.png}
+	\caption{Second paquet TCP du handshake pour la connexion avec \blackword{ipinfo.io}}
+	\label{fig:handshake_2}
+\end{figure}
+
+\subsection{Question 27}
+
+Wireshark nous calcule le MSS (Maximum Segment Size) pour le client et le serveur à partir des frames capturées. Il a déterminé que le MSS du client était de 1460 octets, et celui du serveur de 1430 octets.
+
+\subsection{Question 28}
+On identifie le dernier paquet du handshake TCP montré dans la \autoref{fig:handshake_3}.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.7]{assets/handshake_3.png}
+	\caption{Dernier paquet TCP du handshake pour la connexion avec \blackword{ipinfo.io}}
+	\label{fig:handshake_3}
+\end{figure}
+
+On y trouve :
+\begin{itemize}
+	\item Le numéro d'acquittement : 850512763
+	\item Le numéro de séquence : 2093179967
+	\item La taille de la fenêtre TCP : 502 octets
+\end{itemize}
+
+\subsection{Question 29}
+
+Au cours de l'échange entre le serveur et le client, les valeurs des numéros de séquence et d'acquittement varient comme indiqué en \autoref{tab:ack_seq}.
+
+\begin{table}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\bottomrule
+		Envoyeur & Séquence & Acquittement & Taille & Flags\\
+		Client & 2093179967 & 850512763 & 75 & - \\
+		Serveur & 850512763 & 2093180042 & 0 & ACK\\
+		Serveur & 850512763 & 2093180042 & 177 & PSH, ACK\\
+		Client & 2093180042 & 850512940 & 0 & ACK\\
+		Client & 2093180042 & 850512940 & 0 & FIN, ACK\\
+		Serveur & 850512940 & 2093180043 & 0 & FIN, ACK\\
+		Client & 2093180043 & 850512941 & 0 & ACK\\
+		\toprule
+	\end{tabular}
+	\caption{Suite des échanges TCP avec \blackword{ipinfo.io}}
+	\label{tab:ack_seq}
+\end{table}
+
+On voit que le numéro de séquence d'un des parti augmente de la quantité de données qu'il a envoyé au dernier paquet (+1 si les flags FIN ou SYN sont présents), et ACK augmente de la quantité reçue jusqu'alors (avec ce même +1). Par exemple, quand le client envoie 75 octets avec le numéro de séquence \codeword{2093179967}, le prochain numéro de séquence qu'il enverra est \codeword{2093180042}, ou l'ancien numéro plus 75 octets.
+
+\subsection{Question 30}
+
+Dans l'exemple utilisé jusque là, la taille des données retournées par le serveur, indiquée dans la réponse, est de 12 octets, comme montré en \autoref{fig:http_200}.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics{assets/http_200.png}
+	\caption{Réponse HTTP 200 de \blackword{ipinfo.io}}
+	\label{fig:http_200}
+\end{figure}
+
+En effet, le site se contente de retourner les 12 octets de mon adresse IPv4 au format texte.
+
+\subsection{Question 31}
+
+J'utilise un autre site pour obtenir une page web assez longue pour être fragmentée. Je suppose que la fragmentation s'effectue au niveau de la couche de transport (donc que les données sont fragmentées en plusieurs paquets TCP). Cette supposition est vérifiée sur wireshark, qui montre la fragmentation des données en plusieurs paquets TCP, comme sur la \autoref{fig:tcp_frag}. Sur le côté gauche de la liste des frames, on voit avec une flèche en bas la réponse reconstituée, et les bouts de cette réponse sont indiqués avec un point.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[scale=.8]{assets/wireshark_tcp_frag.png}
+	\caption{Fragmentation en plusieurs paquets TCP d'une requête vers une page web}
+	\label{fig:tcp_frag}
+\end{figure}
+
+\end{document}

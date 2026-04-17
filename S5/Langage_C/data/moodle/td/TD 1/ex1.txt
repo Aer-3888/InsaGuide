@@ -1,0 +1,18 @@
+
+#include <stdio.h>
+
+int main()
+{
+  int a = 5;
+  int b = 2;
+  scanf("%d %d", &a, &b);
+  
+  
+  int est_un_multiple = a%b == 0;
+  if(est_un_multiple){
+  printf("%d est un multiple de %d",a,b);
+  }else{
+  printf("%d n'est pas un multiple de %d",a,b);
+  }
+  return(0);
+}

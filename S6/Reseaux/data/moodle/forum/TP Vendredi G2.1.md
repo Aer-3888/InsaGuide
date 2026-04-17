@@ -1,0 +1,35 @@
+# TP Vendredi G2.1
+
+Source: https://moodleng.insa-rennes.fr/mod/forum/discuss.php?d=107
+
+## TP Vendredi G2.1
+
+Display mode  Display replies flat, with oldest first Display replies flat, with newest first Display replies in threaded form Display replies in nested form
+
+Settings 
+
+[ Star this discussion  ]( "Star this discussion") [ Unsubscribe from this discussion ](https://moodleng.insa-rennes.fr/mod/forum/subscribe.php?sesskey=gXn7g4JwdZ&id=546&d=107 "You are subscribed to this discussion. Click to unsubscribe.")
+
+![Picture of Deleted user](https://moodleng.insa-rennes.fr/theme/image.php/boost/core/1775635657/u/f1)
+
+### TP Vendredi G2.1
+
+by [Deleted user](https://moodleng.insa-rennes.fr/user/view.php?id=9930&course=1159) \- Friday, 27 March 2020, 2:29 PM
+
+Number of replies: 0
+
+Bonjour,  
+La réunion Zoom pour le TP G2.1 d'aujourd'hui à 15h40 est :  
+https://zoom.us/j/342648464  
+  
+À bientôt,  
+Nikos Parlavantzas  
+  
+
+
+[ Permalink ](https://moodleng.insa-rennes.fr/mod/forum/discuss.php?d=107#p172 "Permanent link to this post") [ Reply ](https://moodleng.insa-rennes.fr/mod/forum/post.php?reply=172#mformforum "Reply")
+
+  * [◄ TP vendredi changement du lien](https://moodleng.insa-rennes.fr/mod/forum/discuss.php?d=106)
+  * [TP G1.2 ►](https://moodleng.insa-rennes.fr/mod/forum/discuss.php?d=108)
+
+

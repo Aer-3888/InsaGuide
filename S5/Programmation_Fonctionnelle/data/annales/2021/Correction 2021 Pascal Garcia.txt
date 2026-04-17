@@ -1,0 +1,192 @@
+type 'a file = 'a list
+
+(* Q1 *)
+let enqueue x file = file @ [x]
+
+(* Q2 *)
+exception FileVide
+let dequeue = function
+  | [] -> raise FileVide
+  | e :: r -> e, r
+
+(* Q3 *)
+let nb_elem file =
+  List.fold_right (fun _ acc -> 1 + acc) file 0
+
+(* Q4 *)
+let rec count x = function
+  | [] -> 0
+  | e :: r -> (if e = x then 1 else 0) + count x r
+
+let _ = count 'A' ['A';'B';'A';'A';'C';'B'] = 3
+
+(* Q5 *)
+let rec count_and_remove x = function
+  | [] -> ([], 0)
+  | e :: r ->
+    let file, n = count_and_remove x r in
+    ((if e = x then [] else [e]) @ file,
+     (if e = x then 1 else 0) + n)
+
+let _ = count_and_remove 'A' ['A';'B';'A';'A';'C';'B'] = (['B';'C';'B'],3)
+
+type ('key, 'elt) assoc = ('key * 'elt) list
+
+(* l'ordre dans la liste d'association a-t-il de l'importance ? *)
+
+(* Q6 *)
+let rec assoc_opt k = function
+  | [] -> None
+  | (k', v) :: r when k' = k -> Some v
+  | _ :: r -> assoc_opt k r
+
+let _ = assoc_opt 'c' [('a',1);('b',2);('c',3)] = Some 3 &&
+        assoc_opt 'd' [('a',1);('b',2);('c',3)] = None
+
+(* Q7 *)
+let rec remove_key k = function
+  | [] -> []
+  | (k', _) :: r when k' = k -> r
+  | e :: r -> e :: remove_key k r
+
+let _ = remove_key 'c' [('a',1);('b',2);('c',3)] = [('a',1);('b',2)] &&
+        remove_key 'd' [('a',1);('b',2);('c',3)] = [('a',1);('b',2);('c',3)]
+
+(* Q8 *)
+let rec add_assoc make merge k v = function
+  | [] -> [k, make v]
+  | (k', v') :: r when k' = k -> (k, merge v v') :: r
+  | e :: r -> e :: add_assoc make merge k v r
+
+let make = fun x -> int_of_float x
+let merge = fun x y -> int_of_float x + y
+let _ = add_assoc make merge 'a' 5.0 [('a',1);('b',2);('c',3)] = [('a',6);('b',2);('c',3)] &&
+        add_assoc make merge 'd' 5.0 [('a',1);('b',2);('c',3)] = [('a',1);('b',2);('c',3);('d',5)]
+
+(* Q9 si l'ordre dans la liste d'association n'a pas d'importance *)
+let rec from_list = function
+  | [] -> []
+  | (k, v) :: r ->
+    from_list r
+    |> add_assoc (fun x -> [x]) (fun x l -> x :: l) k v
+
+let _ =
+  from_list [('a',1);('b',2);('c',3);('a',4)]
+  |> List.sort compare
+     =
+  List.sort compare [('a',[1;4]);('b',[2]); ('c',[3])]
+
+(* si l'ordre dans la liste d'association a son importance *)
+let from_list l =
+  let rec from_list acc = function
+    | [] -> acc
+    | (k, v) :: r ->
+      from_list (add_assoc (fun x -> [x]) (fun x l -> l @ [x]) k v acc) r
+  in
+  from_list [] l
+
+let _ = from_list [('a',1);('b',2);('c',3);('a',4)] = [('a',[1;4]);('b',[2]); ('c',[3])]
+
+(* en plus efficace si l'ordre de la liste d'association n'a pas d'importance : *)
+let from_list l =
+  let rec merge (k, l) = function
+    | [] -> [k, l]
+    | (k', v') :: r when k' = k ->
+      merge (k, v' :: l) r
+    | (k', v') :: r -> (k, l) :: merge (k', [v']) r
+  in
+  let l = List.sort compare l in
+  (match l with
+  | [] -> []
+  | (k, v) :: r -> merge (k, [v]) r)
+  |> List.map (fun (k, l) -> k, List.rev l)
+
+let _ = from_list [('a',1);('b',2);('c',3);('a',4)] = [('a',[1;4]);('b',[2]); ('c',[3])]
+
+(* Q10 *)
+let filter_assoc pred l =
+  List.map (fun (k, l') -> k, List.filter (pred k) l') l
+
+let pred = fun k e -> k = 'a' && e >= 3 || k <> 'a' && e <= 2
+let _ = filter_assoc pred [('a',[1;4]);('b',[2]);('c',[3])] = [('a',[4]);('b',[2]);('c',[])]
+
+type words = Node of bool * ((char, words) assoc)
+
+type word = char list
+
+let rec concat : 'a list list -> 'a list = function
+  | [] -> []
+  | e :: r -> e @ concat r
+
+(* Q11 *)
+let rec all_letters : words -> char list = function
+  | Node (_, []) -> []
+  | Node (_, l)  ->
+    List.map (fun (c, w) -> c :: all_letters w) l
+    |> concat
+
+(* sans doublons *)
+let all_letters (words : words) : char list =
+  all_letters words
+  |> List.sort_uniq compare
+
+(* Q12 *)
+let rec sous_arbres : words -> words list = function
+  | Node (_, []) as a -> [a]
+  | Node (_, l) as a  ->
+    a :: concat (List.map (fun (_, w) -> sous_arbres w) l)
+
+(* Q13 *)
+let rec mem (words : words) (w : word) : bool =
+  match words, w with
+  | Node (true, _), [] -> true
+  | Node (_, l), c :: r -> begin
+    match assoc_opt c l with
+      | None -> false
+      | Some words -> mem words r
+  end
+  | _ -> false
+
+(* Q14 *)
+let rec singleton : word -> words = function
+  | [] -> Node (true, [])
+  | c :: r ->
+    Node (false, [c, singleton r])
+
+(* Q15 *)
+let elements (words : words) : word list =
+  let rec elements (acc : word) : words -> word list = function
+    | Node (true, []) -> [acc]
+    | Node (false, []) -> []
+    | Node (b, l)  ->
+      l
+      |> List.map (fun (c, ws) ->
+          elements (acc @ [c]) ws
+        )
+      |> concat
+  in
+  elements [] words
+
+(* Q16 *)
+let rec add_elt (w : word) (words : words) : words =
+  match words, w with
+  | Node (_, l), [] -> Node (true, l)
+  | Node (b, l), c :: r ->
+      Node (b, add_assoc singleton add_elt c r l)
+
+(* Q17 *)
+let rec union (words1 : words) (words2 : words) : words =
+  match words1, words2 with
+  | Node (b1, l1), Node (b2, l2) ->
+    let rec add_all l = function
+      | [] -> []
+      | (c, ws) :: r ->
+        add_assoc (fun x -> x) union c ws l
+    in
+    Node (b1 || b2, add_all l1 l2)
+
+(* to help in testing *)
+let word_of_string s =
+  s
+  |> String.to_seq
+  |> List.of_seq

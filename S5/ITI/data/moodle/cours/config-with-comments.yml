@@ -1,0 +1,11 @@
+database:
+	# Database type to use. Supported types are mysql, postgres and sqlite.
+	type: "mysql"
+	# Database user which is used to connect to the database.
+	user: "whoever"
+	# Database password
+	password: "ALOHOMORA"
+	# Database host
+	host: "XXX.YYY.ZZ:3307"
+	# Database to use
+	database: "whatever"

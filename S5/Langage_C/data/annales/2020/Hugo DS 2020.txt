@@ -1,0 +1,158 @@
+			/* DS 2020 */
+			
+			
+		/* Exercice 1 */
+	
+Q1)
+-stdio.h doit être entre <> et pas "" 
+#include <stdio.h>
+- i n'est pas initialisé donc il faut rajouter int i; juste apres le début du main
+"int i;"
+- il faut une adresse pour le scanf donc on rajoute &i qui est l'adresse de il
+"scanf("%d",&i);"
+- on affiche un entier donc %d au lieu de %s et il manque le ; de fin 
+"printf("%d\n",i);"
+
+
+		/* Exercice 2 */
+		
+Q2)
+int main(){
+	Booleen b=TRUE;
+}
+
+Q3)
+typedef enum {JANVIER=1, FEVRIER, MARS, AVRIL, MAI, JUIN, JUILLET, AOUT, SEPTEMBRE, OCTOBRE, NOVEMBRE, DECEMBRE} Mois;  /* pas besoin de mettre égal sur chaque car par défaut il incrémente de 1 sur la valeur précedente */
+
+Q4)
+typedef struct{
+	int jour,annee;
+	Mois mois;
+} Date;
+
+Q5)
+void setMois(Date * d,Mois m);
+
+Q6)
+void setMois(Date * d,Mois m){
+	d->mois=m;
+}
+
+Q7)
+Le printf affiche 2 car d.mois=FEVRIER=2
+
+Q8)
+Mois getMois(Date d);
+
+Q9)
+Mois getMois(Date d){
+	return d.mois;
+}
+
+Q10)
+void scanDate(Date * d){
+	printf("Saisissez le jour");
+	scanf("%d",&(d->jour));
+	printf("Saisissez le mois");
+	scanf("%d",&(d->mois));
+	printf("Saisissez l'annee");
+	scanf("%d",&(d->annee));
+}
+
+Q11)
+void printDate(Date d){
+	printf("Date: %d/%d/%d\n",d.jour,d.mois,d.annee);
+}
+
+Q12)
+void printDateV2(Date d){
+	static char* nomMois[]={"Janvier","Fevrier","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Decembre"};
+	printf("Date: %d %s %d\n",d.jour,nomMois[d.mois-1],d.annee);
+}
+
+Q13)
+Cela permet d'éviter d'initialiser nomMois à chaque appel de la fonction. De plus, nomMois n'est ainsi pas stocké dans la pile.
+
+Q14)
+int equalDate(Date d1, Date d2){
+	return d1.jour==d2.jour && d1.mois==d2.mois && d1.annee==d2.annee;
+}
+
+Q15)
+int compareDate(Date d1, Date d2){     /* C'est un peu dégueulasse mais bon */
+	if(equalDate(d1,d2)){
+		return 1;
+	}
+	else{
+		if(d1.annee>d2.annee){
+			return 2;
+		}
+		if(d1.annee<d2.annee){
+			return 0;
+		}
+		if(d1.annee==d2.annee){
+			if(d1.mois>d2.mois){
+				return 2;
+			}
+			if(d1.mois<d2.mois){
+				return 0;
+			}
+			if(d1.mois==d2.mois){
+				if(d1.jour>d2.jour){
+				return 2;
+			}
+			if(d1.jour<d2.jour){
+				return 0;
+			}
+			}
+		}
+	}
+}
+
+Q16)
+
+#include <stdio.h>
+#include <stdlib.h>
+#define ERROR_ALLOC 43567
+
+Date* copyDate(Date d){
+	Date * res;
+	if((res=(Date*) malloc(sizeof(Date)))==NULL){
+		fprintf(stderr, "Problème d'allocation mémoire\n");
+		exit(ERROR_ALLOC);
+	}
+	res->jour=d.jour;
+	res->mois=d.mois;
+	res->annee=d.annee;
+	return res;
+}
+
+Q17)
+
+Booleen searchBirthdayDate(Date aChercher, Date * tab, int nbDates){
+	int i;
+	for(i=0; i<nbDates;i++){
+		if(equalDate(aChercher,tab[i])){
+		return TRUE;
+		}
+	}
+	return FALSE;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

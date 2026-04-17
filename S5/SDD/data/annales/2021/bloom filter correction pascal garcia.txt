@@ -1,0 +1,29 @@
+package fr.mrcoder;
+
+import java.util.BitSet;
+
+public class BloomFilter {
+    private BitSet bitSet;
+    private int size;
+    private int nbHashes;
+
+    public BloomFilter(int size, int nbHashes) {
+        bitSet = new BitSet(size);
+        this.size = size;
+        this.nbHashes = nbHashes;
+    }
+    public void add(byte[] bytes) {
+        for (int i = 0; i < nbHashes; i++) {
+            bitSet.set(hash(bytes, i) % size);
+        }
+    }
+    public boolean contains(byte[] bytes) {
+        for (int i = 0; i < nbHashes; i++) {
+            if (bitSet.get(hash(bytes, i) % size) == false) return false;
+        }
+        return true;
+    }
+    private static int hash(byte[] bytes, int i) {
+        return MurmurHash.hash32(bytes, bytes.length, i) & 0x7FFFFFFF;
+    }
+}

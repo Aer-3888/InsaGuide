@@ -1,0 +1,112 @@
+/* lignes fournies */
+#define NBATMAX 1024
+
+
+
+/* Q2 : Definition de la constant LG_MAX */
+#define LG_MAX 64
+
+/* Q1 : Definition du type enum de batiment */
+typedef enum { MAISON , IMMEUBLE , HOPITAL , ECOLE , USINE }Nature;
+
+/* Q3 : Definition de la structure Batiment */
+typedef struct{
+	int identifiant;
+	Nature nature;
+	double hauteur;
+	char *nomVille;
+} Batiment;
+
+typedef struct{
+	int nbat;
+	Batiment ens[NBATMAX];
+}EnsBat;
+
+typedef struct{
+	int nbat;
+	Batiment *ens;
+}EnsBat2;
+
+/* Q4 : Prototype de testUsine */
+int testUsine(Batiment *b); 
+
+/* Q6 : Prototype de changeNature
+ * Justifications :
+ *	renvois 1 si tout cest bien passé
+ *
+ *
+*/
+int changeNature(Batiment *b, Nature n);
+
+/* Q8 : Prototype de changeVille */
+int changeVille(Batiment *b, char *nv);
+
+/* Q5 : Corps de testUsine */
+int testUsine(Batiment *b){
+	return b->nature == USINE;
+}
+
+/* Q7 : Corps de changeNature */
+int changeNature(Batiment *b, Nature n){
+	b->nature = n;
+	return 1;
+}
+
+/* Q9 : Corps de changeVille */
+int changeVille(Batiment *b, char *nv){
+	b->nomVille = nv;
+	return 1;
+}
+
+/* Q10 : Prototype de ajoutBatiment */
+int ajoutBatiment(EnsBat *E, int id, Nature n, double h, char *nv);
+
+/* Q12 : Prototype de chercheDansVille */
+void chercheDansVille(EnsBat *E, char *nv);
+
+/* Q11 : Corps de ajoutBatiment */
+int ajoutBatiment(EnsBat *E, int id, Nature n, double h, char *nv){
+	E->ens[E->nbat].identifiant = id;
+	E->ens[E->nbat].nature = n;
+	E->ens[E->nbat].hauteur = h;
+	E->ens[E->nbat].nomVille = nv;
+
+	(E->nbat)++;
+	return 1;
+}
+
+/* Q13 : Corps de chercheDansVille */
+#include <string.h>
+
+void chercheDansVille(EnsBat *E, char *nv){
+	for(int i=0 ; i < (E->nbat) ; i++){
+		if (!strcmp(nv,E->ens[i].nomVille))
+			printf("identifiant : %d | Nature : %s | Hauteur : %f | Ville : %s \n",E->ens[i].identifiant,E->ens[i].nature,E->ens[i].hauteur,E->ens[i].nomVille);
+	}
+}
+
+/* Q14 : différence entre EnsBat et EnsBat2 et conséquence
+
+EnsBat2 aura un pointeur pour definir le tableau de batiments
+EnsBat a un tableau avec une taille predifinie
+
+EnsBat2 pourrait beneficier de l'allocation dynamique
+
+*/
+
+
+
+
+
+
+/*       ANNEXE B        */
+
+#define MAX_ID 8
+
+void identifiant (char * p, char * n, char * id);
+/* le code de cette fonction sera supposée écrite et fonctionnelle */
+
+/* Q15 : Corps de idFromFile */
+int idFromFile(char * fi, char * fo){
+	/* TODO */
+}

@@ -1,0 +1,6 @@
+database:
+	type: "mysql"
+	user: "whoever"
+	password: "ALOHOMORA"
+	host: "XXX.YYY.ZZ:3307"
+	database: "whatever"

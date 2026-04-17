@@ -1,0 +1,145 @@
+[10/02/2021]
+# Test 1 : Vérifier la validité
+
+ -> Google "numéro sécurité sociale"
+ -> ameli.fr (assurance maladie) : https://www.ameli.fr/assure/droits-demarches/principes/numero-securite-sociale
+ 	- Inutile
+ -> Wikipédia : https://fr.wikipedia.org/wiki/Num%C3%A9ro_de_s%C3%A9curit%C3%A9_sociale_en_France
+	- Bon nombre de chiffres
+	- Bon format
+	- CLÉ DE SÉCU : 97-(X%97) où X est le nombre formé par les 13 premiers chiffres
+		-> la clé est valide
+
+# Extraction d'informations
+
+ - Sexe : Femme (OK)
+ - Année de naissance : 80
+ 	- Mme Kordy est née en 1980?
+ - Mois de naissance : 05
+ 	- Mme Kordy est née en Mai?
+ - Scénario C, naissance hors de France
+ 	- Code 99 (OK)
+	- Code 114 : Roumanie
+		- Mme Kordy est d'origines Roumaines? -> chercher les registres de naturalisation
+ - Numéro de naissance : 114e
+ 	(peu de chances que ça soit utile à moins de compter toutes les naturalisations de personnes
+	d'origines Roumaines sur l'année de naissance de Mme Kordy).
+
+ - La clé de contrôle est OK.
+
+# Informations certaines
+
+ - Née à l'étranger. Où?
+ - PhD en 2009/2008 à l'Uni. d'Orléans
+ - Voyages fréquents à l'international.
+ - Travail vers 2011-2014 à l'uni. Luxembourg
+ - INSA/IRISA depuis 2014
+ - Travail sur les arbres d'attaques et méthodes formelles
+ - Elle est née "Fila", "Kordy" est le nom de famille obtenu d'un mariage
+
+# Collecte d'informations en ligne
+
+ Viser l'âge, où le pays d'origine, ce sont les seules données que l'on peut réfuter avec certitude
+quasi-absolue.
+
+## Recherches sans issues
+
+ -> Google, "Barbara Kordy"
+ 	- Elle a plusieurs noms de famille (nom de jeune fille?)
+	- Besoin de chercher pour "Kordy", "Fila", "Fila-Kordy", "Kordy-Fila"
+ - Page perso IRISA : http://people.irisa.fr/Barbara.Fila/
+ 	- List of publications : http://people.rennes.inria.fr/Barbara.Fila/publications.php
+		- Les papiers alternent en permanence entre Kordy et Fila :(
+	-> Elle a travaillé à l'université de Luxembourg circa 2011~2013
+	-> Thèse à l'université d'Orléans
+		- Y-a-t'il un registre des alumnis de son année?
+	-> Invitée à EWSCS 2019 à Palmse, Estonie, en 2019. Garder en tête pour vérifier code pays? Peu certain.
+	-> Allons fouiner sur : https://people.irisa.fr/Barbara.Fila/academic_duties.php
+		- https://grsrd.uni.lu/2013/ -> https://satoss.uni.lu/members/barbara/contact.php
+			Même données que sur sa page perso. Inutil.
+		- https://gramsec.uni.lu/organization.php rediriges vers page IRISA
+		- plein de liens morts
+		- https://satoss.uni.lu/sacps2015/ -> pas de liens
+		- https://conferences.telecom-bretagne.eu/crisis/2016/ -> pas mentionnée
+		- https://www.dmi.unict.it/giamp/sac/cfp2021.php -> pas de lien
+		-> la majorité d'entre eux ramèneront sur sa page qui n'a pas d'info, inutile.
+	-> Thèse publiée en 2008 https://www.univ-orleans.fr/lifo/publications.php?annee=2008&lang=en
+		-> d'autres thèses et conférences -> https://hal.archives-ouvertes.fr/search/index/q/*/authFullName_s/Barbara+Fila
+	-> Projet TREsPASS : http://www.trespass-project.eu/
+		-> Reçu de subventions -> https://cordis.europa.eu/project/id/318003
+			- Document légal?
+			-> Univ du Luxembourg : https://wwwen.uni.lu/ (inutile, elle n'est plus référencée)
+		-> https://twitter.com/TREsPASSProject
+			-> Pas d'indication sur la TL, ou de follow / followed utiles
+		-> GitHub -> https://github.com/trespass-project/
+			-> Un seul contributeur
+			-> Inutile, si on trouve Mme Kordy c'est dans le contexte du travail. Elle aura mis sa page IRISA.
+	=> Nécessité de trouver une page légale ou, si vraiment nécessaire, perso
+ - Computer science bibliography : https://dblp.org/pid/00/4628.html
+ - https://www.univ-orleans.fr/lifo/pageperso.php?lang=en&id=76
+ - https://www.researchgate.net/scientific-contributions/Barbara-Kordy-42921527
+ -> https://hal.archives-ouvertes.fr/hal-01580990 pas de liens
+ -> https://easychair.org/smart-program/FLoC2018/person493.html -> lien vers IRISA
+ -> https://www.amazon.ae/Books-Barbara-Kordy/s?rh=n%3A11497688031%2Cp_27%3ABarbara+Kordy (pas de lien mais des bouquins sympathiques)
+ -> https://www.pole-excellence-cyber.org/catalogue-recherches/seminaire-sosysec-securite-logiciels-systemes/ (just un lien vers son mail)
+ -> http://perso.eleves.ens-rennes.fr/people/leo.henry/mycv.pdf (CV d'un prof d'OCaml de la promo 2021 et de la 2022)
+ -> http://resources.illc.uva.nl/LogicList/newsitem.php?id=7436 -> pas de mentions d'années / pas de liens
+ -> https://limos.fr/news_thesis/8 -> mention de Mme Kordy
+ -> https://etaps.org/index.php/user-profile/archive/46-etaps-2018/364-post-2018-accepted-papers (lien vers sa page IRISA, pas d'années / dates)
+ -> Un site de recherches pour des convictions? Déménagements? Bref c'est pas le bon pays (https://www.peekyou.com/barbara_fila)
+ -> Un tweet de FormalMethodsGU (https://twitter.com/formalmethodsgu/status/1154339609817559040)
+ 	- pas de chance sur les likes / RT
+	- mais un lien vers https://twitter.com/EMSEC35
+ -> http://cs.ioc.ee/ewscs/2019/index.php?page=kordy (EWSCS 2019)
+
+ -> Collision pour "Barbara Fila" avec le nom d'une célébrité sur instagram? d'une marque?
+ 	-> Les recherches sont contaminées.
+
+## Recherches fructueuses
+
+ -> "Barbara Kordy Fila"
+ 	-> https://www.idref.fr/031400752
+		-> Index de données?
+		-> https://www.idref.fr/autorites.jsp
+		"Barbara Kordy Fila"
+		-> https://www.idref.fr/153828013
+			- Bonnes refs de recherche (PhD de 2008 à Orléans) OK
+			- Le site a pour date de naissance 1978. Si le site a raison, le numéro de sécu est faux.
+			- Corroboré par
+				- https://viaf.org/viaf/204195990/
+				- https://isni.oclc.org/DB=1.2/SET=1/TTL=1/CMD?ACT=SRCH&IKT=8006&SRT=LST_nd&TRM=Fila-Kordy%2C+Barbara
+
+	-> Ministère de l'enseignement supérieur et de la recherche
+		-> 2009, elle a été promue aux fonctions de maître de conférence (https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000021646039)
+		-> Fila est bien son nom de jeune fille ("mariée Kordy")
+
+
+ -> Recherche du côté du nom de famille (Fila) et de l'origine
+ 	- https://www.geneanet.org/nom-de-famille/FILA -> c'est un nom Polonais d'origine?
+		-> https://en.wikipedia.org/wiki/Surnames_by_country#Poland
+			- https://en.wikipedia.org/wiki/Polish_name
+			- Pas d'infos
+	- https://www.geneanet.org/fonds/individus/?country__0__=HUN&go=1&nom=KORDY&size=50&zonegeo__0__=Hongrie
+		-> Kordy c'est Hongrois?
+	- https://francearchives.fr/fr/article/38170 actes de mariages / naturalisation?
+		-> Sans lieu précis c'est presque impossible à retrouver
+	- https://www.archives-nationales.culture.gouv.fr/fr/web/guest/dossiers-de-naturalisation;jsessionid=2546726A7D024B00DAC154A029294782
+		-> Je vais pas me déplacer aux archives nationales non plus…
+ -> view-source:https://people.irisa.fr/Barbara.Fila/index.php
+ 	-> "<h1>Przyklad h1</h1>"
+	-> Polonais pour "example"
+	-> Semble indiquer que la page du site a été créée avec un template en polonais
+
+# Conclusions
+
+ Je peux affirmer avec un fort degré de confiance que le numéro de sécurité social fournis n'est pas celui de Mme Barbara Fila,
+enseignante à l'INSA Rennes. Plusieurs bases de données référencent la thèse défendue en 2008 par Mme Fila à l'Université d'Orléans et
+affirment que Mme Fila est née en 1978 (ce qui serait cohérent; elle aurait été promue maître de conférence à l'âge de 31 ans). Cependant,
+le numéro fourni indique que Mme Fila est née en Mai 1980 en Roumanie. D'autres éléments, comme les origines généralogiques de son nom de
+jeune fille (Fila), ainsi que la présence de commentaires en polonais dans le code de sa page personnelle IRISA, semblent indiquer que
+Mme Fila n'est peut-être pas née en Roumanie, mais plutôt en Pologne.
+J'en conclue (sans néanmoins pouvoir l'affirmer de façon absolue, mais plutôt avec un fort degré de confiance) que le numéro n'est
+probablement pas, en fait, celui de Mme Fila.
+
+Update du 16/02/2021 (avant de rendre) : la référence de l'année de naissance indiquée par idref a mystérieusement disparue ce week-end (14/02/2021 vers 16h30).
+Heureusement, cette page n'était pas la seule et a été archivée.

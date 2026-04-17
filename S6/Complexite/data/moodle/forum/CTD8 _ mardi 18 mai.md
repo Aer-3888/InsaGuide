@@ -1,0 +1,43 @@
+# CTD8 : mardi 18 mai
+
+Source: https://moodleng.insa-rennes.fr/mod/forum/discuss.php?d=2401
+
+## CTD8 : mardi 18 mai
+
+Display mode  Display replies flat, with oldest first Display replies flat, with newest first Display replies in threaded form Display replies in nested form
+
+Settings 
+
+[ Star this discussion  ]( "Star this discussion")
+
+This discussion has been locked so you can no longer reply to it. 
+
+![Picture of Maud Marchal](https://moodleng.insa-rennes.fr/theme/image.php/boost/core/1775635657/u/f1)
+
+### CTD8 : mardi 18 mai
+
+by [Maud Marchal](https://moodleng.insa-rennes.fr/user/view.php?id=5214&course=1158) \- Monday, 17 May 2021, 11:00 PM
+
+Number of replies: 0
+
+Bonjour,
+
+  
+
+
+Je vous informe que les cours du mardi 18 mai auront lieu en distanciel complet.
+
+A demain!
+
+  
+
+
+Maud Marchal  
+
+
+[ Permalink ](https://moodleng.insa-rennes.fr/mod/forum/discuss.php?d=2401#p3625 "Permanent link to this post")
+
+  * [◄ Permanences complexité](https://moodleng.insa-rennes.fr/mod/forum/discuss.php?d=2382)
+  * [Enregistrement cours complexité 20 mai ►](https://moodleng.insa-rennes.fr/mod/forum/discuss.php?d=2413)
+
+

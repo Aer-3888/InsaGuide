@@ -1,0 +1,143 @@
+/************************ EX 1 ************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define TAILLEMAX 100
+
+int main(){
+	char * nom;
+	int nb_gagnants;
+	int borne_inf, borne_sup;
+	int i;
+	int gagnant;
+
+	printf("Veuillez saisir votre nom\n");
+	scanf("%s",nom);
+
+	printf("%s, veuillez saisir le nombre de numéros gagnants à tirer\n",nom);
+	scanf("%d",&nb_gagnants);
+
+	printf("%s, veuillez donner le plus petit chiffre possible\n",nom);
+	scanf("%d",&borne_inf);
+
+	printf("%s, veuillez donner le plus grand chiffre possible\n",nom);
+	scanf("%d",&borne_sup);
+
+	for(i=0; i<nb_gagnants ; i++){
+		srand(time(NULL));
+		gagnant = ((float)rand()*(borne_sup - borne_inf+1))/RAND_MAX + borne_inf ;
+		printf("Voici le numéro gagnant numéro %d : %d \n",i,gagnant);
+	}
+
+	return 0;
+}
+
+/************************ EXO 2 ************************
+	
+	Q3 : 15 caracteres max 3 caracteres 4 fois pour les chiffres et 3 caracteres pour les points de separation (i.e. 3*5)
+	Q4 : sscanf(string,"%s;%d/%d/%d",ip,&j,&m,&a);
+
+ */
+
+//Q5
+void changeFormat(char * f_initial, char * f_final){
+	FILE * source = ouvrirFichier(f_initial,"r",ARRET);
+	FILE * destination = ouvrirFichier(f_final,"w",ARRET);
+
+	char * ligne = lireLigneFichier(source, char * tampon, 25);
+
+	char * ip;
+	int j,m,a;
+	sscanf(ligne,"%s;%d/%d/%d",ip,&j,&m,&a);
+
+	fprintf(destination,"%s;%d-%d-%d",ip,a,m,j);
+	fermerFichier(source);
+	fermerFichier(destination);
+}
+
+
+
+
+
+/************************ EXO 3 ************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define TAILLEMAX_CHAINE 49
+#define TAILLE_CODE 13
+
+/* definition de la structure Livre */
+
+typedef struct{
+	char titre[TAILLEMAX_CHAINE+1];
+	char nomAuteur[TAILLEMAX_CHAINE+1];
+	int annee;
+	int codeBarre[TAILLE_CODE+1];
+} Livre;
+
+
+void afficherLivre(Livre * l);
+void afficherLivre(Livre * l){
+	printf("*** AFFICHAGE D'UN LIVRE ***\n");
+	printf("Titre : %s\nAuteur : %s\nAnnée : %d\nCodeBarre : ",l->titre,l->nomAuteur,l->annee);
+	for(int i=0;i<TAILLE_CODE;i++){
+		printf("%d",l->codeBarre[i]);
+	}
+}
+
+void saisirLivre(Livre * l);
+void saisirLivre(Livre * l){
+	printf("*** SAISIE D'UN LIVRE ***\n");
+	printf("titre : ");
+    scanf("%s",l->titre);
+    printf("auteur : ");
+    scanf("%s",l->nomAuteur);
+    printf("annee : ");
+    scanf("%d",&(l->annee));
+    printf("code barre : \n");
+    for(int i=0 ; i<TAILLE_CODE;i++){
+        printf("\t\t > ");
+        scanf("%d",&(l->codeBarre[i]));
+    }
+}
+
+
+int main(){
+	Livre l;
+	Livre * ptrl;
+	saisirLivre(ptrl);
+	afficherLivre(ptrl);
+	return 0;
+}
+
+int rechercherIndice(char * titre, Livre * s, int taille){
+	int i = 0;
+	int find = 0;
+    while( i<taille && !find){
+    	if(strcmp(titre,s[i]) <= 0) find=1;
+    	else i++;
+    }
+    return i;
+}
+
+void decalerStock(Livre * s, int taille, int indice){
+	for(int i=taille-1 ; i>=indice ; i--){
+		s[i+1]=s[i];
+	}
+}
+
+int ajouterLivre (Livre * s, int taille, int tailleMax, Livre * l){
+	if (taille==tailleMax){
+		printf("Le stock est déjà à son maximum. dsl mon vieux.");
+		return taille;
+	} else {
+		int indice = rechercherIndice(l->titre,s,taille);
+		decalerStock(s,taille,indice);
+		s[indice]=l;
+		return taille+1;
+	}
+}

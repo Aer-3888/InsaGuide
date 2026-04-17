@@ -1,0 +1,18 @@
+protocol secrecy(i,r)
+{
+
+	role i
+	{fresh n: Nonce;
+
+	send_1(i,r,{i,n}pk(r));
+	claim_2(i, Secret, n);
+	}
+
+	role r
+	{var n: Nonce;
+
+	recv_1(i,r,{i,n}pk(r));
+	claim_3(r, Secret, n);
+	}
+
+}

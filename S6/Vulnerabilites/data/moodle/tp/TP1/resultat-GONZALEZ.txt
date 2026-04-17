@@ -1,0 +1,123 @@
+# Identification
+
+J'ai choisi d'analyser le fichier `pixgame.html.prep`.
+
+# Analyse
+
+## Evaluation du contenu
+
+Le fichier en question est au format HTML. Il contient la page principale du site pixgame.fr, site dont
+le nom de domaine a été enregistré en France (du moins auprès de la FRNIC) par une personne assez précautionneuse
+pour indiquer "Ano Nymous", "anonymous@anonymous" comme contact du registrar.
+
+Ce site utilise des assets externes telles que la font "Montserrat" chargée auprès du CDN de googleAPI.
+
+Il contient des sections de code HTML, suivi de JavaScript, puis de CSS auto-généré, suivi du reste de la page web en HTML.
+
+## Calculer des métriques
+### Analyses de surface sur le fichier
+
+La commande `file` confirme que notre fichier est une page web encodée en UTF-8 Unicode, comportant de "très longues lignes". Il y a précisément 16368 lignes, dont 14289 non vides (comme indiqué par `cat pixgame.html.prep | grep -v '^\s*$' | wc -l`). Ce fichier pèse 656028 octets sur 1288 blocs de mon système de fichiers après décompression. La commande `stat` indique que la dernière modification du fichier date de Lundi (15/03/2021) vers 22:32 UTC+1, et que toutes les autres heures sont réglées au moment de la décompression (vers 16h24 le 17/03/2021 UTC+1).
+
+La plus longue ligne observée a pour longueur 32083 caractères selon la commande suivante
+```
+cat pixgame.html.prep | grep -v '^\s*$' | awk '{ print length }' | python -c "print(max([int(input()) for _ in range(14289)]))"
+```
+La plus petite ligne non vide est de longueur 1, et la taille moyenne d'une ligne est de 44 caractères environ.
+
+La ligne 9825 est celle qui contient 32000+ caractères, et elle commence avec un énorme bloc de 'x'. Il sera intéressant de l'explorer plus tard (après exploration et beaucoup de `sed s/x//g`, cette ligne ne contient rien d'autre que des 'x').
+
+### Analyse du contenu du fichier
+
+Un aspect intéressant de l'analyse de la page web est de trouver les balises HTML les plus fréquemment employées dans la page. On peut avoir un aperçu avec
+```
+cat pixgame.html.prep | sed 's/</ </g' | tr ' ' '\n' | grep '^<[^!]'
+```
+
+On obtient un premier découpage assez sale de la structure des balises qui nous indique une multitude de balises de script. Le seul inconvénient est que l'on attrape aussi dans ce découpage des comparaisons en javascript (des chaînes comme "a<b" qui deviennent "a <b" puis "a\n<b" alors que "<b" n'est pas la balise HTML ici).
+
+Je filtre une fois de plus pour enlever les balises fermantes et j'ajoute un `uniq -nr` pour trier et compter.
+
+```
+cat pixgame.html.prep | grep -v '^\s*$' | sed 's/</ </g' | sed 's/>/> /g' | tr ' ' '\n' | grep '^<[^!/]' | cut -b '2-' | sed 's/>//g' | sort | uniq -c | sort -nr
+```
+
+Les balises les plus fréquentes sont donc :
+
+|Occurrences Observées|Balise|
+|-------|---------|
+|    794|div |
+|    355|span|
+|    310|a|
+|     80|time|
+|     67|style|
+|     63|script|
+|     25|i|
+|     20|meta|
+|     15|h4|
+|     14|link|
+|      9|li|
+|      8|input|
+|      4|noscript|
+|      4|img|
+|      3|ul|
+|      3|label|
+|      3|html|
+|      2|source|
+|      2|picture|
+|      2|form|
+|      1|title|
+|      1|head|
+|      1|h1|
+|      1|body|
+
+J'ai pris le soin d'enlever les bruits parasites (erreurs liées à la présence de javascript/autres formats qui ont ajouté du bruit dans la sortie).
+
+Sans surprise les liens (a), les diviseurs de régions (div/span) sont les plus représentés. Il y a aussi effectivement beaucoup de scripts, y compris des scripts bloqués (noscript) très probablement placés dans le contenu de la page par la personne qui l'a téléchargée avec une extension de navigateur qui bloque les scripts.
+
+On peut aussi observer la présence de 'form', qui pourraient être utiles si l'on cherche à les exploiter. Ces deux forms font partie d'un système de recherche de contenu sur le site. (lignes 2437 et 2399).
+
+## Rechercher des éléments
+
+Indiquez les candidats mots de passe que vous avez repérés
+Indiquez ou décrivez les autres éléments intéressants que vous avez repéré
+Collectionnez vos lignes de commandes les plus utiles ici
+
+### Authentifiants WP-admin
+
+Tout semble indiquer que le site tourne sur la plateforme "WordPress" (présence du sous-dossier wp-contents, wp-admin)
+
+Avec
+```grep "admin" pixgame.html.prep -n```
+on trouve immédiatement des endroits intéressants, y compris des scripts qui effectuent des appels via l'interface administrateur de wordpress. Pour ce faire, les scripts doivent très certainement posséder des identifiants qui nous permettent peut-être de pénétrer ce panel administrateur.
+
+Vers la ligne 127, la définition de la structure `twdGlobal` de l'objet javascript `window` interpelle puisqu'elle contient :
+ - L'URL vers le panel administrateur du moteur wordpress
+ - Le nonce(!!!) utilisé pour l'authentification auprès d'une API REST
+ - L'URL de l'API REST du backend wordpress
+ - un format de permalink vers les posts du site
+
+La présence du nonce, si ce dernier permet effectivement de s'authentifier, est *gravissime*. Un nonce est par définition utilisé dans une seule session de protocole et aléatoire. Même si ce dernier est remplacé au cours de l'exécution des scripts sur la page à chaque rafraichissement, il est très inquiétant qu'un utilisateur qui se contente de naviguer sur le site puisse avoir accès aussi simplement à une valeur censée rester privée.
+
+L'ouverture de l'URL de l'API REST sur un navigateur révèle d'autres données intéressantes à exploiter, mais cela sort du contexte de l'analyse pure du fichier.
+
+### Mots de passe très peu subtiles
+
+Sur de nombreuses lignes du fichier, des données indiquant la présence de mots de passe apparaîssent de façon incongrue. On trouve notamment 'password=ohsuo6xae7Th' ligne 830, 'Mot de Passe\n\nip6ooja6Eize' lignes 1469 à 1471, "Login\n...\naiv1Xaet4vee" (lignes 6779 et 6781), "va5eijih9OPe\n...\n...\nCREDential" lignes 2554 et 2557, "temporary\n...\neich7So5xo4a" lignes 6889 et 8691.
+
+### Attributs obfusqués en JavaScript
+
+Ligne 2563 : l'attribut `attrs` de l'objet `block_tdi_7_04e` de type `tdBlock` contient un champs nommé `tdc_css` qui pointe vers une chaîne obfusquée à l'aide d'un encodage en base64. La vraie chaîne contenue est :
+```
+{"all":{"margin-top":"24","margin-bottom":"24","display":""},"portrait":{"margin-top":"16","margin-bottom":"16","display":""},"portrait_max_width":1018,"portrait_min_width":768,"phone":{"margin-top":"12","margin-bottom":"12","display":""},"phone_max_width":767}
+```
+De même le champs `f_article_font_size` (L2564) de `attrs` contient `{"portrait":"13"}` encodé en base64.
+
+D'autres attributs similairement obfusqués pour je ne sais quelle raison sont visibles aux lignes 3765, 3770, 3771, 3772, et 3784 à 3788 incluses.
+
+On peut en trouver beaucoup à décoder avec
+```
+grep -o 'ey.*=' pixgame.html.prep | base64 -d
+```
+
+qui ne ressort que des structures au format JSON pour du formattage de contenu...

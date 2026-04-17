@@ -1,0 +1,7 @@
+protocol auth-mim(r,p)
+{	role r	{
+	fresh n: Nonce;	send_1(r,p,n);	recv_2(p,r,{n}sk(p));
+        claim_3(r,Weakagree);	}
+	role p	{	var v: Nonce;        recv_1(r,p,v);        send_2(p,r,{v}sk(p));
+	}
+}

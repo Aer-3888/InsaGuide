@@ -1,0 +1,274 @@
+---
+title: "Annale Proba 2024"
+author: "Hector Vernet"
+date: "2025-01-12"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+et oui je l'ai faite comme si c'était un TP y'a quoi
+
+## 1 - Intervalle de confiance (4 points)
+
+Vous travaillez pour une entreprise de développement logiciel et vous analysez les temps de réponse d’un nouveau
+serveur web. Vous avez collecté un échantillon de 10 valeurs (temps de réponse en millisecondes).Voici les temps de
+réponse collectés : 200, 223, 144, 206, 189, 229, 247, 259, 158, 220.*
+
+### Question 1.1
+
+Donnez la formule de calcul et le résultat numérique de l’estimation de la moyenne.
+
+```{r}
+temps <- c(200, 223, 144, 206, 189, 229, 247, 259, 158, 220)
+n <- length(temps)
+# On peut tout simplement utiliser `mean` mais la formule est demandée
+mean <- sum(temps) / n
+
+mean
+```
+
+### Question 1.2
+
+Donnez la formule de calcul et le résultat numérique de l’estimation de la variance.
+
+```{r}
+# Variance biaisée
+scarre <- sum(sapply(temps, function(x) (x - mean)^2)) / n
+
+# Variance corrigée
+sprimecarre <- scarre * n / (n - 1)
+
+scarre
+sprimecarre
+```
+
+### Question 1.3
+
+Déterminez l’intervalle de confiance à 92% pour la moyenne des temps de réponse. Vous donnerez la formule avec le
+plus de valeurs numériques possibles. Bien entendu vous ne pouvez pas connaître les valeurs des quantiles.
+
+```{r}
+alpha <- 0.92
+
+IC_moy_min <- mean - qt(1 - alpha / 2, n - 1) * sqrt(sprimecarre / n)
+IC_moy_max <- mean - qt(alpha / 2, n - 1) * sqrt(sprimecarre / n)
+
+IC_moy_min
+IC_moy_max
+```
+
+### Question 1.4
+
+Déterminez un intervalle de confiance à 92% pour la variance des temps de réponse. Vous donnerez la formule avec
+le plus de valeurs numériques possibles. Bien entendu vous ne pouvez pas connaître les valeurs des quantiles.
+
+```{r}
+alpha <- 0.92
+
+IC_var_min <- ((n - 1) * sprimecarre) / qchisq(1 - alpha / 2, n - 1)
+IC_var_max <- ((n - 1) * sprimecarre) / qchisq(alpha / 2, n - 1)
+
+IC_var_min
+IC_var_max
+```
+
+## 2 - Test (5 points)
+
+Une entreprise de développement web a conçu deux designs différents (Design A et Design B) pour un site
+web. Elle souhaite évaluer si les temps de chargement moyens des pages sont équivalents entre ces deux designs.
+L’entreprise a mesuré les temps de chargement (en secondes) pour un échantillon de pages web utilisant chacun des
+designs. Voici les données résumées :
+
+- Design A : Moyenne = 2.5s, Écart-type = 0.5s, Taille de l’échantillon = 20
+- Design B : Moyenne = 2.7s, Écart-type = 0.6s, Taille de l’échantillon = 30
+
+Vous allez effectuer un test pour déterminer si la différence entre les temps de chargement moyens des deux designs
+de site web est statistiquement différent.
+Dans toutes les questions suivantes, **n’oubliez pas de bien définir à quoi correspondent les notations
+que vous pourriez utiliser**.
+
+### Question 2.1
+
+Quel type de test allez vous utiliser ?
+
+*On va réaliser un test d'homogénéité, pour comparer les deux sets de données.*
+
+### Question 2.2
+
+Quelle variable (statistique) allez vous étudier ?
+
+```{r}
+mean1 <- 2.5
+mean2 <- 2.7
+sd1 <- 0.5
+sd2 <- 0.6
+sprime1 <- sd1^2
+sprime2 <- sd2^2
+n1 <- 20
+n2 <- 30
+
+sigmachapodcarre <- (sprime1^2 / n1) + (sprime2^2 / n2)
+
+sigmachapodcarre
+```
+
+### Question 2.3
+
+Quelles sont vos deux hypothèses H0 et H1 ?
+
+*H0 : mean1 = mean2 \
+H1 : mean1 ≠ mean2*
+
+### Question 2.4
+
+Quelle loi suit votre statistique de test de façon générale et sous l’hypothèse H0 ?
+
+*De manière générale, la statistique suit une loi de Student. \
+Pour H0 spécifiquement, il s'agit d'une loi de Student avec v degrés de liberté, v étant détaillé plus loin.*
+
+### Question 2.5
+
+Donner la formule permettant de calculer votre statistique, vous donnerez toutes les valeurs numériques possibles.
+
+*sigmachapodcarre déjà calculée.*
+
+### Question 2.6
+
+Expliquer votre règle de décision.
+
+```{r}
+v <- 1 / ((1 / (n1 - 1) * (sprime1^2 / n1 / sigmachapodcarre)^2)
+          + (1 / (n2 - 1) * (sprime2^2 / n2 / sigmachapodcarre)^2))
+
+v
+```
+*La loi sous H0 est donc `t(v)` \
+On réalisera un intervalle de confiance sur `t(v)` et on regardera si notre statistique `sigmachapodcarre` tombe dedans.*
+
+## 3 - Jouer avec une loi (6 points)
+
+On considère les élections municipales d’une ville avec trois candidats en lice (A, B, C). Un sondage a été réalisé
+auprès de 100 habitants pour connaître leurs intentions de vote. D’après le sondage, les probabilités de vote pour
+chaque candidat sont les suivantes :
+
+- Candidat A : 40%
+- Candidat B : 35%
+- Candidat C : 25%
+
+On considère la variable aléatoire X ∈ N³ représentant la nombre de votes pour les candidats A,B et C.
+
+### Question 3.1
+
+Quelle loi suit la variable aléatoire X ?
+
+*X est un vecteur aléatoire suivant une loi multinomiale (trinomiale) de paramètres :*
+
+- N = 100 *(Nombre de tirages)*
+- θ = (θ₁, θ₂, θ₃) = (0.4, 0.35, 0.25) *(Vecteur de probabilités)*
+
+### Question 3.2
+
+En utilisant cette loi, écrire le code R permettant de calculer la probabilité que, parmi un échantillon aléatoire de
+10 habitants, 5 votent pour A, 3 pour B et 2 pour C
+
+```{r}
+n <- 100
+theta <- c(0.4, 0.35, 0.25)
+
+proba <- dmultinom(c(5, 3, 2), 10, theta)
+
+proba
+```
+
+### Question 3.3
+
+Toujours en utilisant cette loi, écrire le code R permettant de calculer la probabilité que tous votent pour le même
+candidat
+
+```{r}
+proba <- dmultinom(c(n, 0, 0), n, theta)
+proba <- proba + dmultinom(c(0, n, 0), n, theta)
+proba <- proba + dmultinom(c(0, 0, n), n, theta)
+
+proba
+```
+
+### Question 3.4
+
+Toujours en utilisant cette loi, écrire le code R permettant de calculer la probabilité qu’aucun ne vote pour le
+candidat C
+
+```{r}
+proba <- 0
+for (i in 0:n) {
+  proba <- proba + dmultinom(c(i, n - i, 0), n, theta)
+}
+
+proba
+```
+
+On suppose maintenant que la proportion de 40% donnée pour le candidat A est une estimation des véritables
+intentions de vote de la population pour le candidat A faite sur 100 habitants.
+
+### Question 3.5
+
+Expliquez le raisonnement suivi pour calculer l’intervalle de confiance formel à 95% pour la proportion de vote en
+faveur du candidat A (une réponse détaillée indiquant votre raisonnement est attendue). Quel est le soucis de cet
+intervalle de confiance ? Quelle solution peut-on adopter ?
+
+*Pas compris, c'était pas déjà le cas ? Et si c'est les intentions de vote des 100 habitants, comment on peut connaître la proba qu'un habitant respecte son intention de vote ??*
+
+## 4 - Vecteur aléatoire (5 points)
+
+Dans une infrastructure informatique, les performances de deux serveurs, serveur A et serveur B, sont surveillées.
+On modélise les temps de réponse (en millisecondes) de ces serveurs à des requêtes comme un vecteur aléatoire (X,Y)
+où X représente le temps de réponse de serveur A et Y celui de serveur B. Les performances de chaque serveur sont
+supposées indépendantes. Le temps de réponse de serveur A suit une distribution normale avec une moyenne de 200
+ms et un écart-type de 40 ms. Le temps de réponse de serveur B suit une distribution normale avec une moyenne de
+150 ms et un écart-type de 30 ms.
+
+### Question 4.1
+
+Donnez le vecteur moyenne des temps de réponse.
+
+```{r}
+mean <- c(200, 150)
+```
+
+### Question 4.2
+
+Donnez la matrice de covariance des temps de réponse, en considérant l’indépendance des deux variables X et Y.
+
+```{r}
+cov <- rbind(c(40^2, 0),
+             c(0, 30^2))
+```
+*Les zéros viennent du fait que la covariance de deux variables indépendantes est nulle.*
+
+### Question 4.3
+
+Déterminez la probabilité que le temps de réponse de serveur A soit supérieur à 250 ms et celui de serveur B inférieur
+à 120 ms simultanément. Vous donnerez la formule soit sous forme mathématique, soit sous forme de code R.
+
+*Les deux variables sont indépendantes, donc :*
+```{r}
+proba <- pnorm(120, 150, 30) * (1 - pnorm(240, 200, 40))
+
+proba
+```
+
+### Question 4.4
+
+Déterminez la probabilité que la somme des temps de réponse de serveur A et B soit inférieure à 300ms. Vous
+donnerez la formule soit sous forme mathématique, soit sous forme de code R.
+
+*Somme de lois normales indépendantes :
+La loi X+Y a une moyenne égale à la somme des deux moyennes, et une variance égale à la somme des deux variances.*
+```{r}
+proba <- pnorm(300, 150 + 200, sqrt(30^2 + 40^2))
+
+proba
+```

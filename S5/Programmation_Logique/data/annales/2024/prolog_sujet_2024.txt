@@ -1,0 +1,113 @@
+
+%1
+real_acteur(N,P,T) :-
+					film(_,_,N,_,_),
+					!,
+					acteur(N,P,_,_,_),
+					vedette(T,N,_).
+
+%2
+trois_vedettes(T,A) :- 
+					film(T,A,_,_,_),
+					vedette(T,N1,_),
+					vedette(T,N2,_),
+					vedette(T,N3,_),
+					N1 \== N2,
+					N2 \== N3,
+					N1 \== N3.
+
+%3
+sans_eastwood(T) :-
+					film(T,_,N1,_,_),
+					N1 \== eastwood,
+					not(vedette(T,eastwood,_)).
+
+%4
+genre_unstable(N) :-
+					film(T1,_,N,G1,_),
+					film(T2,_,N,G2,_),
+					T1 \== T2,
+					G1 \== G2.
+genre_stable(N) :-
+					film(_,_,N,_,_),
+					not(genre_unstable(N)).
+
+%6 : retourne le début de la liste, celle avant de rencontrer E
+
+%7
+mystere(L,E,R):-
+	tmp(L,E,R,[]).
+tmp([E|_],E,R,R) :-
+	!.
+tmp([F|L],E,Rest,R):-
+	tmp(L,E,Rest,[F|R]).
+
+%8
+interpreter([add | Prog],[Value2|[Value1|Stack]],Env,Res) :-
+	Value is Value1 + Value2,
+	interpreter(Prog,[Value|Stack],Env,Res).
+
+%9
+interpreter([minus | Prog],[Value2|[Value1|Stack]],Env,Res) :-
+	Value is Value1 - Value2,
+	interpreter(Prog,[Value|Stack],Env,Res).
+
+%10
+interpreter([mul | Prog],[Value2|[Value1|Stack]],Env,Res) :-
+	Value is Value1 * Value2,
+	interpreter(Prog,[Value|Stack],Env,Res).
+%11
+interpreter([neq | Prog],[Value2|[Value1|Stack]],Env,Res) :-
+	Value1 = Value2,
+	interpreter(Prog,[0|Stack],Env,Res).
+interpreter([neq | Prog],[Value2|[Value1|Stack]],Env,Res) :-
+	Value1 \= Value2,
+	interpreter(Prog,[1|Stack],Env,Res).
+
+%12
+interpreter([if(Cond,Then,_Else) | Prog], Stack, Env, Res) :-
+	interpreter(Cond,[],Env,ResI),
+	ResI = 1,
+	merger(Then,Prog,NewProg),
+	interpreter(NewProg,Stack,Env,Res).
+interpreter([if(Cond,_Then,Else) | Prog], Stack, Env, Res) :-
+	interpreter(Cond,[],Env,ResI),
+	ResI = 0,
+	merger(Else,Prog,NewProg),
+	interpreter(NewProg,Stack,Env,Res).
+
+merger([],Y,Y).
+merger([A|X],Y,[A|Z]) :-
+	merger(X,Y,Z).
+
+%13
+assoc_set(Id,Value,[],[(Id,Value)]).
+assoc_set(Id,Value,[(Id,_)|Env],[(Id,Value)|Env]).
+assoc_set(Id,Value,[(Id1,V1)|Env],[(Id1,V1)|NewEnv]) :-
+	Id\=Id1,
+	assoc_set(Id,Value,Env,NewEnv).
+
+%14
+interpreter([setvar(Var) | Prog],[Value|Stack],Env,Res) :-
+	assoc_set(Var,Value,Env,NewEnv),
+	interpreter(Prog,Stack,NewEnv,Res).
+
+%15
+interpreter([loadvar(Var) | Prog],Stack,Env,Res) :-
+	assoc_find(Var,Env,Value),
+	interpreter(Prog,[Value|Stack],Env,Res).
+
+%16
+interpreter([while(Cond,Body) | Prog], Stack, Env, Res) :-
+	interpreter(Cond,[],Env,ResI),
+	ResI = 1,
+    append(Body,[while(Cond,Body)|Prog],NewProg),
+    interpreter(NewProg,Stack,Env,Res).```
+
+interpreter([while(Cond,_Body) | Prog], Stack, Env, Res) :-
+	interpreter(Cond,[],Env,ResI),
+	ResI = 0,
+	interpreter(Prog,Stack,Env,Res).
+
+
+

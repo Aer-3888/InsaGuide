@@ -1,0 +1,65 @@
+# 2026-03	TP1
+https://bit.ly/47fzxqP
+
+# Total found
+About 400, with some uncertainties (cf. heuristic above)
+
+# Often found
+ jum2tai4Oshohde
+ neu4gicahJ5ohni
+ zaiziTh3aoxioNg
+ xuare9Ohw9ohpae
+ vai9mo6Aiz0uka2
+ iJ2iewee2sooFo8
+ B@tracian2058
+...
+
+# Sometimes found
+ September@2016
+ RdotP$$t7t
+ Ahth7phohB1lago
+ Sys@dm1n!
+ Sysadmin@123
+ Welcome@123
+ Skyrim@222
+ password123
+ Toctoctoc@123
+...
+
+# Rarely found
+ def456
+ aaghoh7Ieluewoo
+ 1a2z3e4r
+ user123
+ Passwort@789
+ rieh2phee0Ahthi
+ passw0rd
+ Rennes@123
+ Rootroot@1
+ ftpuser@000
+ 18DmYqdt93TnXQhTD3GJ
+...
+
+# Found once
+ NC30.gbk.txt:ji32k7au4a83
+ ingrid.htm:Parkwaydrive@2015
+ ecoli.gff:ruhuemo3Ooz3Uuw
+ enwiki-latest-all-titles-in-ns0:Grenouille35
+ isofr.wget:guest:Changeme@1
+ lambda.ai:mysql:Database@42
+ miser.xyz:Co-cocorico!54
+ datura.txt:Aloneinthedark@1992
+ uspub.csv:dbadmin@2021
+ lambda.ai:ftp@0001
+...
+
+# Never found
+ gdeb2.csv:Test@1234
+ gen1.fna:Generic@2019
+ primes.json:PheeXohthae8sha
+ primes.json:fa3Eix5naecae8o
+ primes.json:sdfghjklm
+ miser.xyz:Hellfest@2023!
+ miser.xyz:Motocultorfest@2007
+ pixgame.html:poiuytrewq@4321
+...

@@ -1,0 +1,134 @@
+%1
+is_sorted([]).
+is_sorted([_X]):-
+	!.
+is_sorted([X|[Y|L]]):-
+	X=<Y,
+	is_sorted([Y|L]).
+
+%2 (la fonction est nommée merge2 juste parce que prolog refusait que je lappelle merge)
+merge2([],L,L).
+merge2(L,[],L).
+merge2([X1|L1],[X2|L2],[X1|L3]):-
+	X1=<X2,
+	merge2(L1,[X2|L2],L3).
+merge2([X1|L1],[X2|L2],[X2|L3]):-
+	X1>=X2,
+	merge2([X1|L1],L2,L3).
+
+%3
+zip([],[],[]).
+zip([X1|L1],[X2|L2],[pair(X1,X2)|L3]):-
+	zip(L1,L2,L3).
+
+%4
+unzip(L3,L1,L2):-
+	zip(L1,L2,L3).
+
+%5
+insert(X,L,[X|L]).
+insert(X,[Y|L],Res):-
+	insert(X,L,R),
+	append([Y],R,Res).
+
+%6
+permutation([],[]).
+permutation([X|S],Y):-
+	permutation(S,Z),
+	permutation_aux(X,Z,Y).
+
+permutation_aux(X,S,[X|S]).
+permutation_aux(X,[Y|T],[Y|S]):-
+	permutation_aux(X,T,S).
+
+
+
+femme(laurence).
+
+homme(bertrand).
+homme(yann).
+
+collegues(laurence, yann).
+collegues(yann,bertrand).
+collegues(yann, pascal). 
+collegues(bertrand, eric).
+collegues(eric, martine). 
+collegues(martine, patrice). 
+collegues(patrice, catherine). 
+collegues(catherine, yann).
+
+temperature(pascal, 37).
+temperature(yann, 38).
+temperature(bertrand,39).
+
+toux(bertrand).
+
+odorat(eric, oui).
+odorat(yann,non).
+
+gout(laurence, moyen). 
+gout(yann, non).
+
+%10
+individu(X):-
+	femme(X).
+individu(X):-
+	homme(X).
+individu(X):-
+	toux(X).
+individu(X):-
+	odorat(X,_).
+individu(X):-
+	gout(X,_).
+individu(X):-
+	collegues(X,_).
+individu(X):-
+	collegues(_,X).
+individu(X):-
+	temperature(X,_).
+
+%11
+fievre(X):-
+	temperature(X,T),
+	T>=38.
+
+%12
+covid(X):-
+	fievre(X).
+covid(X):-
+	toux(X).
+covid(X):-
+	gout(X,non),
+	odorat(X,non).
+
+grippe(X):-
+	fievre(X),
+	toux(X).
+
+%13
+travail(X):-
+	individu(X),
+	not(grippe(X)),
+	not(covid(X)).
+
+travaillent(L1):-
+	findall(X,travail(X),L2),
+	sort(L2,L1).
+
+%14
+contagion(X,N,L):-
+	findall(Y,contamine(N,X,Y),L1),
+	sort(L1,L).
+
+contamine(N,X,Y):-
+	N >= 1,
+	collegues(X,Y).
+contamine(N,X,Y):-
+	N >= 1,
+	collegues(Y,X).
+contamine(N,X,Y):-
+	N > 1,
+	M is N-1,
+	collegues(X,Z),
+	contamine(M,Z,Y).
+

@@ -1,0 +1,28 @@
+meme_taille([],[]).
+meme_taille([_X1|L1],[_X2|L2]):-
+	meme_taille(L1,L2).
+
+liste_somme([],[],[]).
+liste_somme([X1|L1],[X2|L2],[X3|L3]):-
+	meme_taille(L1,L2),
+	X3 is X1 + X2,
+	liste_somme(L1,L2,L3).
+
+multiples([],[]).
+multiples([X|L],[X|R]):-
+	N is X mod 5,
+	N = 0,
+	!,
+	multiples(L,R).
+multiples([_X|L],R):-
+	multiples(L,R).
+
+autres([],[]).
+autres([X|L],Res) :-
+	multiples([X|L],R),
+	not(member(X,R)),
+	!,
+	autres(L,R2),
+	append(R2,[X],Res).
+autres([_X|L],Res) :-
+	autres(L,Res).

@@ -1,0 +1,320 @@
+1
+
+Vulnérabilités et Modèles de menaces
+Olivier HEEN
+
+866c523ec52ab391
+
+1
+
+Adages, Citations...
+
+2
+
+"Lorsque vous êtes connecté à Internet... ...Internet est connecté à vous"
+"We're Not a Target" ­ (yes, you are)
+Worms aren't smart enough to realize that your assets are not interesting
+"Security is a process, not a product"
+"Trust, but verify"
+
+866c523ec52ab391
+
+2
+
+3
+
+866c523ec52ab391
+
+3
+1
+
+Qu'est-ce qui est vulnérable ?
+
+4
+
+Confidentialité Intégrité Disponibilité Quoi d'autre ?
+
+866c523ec52ab391
+
+4
+
+Qu'est-ce qui est vulnérable ?
+
+5
+
+Confidentialité
+ Initialement dans le domaine militaire  send({"l'attaque commence à 13:37"}K)
+
+866c523ec52ab391
+
+5
+
+Qu'est-ce qui est vulnérable ?
+
+6
+
+Intégrité
+ Initialement dans le domaine bancaire  send("Payez 42M",h("Payez 42M"))  send("Payez 42M",{h("Payez 42M")}Kpriv)
+
+866c523ec52ab391
+
+6
+2
+
+Qu'est-ce qui est vulnérable ?
+
+7
+
+Disponibilité
+ Initialement dans le domaine des télécoms  send("SOS"), send("SOS"), send("SOS"), ...
+
+866c523ec52ab391
+
+7
+
+Références
+
+8
+
+The Six Dumbest Ideas in Computer Security
+1) Default Permit 2) Enumerating Badness 3) Penetrate and Patch 4) Hacking is Cool 5) Educating Users 6) Action is Better Than Inaction
+Red team field manual, Blue team field manual
+
+Other sources
+ www.owasp.org  www.sans.org  HackTheBox  RootMe
+8
+
+866c523ec52ab391
+
+Vulnérabilités
+
+9
+
+866c523ec52ab391
+
+9
+3
+
+Qu'est-ce qu'une vulnérabilité ?
+
+10
+
+Définition (très) étendue
+ Un bug
+Matériel ou Logiciel Avec des conséquences néfastes pour
+l'un des participants
+ Un défaut de conception
+Pouvoir créer un user de niveau supérieur Défauts de conception des protocoles
+ Un défaut de configuration
+Mot de passe par défaut, service inutile
+ Une série de négligences  Un mauvais apprentissage  (...)
+
+866c523ec52ab391
+
+10
+
+Quand on découvre une vulnérabilité... 11
+Full disclosure
+ Publication directe
+Non disclosure
+ Non publication  Patch "silencieux"
+
+Responsible disclosure
+ Coopération inventeur / éditeur  Rôle possible des CERTs  Delai typique : 3 mois
+
+Plus recement : BUG BOUNTY
+
+866c523ec52ab391
+
+11
+
+Exemples de vulnérabilités
+
+12
+
+Target: Supermicro IPMI on a.b.c.d
+
+Check: nmap -p 49152 a.b.c.d 49152/tcp open unknown
+
+Exploit: wget http://a.b.c.d:49152/psblock
+
+Analyze: strings psblock ...adminMaudePace...
+
+Remediation: upgrade! Consider password as disclosed, check related systems (generalize)
+Workaround: let's think a bit about it...
+
+866c523ec52ab391
+
+12
+
+4
+
+Exemples de vulnérabilités
+
+13
+
+Heartbleed
+
+ShellShock
+
+...
+
+(details dans le cours
+
+injections)
+
+866c523ec52ab391
+
+13
+
+Nommage / Référencement
+
+14
+
+Base CVE = recenser les vulnerabilités
+
+ Common Vulnerabilities and Exposures
+
+ Fixe les conventions de nommage
+
+ Distribue et tient à jour les entrées
+
+ https://cve.mitre.org/
+
+Exemples
+ Shellshock  Heartbleed  PwnKit
+
+CVE-2014-6271 CVE-2014-0160 CVE-2021-4034
+
+866c523ec52ab391
+
+14
+
+Impact
+
+15
+
+Echelle CVSS = évaluer les vulnérabilités
+
+ Common Vulnerability Scoring System
+
+ 0 à 3.9: low
+
+ 4 à 6.9: medium
+
+ 7 à 8.9: high
+
+ 9 à 10: critical
+
+Exemples
+ Shellshock  Heartbleed  PwnKit
+
+CVE-2014-6271 CVSSv3.1 = 9.8 CVE-2014-0160 CVSSv3.1 = 7.5 CVE-2021-4034 CVSSv3.1 = 7.8
+
+866c523ec52ab391
+
+15
+
+5
+
+CVSS v3
+
+16
+
+866c523ec52ab391
+
+16
+
+CVSS v4
+
+17
+
+866c523ec52ab391
+
+(synthèse des changements ici : https://www.first.org/cvss/v4-0)
+17
+
+CVSSv(2+k)  CVSSv(2)+k ?
+
+18
+
+2007 v2.0 2015 v3.0 2019 v3.1 2023 v4.0
+Example CVE-2014-0160 (Heartbleed)
+v2 5.0 AV:N/AC:L/Au:N/C:P/I:N/A:N v3 7.5 AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N v4 8.7 AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:A
+Example CVE-2021-23846 (un mot de passe en clair...)
+v2 4.3 AV:N/AC:M/Au:N/C:P/I:N/A:N v3 5.9 AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N (autre source 8.8) v4 8.2 AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+Example CVE-2025-62245 (un CSRF)
+v3 4.3 AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N v4 5.1 AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N
+
+866c523ec52ab391
+
+18
+
+6
+
+Eviter les vulnérabilités 19
+
+866c523ec52ab391
+
+19
+
+Secure Coding
+
+20
+
+866c523ec52ab391
+
+20
+
+Eviter les vulnérabilités
+
+21
+
+Faire moins confiance
+ Minimiser la trusted base
+
+Vérifier les paramètres
+ En entrée et "en sortie"  "En sortie"  "à l'usage"
+
+Changer les configs par défaut
+ Notamment les mots de passe par défaut  À l'installation et après les mises-à-jour
+
+866c523ec52ab391
+
+21
+
+7
+
+Pratiques / coût / delais
+
+22
+
+Pratiques
+ Secure Design  Fixes/Patches/Workaround  Wait and pray/End-of-Life?
+Déployer vite?
+ Sorte de test en réel  Plus couteux à réparer  Il faudrait des modèles
+Exemple actuel
+ WPA3
+
+866c523ec52ab391
+
+22
+
+Eviter les vulnérabilités
+
+23
+
+Tester
+ Boite noire / Boite blanche  Red team / Blue teams
+Surveiller / alerter
+ SOC / CERTS  securitytxt.org
+Remédier
+ Prioriser/Planifier les actions correctives  Vérifier et tracer (ex. délai de remédiation)  Chercher les root causes / Généraliser
+
+866c523ec52ab391
+
+23
+
+8
+
+

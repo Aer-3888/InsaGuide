@@ -1,0 +1,94 @@
+FORMULESTALEO.8xp
+
+Fmesure=2PR/(P+R)
+maximum likelihood: P(w|h)=C(hw)/C(h)
+Lissage de laplace : P(w|h)=(C(hw)+α)/(c(h)+α*|V|)
+Lissage Dirichlet
+Lissage de Good Turing : on donne aux séquences jamais vues la proba des séquences vues une seule fois
+Absolute discounting: on prends à ceux qui pesent lourd et on redistribue à ceux qui n'ont rien
+MAP=(1/Q)*Σ(de i=1 à Q) (1/mi)*Σ(de k=1 à mi) P(Rik)
+Q=nb de requetes
+mi=nb de docs pertinents, si doc pertinents pas dans ceux ramenés : leur P(Rik) est à 0
+
+idf=log(|D| / Σ nb docs qui contiennent le mot)
+
+B : Beginning of a chunk
+I: In a chunk
+O: Outside any chunk
+
+CKY utilise la programmation dynamique en plus de la stratégie bottom up.
+
+---
+
+DEF.8xp
+
+
+mesure similarité cos:0 si differents 
+lemmatiseur: transforme chaque mot du document en lemme cad une forme canonique utilisée pour 
+representer un lexie(nom,adj:masculin singulier) ou verbe(infinitif)
+Stemmer:transforme chaque mot du doc en stem cad le support morphologique d'un lexie, le radical
+(ex:aimerais->aim) : on enleve les suffixes, infixes, prefixes
+les lemmatiseurs et stemmers sont utilisés pr transformer chaque lexeme du doc(mot) en quelque chose 
+qui sera mieux adapté pour comparer les documents. car si on ne fais pas cela alors Manger et mangerais 
+seront comptés comme differents alors qu'ils ont le meme sens et devraient donc être considérés identiques.
+C'est donc plus pertient de les utiliser pour avoir de meilleurs résultats de similarité malgré des mots qui se distinguent par 
+inflexion. Cela réduit aussi la taille du vocabulaire.
+lemme -> mot réel alors que stem pas forcemment
+
+caractéristiques du langage naturel qui font que contrairement au langage formel son traitement automatique 
+par ordinateur est difficile:
+-Ambiguité sémantique: il lit vs le lit ils seront comptés identiques alors que non(homonymes), avocat (fruit/metier)
+ ou polysémie : même mot mais plusieurs sens selon le contexte verre: contenu/conteneur, agneau:animal/nourriture
+-Ambiguités phonétiques et phonologiques: dans ces meubles laquais, danse aime bleu laquais
+-Ambiguité syntaxique ou structurelle:
+lorsque le syntaxe d'une phrase peut être interpretee de differentes manieres, de sorte que la meme phrase a des significations différentes. Par exemple:
+ la petite brise la glace, j'ai été voir un film avec brad pitt
+-Ambiguité graphique: le "moins(-)": parfois c'est un moins mathematique, parfois c'est un séparateur entre deux mots comme jean-paul
+-Ambiguité lexicale:
+*static:président peut être interprété comme un verbe et comme un nom, ferme (nom,adj,verb)
+-Ambiguité pragmatique: concerne les éléments du langage dont la signification ne peut être 
+comprise qu'en connaissant le contexte de leur emploi.
+Paul:tu viens à la fête de luc mardi soir? virginie:j'ai entendu que benoit sera là. 
+conclusion: si benoit est la alors peut être je ne viendrais pas
+
+SPEECH RECOGNITION:
+-technique informatique qui permet d'analyser la voix humaine captée au moyen d'un 
+microphone pour la transcrire sous la forme d'un texte exploitable par une machine.
+difficultés:
+-Variabilité du signal due au locuteur :deux répetitions d'un meme message par la meme personne ne sont pas strictement
+identiques.le signal se modifie en fct de l'etat emotionnel ou physique du locuteur(stress fatigue) mais aussi en fct du style adopté(soigné ou relaché)
+-Variabilité due a l'environnement acoustique:le microphone selon ses caracteristiques, capte, en meme temps que le signal de parole,
+les bruits de l'environnement.
+-variabilité due à l'ambiguité de la langue: la taille et le choix du vocabulaire, les contraintes grammaticales etc
+
+particularités:
+-pas de ponctuation: on peut pas séparer clairement les phrases, c'est le souffle quand ils respirent qui sépare
+-pas de majuscules : difficile de reconnaitre les noms propres
+-erreurs de transcriptions accents/prononciations => se base sur un texte pas correct
+
+
+---
+
+STATLM.8xp
+
+Statistical language modeling
+maximum likelihood estimation: Pml[w|h]=C(hw)/C(h)=nombre de hw/nombre de h
+lissage:
+laplace smoothing(add-one):P[w|h]=(c(hw)+1)/(c(h)+|V|)
+dirichlet unigram smoothing:(c(hw)+λP(w))/Σv(c(hv)+λP(v))
+
+le principe de discounting: on prend une partie de la proba des événements observés, 
+on prétend qu'ils sont observés moins que la réalité. On distribue cette partie de la 
+proba aux événements non observés pour qu'on ait pas de proba nulle même pour les sequences non observées. 
+on fait cela le plus intelligemment possible.
+On a 2methodes: le lissage de la place (add-one) ou on rajoute +1 à c(hw) et il y'a le
+lissage unigram de dirichlet où on rajoute λP[w] à c(hw)
+
+P=TP/PrP=TP/(TP+FP)=(le nombre d'éléments  correctes et predits comme etant vrais par classif)/(le nombre total d'éléments séléctionnés par le classif comme étant vrais)
+R=TP/TP+FN=TP/AP=le nombre d'éléments  correctes et predits comme etant vrais par classif/le nombre total d'éléments correctes dans le jeu de données
+
+F-mesure pour connaitre la performance d'un systeme selon sa precision-rappel: f=2PR/(P+R)
+
+étiqueteurs: état de l'art :ils ont des performances entre 96 et 97% (max 98%)
+
+

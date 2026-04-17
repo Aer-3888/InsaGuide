@@ -1,0 +1,148 @@
+public class IntervalSum {
+    private int[] sum;
+    private int[] array;
+
+    public IntervalSum(int[] array) {
+        this.array = array;
+        sum = new int[array.length];
+        sum[0] = array[0];
+        for (int i = 1; i < array.length; i++) {
+            sum[i] = sum[i - 1] + array[i];
+        }
+    }
+
+    public int get(int a, int b) {
+        return sum[b] - (a == 0 ? 0 : sum[a - 1]);
+    }
+
+    public void set(int index, int value) {
+        array[index] = value;
+        for (int i = index; i < sum.length; i++) {
+            sum[i] = sum[i - 1] + array[i];
+        }
+    }
+
+    public static void main(String[] args) {
+        IntervalSum sum = new IntervalSum(new int[]{10, -2, 5, 1, 0, -8, 12, -1, -1, 2, 4});
+        System.out.println(sum.get(2, 8));
+        sum.set(5, 100);
+        System.out.println(sum.get(2, 8));
+    }
+}
+
+
+public class SegmentTree {
+    static class Node {
+        int sum;
+        int min;
+        int from;
+        int to;
+        int size() {
+            return to - from + 1;
+        }
+    }
+
+    private Node[] heap;
+    private int[] array;
+    private int size;
+
+    public SegmentTree(int[] array) {
+        this.array = Arrays.copyOf(array, array.length);
+        heap = new Node[4 * array.length];
+        build(1, 0, array.length - 1);
+    }
+
+    private void build(int heapIdx, int from, int to) {
+        heap[heapIdx] = new Node();
+        heap[heapIdx].from = from;
+        heap[heapIdx].to = to;
+        if (from == to) {
+            heap[heapIdx].sum = array[from];
+            heap[heapIdx].min = array[from];
+        } else {
+            int middle = from + (to - from) / 2;
+            // Build childs
+            build(2 * heapIdx,     from,       middle);
+            build(2 * heapIdx + 1, middle + 1, to);
+            heap[heapIdx].sum = heap[2 * heapIdx].sum + heap[2 * heapIdx + 1].sum;
+            heap[heapIdx].min = Math.min(heap[2 * heapIdx].min, heap[2 * heapIdx + 1].min);
+        }
+    }
+
+
+ public int rsq(int from, int to) {
+        return rsq(1, from, to);
+    }
+
+    private int rsq(int heapIdx, int from, int to) {
+        Node n = heap[heapIdx];
+        if (contains(from, to, n.from, n.to)) {
+            return heap[heapIdx].sum;
+        }
+        if (intersects(from, to, n.from, n.to)) {
+            int leftSum = rsq(2 * heapIdx, from, to);
+            int rightSum = rsq(2 * heapIdx + 1, from, to);
+            return leftSum + rightSum;
+        }
+        return 0;
+    }
+
+
+  public int rMinQ(int from, int to) {
+        return rMinQ(1, from, to);
+    }
+
+    private int rMinQ(int heapIdx, int from, int to) {
+        Node n = heap[heapIdx];
+        if (contains(from, to, n.from, n.to)) {
+            return heap[heapIdx].min;
+        }
+        if (intersects(from, to, n.from, n.to)) {
+            int leftMin = rMinQ(2 * heapIdx, from, to);
+            int rightMin = rMinQ(2 * heapIdx + 1, from, to);
+            return Math.min(leftMin, rightMin);
+        }
+        return Integer.MAX_VALUE;
+    }
+
+
+ public void update(int i, int value) {
+        update(1, i, value);
+    }
+
+    private void update(int heapIdx, int i, int value) {
+        Node n = heap[heapIdx];
+        if (n.size() == 1) {
+            array[i] = value;
+            n.sum = value;
+            n.min = value;
+            return;
+        }
+        int middle = n.from + (n.to - n.from) / 2;
+        if (i <= middle) {
+            update(2 * heapIdx, i, value);
+        } else {
+            update(2 * heapIdx + 1, i, value);
+        }
+        n.sum = heap[2 * heapIdx].sum + heap[2 * heapIdx + 1].sum;
+        n.min = Math.min(heap[2 * heapIdx].min, heap[2 * heapIdx + 1].min);
+    }
+
+    //Test if the range1 contains range2
+    private boolean contains(int from1, int to1, int from2, int to2) {
+        return from2 >= from1 && to2 <= to1;
+    }
+
+    //check inclusive intersection, test if range1[from1, to1] intersects range2[from2, to2]
+    private boolean intersects(int from1, int to1, int from2, int to2) {
+        return from1 <= from2 && to1 >= from2   //  (.[..)..] or (.[...]..)
+            || from1 >= from2 && from1 <= to2; // [.(..]..) or [..(..)..
+    }
+
+    public static void main(String[] args) {
+        SegmentTree tree = new SegmentTree(new int[]{10, -2, 5, 1, 0, -8, 12, -1, -1, 2, 4});
+        System.out.println(tree.rsq(2, 8));
+        tree.update(5, 100);
+        System.out.println(tree.rsq(2, 8));
+    }
+}

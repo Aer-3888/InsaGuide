@@ -1,0 +1,99 @@
+grid(
+    [
+        [1,1,1,1],
+        [1,1,1,1],
+        [1,1,2,2],
+        [2,2,2,2]
+    ]).
+
+dimension([], 0, 0).
+
+dimension([R|Rs], N, M) :-
+    length([R|Rs], N),
+    length(R, M).
+
+slice(L, Start, End, Res) :-
+    slice_aux(L, 0, Start, End, Res).
+
+slice_aux(_, I, _, End, []) :-
+    I is End + 1.
+
+slice_aux([_|Xs], I, Start, End, Res) :-
+    I < Start,
+    I1 is I + 1,
+    slice_aux(Xs, I1, Start, End, Res).
+
+slice_aux([X|Xs], I, Start, End, [X|R]) :-
+    I >= Start,
+    I =< End,
+    I1 is I + 1,
+    slice_aux(Xs, I1, Start, End, R).
+
+
+sub_grid(Grid, I, J, N, M, Res) :-
+    EndI is I + N - 1,
+    EndJ is J + M - 1,
+    slice(Grid, I, EndI, Rows),
+    slice_rows(Rows, J, EndJ, Res).
+
+slice_rows([], _, _, []).
+slice_rows([Row|Rows], Start, End, [Row1|Rows1]) :-
+    slice(Row, Start, End, Row1),
+    slice_rows(Rows, Start, End, Rows1).
+
+
+constant_list([X], X).
+constant_list([X,X|Xs], X) :-
+    constant_list([X|Xs], X).
+
+constant_grid([[X|_]], X).
+constant_grid([R1,R2|Rs], X) :-
+    constant_list(R1, X),
+    constant_grid([R2|Rs], X).
+
+
+to_quadtree(Grid, Quadtree) :-
+    dimension(Grid, N, N),
+    to_quadtree_aux(Grid, N, Quadtree).
+
+to_quadtree_aux(Grid, N, quadtree(N, V)) :-
+    constant_grid(Grid, V),
+    !.
+
+to_quadtree_aux(Grid, N, quadtree(UL, UR, LL, LR)) :-
+    N1 is N // 2,
+    sub_grid(Grid, 0, 0, N1, N1, Grid_UL),
+    sub_grid(Grid, 0, N1, N1, N1, Grid_UR),
+    sub_grid(Grid, N1, 0, N1, N1, Grid_LL),
+    sub_grid(Grid, N1, N1, N1, N1, Grid_LR),
+    to_quadtree_aux(Grid_UL, N1, UL),
+    to_quadtree_aux(Grid_UR, N1, UR),
+    to_quadtree_aux(Grid_LL, N1, LL),
+    to_quadtree_aux(Grid_LR, N1, LR).
+
+réponse à la reconstruction de la grille à partir du quadtree (pas dans le DS)
+
+fill(N, N, _, []).
+fill(I, N, V, [G|Gs]) :-
+    I < N,
+    length(G, N),
+    constant_list(G, V),
+    I1 is I + 1,
+    fill(I1, N, V, Gs).
+
+concat([], [], []).
+concat([L1|L1s], [L2|L2s], [LL|LLs]) :-
+    append(L1, L2, LL),
+    concat(L1s, L2s, LLs).
+
+to_grid(quadtree(N, V), Grid) :-
+    fill(0, N, V, Grid).
+
+to_grid(quadtree(UL, UR, LL, LR), Grid) :-
+    to_grid(UL, G1),
+    to_grid(UR, G2),
+    to_grid(LL, G3),
+    to_grid(LR, G4),
+    concat(G1, G2, GUpper),
+    concat(G3, G4, GLower),
+    append(GUpper, GLower, Grid).

@@ -1,0 +1,159 @@
+Annale web 2022 - EV
+
+Q.1) 
+
+
+[
+    {
+        "id":1,
+        "nom":"INSA",
+        "gps":"",
+        "abris":true
+    },
+    {
+        "id":2,
+        "nom":"Chimie",
+        "gps":"",
+        "abris":false
+    }
+]
+
+
+Q.2)
+
+<arrets>
+  <arret id="1" nom="INSA" gps="" abris="true"/>
+  <arret id="2" nom="Chimie" gps="" abris="false"/>
+</arrets>
+
+Q.3)
+
+GET api/public/lignes/noms
+pas de données d'entrée
+retour : 
+[
+    {
+        "nom":"Foo"
+    }
+]
+
+GET api/public/arrets/{nom}
+entrée : 
+{
+    "nom":"INSA"
+}
+retour :
+[
+    {
+        "id":1,
+        "nom":"INSA",
+        "gps":"",
+        "abris":true
+    }
+]
+
+On peut réaliser cette optimisation avec un DTO. 
+code en java :
+public record ligneDTO(String nom, String couleur, String arret_debut, string arret_fin){
+}
+retour : 
+[
+    {
+        "nom":"INSA",
+        "couleur":"red",
+        "arret_debut":"INSA",
+        "arret_fin":"Chimie"
+    }
+]
+
+GET api/public/lignes/nom-et-types
+code java :
+public record lignetypeDTO(String nom, Type type){
+}
+retour :
+[
+  {
+    "nom": "Foo",
+    "type": "BUS"
+  }
+]
+
+Q.4)
+On change api/public en api/private
+On utilise un Spring pour vérifier le rôle ADMIN avant d’autoriser l’accès aux différentes routes.
+On ajoute des méthodes de création d'utilisateurs et on gére l'authentification.
+
+Q.5)
+POST api/private/arrets
+entrée :
+{
+    "id": 3,
+    "nom": "Etoile",
+    "gps": "",
+    "abris": true
+}
+sortie :
+201 CREATED
+400 BAD REQUEST
+401 Unauthorized
+403 Forbidden
+
+DELETE api/private/arrets/100
+pas de données d'entrée
+sortie :
+204 No Content
+404 Not Found
+401 Unauthorized
+403 Forbidden
+
+PATCH api/private/arrets/1
+entrée : 
+{
+  "nom": "INSA Modifié",
+  "abris": false
+}
+sortie :
+200 OK
+404 Not Found
+401 Unauthorized
+403 Forbidden
+
+Q.6)
+@Service
+public class TransportService {
+    private final List<Ligne> lignes = new ArrayList<>();
+    private final List<Arret> arrets = new ArrayList<>();
+
+    public TransportService() {
+        Arret a1 = new Arret(1, "INSA", "", true);
+        Arret a2 = new Arret(2, "Chimie", "", false);
+        arrets.addAll(List.of(a1, a2));
+        Ligne ligne = new Ligne(3, "Foo", "red", Type.BUS, "1970", List.of(a1, a2));
+        lignes.add(ligne);
+    }
+
+
+    public List<Ligne> getLignes() { return lignes; }
+    public List<Arret> getArrets() { return arrets; }
+    public void addArret(Arret arret) { arrets.add(arret); }
+    ........ //flemme de faire le reste
+}
+
+Q.7)
+Ce service gère les données des transports en commun.
+Il est géré par le controleur.
+
+Q.8)
+Mal formé car on ouvre foo avant bar et on le ferme avant de fermer bar donc invalide 
+
+Q.9)
+Mal formé (<C/> devrait être </C>) donc invalide
+
+Q.10)
+Valide et bien formé
+
+Q.11)
+Mal formé donc invalide (il devrait y avoir des accolades)
+
+Q.12)
+Mal formé donc invalide (virgules manquantes entre les champs)

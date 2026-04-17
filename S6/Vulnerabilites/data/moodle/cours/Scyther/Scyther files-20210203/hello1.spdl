@@ -1,0 +1,20 @@
+usertype String;
+const hello: String;
+
+protocol hello1(i,r)
+{
+
+	role i
+	{
+	send_1(i,r,{hello}sk(i));
+	recv_2(r,i,{hello}sk(r));
+	claim(i,Alive);
+	}
+
+	role r
+	{
+	recv_1(i,r,{hello}sk(i));
+	send_2(r,i,{hello}sk(r));
+	}
+
+}

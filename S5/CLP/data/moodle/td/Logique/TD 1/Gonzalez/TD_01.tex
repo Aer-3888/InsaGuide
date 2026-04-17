@@ -1,0 +1,432 @@
+% vim: set spell:
+% vim: set spell spelllang=en:
+\documentclass[a4paper,10pt]{article}
+%\usepackage[mathjax]{lwarp}
+%\usepackage{lwarp}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{pifont}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{hyperref}
+\usepackage{stmaryrd}
+\usepackage[left=2cm,right=2cm]{geometry}
+
+\title{Tutorials : Concepts of Logic and Programming}
+\author{Nicolas González}
+\date{September 9th 2020}
+
+\def\centralruler{\begin{center}\rule{5cm}{.1pt}\end{center}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Com}{\mathbb{C}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Lin}{\mathcal{L}}
+\newcommand{\Mnn}{\mathcal{M}_n(\R)}
+\newcommand{\ProScal}[2]{\langle #1,#2 \rangle}
+\newcommand{\Norm}[1]{\left|\left| #1 \right|\right|}
+\newcommand{\grad}{\overrightarrow{\nabla}}
+\newcommand{\Proba}{\mathbb{P}}
+\newcommand{\vv}[1]{\overrightarrow{\textbf{#1}}}
+
+\DeclareMathOperator{\Vect}{Vect}
+\DeclareMathOperator{\Imag}{\Im m}
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\asinh}{asinh}
+
+
+\renewcommand{\theequation}{\thesubsection--\arabic{equation}}
+
+
+\newcommand{\Tstrut}{\rule{0pt}{2.6ex}}
+\newcommand{\Bstrut}{\rule[-0.9ex]{0pt}{0pt}}
+\newcommand{\TBstrut}{\Tstrut\Bstrut}
+%\usepackage[toc]{glossaries}
+%\makeglossaries
+%\loadglsentries{glossary}
+
+\begin{document}
+
+\maketitle
+%\tableofcontents
+
+\newpage
+
+\section{Exercise 1}
+Prove the following relations using Boole's algebra, then using truth tables.
+\begin{enumerate}
+	\item $\overline{A\overline{B}+\overline{A}B}=\overline{A}{\overline{B}}+AB$
+	\item $AB+ACD+\overline{B}D=AB+\overline{B}D$
+\end{enumerate}
+
+\centralruler
+
+\subsection{First question}
+
+Using Boole's algebra, especially De Morgan's law, we find
+\begin{align*}
+	\overline{A\overline{B}+\overline{A}B}&=
+\overline{(A\overline{B})}\cdot\overline{(\overline{A}\cdot B)}\\
+&=\left(\overline{A}+B\right)\cdot\left(A+\overline{B}\right)\\
+&=\overline{A}\cdot A+BA+\overline{A}~\overline{B}+B~\overline{B}\\
+&=\overline{A}~\overline{B}+A~B
+\end{align*}
+
+De Morgan's law is applied twice here (once over an OR and afterwards an AND), we then distribute over OR, and notice that $\overline{A}\cdot A=0$ (since $A$ can't be true and false at the same time).
+
+A truth table is more laborious but it works. The first expression yields
+\begin{center}
+	\begin{tabular}{|c|c|c|}
+		\hline
+		A/B&0&1\\\hline
+		0&1&0\\\hline
+		1&0&1\\\hline
+	\end{tabular}
+\end{center}
+
+And the second expression yields
+\begin{center}
+	\begin{tabular}{|c|c|c|}
+		\hline
+		A/B&0&1\\\hline
+		0&1&0\\\hline
+		1&0&1\\\hline
+	\end{tabular}
+\end{center}
+
+The second expression is essentially "either both of the input are false, or they're both true". Which is a simpler way to write a not-ed XOR.
+
+\subsection{Second question}
+
+This time simplifications will help us more than anything else
+\begin{align*}
+	A~B+A~C~D+\overline{B}~D&=A~B~\overline{C}~\overline{D}+A~B~C~\overline{D}+A~B~\overline{C}~D+A~B~C~D\\
+		&\quad+A~\overline{B}~C~D+A~B~C~D\\
+		&\quad+\overline{A}~\overline{B}~\overline{C}~D+\overline{A}~\overline{B}~C~D+A~\overline{B}~\overline{C}~D+A~\overline{B}~C~D\\
+		&=A~B~\overline{C}~\overline{D}+A~B~C~\overline{D}+A~B~\overline{C}~D+A~B~C~D\\
+		&\quad+\overline{A}~\overline{B}~\overline{C}~D+\overline{A}~\overline{B}~C~D+A~\overline{B}~\overline{C}~D+A~\overline{B}~C~D\\
+		&=A~B+\overline{B}~D
+\end{align*}
+
+Indeed, $x+x=x$, so all of the terms coming from the middle minterm can be repeated as many times as we want, or in fact their amount can be reduced.
+
+Then the truth tables yield
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|}
+		AB/CD&00&01&11&10\\\hline
+		00&&1&1&\\\hline
+		01&&&&\\\hline
+		10&&1&1&\\\hline
+		11&1&1&1&1\\\hline
+	\end{tabular}
+\end{center}
+
+for the first one, and
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|}
+		AB/CD&00&01&11&10\\\hline
+		00&&1&1&\\\hline
+		01&&&&\\\hline
+		10&&1&1&\\\hline
+		11&1&1&1&1\\\hline
+	\end{tabular}
+\end{center}
+
+for the second one, which is, of course, the same table ; therefore it's the same expression.
+
+\section{Exercise 2}
+
+We want to build a transcoder between 4-bit natural binary towards Gray's thoughtful binary code (also on 4 bits), in accordance with the table below. Using Karnaugh tables, simplify the logical function yielding the four outputs $a$, $b$, $c$ and $d$ from the four inputs $A$, $B$, $C$ and $D$.
+\begin{center}
+	\begin{tabular}{|c|c|}
+		\hline
+		Binaire Naturel&Code de GRAY\\\hline
+		ABCD&abcd\\\hline
+		0000&0000\\\hline
+		0001&0001\\\hline
+		0010&0011\\\hline
+		0011&0010\\\hline
+		0100&0110\\\hline
+		0101&0111\\\hline
+		0110&0101\\\hline
+		0111&0100\\\hline
+		1000&1100\\\hline
+		1001&1101\\\hline
+		1010&1111\\\hline
+		1011&1110\\\hline
+		1100&1010\\\hline
+		1101&1011\\\hline
+		1110&1001\\\hline
+		1111&1000\\\hline
+	\end{tabular}
+\end{center}
+\centralruler
+
+Let us use the power of \textit{linear algebra} to consider four logical functions $f_1$, $f_2$, $f_3$, $f_4$, each of which defines the output value $a$, $b$, $c$ or $d$. They all have their own Karnaugh table.
+\begin{enumerate}
+	\item For $a$, the table is
+		\begin{center}
+			\begin{tabular}{|c|c|c|c|c|}
+				\hline
+				AB/CD&00&01&11&10\\\hline
+				00&0&0&0&0\\\hline
+				01&0&0&0&0\\\hline
+				11&1&1&1&1\\\hline
+				10&1&1&1&1\\\hline
+			\end{tabular}
+		\end{center}
+		This one isn't too complicated, $a=A$.
+	\item For $b$, the table is
+		\begin{center}
+			\begin{tabular}{|c|c|c|c|c|}
+				\hline
+				AB/CD&00&01&11&10\\\hline
+				00&0&0&0&0\\\hline
+				01&1&1&1&1\\\hline
+				11&0&0&0&0\\\hline
+				10&1&1&1&1\\\hline
+			\end{tabular}
+		\end{center}
+		So it's rather explicit that $b=\overline{A}~B+A~\overline{B}$.
+	\item For $c$, the table is
+		\begin{center}
+			\begin{tabular}{|c|c|c|c|c|}
+				\hline
+				AB/CD&00&01&11&10\\\hline
+				00&0&0&1&1\\\hline
+				01&1&1&0&0\\\hline
+				11&1&1&0&0\\\hline
+				10&0&0&1&1\\\hline
+			\end{tabular}
+		\end{center}
+		So pretty evidently $c=\overline{C}~B+\overline{B}~C$.
+	\item For $d$, the table is
+		\begin{center}
+			\begin{tabular}{|c|c|c|c|c|}
+				\hline
+				AB/CD&00&01&11&10\\\hline
+				00&0&1&0&1\\\hline
+				01&0&1&0&1\\\hline
+				11&0&1&0&1\\\hline
+				10&0&1&0&1\\\hline
+			\end{tabular}
+		\end{center}
+		Very similar to $b$, we find out that $d=C~\overline{D}+\overline{C}~D$
+\end{enumerate}
+
+The exercise can be summed up as
+\begin{align*}
+\begin{pmatrix}a\\b\\c\\d\end{pmatrix} = \begin{pmatrix}A\\\overline{A}~B+A~\overline{B}\\\overline{C}~B+C~\overline{B}\\\overline{C}~D+\overline{D}~D\end{pmatrix}
+\end{align*}
+
+\section{Exercise 3}
+
+[I wouldn't try and draw this circuit in LaTeX Tikz even if I received 1 million euros for it]
+\centralruler
+
+Let's inspect the gates, and mark them, from left to right then top to bottom 1 through 4.
+\begin{enumerate}
+	\item Gate 1 is an AND between $b$ and $c$, so $(1)=b~c$.
+	\item Gate 2 is an AND between $(1)$ and $a$, so $(2)=(1)~a=a~b~c$
+	\item Gate 3 is a NAND between $(1)$ and $a$ as well so $(3)=\overline{(2)}=\overline{a~b~c}$
+	\item Gate 4 is a NOR between $(2)$ and $d$ so $(4)=\overline{(2)+d}=\overline{a~b~c+d}$
+	\item Finally, gate 5 is another NAND between $(4)$ and $(3)$ so $S=\overline{(4)~(3)}=\overline{\left(\overline{a~b~c+d}\right)~\overline{a~b~c}}$
+\end{enumerate}
+
+We'll have to use De Morgan or else this'll just be chaos.
+\begin{align*}
+	\overline{\left(\overline{a~b~c+d}\right)~\overline{a~b~c}}&=\overline{\overline{a~b~c+d}}+\overline{\overline{a~b~c}}\\
+								   &=(a~b~c+d)+(a~b~c)\\
+								   &=a~b~c+d
+\end{align*}
+
+You can try building the table of truth (it's rather fast) and you'll find out that this is actually the most reduced expression of our logical function.
+
+\section{Exercise 4}
+Vous devez effectuer un contrôle sur des transistors en fin de chaîne de fabrication, afin de les répartir en trois catégories $C1$, $C2$, $C3$. Vous pouvez vérifier pour cela la fréquence maximale de fonctionnement $F$, la bande passante $B$, le gain en continu $G$, et l'impédance d'entrée $Z$.
+
+Pour simplifier, vous considérez qu'un paramètre est correct s'il se situe dans la gamme de tolérance prévue pour ce paramètre : $X=1$ si le paramètre $X$ est correct, $X=0$.
+\begin{itemize}
+	\item $C1$ : vous placez dans cette catégorie les transistors qui ont une fréquence correcte et au moins deux autres paramètres corrects (parmis les trois restants).
+	\item $C2$ : vous placez dans cette catégorie les transistors qui ont seulement une fréquence incorrecte et les transistors qui ont une fréquence correcte avec au moins deux paramètres incorrects sur les trois restants.
+	\item $C3$ : vous placez dans cette catégorie les transistors qui ont une fréquence incorrecte et au moins un autre paramètre incorrect.
+\end{itemize}
+
+En utilisant des fonctions élémentaires, réalisez un système combinatoire permettant d'élaborer $C1$, $C2$, $C3$ en fonction des paramètres $F$, $B$, $G$ et $Z$.
+\begin{enumerate}
+	\item En réécrivant directement les énoncés de $C1$, $C2$ et $C3$ sous une forme d'équation logique.
+	\item En remplissant une table de vérité pour $C1$, $C2$ et $C3$ et en simplifiant avec les tableaux de Karnaugh (vous devez obtenir les même fonctions qu'en $1$).
+	\item Proposez les circuits avec des ports à $2$, $3$ ou $4$ entrées.
+\end{enumerate}
+
+\centralruler
+
+\subsection{Question 1}
+Writing $C1$, $C2$ and $C3$ as logical functions is rather easy.
+
+With $C1$, you want a transistor with a correct frequency and at least two other valid parameters, i.e. $F+X$ where $X$ means "at least two other valid parameters". What other parameters do we have? We have $Z$, $G$ and $B$. So "at least two other valid parameters" is $Z~G$ or $Z~B$ or $G~B$ (we could write out all $4$ possibilities but the last one would be equivalent to sub-cases of the others). We find
+$$C1=F\cdot\left(Z~G+Z~B+G~B\right)$$
+
+For $C2$, you want transistors where all is fine but the frequency, or those who have a correct frequency but at least two other incorrect parameters. That gives
+\[
+C2=\underbrace{\overline{F}~G~Z~B}_{\text{only the frequency is wrong}}+\left(\underbrace{F}_{\text{correct frequency}}~\underbrace{\left(\overline{G}~\overline{B}+\overline{Z}~\overline{G}+\overline{Z}~\overline{B}\right)}_{\text{and at least two other params are incorrect}}\right)
+\]
+
+For $C3$, we find
+\[
+	C3=\overline{F}~\left(\overline{G}+\overline{B}+\overline{Z}\right)
+\]
+
+\subsection{Question 2}
+
+I'll directly jump into Karnaugh tables because technically they are also a sort of truth table.
+
+For $C1$ : 
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		FB/GZ&00&01&11&10\\\hline
+		00&0&0&0&0\\\hline
+		01&0&0&0&0\\\hline
+		11&0&1&1&1\\\hline
+		10&0&0&1&0\\\hline
+	\end{tabular}
+\end{center}
+Yielding the expression
+\begin{align*}
+	C1&=FB~\overline{G}Z+FBGZ+FBG\overline{Z}+F\overline{B}GZ\\
+	  &=F~\left(B\overline{G}Z+BGZ+BG\overline{Z}+\overline{B}GZ\right)\\
+	  &=F~\left(BGZ+B\overline{G}Z+BGZ+BG\overline{Z}+\overline{B}GZ\right)\\
+	  &=F~\left(BZ+BGZ+BG\overline{Z}+BGZ+\overline{B}GZ\right)\\
+	  &=F~\left(BZ+BG+ZG\right)
+\end{align*}
+
+For $C2$ :
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		FB/GZ&00&01&11&10\\\hline
+		00&0&0&0&0\\\hline
+		01&0&0&1&0\\\hline
+		11&1&0&0&0\\\hline
+		10&1&1&0&1\\\hline
+	\end{tabular}
+\end{center}
+Which gives the expression
+\begin{align*}
+	C2&=\overline{F}~B~G~Z+F~B~\overline{G}~\overline{Z}+F~\overline{B}~\overline{G}~\overline{Z}+F~\overline{B}~\overline{G}~Z+F~\overline{B}~G~\overline{Z}\\
+	  &=\overline{F}~B~G~Z+F~\left(B~\overline{G}~\overline{Z}+\overline{B}~\overline{G}~\overline{Z}+\overline{B}~\overline{G}~Z+\overline{B}~G~\overline{Z}\right)\\
+	  &=\overline{F}~B~G~Z+F~\left(B~\overline{G}~\overline{Z}+\overline{B}~\overline{G}~\overline{Z}+\overline{B}~\overline{G}~Z+\overline{B}~\overline{G}~\overline{Z}+\overline{B}~G~\overline{Z}+\overline{B}~\overline{G}~\overline{Z}\right)\\
+	  &=\overline{F}~B~G~Z+F~\left(\overline{B}~\overline{G}+\overline{B}~\overline{Z}+\overline{G}~\overline{Z}\right)
+\end{align*}
+
+And lo-and-behold, this is the same expression as before. How surprising, am I right?
+
+For $C3$ :
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		FB/GZ&00&01&11&10\\\hline
+		00&1&1&1&1\\\hline
+		01&1&1&0&1\\\hline
+		11&0&0&0&0\\\hline
+		10&0&0&0&0\\\hline
+	\end{tabular}
+\end{center}
+
+And, you know, it happens to give the exact formula I have above
+\begin{align*}
+	C3&=\overline{F}~\overline{G}+\overline{F}~\overline{B}~G~Z+\overline{F}~G~\overline{Z}\\
+	  &=\overline{F}~\left(\overline{G}+G~\overline{B}~Z+\overline{Z}~G\right)\\
+	  &=\overline{F}~\left(\overline{G}+G~\left(\overline{B}~Z+\overline{Z}\right)\right)\\
+	  &=\overline{F}~\left(\overline{G}+\overline{B}~Z+\overline{Z}\right)\\
+	  &=\overline{F}~\left(\overline{G}+\overline{B}+\overline{Z}\right)
+\end{align*}
+
+\textit{Fantastic}
+
+\subsection{Question 3}
+I'm literally not going to do that in LaTeX. I will do it in Logisim however and attach the file.
+
+\section{Exercise 5}
+\begin{enumerate}
+	\item Donnez pour le codage binaire naturel le domaine de codage des entiers non signés si le nombre de bits est $10$, $12$, $16$.
+	\item Avec $n$ bits, quel est le nombre décimal le plus grand représentable suivant la représentation en complément à deux?
+\end{enumerate}
+
+\centralruler
+
+\section{Question 1}
+Using unsigned natural binary we can represent any integer $n$ with
+\begin{itemize}
+	\item $10$ bits as long as $n\in\left[0,2^{10}-1\right]\cap\N$
+	\item $12$ bits as long as $n\in\left[0,2^{12}-1\right]\cap\N$
+	\item $16$ bits as long as $n\in\left[0,2^{16}-1\right]\cap\N$
+\end{itemize}
+
+\section{Question 2}
+Using $n$ bits in signed natural binary means that one of these bits encodes the sign of the integer. As such, in the method of a power of two's complement, the range of encoded binaries is
+\[
+	\left[-2^{n-1},2^{n-1}-1\right]
+\]
+So the largest integer representable is $2^{n-1}-1$.
+
+\section{Exercise 6}
+\begin{itemize}
+	\item De combien de bits $N$ faut-il disposer pour représenter le cap d'un bateau avec une précision de $1^\circ$?
+	\item De combien de bits $N$ faut-il disposer pour représenter le cap d'un bateau avec une précision de $0,1^\circ$?
+\end{itemize}
+\centralruler{}
+
+Question $1$ needs a way to encode $360$ values at least, so we would nead the ceiling of $\log_2(360)$, which is 8 (since the smallest power of $2$ above $360$ is $512=2^8$). So you'd need $8$ bits.
+
+Same for question 2, which needs $3600$ values. This is just above $2048=2^{11}$ and below $2^{12}=4096$. So you need 12 bits.
+
+\section{Exercise 7}
+Parmi les caractères, il y a les lettres minuscules et les lettres majuscules. Appelons "majusc" l'opérateur qui, étant donné une lettre minuscule, donne en résultat la lettre majuscule correspondante, par exemple :
+\begin{itemize}
+	\item majusc("a")="A"
+	\item majusc("k")="K"
+\end{itemize}
+Appelons MAJUSC l'opérateur analogue sur les représentations ASCII (7 bits) des caractères
+\begin{enumerate}
+	\item Exprimer cet opérateur à l'aide des opérateurs logiques et de constantes
+	\item Dans le même esprit, réaliser l'opérateur "majminusc" qui, étant donné une lettre quelconque donne en résultat :
+		\begin{itemize}
+			\item Pour une minuscule, la majuscule correspondante
+			\item Pour une majuscule, la minuscule correspondante
+		\end{itemize}
+\end{enumerate}
+
+\centralruler{}
+
+\subsection{Question 1}
+We can represent MAJUSC as an operator defined by
+\[
+	MAJUSC: [97,122]\cap\N\to[65,90]\cap\N
+\]
+
+Observe that there is a one to one correspondance between these two ranges, which is to be expected since there is exactly one uppercase for every lowercase letter (MAJUSC is a bijection). The only difference between 'A' and 'a' is exactly one bit : the sixth one. To change a lowercase into an uppercase, just cancel the sixth bit :
+\[
+	MAJUSC(X) = X\ \&\ 0b01011111
+\]
+
+\subsection{Question 2}
+Now we need to work on a condition, which uses an OR and some clever masking.
+Let's say, if we're given an uppercase, that we want to make it a lowercase.
+\[
+	X\ |\ 0b00100000
+\]
+This is just bit flipping, that is, if the sixth bit is one, make it zero, if it's zero, make it one. This can be accomplished with a simple logical exclusive OR :
+\[
+	X\ \oplus\ 0b0010000
+\]
+If the sixth bit was $1$, it's now $0$, and if it was zero, it's now one.
+
+\end{document}
+

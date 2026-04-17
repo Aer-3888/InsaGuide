@@ -1,0 +1,138 @@
+Exercice 1
+
+Q1) Théorème car on le déduit des axiomes
+
+Q2)
+
+SORTE Boolean
+UTILISE 
+FONCTIONS
+	vrai : --> Boolean
+	faux : --> Boolean
+	non : Boolean --> Boolean 
+	et : Boolean x Boolean --> Boolean
+	ou : Boolean x Boolean --> Boolean
+AXIOMES
+	non(faux)=vrai
+	non(vrai)=faux
+	et(vrai,vrai)=vrai
+	et(faux,faux)=faux
+	et(vrai,faux)=faux
+	et(faux,vrai)=faux
+	ou(vrai,vrai)=vrai
+	ou(vrai,faux)=vrai
+	ou(faux,vrai)=vrai
+	ou(faux,faux)=faux
+PRECONDITIONS
+	aucune ?
+	
+Q3) 
+
+-cas x=vrai y=vrai
+
+et(vrai,vrai)=vrai ==> non(vrai)=faux
+(non(x),non(y))=(faux,faux)  ==> ou (faux,faux)=faux
+==> OK
+Puis faire tous les cas et pareil pour le 2ème théorème
+Flemme
+
+Exercice 2
+Q4)
+         7
+	3        10
+1	  6	      14
+	4	7
+	
+Q5)
+
+public void placer (int i){
+	if(vide()){
+		modifRacine(i);
+	}
+	void positRacine();
+	if(valec()>=i){
+		if(!aFilsG()){
+			modifFilsG(i);
+		}else{
+			modifArbreG(arbreG().placer(i));
+		}
+	}else{
+		if(!aFilsD()){
+		modifFilsD(i);
+		}else{
+			modifArbreD(arbreD().placer(i));
+		}
+	}
+	
+}
+
+Q6)
+	a)
+	
+	Il existe au moins une valeur plus petite que le noeud à oter car dans notre car le noeud a 2 fils donc le fils gauche
+	est forcement inférieur au noeud. 
+	
+	b)
+	
+	v est la valeur la plus à droite du fils Gauche. Cette valeur peut posséder un fils Gauche mais pas de fils droit
+	car sinon cela voudrait dire qu'il y a une valeur encore plus grande mais qui reste quand même inférieure à la valeur
+	du noeud à oter
+	
+Q7)
+
+public int oterPlusGrandInf(){
+	Arbre modif=arbreG();
+	while(modif.aFilsD()){
+		modif.positFilsD();
+	}
+	int res=modif.valec();
+	modif.oterEc();
+	modifEc(res);
+	modifArbreG(modif);
+	return res;
+}
+	
+Q8)
+
+public void supprimerEc(){
+	if(!aFilsD() || !aFilsG()){
+		oterEc();
+	}else{
+		oterPlusGrandInf();
+	}
+}
+
+Exercice 3
+
+Q9)
+
+			A
+		B
+	D		C
+	  E	   F
+			 G
+			 
+			
+			1
+		2
+	4		3
+		5
+		
+			
+			do
+		re
+	mi		sol
+		fa		
+			si
+				la
+				
+
+
+
+
+
+
+
+
+
+

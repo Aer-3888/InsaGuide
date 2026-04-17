@@ -1,0 +1,194 @@
+			/* DS 2014-2015 */
+		
+		/* Exercice 1 */
+		
+Q1)
+14: scanf("%s",name);
+17: scanf("%s",surname);
+20: for(i=0;i<8 && name[i-1]!='\0';i++)
+21: 	login[i]=name[i-1]
+24: printf("Your login is : %s\n",login);
+26: printf("Process finished \n");
+
+Q2)
+-Le programme donne le pseudo ent d'un élève à partir de son nom et son prénom.
+-Si l'on veut changer la longueur du login il faut changer le #define LOGIN_SIZE [valeur à changer]
+-Non le code n'est pas bien adapté car dans le for on n'utilise une valeur directement et pas LOGIN_SIZE, il faut donc changer i<LOGIN_SIZE-1 dans le for et login[LOGIN_SIZE-1] ligne 22
+
+
+		/* Exercice 2 */
+		
+Q3)
+#include <stdio.h>
+#include <stdlib.h>
+#define NB_RELEVE 200
+#define TAILLE_NOM_SITE 32
+#define TAILLE_NOM_FICHIER 50
+
+typedef struct{
+char nom[TAILLE_NOM_SITE];
+int min;
+int max;
+} Releve;
+
+Q4)
+void afficherReleve(Releve r);
+
+Q5)
+void afficherReleve(Releve r){
+	printf("Nom: %s -> min=%d et max=%d",r.nom,r.min,r.max);
+}
+
+Q6)
+void saisirReleve(Releve * r);
+
+Q7)
+void saisirReleve(Releve * r){
+	printf("Veuillez saisir le nom du site");
+	scanf("%s",r->nom);
+	
+	printf("Veuillez saisir la temperature minimale");
+	scanf("%d",&(r->min));
+	
+	printf("Veuillez saisir la temperature maximale");
+	scanf("%d",&(r->max));
+}
+
+Q8)
+int main(){
+	Releve tabReleves[NB_RELEVE];
+	char nomFichier[TAILLE_NOM_FICHIER];
+	saisirReleve(&(tabReleves[0]));
+	saisirReleve(&(tabReleves[1]));
+	afficherReleve(tabReleves[0]);
+	afficherReleve(tabReleves[1]);
+}
+
+Q9)
+int calculerEcart(Releve r);
+
+int calculerEcart(Releve r){
+	return r.max-r.min;
+}
+
+Q10)
+int enregistrerReleves(Releve tabRel[], int N, char * nomFichier[]){
+	int i;
+	FILE *monfichier=(FILE*) NULL;
+	if((monfichier=fopen(nomFichier,"w"))==(FILE*) NULL){
+		fprintf(stderr,"Erreur d'ouverture du fichier %s\n",nomFichier);
+		return 0;
+	}
+	
+	for(i=0;i<N;i++){
+		fprintf("%s %d %d\n",tabRel[i].nom,tabRel[i].min,tabRel[i].max);
+	}
+	
+	if(fclose(monfichier)){
+		fprintf(stderr,"Problème fermeture du fichier\n");
+		return 0;
+	}
+	return 1;
+	
+}
+
+Q11)
+int main(){
+	int n;
+	Releve tabReleves[NB_RELEVE];
+	char nomFichier[TAILLE_NOM_FICHIER]="./fichier.txt";
+	saisirReleve(&(tabReleves[0]));
+	saisirReleve(&(tabReleves[1]));
+	afficherReleve(tabReleves[0]);
+	afficherReleve(tabReleves[1]);
+	
+	/* Début Q11 */
+	n=enregistrerReleves(tabReleves, 2, nomFichier);
+	printf("%d",n");
+}
+
+
+		/* Exercice 3 */
+		
+Q12)
+#include <string.h>
+int calculeScore(char * resultats);
+
+int calculeScore(char * resultats){
+	int i;
+	int score=0;
+	for(i=0;i<strlen(resultats);i++){
+		if(resultats[i]='G') score++;
+		if(resultats[i]='P') score--;
+	}
+	return score;
+}
+
+Q13)
+int lireTournoiFichier(char * nomfichier, Tournoi * tournoi);
+
+
+
+#include <stdio.h>
+#include "exo3.h"
+int main(void){
+Tournoi t;
+/*Question 13*/
+int code;
+code=lireTournoiFichier("./tournoi1.txt",t);
+printf("%d",code);
+return 0;
+}
+
+
+
+int lireTournoiFichier(char * nomfichier, Tournoi * tournoi){
+	int i;
+	char* score;
+	FILE *monfichier=(FILE*) NULL;
+	if((monfichier=fopen(nomFichier,"r"))==(FILE*) NULL){
+		fprintf(stderr,"Erreur d'ouverture du fichier %s\n",nomFichier);
+		return -1;
+	}
+	
+	fscanf(monfichier,"%d",&(tournoi->nb_equipes));
+		
+	if((tournoi->equipes=(Equipe *) calloc(tournoi->nb_equipes,sizeof(Equipe)))==NULL){
+		printf("Problème allocation mémoire");
+		return -2;
+	}
+	
+	for(i=0;i<tournoi->nb_equipes;i++){
+		fscanf(monfichier,"%d",&(((tournoi->equipes)[i]).numero));
+		fscanf(monfichier,"%s",score);
+		((tournoi->equipes)[i]).score_total=calculeScore(score);
+		fscanf(nomFichier,"%[^\n\r]",((tournoi->equipes)[i]).nom_equipe);
+	}
+	
+	if(fclose(monfichier)){
+		fprintf(stderr,"Problème fermeture du fichier\n");
+		return -1;
+	}
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

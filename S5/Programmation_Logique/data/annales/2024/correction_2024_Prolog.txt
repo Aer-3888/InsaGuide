@@ -1,0 +1,106 @@
+%Annale Prolog 2024
+
+%Ex1
+%Q1
+real_acteur(N,P,T) :- 
+	film(T,_,N,_,_),
+	acteur(N,P,_,_,_),
+	vedette(T,N,_).
+
+%Q2
+trois_vedettes(T,A) :-
+	film(T,A,_,_,_),
+	vedette(T,N1,_),
+	vedette(T,N2,_),
+	vedette(T,N3,_),
+	N1\==N2,
+	N2\==N3,
+	N1\==N3.
+
+%Q3
+sans_eastwood(T) :-
+	film(T,_,R,_,_),
+	R\==eastwood,
+	not(vedette(T,eastwood,_)).
+
+%Q4
+genre_instable(N) :-
+	film(T1,_,N,G1,_),
+	film(T2,_,N,G2,_),
+	G1\==G2.
+
+genre_stable(N) :-
+	film(_,_,N,_,_),
+	not(genre_instable(N)).
+
+%Ex2
+%Q5
+%cf image
+
+%Q6
+%mystere\3 retourne la liste jusqu'à ce qu'il atteigne l'élément de valeur E
+
+%Q7
+%On supprime la ligne 6 et on remplace la ligne 4 par : 
+tmp([E|_],E,R,R) :- !.
+
+%Ex3
+%Q8
+interpreter([add|Prog],[Op2,Op1|Stack],Env,Res) :-
+	X is Op1+Op2,
+	interpreter(Prog, [X|Stack], Env, Res).
+
+%Q9
+interpreter([minus|Prog],[Op2,Op1|Stack],Env,Res) :-
+	X is Op1-Op2,
+	interpreter(Prog, [X|Stack], Env, Res).
+
+%Q10
+interpreter([mul|Prog],[Op2,Op1|Stack],Env,Res) :-
+	X is Op1*Op2,
+	interpreter(Prog, [X|Stack], Env, Res).
+
+%Q11
+interpreter([neq|Prog],[Op2,Op1|Stack],Env,Res) :-
+	interpreter(Prog, [0|Stack], Env, Res).
+interpreter([neq|Prog],[Op2,Op1|Stack,Env,Res) :-
+	Op1\==Op2,
+	interpreter(Prog,[1|Stack],Env,Res).
+
+%Q12
+interpreter([if(Cond,Then,Else)|Prog],Stack,Env,Res) :-
+	interpreter(Cond, [], Env, ResC),
+	ResC=1,
+	append(Then,Prog,NewProg),
+	interpreter(NewProg,Stack,Env,Res).
+interpreter([if(Cond,Then,Else)|Prog],Stack,Env,Res) :-
+	interpreter(Cond, [], Env, ResC),
+	ResC=0,
+	append(Else,Prog,NewProg),
+	interpreter(NewProg,Stack,Env,Res).	
+
+%Q13
+assoc_set(Id,Val,[(Id,_)|R],[(Id,Val)|R]).
+assoc_set(Id,Val,[],[(Id,Val)]).
+assoc_set(Id,Val,[(I,V)|R],[(I,V)|R1]) :-
+	Id\==I,
+	assoc_set(Id,Val,R,R1).
+	
+%Q14
+interpreter([setvar(Id)|Prog],[V|Stack],Env,Res) :-
+	assoc_set(Id,V,Env,NewEnv),
+	interpreter(Prog,Stack,NewEnv,Res).
+
+%Q15
+interpreter([loadvar(Id)|Prog],Stack,Env,Res) :-
+	assoc_find(Id,Env,Val),
+	interpreter(Prog,[Val|Satck],Env,Res).
+	
+%Q16
+interpreter([while(Cond,Body)|Prog], Stack,Env,Res) :- 
+	interpreter(Cond,[],Env,1),
+	append(Body,[while(Cond,Body)|Prog],P),
+	interpreter(P,Stack,Env,Res).
+interpreter([while(Cond,Body)|Prog],Stack,Env,Res) :-
+	interpreter(Cond,[],Env,0),
+	interpreter(Prog,Stack,Env,Res).

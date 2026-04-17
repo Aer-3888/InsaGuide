@@ -1,0 +1,5 @@
+.players-list {
+    margin: 1em;
+    display: flex;
+    flex-flow: row wrap;
+}

@@ -1,0 +1,46 @@
+/* Quelques exemples pour démarrer la partie css */
+
+/* on applique Arial à tous les éléments */
+* {
+    font-family: Arial;
+    margin: 2px;
+    padding: 2px;
+}
+/* chaque élément est affiché dans un block */
+* {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Par exemple, si l'on veut afficher le nom et prénon sur la même ligne */
+prenom, nom {
+    display: inline;
+}
+
+/* Maintenant, si l'on veut ajouter ,comme dans le sujet de tp, "Nom de l'étudiant : " avant son nom et prénom*/
+etudiant::before {
+    content: "Nom de l'étudiant : ";
+    font-weight: bold;
+}
+
+/* Pour afficher les mots-clés de façon plus sympathique*/
+keyword {
+    display: inline-block;
+    background-color: #eee;
+    margin: 2px;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

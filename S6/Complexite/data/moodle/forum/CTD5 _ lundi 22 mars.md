@@ -1,0 +1,43 @@
+# CTD5 : lundi 22 mars
+
+Source: https://moodleng.insa-rennes.fr/mod/forum/discuss.php?d=2116
+
+## CTD5 : lundi 22 mars
+
+Display mode  Display replies flat, with oldest first Display replies flat, with newest first Display replies in threaded form Display replies in nested form
+
+Settings 
+
+[ Star this discussion  ]( "Star this discussion")
+
+This discussion has been locked so you can no longer reply to it. 
+
+![Picture of Maud Marchal](https://moodleng.insa-rennes.fr/theme/image.php/boost/core/1775635657/u/f1)
+
+### CTD5 : lundi 22 mars
+
+by [Maud Marchal](https://moodleng.insa-rennes.fr/user/view.php?id=5214&course=1158) \- Monday, 22 March 2021, 11:54 AM
+
+Number of replies: 0
+
+Bonjour,
+
+  
+
+
+Je vous rappelle que le CTD d'aujourd'hui (22 mars) sera en distanciel complet.
+
+A tout à l'heure,
+
+  
+
+
+Maud Marchal  
+
+
+[ Permalink ](https://moodleng.insa-rennes.fr/mod/forum/discuss.php?d=2116#p3224 "Permanent link to this post")
+
+  * [◄ CTD4 : vendredi 19 mars](https://moodleng.insa-rennes.fr/mod/forum/discuss.php?d=2090)
+  * [CTD6 : vendredi 2 avril ►](https://moodleng.insa-rennes.fr/mod/forum/discuss.php?d=2226)
+
+

@@ -1,0 +1,3 @@
+racine=race White
+no=sex Male yes=sup50K no=infeq50K
+yes=native-country United-States yes=sup50K no=infeq50K

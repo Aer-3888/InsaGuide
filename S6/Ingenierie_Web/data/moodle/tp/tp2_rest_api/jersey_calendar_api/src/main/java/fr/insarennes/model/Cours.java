@@ -1,0 +1,102 @@
+package fr.insarennes.model;
+
+import com.google.common.base.MoreObjects;
+import fr.insarennes.resource.DurationXmlAdapter;
+import fr.insarennes.resource.LocalDateTimeXmlAdapter;
+
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+@XmlSeeAlso({CM.class, TD.class})
+public abstract class Cours extends CalendarElement {
+	protected Matiere matiere;
+	protected LocalDateTime horaire;
+	protected Enseignant ens;
+	protected Duration duration;
+
+	Cours() {
+		super();
+	}
+
+	public Cours(final Matiere m, final LocalDateTime h, final Enseignant e, final Duration d) {
+		super();
+		matiere = Objects.requireNonNull(m);
+		horaire = Objects.requireNonNull(h);
+		ens = Objects.requireNonNull(e);
+		duration = Objects.requireNonNull(d);
+	}
+
+	public boolean matchesID(final int i) {
+		return i == getId() || i == matiere.getId() || i == ens.getId();
+	}
+
+	public Matiere getMatiere() {
+		return matiere;
+	}
+
+	public void setMatiere(final Matiere m) {
+		matiere = m;
+	}
+
+	public LocalDateTime getHoraire() {
+		return horaire;
+	}
+
+	@XmlJavaTypeAdapter(LocalDateTimeXmlAdapter.class)
+	public void setHoraire(final LocalDateTime h) {
+		horaire = h;
+	}
+
+	public Enseignant getEns() {
+		return ens;
+	}
+
+	public void setEns(final Enseignant e) {
+		ens = e;
+	}
+
+	public Duration getDuration() {
+		return duration;
+	}
+
+	@XmlJavaTypeAdapter(DurationXmlAdapter.class)
+	public void setDuration(final Duration d) {
+		duration = d;
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects
+			.toStringHelper(this)
+			.add("matiere", matiere)
+			.add("horaire", horaire)
+			.add("ens", ens)
+			.add("duration", duration)
+			.add("id", id)
+			.toString();
+	}
+
+//	@Override
+//	public boolean equals(final Object o) {
+//		if(this == o) {
+//			return true;
+//		}
+//		if(!(o instanceof Cours)) {
+//			return false;
+//		}
+//		if(!super.equals(o)) {
+//			return false;
+//		}
+//		final Cours cours = (Cours) o;
+//		return Objects.equals(getMatiere(), cours.getMatiere()) && Objects.equals(getHoraire(), cours.getHoraire()) && Objects.equals(getEns(),
+//			cours.getEns()) && Objects.equals(getDuration(), cours.getDuration());
+//	}
+//
+//	@Override
+//	public int hashCode() {
+//		return Objects.hash(super.hashCode(), getMatiere(), getHoraire(), getEns(), getDuration());
+//	}
+}

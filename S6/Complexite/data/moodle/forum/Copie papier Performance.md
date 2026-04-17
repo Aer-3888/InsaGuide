@@ -1,0 +1,38 @@
+# Copie papier Performance
+
+Source: https://moodleng.insa-rennes.fr/mod/forum/discuss.php?d=3205
+
+## Copie papier Performance   
+  
+Display mode  Display replies flat, with oldest first Display replies flat, with newest first Display replies in threaded form Display replies in nested form
+
+Settings 
+
+[ Star this discussion  ]( "Star this discussion")
+
+![Picture of Nikolaos Parlavantzas](https://moodleng.insa-rennes.fr/theme/image.php/boost/core/1775635657/u/f1)
+
+### Copie papier Performance 
+
+by [Nikolaos Parlavantzas](https://moodleng.insa-rennes.fr/user/view.php?id=5418&course=1158) \- Thursday, 25 April 2024, 10:35 AM
+
+Number of replies: 0
+
+Bonjour à tous,  
+
+
+Je déposerai une copie papier des diapositives sur Performance dans votre casier lundi prochain. Vous pourrez l'apporter pour le DS.   
+
+
+Bonne journée,
+
+Nikos Parlavantzas
+
+  
+
+
+[ Permalink ](https://moodleng.insa-rennes.fr/mod/forum/discuss.php?d=3205#p4688 "Permanent link to this post")
+
+  * [◄ Informations sur le DS de complexité](https://moodleng.insa-rennes.fr/mod/forum/discuss.php?d=2433)
+
+

@@ -1,0 +1,77 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+
+# Binary/large files (keep in data/ but don't track)
+*.pdf
+*.docx
+*.xlsx
+*.pptx
+*.zip
+*.tar.gz
+*.mp4
+*.mkv
+*.avi
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.svg
+*.circ
+*.mem
+
+# Data files (large)
+*.csv
+*.data
+*.test
+*.pkl
+*.pkl.gz
+*.h5
+*.hdf5
+*.npy
+*.npz
+*.HEIC
+*.heic
+*.clip
+*.map
+*.txt.gz
+
+# Large text data
+shakespeare.txt
+
+# Binary tools
+bonzaiboost
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+*.ipynb
+
+# Java
+*.class
+*.jar
+target/
+build/
+.gradle/
+*.war
+
+# C
+*.o
+*.exe
+*.out
+
+# Node
+node_modules/
