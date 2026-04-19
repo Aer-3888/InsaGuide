@@ -2,11 +2,11 @@
 
 > Following teacher instructions from: `S5/ADFD/data/moodle/tp/tp2/README.md`
 
-**Technique**: Hierarchical Agglomerative Clustering (CAH) applied after PCA on the principal components, following the CAH-MIXTE methodology.
+**Technique** : Classification Ascendante Hierarchique (CAH) appliquee apres ACP sur les composantes principales, selon la methodologie CAH-MIXTE.
 
-**Goal**: Group French cities into clusters with homogeneous climate profiles, using the principal components from the PCA as input features.
+**Objectif** : Regrouper les villes francaises en clusters ayant des profils climatiques homogenes, en utilisant les composantes principales de l'ACP comme variables d'entree.
 
-**Dataset**: Monthly average temperatures (12 months) for 15 French cities.
+**Jeu de donnees** : Temperatures moyennes mensuelles (12 mois) pour 15 villes francaises.
 
 ---
 
@@ -78,7 +78,7 @@ Variance expliquee par composante:
 Variance cumulee avec 2 PCs: ~90%
 ```
 
-**Interpretation:** Two components capture approximately 87-90% of the total variance, well above the 80% threshold. The 12 monthly temperatures can be summarized by just 2 numbers per city with minimal information loss.
+**Interpretation :** Deux composantes capturent environ 87-90% de la variance totale, bien au-dessus du seuil de 80%. Les 12 temperatures mensuelles peuvent etre resumees par seulement 2 nombres par ville avec une perte d'information minimale.
 
 ---
 
@@ -110,7 +110,7 @@ plt.show()
 ```
 
 **Expected output/plot:**
-- Left panel: One very tall bar for PC1 (~73%), a medium bar for PC2 (~17%), then all remaining bars are tiny (<5%). The "elbow" is clear at k=2.
+- Left panel: One very tall bar for PC1 (~73%), a medium bar for PC2 (~17%), then all remaining bars are tiny (&lt;5%). The "elbow" is clear at k=2.
 - Right panel: Rises sharply to ~73% at PC1, then to ~90% at PC2, then slowly approaches 100%. The 80% threshold line is crossed at PC2.
 
 ---

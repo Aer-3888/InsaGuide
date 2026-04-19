@@ -126,7 +126,7 @@ Client                          Serveur
 
 ### Controle de flux (fenetre glissante)
 
-Le recepteur annonce une **Window Size** dans chaque ACK. L'emetteur ne peut pas envoyer plus d'octets que cette fenetre sans accuseé de reception.
+Le recepteur annonce une **Window Size** dans chaque ACK. L'emetteur ne peut pas envoyer plus d'octets que cette fenetre sans accuse de reception.
 
 Si le recepteur est deborde : `Window=0` = "arrete d'envoyer".
 

@@ -119,7 +119,7 @@ $$\eta^2 = \frac{SCE}{SCT}$$
 
 | $\eta^2$ | Taille d'effet |
 |-----------|----------------|
-| $< 0.01$ | Negligeable |
+| $\lt 0.01$ | Negligeable |
 | $0.01 - 0.06$ | Petit |
 | $0.06 - 0.14$ | Moyen |
 | $> 0.14$ | Grand |
@@ -355,5 +355,5 @@ Quand les effectifs sont inegaux, l'ordre des facteurs dans `anova()` compte (AN
 1. Convertir les groupes en **facteur** (`as.factor`)
 2. **Boxplot** pour visualiser
 3. **ANOVA** : `anova(lm(Y ~ Groupe))`
-4. Si $p < 0.05$ : **post-hoc** avec `TukeyHSD()` ou `emmeans()`
+4. Si $p \lt 0.05$ : **post-hoc** avec `TukeyHSD()` ou `emmeans()`
 5. Verifier normalite (`shapiro.test`) et homoscedasticite (`bartlett.test`)

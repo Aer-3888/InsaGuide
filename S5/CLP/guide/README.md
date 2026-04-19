@@ -1,58 +1,58 @@
-# CLP -- Conception Logique des Processeurs (Processor Logic Design)
+# CLP -- Conception Logique des Processeurs
 
-## Course Overview
+## Vue d'ensemble du cours
 
-CLP (Conception Logique des Processeurs) is a 3rd-year course at INSA Rennes covering the full stack of digital system design: from Boolean algebra and logic gates all the way up to processor architecture and ARM assembly programming. The course is split into two major parts:
+CLP (Conception Logique des Processeurs) est un cours de 3e annee a l'INSA Rennes couvrant l'ensemble de la conception de systemes numeriques : de l'algebre de Boole et des portes logiques jusqu'a l'architecture des processeurs et la programmation en assembleur ARM. Le cours se divise en deux parties principales :
 
-1. **Digital Logic** (Logique) -- combinational and sequential circuit design, state machines, processor datapath and control unit
-2. **ARM Assembly** (Assembleur) -- ARM instruction set, stack management, function calls, data structures in assembly
-
----
-
-## Chapter Navigation
-
-### Part I -- Digital Logic
-
-| Chapter | File | Key Topics |
-|---------|------|------------|
-| 1. Combinational Logic | [combinational-logic.md](combinational-logic.md) | Logic gates, Boolean algebra, Karnaugh maps, transcoders, multiplexers, decoders |
-| 2. Sequential Logic | [sequential-logic.md](sequential-logic.md) | Flip-flops (D, T, JK, RS), registers, counters, state machines (Moore/Mealy) |
-| 3. Processor Architecture | [processor-architecture.md](processor-architecture.md) | Datapath (UT), Control Unit (UC), ALU, microcode, sequencer, memory |
-| 4. Logisim Circuits | [logisim-circuits.md](logisim-circuits.md) | Circuit design methodology, Logisim file reference, simulation techniques |
-| 5. PGCD / Arithmetic Circuits | [pgcd-arithmetic.md](pgcd-arithmetic.md) | GCD algorithm in hardware, UC+UT integration, Fibonacci machine |
-
-### Part II -- ARM Assembly
-
-| Chapter | File | Key Topics |
-|---------|------|------------|
-| 6. ARM Assembly Language | [assembly-arm.md](assembly-arm.md) | ARM instruction set, addressing modes, stack, procedures, data structures, GPIO |
+1. **Logique Numerique** -- conception de circuits combinatoires et sequentiels, machines a etats, chemin de donnees et unite de commande
+2. **Assembleur ARM** -- jeu d'instructions ARM, gestion de la pile, appels de fonctions, structures de donnees en assembleur
 
 ---
 
-## How to Use This Guide
+## Navigation par chapitre
 
-1. **First pass**: Read chapters 1-3 in order -- they build on each other. Combinational logic feeds into sequential logic, which feeds into processor architecture.
-2. **Practice**: Work through the exercises in `../exercises/` after each chapter. The TD solutions are organized by topic.
-3. **Assembly**: Chapter 6 is self-contained. Start with basic instructions, then tackle function calls and recursion.
-4. **Exam prep**: Use `../exam-prep/` for timed practice and methodology.
+### Partie I -- Logique Numerique
+
+| Chapitre | Fichier | Sujets cles |
+|----------|---------|-------------|
+| 1. Logique combinatoire | [combinational-logic.md](combinational-logic.md) | Portes logiques, algebre de Boole, tableaux de Karnaugh, transcodeurs, multiplexeurs, decodeurs |
+| 2. Logique sequentielle | [sequential-logic.md](sequential-logic.md) | Bascules (D, T, JK, RS), registres, compteurs, machines a etats (Moore/Mealy) |
+| 3. Architecture processeur | [processor-architecture.md](processor-architecture.md) | Unite de traitement (UT), Unite de commande (UC), UAL, microcode, sequenceur, memoire |
+| 4. Circuits Logisim | [logisim-circuits.md](logisim-circuits.md) | Methodologie de conception de circuits, reference des fichiers Logisim, techniques de simulation |
+| 5. PGCD / Circuits arithmetiques | [pgcd-arithmetic.md](pgcd-arithmetic.md) | Algorithme du PGCD en materiel, integration UC+UT, machine Fibonacci |
+
+### Partie II -- Assembleur ARM
+
+| Chapitre | Fichier | Sujets cles |
+|----------|---------|-------------|
+| 6. Langage assembleur ARM | [assembly-arm.md](assembly-arm.md) | Jeu d'instructions ARM, modes d'adressage, pile, procedures, structures de donnees, GPIO |
 
 ---
 
-## Exam Structure
+## Comment utiliser ce guide
 
-The CLP course has **two separate exams**:
-
-| Exam | Content | Format |
-|------|---------|--------|
-| DS Logique | Combinational + Sequential logic, state machines, UC/UT | Written, circuit design, truth tables, Karnaugh maps |
-| DS Assembleur | ARM assembly programming | Written, code reading/writing, stack tracing |
+1. **Premier passage** : Lire les chapitres 1 a 3 dans l'ordre -- ils s'appuient les uns sur les autres. La logique combinatoire alimente la logique sequentielle, qui alimente l'architecture processeur.
+2. **Pratique** : Travailler les exercices dans `../exercises/` apres chaque chapitre. Les solutions de TD sont organisees par sujet.
+3. **Assembleur** : Le chapitre 6 est autonome. Commencer par les instructions de base, puis aborder les appels de fonctions et la recursivite.
+4. **Preparation aux examens** : Utiliser `../exam-prep/` pour des exercices chronometres et la methodologie.
 
 ---
 
-## Key Resources
+## Structure des examens
 
-- **Logisim circuits**: All `.circ` files in `../data/moodle/cours/` and `../data/moodle/td/Logique/`
-- **ARM cheatsheet**: `../data/moodle/cours/ARM/arm-cheatsheet.pdf`
-- **Course synthesis**: `../data/moodle/cours/CPL-Cours-2020-2021-synthese.pdf`
-- **ARM lecture slides**: `../data/moodle/cours/AssembleurARM - 2023-2024 - version etudiant.pdf`
-- **Past exams**: `../data/annales/` (organized by Assembleur and Logique)
+Le cours CLP comporte **deux examens distincts** :
+
+| Examen | Contenu | Format |
+|--------|---------|--------|
+| DS Logique | Logique combinatoire + sequentielle, machines a etats, UC/UT | Ecrit : conception de circuits, tables de verite, tableaux de Karnaugh |
+| DS Assembleur | Programmation en assembleur ARM | Ecrit : lecture/ecriture de code, trace de pile |
+
+---
+
+## Ressources cles
+
+- **Circuits Logisim** : Tous les fichiers `.circ` dans `../data/moodle/cours/` et `../data/moodle/td/Logique/`
+- **Aide-memoire ARM** : `../data/moodle/cours/ARM/arm-cheatsheet.pdf`
+- **Synthese du cours** : `../data/moodle/cours/CPL-Cours-2020-2021-synthese.pdf`
+- **Diapositives assembleur ARM** : `../data/moodle/cours/AssembleurARM - 2023-2024 - version etudiant.pdf`
+- **Annales** : `../data/annales/` (organisees par Assembleur et Logique)

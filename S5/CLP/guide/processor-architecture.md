@@ -1,280 +1,280 @@
-# Chapter 3 -- Processor Architecture
+# Chapitre 3 -- Architecture des processeurs
 
-## 3.1 Overview
+## 3.1 Vue d'ensemble
 
-A processor is decomposed into two main units:
+Un processeur se decompose en deux unites principales :
 
-- **UT (Unite de Traitement / Processing Unit / Datapath)**: Contains registers, ALU, buses, and performs computations
-- **UC (Unite de Commande / Control Unit)**: Generates control signals to orchestrate the UT based on the current instruction and conditions
+- **UT (Unite de Traitement / Chemin de donnees)** : Contient les registres, l'UAL, les bus et effectue les calculs
+- **UC (Unite de Commande)** : Genere les signaux de commande pour orchestrer l'UT en fonction de l'instruction courante et des conditions
 
 ```
                 +------------------+
-   Inputs ----->|                  |----> Outputs
-                |   UT (Datapath)  |
+   Entrees ---->|                  |----> Sorties
+                |   UT (Donnees)   |
                 |                  |
                 +--------+---------+
                          |
-              conditions |  commands
+              conditions |  commandes
                          |
                 +--------+---------+
                 |                  |
-                |  UC (Control)    |
+                |  UC (Commande)   |
                 |                  |
                 +------------------+
 ```
 
-The UC sends **commands** (control signals) to the UT. The UT sends **conditions** (status flags) back to the UC. This separation is the foundation of all processor design.
+L'UC envoie des **commandes** (signaux de controle) a l'UT. L'UT envoie des **conditions** (drapeaux d'etat) a l'UC. Cette separation est le fondement de toute conception de processeur.
 
 ---
 
-## 3.2 Processing Unit (UT / Datapath)
+## 3.2 Unite de Traitement (UT / Chemin de donnees)
 
-### Components
+### Composants
 
-| Component | Role | Example |
+| Composant | Role | Exemple |
 |-----------|------|---------|
-| Registers | Store data values | N0, N1, Q, N in Fibonacci machine |
-| ALU | Arithmetic and Logic | Adder, comparator |
-| Buses | Transfer data between components | Internal data bus |
-| Tri-state buffers | Control bus access | Enable/disable outputs onto shared bus |
-| Multiplexers | Select data sources | Choose which register feeds ALU input |
+| Registres | Stocker les valeurs de donnees | N0, N1, Q, N dans la machine Fibonacci |
+| UAL | Arithmetique et logique | Additionneur, comparateur |
+| Bus | Transferer les donnees entre composants | Bus de donnees interne |
+| Tampons trois-etats | Controler l'acces au bus | Activer/desactiver les sorties sur un bus partage |
+| Multiplexeurs | Selectionner les sources de donnees | Choisir quel registre alimente l'entree de l'UAL |
 
-### Register Operations
+### Operations sur les registres
 
-Each register has control signals:
-- **Load (LD)**: When active, register captures value from bus on next clock edge
-- **Output Enable (OE)**: When active, register drives its value onto the bus
+Chaque registre possede des signaux de commande :
+- **Chargement (LD)** : Quand actif, le registre capture la valeur du bus au prochain front d'horloge
+- **Activation de sortie (OE)** : Quand actif, le registre place sa valeur sur le bus
 
-### ALU Operations
+### Operations de l'UAL
 
-The ALU performs operations selected by control signals:
-- Addition, subtraction
-- AND, OR, XOR, NOT
-- Shift left, shift right
-- Comparison (generates condition flags)
+L'UAL effectue les operations selectionnees par les signaux de commande :
+- Addition, soustraction
+- ET, OU, XOR, NON
+- Decalage a gauche, decalage a droite
+- Comparaison (genere les drapeaux de condition)
 
-### Condition Flags
+### Drapeaux de condition
 
-The UT generates flags sent to the UC:
+L'UT genere des drapeaux envoyes a l'UC :
 
-| Flag | Name | Meaning |
-|------|------|---------|
-| Z | Zero | Result is zero |
-| N | Negative | Result is negative (MSB = 1) |
-| C | Carry | Unsigned overflow occurred |
-| V | oVerflow | Signed overflow occurred |
-
----
-
-## 3.3 Control Unit (UC)
-
-The UC is itself a finite state machine. It can be implemented in two ways:
-
-### 1. Hardwired Control (Horizontal Microprogramming)
-
-The UC is built directly from combinational and sequential logic. From Logisim circuit 7-memory-horizontal:
-
-- Each state is encoded with flip-flops
-- Transition logic is implemented with gates
-- Fast but inflexible -- changes require rewiring
-
-### 2. Microprogrammed Control (Vertical Microprogramming)
-
-The UC uses a ROM (Read-Only Memory) to store microinstructions. From Logisim circuit 8-memory-vertical:
-
-- Each address in ROM corresponds to a state
-- ROM contents define control signals and next-state information
-- Flexible -- change behavior by reprogramming ROM
-- Slightly slower due to ROM access time
-
-### Sequencer
-
-The sequencer controls the flow of states in the UC. From TD5 Exercise:
-
-Components:
-- **Counter**: Holds current state (address)
-- **ROM**: Stores microcode (commands + jump targets)
-- **Multiplexer**: Selects the condition to evaluate
-- **Jump logic**: Decides whether to increment counter or load a new address
-
-**Operation each clock cycle**:
-1. Counter provides current address to ROM
-2. ROM outputs: command bits + jump code + jump address
-3. Jump code selects which condition to check via MUX
-4. If condition is true: load jump address into counter
-5. If condition is false: increment counter
+| Drapeau | Nom | Signification |
+|---------|-----|---------------|
+| Z | Zero | Le resultat est zero |
+| N | Negatif | Le resultat est negatif (MSB = 1) |
+| C | Retenue (Carry) | Debordement non-signe |
+| V | Debordement (oVerflow) | Debordement signe |
 
 ---
 
-## 3.4 Microcode Design (from TD5 -- Fibonacci Machine)
+## 3.3 Unite de Commande (UC)
 
-### Problem
+L'UC est elle-meme une machine a etats finis. Elle peut etre implementee de deux facons :
 
-Design a circuit that computes Fibonacci numbers F(n).
+### 1. Commande cablee (Microprogrammation horizontale)
 
-**Algorithm**:
+L'UC est construite directement a partir de logique combinatoire et sequentielle. Du circuit Logisim 7-memory-horizontal :
+
+- Chaque etat est code avec des bascules
+- La logique de transition est implementee avec des portes
+- Rapide mais inflexible -- les modifications necessitent un recablage
+
+### 2. Commande microprogrammee (Microprogrammation verticale)
+
+L'UC utilise une ROM (memoire morte) pour stocker les micro-instructions. Du circuit Logisim 8-memory-vertical :
+
+- Chaque adresse en ROM correspond a un etat
+- Le contenu de la ROM definit les signaux de commande et l'information d'etat suivant
+- Flexible -- changer le comportement en reprogrammant la ROM
+- Legerement plus lent a cause du temps d'acces a la ROM
+
+### Sequenceur
+
+Le sequenceur controle le flux des etats dans l'UC. Du TD5 :
+
+Composants :
+- **Compteur** : Contient l'etat courant (adresse)
+- **ROM** : Stocke le microcode (commandes + cibles de saut)
+- **Multiplexeur** : Selectionne la condition a evaluer
+- **Logique de saut** : Decide s'il faut incrementer le compteur ou charger une nouvelle adresse
+
+**Fonctionnement a chaque cycle d'horloge** :
+1. Le compteur fournit l'adresse courante a la ROM
+2. La ROM produit : bits de commande + code de saut + adresse de saut
+3. Le code de saut selectionne la condition a verifier via le MUX
+4. Si la condition est vraie : charger l'adresse de saut dans le compteur
+5. Si la condition est fausse : incrementer le compteur
+
+---
+
+## 3.4 Conception du microcode (du TD5 -- Machine Fibonacci)
+
+### Probleme
+
+Concevoir un circuit qui calcule les nombres de Fibonacci F(n).
+
+**Algorithme** :
 ```
-while not init:
-    N0 = 0; N1 = 1; N = input; Q = 0; Res = 0
-while N > Q:
-    N1 = N0 + N1; N0 = N1; Q = Q + 1   (simultaneous)
-while init:
-    Res = 1; display N0
+tant que init:
+    N0 = 0; N1 = 1; N = entree; Q = 0; Res = 0
+tant que N > Q:
+    N1 = N0 + N1; N0 = N1; Q = Q + 1   (simultane)
+tant que init:
+    Res = 1; afficher N0
 Res = 0
 ```
 
-### UT Design
+### Conception de l'UT
 
-Registers and controls:
-- R_N0 (8-bit register for N0)
-- R_N1 (8-bit register for N1)
-- R_N (8-bit register for N, the target index)
-- Counter Q (8-bit counter with increment)
-- Latch Res (JK flip-flop for result flag)
+Registres et commandes :
+- R_N0 (registre 8 bits pour N0)
+- R_N1 (registre 8 bits pour N1)
+- R_N (registre 8 bits pour N, l'indice cible)
+- Compteur Q (compteur 8 bits avec increment)
+- Verrou Res (bascule JK pour le drapeau de resultat)
 
-Commands sent by UC:
-- RESET: Initialize all registers (N0=0, N1=1, N=input, Q=0)
-- N1_2_N0: Load N1's value into N0
-- SUM_N1: Load N0+N1 into N1
-- INC_Q: Increment counter Q
-- RES_0: Reset Res to 0
-- RES_1: Set Res to 1
-- OUT_N0: Put N0 on output bus
+Commandes envoyees par l'UC :
+- RESET : Initialiser tous les registres (N0=0, N1=1, N=entree, Q=0)
+- N1_2_N0 : Charger la valeur de N1 dans N0
+- SUM_N1 : Charger N0+N1 dans N1
+- INC_Q : Incrementer le compteur Q
+- RES_0 : Remettre Res a 0
+- RES_1 : Mettre Res a 1
+- OUT_N0 : Placer N0 sur le bus de sortie
 
-Conditions sent to UC:
-- init: User initialization signal
-- N_GT_Q: Comparator output (N > Q)
+Conditions envoyees a l'UC :
+- init : Signal d'initialisation utilisateur
+- N_GT_Q : Sortie du comparateur (N > Q)
 
-### UC Design (State Machine)
+### Conception de l'UC (Machine a etats)
 
-| State | Name | Action | Next State |
-|-------|------|--------|------------|
-| 0 (A) | Wait for init | RESET, RES_0 | If init: stay. Else: go to 1 |
-| 1 (B) | Check loop | (none) | If N <= Q: go to 3. Else: go to 2 |
-| 2 (C) | Iterate | N1_2_N0, SUM_N1, INC_Q | Go to 1 |
-| 3 (D) | Display | RES_1, OUT_N0 | If init: stay. Else: go to 4 |
-| 4 (E) | Reset result | RES_0 | Go to 0 |
+| Etat | Nom | Action | Etat suivant |
+|------|-----|--------|-------------|
+| 0 (A) | Attente init | RESET, RES_0 | Si init : rester. Sinon : aller en 1 |
+| 1 (B) | Verification boucle | (aucune) | Si N &lt;= Q : aller en 3. Sinon : aller en 2 |
+| 2 (C) | Iteration | N1_2_N0, SUM_N1, INC_Q | Aller en 1 |
+| 3 (D) | Affichage | RES_1, OUT_N0 | Si init : rester. Sinon : aller en 4 |
+| 4 (E) | Remise a zero resultat | RES_0 | Aller en 0 |
 
-### Microcode Encoding
+### Codage du microcode
 
-Each microinstruction word (13 bits):
+Chaque mot de micro-instruction (13 bits) :
 
 ```
-[Jump Code (3 bits)] [Jump Address (3 bits)] [Commands (7 bits)]
+[Code de saut (3 bits)] [Adresse de saut (3 bits)] [Commandes (7 bits)]
 
-Commands: N1_2_N0 | SUM_N1 | INC_Q | RES_0 | RES_1 | OUT_N0 | RESET
+Commandes : N1_2_N0 | SUM_N1 | INC_Q | RES_0 | RES_1 | OUT_N0 | RESET
 
-State A: 001 000 0001001    -- jump code 1 (check init), addr 0, RESET+RES_0
-State B: 010 011 0000000    -- jump code 2 (check /N_GT_Q), addr 3, no commands
-State C: 111 001 1110000    -- jump code 7 (unconditional), addr 1, N1_2_N0+SUM_N1+INC_Q
-State D: 001 011 0000110    -- jump code 1 (check init), addr 3, RES_1+OUT_N0
-State E: 111 000 0001000    -- jump code 7 (unconditional), addr 0, RES_0
+Etat A : 001 000 0001001    -- code saut 1 (test init), adr 0, RESET+RES_0
+Etat B : 010 011 0000000    -- code saut 2 (test /N_GT_Q), adr 3, pas de commande
+Etat C : 111 001 1110000    -- code saut 7 (inconditionnel), adr 1, N1_2_N0+SUM_N1+INC_Q
+Etat D : 001 011 0000110    -- code saut 1 (test init), adr 3, RES_1+OUT_N0
+Etat E : 111 000 0001000    -- code saut 7 (inconditionnel), adr 0, RES_0
 ```
 
-### Sequencer MUX Inputs
+### Entrees du MUX du sequenceur
 
-| Jump Code | Condition Selected |
-|-----------|-------------------|
-| 0 | Always 0 (unconditional increment) |
+| Code de saut | Condition selectionnee |
+|--------------|----------------------|
+| 0 | Toujours 0 (increment inconditionnel) |
 | 1 | init |
 | 2 | /N_GT_Q |
-| 7 | Always 1 (unconditional jump) |
+| 7 | Toujours 1 (saut inconditionnel) |
 
 ---
 
-## 3.5 PGCD Machine Architecture
+## 3.5 Architecture de la machine PGCD
 
-The GCD (PGCD) machine is a key course example that integrates UC and UT. See the dedicated chapter [pgcd-arithmetic.md](pgcd-arithmetic.md) for the full treatment.
+La machine PGCD est un exemple cle du cours qui integre UC et UT. Voir le chapitre dedie [pgcd-arithmetic.md](pgcd-arithmetic.md) pour le traitement complet.
 
-**Quick summary of architecture**:
-- UT contains registers A and B, a subtractor, and a comparator
-- UC implements the Euclidean algorithm as a state machine
-- The integration uses the condition A>B, A=B, A<B to control subtraction
+**Resume rapide de l'architecture** :
+- L'UT contient les registres A et B, un soustracteur et un comparateur
+- L'UC implemente l'algorithme d'Euclide comme machine a etats
+- L'integration utilise les conditions A>B, A=B, A&lt;B pour controler la soustraction
 
 ---
 
-## 3.6 Memory Hierarchy
+## 3.6 Hierarchie memoire
 
-### Register File
+### Banc de registres
 
-Fastest storage. Directly inside the processor. In ARM: 16 registers (r0-r15).
+Stockage le plus rapide. Directement a l'interieur du processeur. En ARM : 16 registres (r0-r15).
 
 ### Cache
 
-Small, fast memory between processor and main memory. Exploits:
-- **Temporal locality**: Recently accessed data is likely to be accessed again
-- **Spatial locality**: Data near recently accessed data is likely to be accessed
+Memoire petite et rapide entre le processeur et la memoire principale. Exploite :
+- **Localite temporelle** : Les donnees recemment accedees seront probablement accedees a nouveau
+- **Localite spatiale** : Les donnees proches de celles recemment accedees seront probablement accedees
 
-### Main Memory (RAM)
+### Memoire principale (RAM)
 
-Larger, slower. Stores program and data during execution.
+Plus grande, plus lente. Stocke le programme et les donnees pendant l'execution.
 
-### ROM (Read-Only Memory)
+### ROM (memoire morte)
 
-Non-volatile. Used for:
-- Microcode storage in UC
-- Boot firmware
-- Lookup tables in combinational circuits
-
----
-
-## 3.7 Common Pitfalls
-
-1. **Confusing UC and UT**: The UC controls, the UT computes. The UC never performs arithmetic on data -- it only sequences operations.
-
-2. **Missing conditions**: The UC needs conditions from the UT to make decisions. If you forget to wire a comparison result back to the UC, the machine cannot branch.
-
-3. **Simultaneous operations**: In hardware, operations connected to different registers can happen in the same clock cycle (unlike sequential code). The Fibonacci machine exploits this: N0=N1 and N1=N0+N1 happen simultaneously.
-
-4. **Microcode word width**: Each bit in the microcode word has a specific meaning. Getting the bit order wrong means sending wrong commands to the UT.
-
-5. **Bus conflicts**: Never enable two outputs onto the same bus simultaneously. Use tri-state buffers with mutually exclusive enable signals.
-
-6. **State count**: The number of microcode states does NOT equal the number of high-level algorithm steps. You may need extra states for initialization, condition checking, and cleanup.
+Non volatile. Utilisee pour :
+- Le stockage du microcode dans l'UC
+- Le firmware de demarrage
+- Les tables de correspondance dans les circuits combinatoires
 
 ---
 
-## CHEAT SHEET -- Processor Architecture
+## 3.7 Pieges courants
+
+1. **Confondre UC et UT** : L'UC commande, l'UT calcule. L'UC n'effectue jamais d'arithmetique sur les donnees -- elle ne fait que sequencer les operations.
+
+2. **Conditions manquantes** : L'UC a besoin des conditions de l'UT pour prendre des decisions. Si vous oubliez de caler un resultat de comparaison vers l'UC, la machine ne peut pas brancher.
+
+3. **Operations simultanees** : En materiel, les operations connectees a des registres differents peuvent se produire dans le meme cycle d'horloge (contrairement au code sequentiel). La machine Fibonacci exploite ceci : N0=N1 et N1=N0+N1 se produisent simultanement.
+
+4. **Largeur du mot de microcode** : Chaque bit du mot de microcode a une signification precise. Se tromper dans l'ordre des bits signifie envoyer de mauvaises commandes a l'UT.
+
+5. **Conflits de bus** : Ne jamais activer deux sorties sur le meme bus simultanement. Utiliser des tampons trois-etats avec des signaux d'activation mutuellement exclusifs.
+
+6. **Nombre d'etats** : Le nombre d'etats du microcode n'est PAS egal au nombre d'etapes de l'algorithme de haut niveau. Vous pouvez avoir besoin d'etats supplementaires pour l'initialisation, la verification des conditions et le nettoyage.
+
+---
+
+## AIDE-MEMOIRE -- Architecture des processeurs
 
 ```
-TWO-UNIT DECOMPOSITION:
-  UT (Datapath):  registers + ALU + buses + MUXes
-  UC (Control):   FSM that generates control signals
+DECOMPOSITION EN DEUX UNITES :
+  UT (Donnees) :  registres + UAL + bus + MUX
+  UC (Commande) : MEF qui genere les signaux de commande
 
-UC -> UT:  commands (load register, enable output, select ALU op)
-UT -> UC:  conditions (zero, carry, overflow, comparison results)
+UC -> UT :  commandes (charger registre, activer sortie, selectionner op UAL)
+UT -> UC :  conditions (zero, retenue, debordement, resultats de comparaison)
 
-UC IMPLEMENTATION STYLES:
-  Hardwired:        Gates + flip-flops, fast, inflexible
-  Microprogrammed:  ROM + counter + MUX, flexible, slightly slower
+STYLES D'IMPLEMENTATION DE L'UC :
+  Cablee :           Portes + bascules, rapide, inflexible
+  Microprogrammee :  ROM + compteur + MUX, flexible, legerement plus lente
 
-SEQUENCER OPERATION (each clock cycle):
-  1. Counter -> ROM address
-  2. ROM outputs: commands + jump_code + jump_address
-  3. jump_code -> MUX selects condition
-  4. If condition true: counter <- jump_address (load)
-  5. If condition false: counter <- counter + 1 (increment)
+FONCTIONNEMENT DU SEQUENCEUR (a chaque cycle d'horloge) :
+  1. Compteur -> adresse ROM
+  2. ROM produit : commandes + code_saut + adresse_saut
+  3. code_saut -> MUX selectionne la condition
+  4. Si condition vraie : compteur <- adresse_saut (chargement)
+  5. Si condition fausse : compteur <- compteur + 1 (increment)
 
-MICROCODE WORD FORMAT:
-  [Jump Code] [Jump Address] [Command Bits]
-  Jump Code: selects which condition (via MUX)
-  Jump Address: where to jump if condition met
-  Command Bits: one bit per control signal to UT
+FORMAT DU MOT DE MICROCODE :
+  [Code de saut] [Adresse de saut] [Bits de commande]
+  Code de saut : selectionne quelle condition (via MUX)
+  Adresse de saut : ou sauter si condition verifiee
+  Bits de commande : un bit par signal de commande vers l'UT
 
-FIBONACCI MACHINE STATES:
-  A: Initialize    B: Check N>Q    C: Iterate
-  D: Display       E: Reset result
+ETATS DE LA MACHINE FIBONACCI :
+  A : Initialiser    B : Verifier N>Q    C : Iterer
+  D : Afficher       E : Remise a zero resultat
 
-CONDITION FLAGS (ALU output):
-  Z (Zero)      N (Negative)    C (Carry)    V (oVerflow)
+DRAPEAUX DE CONDITION (sortie UAL) :
+  Z (Zero)      N (Negatif)    C (Retenue)    V (Debordement)
 
-DESIGN METHODOLOGY:
-  1. Write algorithm in pseudocode
-  2. Identify registers, operations, conditions
-  3. Design UT (registers + ALU + buses)
-  4. Design UC state machine
-  5. Define command signals and conditions
-  6. Encode microcode in ROM
-  7. Build sequencer (counter + MUX + ROM)
-  8. Integrate UC + UT
+METHODOLOGIE DE CONCEPTION :
+  1. Ecrire l'algorithme en pseudo-code
+  2. Identifier registres, operations, conditions
+  3. Concevoir l'UT (registres + UAL + bus)
+  4. Concevoir la machine a etats de l'UC
+  5. Definir les signaux de commande et conditions
+  6. Encoder le microcode en ROM
+  7. Construire le sequenceur (compteur + MUX + ROM)
+  8. Integrer UC + UT
 ```

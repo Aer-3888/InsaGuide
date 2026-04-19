@@ -49,7 +49,7 @@
 
 ### Sous-reseaux
 - [ ] Connaitre le tableau des masques /24 a /30 par coeur
-- [ ] Maitriser la methode : masque -> pas -> reseau -> broadcast -> plage
+- [ ] Maitriser la methode : masque → pas → reseau → broadcast → plage
 - [ ] Savoir faire du VLSM (du plus grand au plus petit)
 - [ ] Puissances de 2 de 2^1 a 2^10
 

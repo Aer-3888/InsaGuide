@@ -45,9 +45,9 @@ Le pattern Adapter permet d'utiliser les structures du TP2 avec les API standard
 
 ## Exercice 1
 
-### Implementer IterateurEngine -- adapter Iterateur\<T\> vers java.util.Iterator\<T\>
+### Implementer IterateurEngine -- adapter Iterateur\&lt;T\> vers java.util.Iterator\&lt;T\>
 
-**Answer:**
+**Reponse :**
 
 ```java
 package main;
@@ -76,7 +76,7 @@ public class IterateurEngine<T> implements Iterator<T> {
 }
 ```
 
-**How the code works:**
+**Fonctionnement du code :**
 - `entete()` dans le constructeur deplace le curseur de la sentinelle head au premier element reel.
 - `hasNext()` correspond a `!estSorti()`.
 - `next()` combine `valec()` (obtenir la valeur) et `succ()` (avancer).
@@ -85,11 +85,11 @@ public class IterateurEngine<T> implements Iterator<T> {
 
 ## Exercice 2
 
-### Implementer ListeEngine -- adapter Liste\<T\> vers java.util.List\<T\>
+### Implementer ListeEngine -- adapter Liste\&lt;T\> vers java.util.List\&lt;T\>
 
-Wrapper qui expose une interface `java.util.List<T>`, permettant les operations standard Java (`add()`, `remove()`, `contains()`, `size()`) et les boucles for-each.
+Wrapper qui expose une interface `java.util.List&lt;T&gt;`, permettant les operations standard Java (`add()`, `remove()`, `contains()`, `size()`) et les boucles for-each.
 
-**Answer:**
+**Reponse :**
 
 ```java
 package main;
@@ -186,7 +186,7 @@ public class ListeEngine<T> implements List<T> {
 }
 ```
 
-**How the code works:**
+**Fonctionnement du code :**
 - `add(T e)` navigue jusqu'a la queue avant d'inserer : `enqueue()` positionne le curseur sur le dernier element reel, puis `ajouterD(e)` insere apres.
 - `remove(Object o)` utilise `==` (identite) et non `.equals()` -- c'est une limitation connue de l'implementation de l'etudiant.
 - `size()` est O(n) car la `Liste` sous-jacente ne maintient pas de compteur.
@@ -200,7 +200,7 @@ public class ListeEngine<T> implements List<T> {
 
 Classe valeur representant des coordonnees GPS (latitude, longitude) avec `equals()` correct pour les recherches.
 
-**Answer:**
+**Reponse :**
 
 ```java
 package main;
@@ -236,7 +236,7 @@ public class Coordonnees {
 }
 ```
 
-**How the code works:**
+**Fonctionnement du code :**
 `equals()` est essentiel car `BdGeographique.coord()` cherche par coordonnees. Sans `equals()`, deux objets `Coordonnees` avec les memes latitude/longitude ne correspondraient pas.
 
 ---
@@ -247,7 +247,7 @@ public class Coordonnees {
 
 Stocker le nom d'une ville, ses coordonnees GPS et sa population.
 
-**Answer:**
+**Reponse :**
 
 ```java
 package main;
@@ -290,7 +290,7 @@ public class Enregistrement {
 }
 ```
 
-**How the code works:**
+**Fonctionnement du code :**
 `equals()` compare les trois champs. Deux enregistrements sont egaux seulement si le nom, les coordonnees et la population correspondent tous.
 
 ---
@@ -301,7 +301,7 @@ public class Enregistrement {
 
 Construire une base de donnees d'enregistrements de villes utilisant `ListeEngine` pour wrapper une `ListeDoubleChainee`. Implementer ajouter, retirer, rechercher et agreger.
 
-**Answer:**
+**Reponse :**
 
 ```java
 package main;
@@ -400,8 +400,8 @@ public class BdGeographique {
 }
 ```
 
-**How the code works:**
-- La ligne clef est `new ListeEngine<>(new ListeDoubleChainee<>())` : `BdGeographique` ne voit qu'un `java.util.List<Enregistrement>`, mais les donnees sont stockees dans la liste doublement chainee du TP2.
+**Fonctionnement du code :**
+- La ligne clef est `new ListeEngine&lt;&gt;(new ListeDoubleChainee&lt;&gt;())` : `BdGeographique` ne voit qu'un `java.util.List&lt;Enregistrement&gt;`, mais les donnees sont stockees dans la liste doublement chainee du TP2.
 - `retirerVille` utilise une boucle car un nom peut apparaitre plusieurs fois.
 - Toutes les recherches sont des scans lineaires O(n). Pour de meilleurs performances, il faudrait des tables de hachage (TP5) ou des structures spatiales (TP7).
 
@@ -413,7 +413,7 @@ public class BdGeographique {
 
 Comment utiliser une liste tableau au lieu d'une liste chainee ?
 
-**Answer:**
+**Reponse :**
 
 Le changement est une seule ligne dans le constructeur :
 
@@ -431,7 +431,7 @@ this.data = new java.util.LinkedList<>();
 this.data = new java.util.ArrayList<>();
 ```
 
-**How the code works:**
+**Fonctionnement du code :**
 Les quatre options produisent un comportement identique pour `BdGeographique`. Les seules differences sont les caracteristiques de performance et les limites de capacite (`ListeTabulee` a TMAX=1000).
 
 ---

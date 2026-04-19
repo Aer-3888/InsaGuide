@@ -5,7 +5,7 @@
 ## Exercice 1 : Modus tollens
 
 ### Enonce
-Prouver : p -> q, ~q |- ~p
+Prouver : p → q, ~q |- ~p
 
 ### Preuve detaillee
 
@@ -22,7 +22,7 @@ Prouver : p -> q, ~q |- ~p
 
 **Justification de chaque pas :**
 - Ligne 3 : hypothese temporaire pour preparer ~-I
-- Ligne 4 : modus ponens (->-E). Premisses : p (ligne 3) et p -> q (ligne 1). Conclusion : q.
+- Ligne 4 : modus ponens (->-E). Premisses : p (ligne 3) et p → q (ligne 1). Conclusion : q.
 - Ligne 5 : contradiction (~-E). Premisses : q (ligne 4) et ~q (ligne 2). Conclusion : _|_.
 - Ligne 6 : introduction de la negation (~-I). On avait suppose p (ligne 3) et obtenu _|_ (ligne 5). Donc ~p est prouve, et l'hypothese p est dechargee.
 
@@ -93,8 +93,8 @@ Prouver : ~p /\ ~q |- ~(p \/ q)
 **Justification de chaque pas :**
 - Lignes 2-3 : extraire les deux negations de l'hypothese.
 - Ligne 4 : hypothese temporaire p \/ q pour preparer ~-I.
-- Lignes 5-6 : cas p -> contradiction avec ~p.
-- Lignes 7-8 : cas q -> contradiction avec ~q.
+- Lignes 5-6 : cas p → contradiction avec ~p.
+- Lignes 7-8 : cas q → contradiction avec ~q.
 - Ligne 9 : \/-E combine les deux cas. Les deux branches donnent _|_, donc _|_.
 - Ligne 10 : ~-I conclut ~(p \/ q).
 
@@ -103,11 +103,11 @@ Prouver : ~p /\ ~q |- ~(p \/ q)
 ## Exercice 4 : Exportation
 
 ### Enonce
-Prouver : (p /\ q) -> r |- p -> (q -> r)
+Prouver : (p /\ q) → r |- p → (q → r)
 
 ### Preuve detaillee
 
-**Strategie :** La conclusion est p -> (q -> r). C'est une implication. On utilise ->-I : supposer p, prouver q -> r. Ensuite q -> r est aussi une implication : supposer q, prouver r. On aura p et q, donc p /\ q, et avec l'hypothese (p /\ q) -> r, on obtient r.
+**Strategie :** La conclusion est p → (q → r). C'est une implication. On utilise ->-I : supposer p, prouver q → r. Ensuite q → r est aussi une implication : supposer q, prouver r. On aura p et q, donc p /\ q, et avec l'hypothese (p /\ q) → r, on obtient r.
 
 ```
 1.  (p /\ q) -> r       [hypothese]
@@ -123,20 +123,20 @@ Prouver : (p /\ q) -> r |- p -> (q -> r)
 - Ligne 2 : hypothese temporaire p (pour la fleche externe).
 - Ligne 3 : hypothese temporaire q (pour la fleche interne).
 - Ligne 4 : /\-I combine p (ligne 2, dans la portee) et q (ligne 3).
-- Ligne 5 : modus ponens avec (p /\ q) -> r.
-- Ligne 6 : ->-I decharge q, obtient q -> r.
-- Ligne 7 : ->-I decharge p, obtient p -> (q -> r).
+- Ligne 5 : modus ponens avec (p /\ q) → r.
+- Ligne 6 : ->-I decharge q, obtient q → r.
+- Ligne 7 : ->-I decharge p, obtient p → (q → r).
 
 ---
 
 ## Exercice 5 : Importation (sens inverse de l'exportation)
 
 ### Enonce
-Prouver : p -> (q -> r) |- (p /\ q) -> r
+Prouver : p → (q → r) |- (p /\ q) → r
 
 ### Preuve detaillee
 
-**Strategie :** La conclusion est (p /\ q) -> r. On utilise ->-I : supposer p /\ q, prouver r. De p /\ q on extrait p et q, puis on utilise l'hypothese deux fois.
+**Strategie :** La conclusion est (p /\ q) → r. On utilise ->-I : supposer p /\ q, prouver r. De p /\ q on extrait p et q, puis on utilise l'hypothese deux fois.
 
 ```
 1.  p -> (q -> r)        [hypothese]
@@ -218,11 +218,11 @@ Prouver : p \/ q, ~p |- q
 ## Exercice 8 : Transitivite universelle avec quantificateurs
 
 ### Enonce
-Prouver : Ax, (P(x) -> Q(x)), Ax, (Q(x) -> R(x)) |- Ax, (P(x) -> R(x))
+Prouver : Ax, (P(x) → Q(x)), Ax, (Q(x) → R(x)) |- Ax, (P(x) → R(x))
 
 ### Preuve detaillee
 
-**Strategie :** La conclusion est Ax, (P(x) -> R(x)). Pour A-I (introduction du pour tout), on prouve P(a) -> R(a) pour une variable fraiche a. Pour ->-I, on suppose P(a) et on montre R(a).
+**Strategie :** La conclusion est Ax, (P(x) → R(x)). Pour A-I (introduction du pour tout), on prouve P(a) → R(a) pour une variable fraiche a. Pour ->-I, on suppose P(a) et on montre R(a).
 
 ```
 1.  Ax, (P(x) -> Q(x))     [hypothese]
@@ -240,7 +240,7 @@ Prouver : Ax, (P(x) -> Q(x)), Ax, (Q(x) -> R(x)) |- Ax, (P(x) -> R(x))
 
 **Justification de chaque pas :**
 - Ligne 3 : variable fraiche a. a n'apparait dans aucune hypothese (1 et 2 ne mentionnent pas a).
-- Ligne 4 : A-E (elimination du pour tout). De Ax, (P(x) -> Q(x)), on instantie x par a.
+- Ligne 4 : A-E (elimination du pour tout). De Ax, (P(x) → Q(x)), on instantie x par a.
 - Ligne 5 : A-E sur la deuxieme hypothese.
 - Lignes 6-7 : deux applications de modus ponens (chaine de la transitivite).
 - Ligne 9 : A-I. Condition : a ne doit apparaitre dans aucune hypothese non dechargee. Les seules hypotheses non dechargees sont 1 et 2, qui ne contiennent pas a. OK.
@@ -288,11 +288,11 @@ Pour E-E : on pose Ay, R(a,y) pour a frais. Ensuite on prouve la conclusion sans
 ## Exercice 10 : Contraposee
 
 ### Enonce
-Prouver : p -> q |- ~q -> ~p (sans RAA)
+Prouver : p → q |- ~q → ~p (sans RAA)
 
 ### Preuve detaillee
 
-**Strategie :** La conclusion est ~q -> ~p (implication). On utilise ->-I : supposer ~q, prouver ~p. Pour prouver ~p (negation), on utilise ~-I : supposer p, trouver _|_.
+**Strategie :** La conclusion est ~q → ~p (implication). On utilise ->-I : supposer ~q, prouver ~p. Pour prouver ~p (negation), on utilise ~-I : supposer p, trouver _|_.
 
 ```
 1.  p -> q              [hypothese]
@@ -310,7 +310,7 @@ Prouver : p -> q |- ~q -> ~p (sans RAA)
 - Ligne 4 : modus ponens classique.
 - Ligne 5 : q et ~q donnent _|_.
 - Ligne 6 : ~-I conclut ~p (hypothese p dechargee).
-- Ligne 7 : ->-I conclut ~q -> ~p (hypothese ~q dechargee).
+- Ligne 7 : ->-I conclut ~q → ~p (hypothese ~q dechargee).
 
 Remarque : cette preuve n'utilise PAS RAA. Elle est valide en logique intuitionniste.
 
@@ -319,7 +319,7 @@ Remarque : cette preuve n'utilise PAS RAA. Elle est valide en logique intuitionn
 ## Exercice 11 : Preuve par l'absurde (RAA)
 
 ### Enonce
-Prouver : ~p -> p |- p
+Prouver : ~p → p |- p
 
 ### Preuve detaillee
 
@@ -335,7 +335,7 @@ Prouver : ~p -> p |- p
 
 **Justification de chaque pas :**
 - Ligne 2 : hypothese temporaire ~p pour RAA.
-- Ligne 3 : modus ponens avec l'hypothese ~p -> p. L'antecedent ~p est vrai (ligne 2), donc p.
+- Ligne 3 : modus ponens avec l'hypothese ~p → p. L'antecedent ~p est vrai (ligne 2), donc p.
 - Ligne 4 : p (ligne 3) et ~p (ligne 2) donnent _|_.
 - Ligne 5 : RAA conclut p.
 
@@ -344,7 +344,7 @@ Prouver : ~p -> p |- p
 ## Exercice 12 : Axiome S de la logique combinatoire
 
 ### Enonce
-Prouver : |- (p -> (q -> r)) -> ((p -> q) -> (p -> r))
+Prouver : |- (p → (q → r)) → ((p → q) → (p → r))
 
 ### Preuve detaillee
 
@@ -364,9 +364,9 @@ Prouver : |- (p -> (q -> r)) -> ((p -> q) -> (p -> r))
 
 **Justification de chaque pas :**
 - Lignes 1-3 : trois hypotheses temporaires emboitees. Chacune prepare une introduction d'implication.
-- Ligne 4 : modus ponens avec p (ligne 3) et p -> (q -> r) (ligne 1).
-- Ligne 5 : modus ponens avec p (ligne 3) et p -> q (ligne 2).
-- Ligne 6 : modus ponens avec q (ligne 5) et q -> r (ligne 4).
+- Ligne 4 : modus ponens avec p (ligne 3) et p → (q → r) (ligne 1).
+- Ligne 5 : modus ponens avec p (ligne 3) et p → q (ligne 2).
+- Ligne 6 : modus ponens avec q (ligne 5) et q → r (ligne 4).
 - Lignes 7-9 : trois ->-I consecutives, dechargent les trois hypotheses dans l'ordre inverse.
 
 C'est l'**axiome S** de la logique combinatoire (systeme SKI). Il exprime la distributivite de l'implication.
@@ -376,11 +376,11 @@ C'est l'**axiome S** de la logique combinatoire (systeme SKI). Il exprime la dis
 ## Exercice 13 : Existentiel et implication universelle
 
 ### Enonce
-Prouver : Ex, P(x), Ax, (P(x) -> Q(x)) |- Ex, Q(x)
+Prouver : Ex, P(x), Ax, (P(x) → Q(x)) |- Ex, Q(x)
 
 ### Preuve detaillee
 
-**Strategie :** On a un existentiel Ex, P(x). On utilise E-E pour poser P(a) pour a frais. Ensuite on utilise A-E pour obtenir P(a) -> Q(a), puis modus ponens pour Q(a), puis E-I pour Ex, Q(x).
+**Strategie :** On a un existentiel Ex, P(x). On utilise E-E pour poser P(a) pour a frais. Ensuite on utilise A-E pour obtenir P(a) → Q(a), puis modus ponens pour Q(a), puis E-I pour Ex, Q(x).
 
 ```
 1.  Ex, P(x)                    [hypothese]
@@ -408,11 +408,11 @@ Prouver : Ex, P(x), Ax, (P(x) -> Q(x)) |- Ex, Q(x)
 ## Exercice 14 : Double negation (classique)
 
 ### Enonce
-Prouver : |- ~~p -> p
+Prouver : |- ~~p → p
 
 ### Preuve detaillee
 
-**Strategie :** La conclusion est ~~p -> p. On utilise ->-I : supposer ~~p, prouver p. Pour prouver p (formule atomique) a partir de ~~p, on utilise RAA.
+**Strategie :** La conclusion est ~~p → p. On utilise ->-I : supposer ~~p, prouver p. Pour prouver p (formule atomique) a partir de ~~p, on utilise RAA.
 
 ```
 1.  | [~~p]              [hypothese temporaire pour ->-I]
@@ -434,11 +434,11 @@ Prouver : |- ~~p -> p
 ## Exercice 15 : Loi de Peirce (type DS 2022-2023)
 
 ### Enonce
-Prouver : |- ((p -> q) -> p) -> p
+Prouver : |- ((p → q) → p) → p
 
 ### Preuve detaillee
 
-**Strategie :** La conclusion est une implication. On utilise ->-I : supposer (p -> q) -> p, prouver p. Pour p (atomique), on utilise RAA.
+**Strategie :** La conclusion est une implication. On utilise ->-I : supposer (p → q) → p, prouver p. Pour p (atomique), on utilise RAA.
 
 ```
 1.  | [(p -> q) -> p]        [hypothese temporaire pour ->-I]
@@ -454,8 +454,8 @@ Prouver : |- ((p -> q) -> p) -> p
 ```
 
 **Justification de chaque pas :**
-- Lignes 3-5 : L'astuce est de construire p -> q en utilisant ex falso. Dans l'hypothese ~p (ligne 2), si on suppose p (ligne 3), on a immediatement _|_, d'ou on peut deduire n'importe quoi, y compris q.
-- Ligne 6 : ->-I conclut p -> q.
+- Lignes 3-5 : L'astuce est de construire p → q en utilisant ex falso. Dans l'hypothese ~p (ligne 2), si on suppose p (ligne 3), on a immediatement _|_, d'ou on peut deduire n'importe quoi, y compris q.
+- Ligne 6 : ->-I conclut p → q.
 - Ligne 7 : Modus ponens avec l'hypothese 1.
 - Lignes 8-9 : p et ~p donnent _|_, donc RAA conclut p.
 
@@ -509,8 +509,8 @@ Prouver : p \/ (q /\ r) |- (p \/ q) /\ (p \/ r)
 | \/-I1 | De A, conclure A \/ B | Introduction du OU (gauche) |
 | \/-I2 | De B, conclure A \/ B | Introduction du OU (droite) |
 | \/-E | De A \/ B, A |- C, B |- C, conclure C | Elimination du OU (par cas) |
-| ->-I | De [A] ... B, conclure A -> B | Introduction de l'implication |
-| ->-E | De A et A -> B, conclure B | Elimination de l'implication (modus ponens) |
+| ->-I | De [A] ... B, conclure A → B | Introduction de l'implication |
+| ->-E | De A et A → B, conclure B | Elimination de l'implication (modus ponens) |
 | ~-I | De [A] ... _\|_, conclure ~A | Introduction de la negation |
 | ~-E | De A et ~A, conclure _\|_ | Elimination de la negation (contradiction) |
 | _\|_-E | De _\|_, conclure A (n'importe quoi) | Ex falso quodlibet |

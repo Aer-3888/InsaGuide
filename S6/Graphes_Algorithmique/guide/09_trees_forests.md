@@ -64,7 +64,7 @@ Une **feuille** est un sommet de degre 1.
 
 Par le theoreme des poignees de main : Somme d(v) = 2(n-1) = 2n-2.
 
-Donc la moyenne des degres est (2n-2)/n < 2. Il y a forcement des sommets de degre 1.
+Donc la moyenne des degres est (2n-2)/n &lt; 2. Il y a forcement des sommets de degre 1.
 
 ### Suppression de feuille
 
@@ -269,7 +269,7 @@ Le tri topologique est a la base de l'ordonnancement (methode MPM) :
 - Marge totale MT = LS - ES
 - Chemin critique : taches avec MT = 0
 
-Voir le chapitre dédié dans les exercices pour des exemples complets.
+Voir le chapitre dedie dans les exercices pour des exemples complets.
 
 ---
 

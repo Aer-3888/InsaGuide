@@ -1,55 +1,55 @@
-# SDD -- Structures de Donnees (Data Structures)
+# SDD -- Structures de Donnees
 
-## Course Overview
+## Presentation du cours
 
-SDD is the core data structures course at INSA Rennes (3rd year, Semester 5). It covers the design, implementation, and analysis of fundamental data structures in Java, with emphasis on abstract data types, interface/implementation separation, and algorithmic complexity.
+SDD est le cours fondamental de structures de donnees a l'INSA Rennes (3e annee, Semestre 5). Il couvre la conception, l'implementation et l'analyse des structures de donnees fondamentales en Java, avec un accent sur les types abstraits de donnees, la separation interface/implementation et la complexite algorithmique.
 
-**Language:** Java (generics, interfaces, iterators, collections framework)
-**Assessment:** Written exam (DS) -- implement operations, trace algorithms, prove complexities
+**Langage :** Java (generiques, interfaces, iterateurs, framework de collections)
+**Evaluation :** Examen ecrit (DS) -- implementer des operations, tracer des algorithmes, prouver des complexites
 
-## Topics
+## Sujets
 
-| # | Topic | Guide | Key Concepts |
-|---|-------|-------|--------------|
-| 1 | [Linked Lists](01-linked-lists.md) | Singly/doubly linked, sentinels, cursor pattern | O(1) insert/delete at cursor |
-| 2 | [Iterators & Design Patterns](02-iterators.md) | Iterator pattern, Java Iterator/Iterable, adapter pattern | Separation of concerns |
-| 3 | [Stacks & Queues](03-stacks-queues.md) | LIFO/FIFO, array/linked implementations | Expression evaluation, BFS |
-| 4 | [Hash Tables](04-hash-tables.md) | Hash functions, chaining, open addressing, load factor | O(1) average lookup |
-| 5 | [Binary Trees](05-binary-trees.md) | BST, AVL, rotations, traversals | O(log n) balanced operations |
-| 6 | [Heaps & Priority Queues](06-heaps-priority-queues.md) | Min/max heap, heapify, heap sort | O(log n) insert/extract-min |
-| 7 | [Graphs & Dijkstra](07-graphs-dijkstra.md) | Adjacency list/matrix, BFS, DFS, Dijkstra | Shortest paths |
-| 8 | [Quadtrees](08-quadtrees.md) | Spatial data structures, region quadtrees, pruning | Image compression |
-| 9 | [Complexity Analysis](09-complexity.md) | Big-O, Theta, Omega, amortized analysis | Proof techniques |
+| # | Sujet | Guide | Concepts cles |
+|---|-------|-------|---------------|
+| 1 | [Listes chainees](01-linked-lists.md) | Simplement/doublement chainees, sentinelles, patron curseur | O(1) insertion/suppression au curseur |
+| 2 | [Iterateurs et Design Patterns](02-iterators.md) | Patron iterateur, Java Iterator/Iterable, patron adaptateur | Separation des preoccupations |
+| 3 | [Piles et Files](03-stacks-queues.md) | LIFO/FIFO, implementations tableau/chainee | Evaluation d'expressions, BFS |
+| 4 | [Tables de hachage](04-hash-tables.md) | Fonctions de hachage, chainage, adressage ouvert, facteur de charge | O(1) recherche en moyenne |
+| 5 | [Arbres binaires](05-binary-trees.md) | ABR, AVL, rotations, parcours | O(log n) operations equilibrees |
+| 6 | [Tas et Files de priorite](06-heaps-priority-queues.md) | Tas min/max, heapify, tri par tas | O(log n) insertion/extraction-min |
+| 7 | [Graphes et Dijkstra](07-graphs-dijkstra.md) | Liste/matrice d'adjacence, BFS, DFS, Dijkstra | Plus courts chemins |
+| 8 | [Quadtrees](08-quadtrees.md) | Structures spatiales, quadtrees de region, elagage | Compression d'images |
+| 9 | [Analyse de complexite](09-complexity.md) | Big-O, Theta, Omega, analyse amortie | Techniques de preuve |
 
-## Master Complexity Table
+## Tableau de complexite general
 
-| Data Structure | Access | Search | Insert | Delete | Space | Notes |
-|---------------|--------|--------|--------|--------|-------|-------|
-| Array | O(1) | O(n) | O(n) | O(n) | O(n) | O(log n) search if sorted |
-| Linked List (at cursor) | O(n) | O(n) | O(1) | O(1) | O(n) | O(1) ops at known position |
-| Array-backed List | O(1) | O(n) | O(n) | O(n) | O(n) | Amortized O(1) append |
-| Stack | O(n) | O(n) | O(1) | O(1) | O(n) | LIFO access only |
-| Queue | O(n) | O(n) | O(1) | O(1) | O(n) | FIFO access only |
-| Hash Table | -- | O(1)* | O(1)* | O(1)* | O(n) | *Average case; O(n) worst |
-| BST (balanced) | O(log n) | O(log n) | O(log n) | O(log n) | O(n) | Degenerates to O(n) if unbalanced |
-| AVL Tree | O(log n) | O(log n) | O(log n) | O(log n) | O(n) | Guaranteed balance |
-| Min/Max Heap | O(1)** | O(n) | O(log n) | O(log n) | O(n) | **Peek only; no arbitrary access |
-| Priority Queue (heap) | -- | -- | O(log n) | O(log n) | O(n) | add + poll |
-| Priority Queue (sorted array) | -- | -- | O(n) | O(n) | O(n) | add uses binary search + shift; poll shifts all elements |
-| Quadtree | -- | O(log n)*** | O(log n)*** | O(log n)*** | O(n) | ***For spatial queries |
-| Graph (adj. list) | -- | O(V+E) | O(1) | O(E) | O(V+E) | Edge operations |
-| Graph (adj. matrix) | -- | O(1) | O(1) | O(1) | O(V^2) | Space-expensive |
+| Structure de donnees | Acces | Recherche | Insertion | Suppression | Espace | Notes |
+|---------------------|-------|-----------|-----------|-------------|--------|-------|
+| Tableau | O(1) | O(n) | O(n) | O(n) | O(n) | O(log n) recherche si trie |
+| Liste chainee (au curseur) | O(n) | O(n) | O(1) | O(1) | O(n) | O(1) ops a position connue |
+| Liste avec tableau | O(1) | O(n) | O(n) | O(n) | O(n) | O(1) amorti en ajout a la fin |
+| Pile | O(n) | O(n) | O(1) | O(1) | O(n) | Acces LIFO uniquement |
+| File | O(n) | O(n) | O(1) | O(1) | O(n) | Acces FIFO uniquement |
+| Table de hachage | -- | O(1)* | O(1)* | O(1)* | O(n) | *Cas moyen ; O(n) pire cas |
+| ABR (equilibre) | O(log n) | O(log n) | O(log n) | O(log n) | O(n) | Degenere en O(n) si desequilibre |
+| Arbre AVL | O(log n) | O(log n) | O(log n) | O(log n) | O(n) | Equilibre garanti |
+| Tas min/max | O(1)** | O(n) | O(log n) | O(log n) | O(n) | **Peek seulement ; pas d'acces arbitraire |
+| File de priorite (tas) | -- | -- | O(log n) | O(log n) | O(n) | add + poll |
+| File de priorite (tableau trie) | -- | -- | O(n) | O(n) | O(n) | add utilise recherche dichotomique + decalage ; poll decale tous les elements |
+| Quadtree | -- | O(log n)*** | O(log n)*** | O(log n)*** | O(n) | ***Pour requetes spatiales |
+| Graphe (liste adj.) | -- | O(V+E) | O(1) | O(E) | O(V+E) | Operations sur aretes |
+| Graphe (matrice adj.) | -- | O(1) | O(1) | O(1) | O(V^2) | Couteux en espace |
 
-## Java Patterns Used in This Course
+## Patrons Java utilises dans ce cours
 
-### 1. Interface / Implementation Separation
+### 1. Separation interface / implementation
 ```
 Liste<T>  (interface)
   |-- ListeDoubleChainee<T>  (linked implementation)
   |-- ListeTabulee<T>         (array implementation)
 ```
 
-### 2. Iterator Pattern
+### 2. Patron Iterateur
 ```
 Liste<T> --creates--> Iterateur<T>
   |                      |
@@ -57,37 +57,37 @@ Liste<T> --creates--> Iterateur<T>
   |-- ListeTabulee       |-- ListeTabuleeIterateur
 ```
 
-### 3. Adapter Pattern
+### 3. Patron Adaptateur
 ```
 Liste<T> --adapted by--> ListeEngine<T> implements java.util.List<T>
 Iterateur<T> --adapted by--> IterateurEngine<T> implements java.util.Iterator<T>
 ```
 
-### 4. Generics
+### 4. Generiques
 ```java
 public class ListeDoubleChainee<T> implements Liste<T> { ... }
 public class HeapPQ<T> implements PriorityQueue<T> { ... }
 public class Dijkstra<T> { ... }
 ```
 
-## How to Use This Guide
+## Comment utiliser ce guide
 
-1. **Before a TP**: Read the corresponding topic guide for theory
-2. **During study**: Use the cheat sheets at the end of each topic
-3. **Before the exam**: Focus on the [Exam Prep](../exam-prep/README.md) section
-4. **For practice**: Work through the [Exercise Solutions](../exercises/) with the TP source code
+1. **Avant un TP** : Lire le guide du sujet correspondant pour la theorie
+2. **Pendant les revisions** : Utiliser les aide-memoire a la fin de chaque sujet
+3. **Avant l'examen** : Se concentrer sur la section [Preparation a l'examen](../exam-prep/)
+4. **Pour s'exercer** : Travailler les [Solutions d'exercices](../exercises/) avec le code source des TP
 
-## Key Files to Know
+## Fichiers cles a connaitre
 
-| File | Role |
-|------|------|
-| `MyList<T>` | Original list interface (TP1) |
-| `Liste<T>` / `Iterateur<T>` | Refined interfaces separating list from iterator (TP2-3) |
-| `ListeEngine<T>` / `IterateurEngine<T>` | Adapters bridging custom lists to `java.util.List` (TP3) |
-| `Arbre` | Binary tree interface (TP6) |
-| `TreeTwo` | Binary tree implementation with postfix traversal (TP6) |
-| `ExprArith` | Arithmetic expression tree evaluator (TP6) |
-| `QuadTree` / `Tree` | Quadtree interface and implementation for images (TP7) |
-| `PriorityQueue<T>` / `HeapPQ<T>` | Priority queue with binary heap (TP8) |
-| `Graph<T>` / `IndexedGraph` | Graph interface and adjacency list implementation (TP8) |
-| `Dijkstra<T>` | Shortest path algorithm (TP8) |
+| Fichier | Role |
+|---------|------|
+| `MyList&lt;T&gt;` | Interface liste originale (TP1) |
+| `Liste&lt;T&gt;` / `Iterateur&lt;T&gt;` | Interfaces raffinées separant liste et iterateur (TP2-3) |
+| `ListeEngine&lt;T&gt;` / `IterateurEngine&lt;T&gt;` | Adaptateurs reliant listes personnalisees a `java.util.List` (TP3) |
+| `Arbre` | Interface arbre binaire (TP6) |
+| `TreeTwo` | Implementation arbre binaire avec parcours postfixe (TP6) |
+| `ExprArith` | Evaluateur d'expressions arithmetiques par arbre (TP6) |
+| `QuadTree` / `Tree` | Interface et implementation quadtree pour images (TP7) |
+| `PriorityQueue&lt;T&gt;` / `HeapPQ&lt;T&gt;` | File de priorite avec tas binaire (TP8) |
+| `Graph&lt;T&gt;` / `IndexedGraph` | Interface graphe et implementation par liste d'adjacence (TP8) |
+| `Dijkstra&lt;T&gt;` | Algorithme de plus court chemin (TP8) |

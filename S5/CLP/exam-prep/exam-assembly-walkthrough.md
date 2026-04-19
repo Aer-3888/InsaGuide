@@ -1,10 +1,10 @@
-# Assembly Exam Walkthroughs
+# Corriges d'examens d'assembleur
 
-## 2017 Exam -- String Processing
+## Examen 2017 -- Traitement de chaines
 
-### Exercise 1: Count Character Occurrences
+### Exercice 1 : Compter les occurrences d'un caractere
 
-**Problem** (reconstructed from solution code): Count the number of 'e' characters in the string "Ouvroir de litterature potentielle". Note: the source file `Exercice1 Theo.s` uses the accented spelling "litterature", which means the accented character is NOT counted by ASCII comparison.
+**Probleme** (reconstitue a partir du code solution) : Compter le nombre de caracteres 'e' dans la chaine "Ouvroir de litterature potentielle". Note : le fichier source `Exercice1 Theo.s` utilise l'orthographe accentuee "litterature", ce qui signifie que le caractere accentue n'est PAS compte par la comparaison ASCII.
 
 **Given code** (`Exercice1 Theo.s`):
 
@@ -33,7 +33,7 @@ _Start:
 
 **Note on encoding**: The original source string contains the accented character "e" in "litterature". Since ARM `LDRB` compares raw byte values, the accented "e" (UTF-8: 0xC3 0xA9) does NOT match ASCII 'e' (0x65). This affects the count.
 
-### Step-by-Step Methodology
+### Methodologie pas a pas
 
 **Step 1: Identify the data structures**
 - `a`: 4-byte space for the result
@@ -63,11 +63,11 @@ Occurrences of 'e': d**e**, literatur**e**, pot**e**nti**e**ll**e** = 5
 
 ---
 
-## 2018 Exam -- Structures and Vectors
+## Examen 2018 -- Structures et vecteurs
 
-### Context
+### Contexte
 
-The exam works with mathematical structures:
+L'examen travaille avec des structures mathematiques :
 
 **Line** (Droite): ax + by + c = 0
 ```
@@ -155,7 +155,7 @@ fin_boucle:
     bx lr
 ```
 
-### Key Exam Techniques
+### Techniques cles d'examen
 
 1. **Array of pointers to structures**: `ldr r5, [r8, r4, lsl #2]` gets the i-th pointer, then `ldr r6, [r5, #4]` dereferences the structure field.
 
@@ -209,15 +209,15 @@ Colinearite:
 
 **Expected results**:
 - D1 direction: (-2, 3), D2 direction: (-4, 6)
-- Cross product: (-2)*6 - 3*(-4) = -12 + 12 = 0 -> Collinear (D1 parallel to D2)
+- Cross product: (-2)*6 - 3*(-4) = -12 + 12 = 0 → Collinear (D1 parallel to D2)
 
 ---
 
-## 2019 Exam -- Structures and String Processing
+## Examen 2019 -- Structures et traitement de chaines
 
-### Context
+### Contexte
 
-The exam works with ingredient structures for a recipe:
+L'examen travaille avec des structures d'ingredients pour une recette :
 
 ```
 Structure Ingredient {
@@ -340,16 +340,16 @@ Result: 150 (grams of butter)
 
 ---
 
-## General Exam-Taking Strategy for Assembly
+## Strategie generale pour l'examen d'assembleur
 
-### Reading Code (Comprehension Questions)
+### Lecture de code (Questions de comprehension)
 
 1. **Identify the data**: Read `.data` and `.bss` sections first. Understand what variables exist and their types.
 2. **Note the constants**: `.equ` and `.set` definitions tell you structure offsets and sizes.
 3. **Trace registers**: For each instruction, write down what register holds what value.
 4. **Draw the stack**: For function calls, draw the stack frame at the function entry point.
 
-### Writing Code (Production Questions)
+### Ecriture de code (Questions de production)
 
 1. **Start with the prologue**: Always write the standard prologue first (save LR, FP, set FP, allocate locals, save registers).
 2. **Define offsets**: Write `.equ` for all stack offsets before coding the body.
@@ -357,7 +357,7 @@ Result: 150 (grams of butter)
 4. **End with the epilogue**: Reverse the prologue exactly (restore registers, free locals, restore FP and LR, bx lr).
 5. **Verify**: Check that every STMFD has a matching LDMFD with the same register list.
 
-### Common Patterns to Memorize
+### Patrons courants a memoriser
 
 **String traversal**:
 ```arm
@@ -391,7 +391,7 @@ func:
     bx lr
 ```
 
-### Self-Check Before Submitting
+### Auto-verification avant de rendre
 
 - [ ] Every function saves and restores LR (if it calls other functions)
 - [ ] Stack is balanced (total pushed = total popped)

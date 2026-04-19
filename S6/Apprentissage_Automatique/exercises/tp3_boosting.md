@@ -1,88 +1,88 @@
-# TP3 - Decision Trees and Boosting with BonzaiBoost
+# TP3 - Arbres de decision et boosting avec BonzaiBoost
 
-> Following teacher instructions from: `data/moodle/tp/tp3_boosting/README.md` and `data/moodle/tp/tp3_boosting/TP3_but_4.pdf`
-
----
-
-## Dataset: Adult Income (Census)
-
-**Problem:** Predict whether a person earns more than $50K/year based on census data.
-
-- `adult.data`: Training data (32,561 records)
-- `adult.test`: Test data (16,281 records)
-- `adult.names`: Dataset description and attribute definitions
-
-**Attributes (14 features):**
-
-| Feature | Type | Values |
-|---------|------|--------|
-| age | Continuous | Age of the person |
-| workclass | Nominal | Private, Self-emp-not-inc, Federal-gov, etc. |
-| fnlwgt | Ignore | Census weight (not used) |
-| education | Nominal | Bachelors, Some-college, HS-grad, etc. |
-| education-num | Continuous | Number of years of education |
-| marital-status | Nominal | Married-civ-spouse, Divorced, Never-married, etc. |
-| occupation | Nominal | Tech-support, Exec-managerial, Prof-specialty, etc. |
-| relationship | Nominal | Wife, Own-child, Husband, etc. |
-| race | Nominal | White, Asian-Pac-Islander, Black, etc. |
-| sex | Nominal | Female, Male |
-| capital-gain | Ignore | (not used) |
-| capital-loss | Ignore | (not used) |
-| hours-per-week | Continuous | Hours worked per week |
-| native-country | Nominal | United-States, England, etc. (41 countries) |
-
-**Target classes:**
-- `sup50K` (~24%): Income > $50K/year
-- `infeq50K` (~76%): Income <= $50K/year
+> Instructions du TP issues de : `data/moodle/tp/tp3_boosting/README.md` et `data/moodle/tp/tp3_boosting/TP3_but_4.pdf`
 
 ---
 
-## Exercise 1: Naive Baseline
+## Dataset : Adult Income (Census)
 
-### What is the training/test accuracy of the naive classifier?
+**Probleme :** Predire si une personne gagne plus de 50K$/an a partir de donnees de recensement.
 
-The naive classifier predicts the majority class for all instances.
+- `adult.data` : Donnees d'entrainement (32 561 enregistrements)
+- `adult.test` : Donnees de test (16 281 enregistrements)
+- `adult.names` : Description du dataset et definition des attributs
 
-**Answer:**
+**Attributs (14 features) :**
+
+| Feature | Type | Valeurs |
+|---------|------|---------|
+| age | Continue | Age de la personne |
+| workclass | Nominale | Private, Self-emp-not-inc, Federal-gov, etc. |
+| fnlwgt | Ignoree | Poids du recensement (non utilise) |
+| education | Nominale | Bachelors, Some-college, HS-grad, etc. |
+| education-num | Continue | Nombre d'annees d'etudes |
+| marital-status | Nominale | Married-civ-spouse, Divorced, Never-married, etc. |
+| occupation | Nominale | Tech-support, Exec-managerial, Prof-specialty, etc. |
+| relationship | Nominale | Wife, Own-child, Husband, etc. |
+| race | Nominale | White, Asian-Pac-Islander, Black, etc. |
+| sex | Nominale | Female, Male |
+| capital-gain | Ignoree | (non utilise) |
+| capital-loss | Ignoree | (non utilise) |
+| hours-per-week | Continue | Heures travaillees par semaine |
+| native-country | Nominale | United-States, England, etc. (41 pays) |
+
+**Classes cibles :**
+- `sup50K` (~24%) : Revenu > 50K$/an
+- `infeq50K` (~76%) : Revenu &lt;= 50K$/an
+
+---
+
+## Exercice 1 : Baseline naive
+
+### Quelle est l'accuracy train/test du classifieur naif ?
+
+Le classifieur naif predit la classe majoritaire pour toutes les instances.
+
+**Reponse :**
 
 ```bash
-# Navigate to the dataset directory
+# Se deplacer dans le repertoire du dataset
 cd adult/
 
-# Generate the naive classifier (depth 0 = no questions = majority class)
+# Generer le classifieur naif (profondeur 0 = pas de question = classe majoritaire)
 ../bonzaiboost -S adult -d 0
 
-# Evaluate on training data
+# Evaluer sur les donnees d'entrainement
 ../bonzaiboost -S adult -C < adult.data > /dev/null
 
-# Evaluate on test data
+# Evaluer sur les donnees de test
 ../bonzaiboost -S adult -C < adult.test > /dev/null
 ```
 
-**Expected output:**
-- Training accuracy: ~75.9% (= proportion of `infeq50K` in adult.data)
-- Test accuracy: ~76.1% (similar proportion in adult.test)
+**Sortie attendue :**
+- Accuracy entrainement : ~75.9% (= proportion de `infeq50K` dans adult.data)
+- Accuracy test : ~76.1% (proportion similaire dans adult.test)
 
-### Why might this be misleading?
+### Pourquoi cela peut-il etre trompeur ?
 
-**Answer:**
+**Reponse :**
 
-The naive classifier gives ~76% accuracy simply by predicting `infeq50K` (earns <= $50K) for everyone. This is misleading because:
-- It correctly classifies 100% of the majority class but 0% of the minority class (`sup50K`).
-- Any model that does not significantly exceed 76% is essentially useless.
-- With imbalanced data (76% vs 24%), accuracy alone is deceptive. A model at 78% only improves by 2 points over the most trivial prediction possible.
+Le classifieur naif donne ~76% d'accuracy simplement en predisant `infeq50K` (gagne &lt;= 50K$) pour tout le monde. C'est trompeur car :
+- Il classe correctement 100% de la classe majoritaire mais 0% de la classe minoritaire (`sup50K`).
+- Tout modele qui ne depasse pas significativement 76% est essentiellement inutile.
+- Avec des donnees desequilibrees (76% vs 24%), l'accuracy seule est trompeuse. Un modele a 78% n'ameliore que de 2 points la prediction la plus triviale possible.
 
-**Explanation:** The baseline establishes the minimum performance threshold. A useful model should target well above 82-85% to justify the added complexity.
+**Explication :** La baseline etablit le seuil minimal de performance. Un modele utile devrait viser bien au-dessus de 82-85% pour justifier la complexite ajoutee.
 
 ---
 
-## Exercise 2: Manual Decision Tree (4 Leaves)
+## Exercice 2 : Arbre de decision manuel (4 feuilles)
 
-### Design a 4-leaf binary decision tree by intuition, then evaluate it.
+### Concevoir un arbre binaire a 4 feuilles par intuition, puis l'evaluer.
 
-**Answer:**
+**Reponse :**
 
-The file `arbre.txt` shows the format for manual rules:
+Le fichier `arbre.txt` montre le format pour les regles manuelles :
 
 ```
 racine=race White
@@ -90,260 +90,260 @@ no=sex Male yes=sup50K no=infeq50K
 yes=native-country United-States yes=sup50K no=infeq50K
 ```
 
-**Explanation of the structure:**
-- Line 1: The root asks "race = White?"
-- Line 2: Branch "no" (not White) -> asks "sex = Male?" -> if yes: `sup50K`, if no: `infeq50K`
-- Line 3: Branch "yes" (White) -> asks "native-country = United-States?" -> if yes: `sup50K`, if no: `infeq50K`
+**Explication de la structure :**
+- Ligne 1 : La racine demande "race = White ?"
+- Ligne 2 : Branche "no" (pas White) → demande "sex = Male ?" → si oui : `sup50K`, si non : `infeq50K`
+- Ligne 3 : Branche "yes" (White) → demande "native-country = United-States ?" → si oui : `sup50K`, si non : `infeq50K`
 
-### Procedure to build and evaluate your own tree
+### Procedure pour construire et evaluer votre propre arbre
 
 ```bash
-# 1. Create your rules file (e.g., mon_arbre.txt)
-#    Example: try using education or marital-status as root
+# 1. Creer votre fichier de regles (ex : mon_arbre.txt)
+#    Exemple : essayer marital-status ou education comme racine
 #    racine=marital-status Married-civ-spouse
 #    no=education Bachelors yes=sup50K no=infeq50K
 #    yes=hours-per-week 40 yes=sup50K no=infeq50K
 
-# 2. Convert to BonzaiBoost format
+# 2. Convertir au format BonzaiBoost
 perl ../rules2tree.pl adult mon_arbre.txt
 
-# 3. Evaluate on training data
+# 3. Evaluer sur les donnees d'entrainement
 ../bonzaiboost -S adult -C < adult.data > /dev/null
 
-# 4. Evaluate on test data
+# 4. Evaluer sur les donnees de test
 ../bonzaiboost -S adult -C < adult.test > /dev/null
 ```
 
-### Question 1: Does your manual tree outperform the naive classifier?
+### Question 1 : Votre arbre manuel surpasse-t-il le classifieur naif ?
 
-**Answer:** Probably not, or only barely. Human intuition is rarely better than data statistics for choosing the right splits and leaf predictions. The example tree in `arbre.txt` uses race and nationality, which are weak predictors of income compared to education level or marital status.
+**Reponse :** Probablement pas, ou a peine. L'intuition humaine est rarement meilleure que les statistiques des donnees pour choisir les bons splits et les predictions des feuilles. L'arbre d'exemple dans `arbre.txt` utilise la race et la nationalite, qui sont de faibles predicteurs du revenu compare au niveau d'education ou au statut marital.
 
-### Question 2: If you keep the rules but change leaf decisions to match training statistics, do results improve?
+### Question 2 : Si on garde les regles mais change les decisions des feuilles pour correspondre aux statistiques d'entrainement, les resultats s'ameliorent-ils ?
 
-**Answer:** Yes, significantly. The splits (questions asked) are less important than the leaf predictions. Even with suboptimal splits, if the leaves predict the majority class among the training examples that reach them, the result improves. This demonstrates that a decision tree's accuracy depends heavily on correct leaf assignments.
+**Reponse :** Oui, significativement. Les splits (questions posees) sont moins importants que les predictions des feuilles. Meme avec des splits sous-optimaux, si les feuilles predisent la classe majoritaire parmi les exemples d'entrainement qui les atteignent, le resultat s'ameliore. Cela demontre que l'accuracy d'un arbre de decision depend fortement de l'attribution correcte des feuilles.
 
 ---
 
-## Exercise 3: Automatic Tree Construction
+## Exercice 3 : Construction automatique d'arbre
 
-### 3a: Depth-limited tree (d=2, 4 leaves)
+### 3a : Arbre a profondeur limitee (d=2, 4 feuilles)
 
 ```bash
-# Build a depth-2 tree (4 leaves maximum)
+# Construire un arbre de profondeur 2 (4 feuilles maximum)
 ../bonzaiboost -S adult -d 2
 
-# Evaluate on training data
+# Evaluer sur les donnees d'entrainement
 ../bonzaiboost -S adult -C < adult.data > /dev/null
 
-# Evaluate on test data
+# Evaluer sur les donnees de test
 ../bonzaiboost -S adult -C < adult.test > /dev/null
 
-# Visualize the tree
+# Visualiser l'arbre
 dot -Tpng adult.tree.dot > adult_d2.png
 ```
 
-**Expected output:**
-- Training accuracy: ~80-82%
-- Test accuracy: ~79-81%
-- Train/test gap: ~1-2 points (low overfitting)
+**Sortie attendue :**
+- Accuracy entrainement : ~80-82%
+- Accuracy test : ~79-81%
+- Ecart train/test : ~1-2 points (peu d'overfitting)
 
-### Does the automatic tree outperform your manual tree? Interpret it: which features did it choose? Why?
+### L'arbre automatique surpasse-t-il votre arbre manuel ? Interpretez-le : quelles features a-t-il choisies ? Pourquoi ?
 
-**Answer:**
+**Reponse :**
 
-The automatic depth-2 tree is significantly better than the naive baseline (+4-6 points) and almost certainly outperforms any manual tree. The automatically chosen features are typically:
+L'arbre automatique de profondeur 2 est significativement meilleur que la baseline naive (+4-6 points) et surpasse presque certainement tout arbre manuel. Les features choisies automatiquement sont typiquement :
 
-- **marital-status** (being married significantly increases income probability)
-- **education-num** (more years of education = higher income)
-- **age** (35-55 year olds earn the most)
+- **marital-status** (etre marie augmente significativement la probabilite de revenu eleve)
+- **education-num** (plus d'annees d'etudes = revenu plus eleve)
+- **age** (les 35-55 ans gagnent le plus)
 
-These features are chosen because they maximize information gain. The small train/test gap (~1-2 points) indicates **moderate underfitting**: the tree is too simple to capture all patterns.
+Ces features sont choisies car elles maximisent le gain d'information. Le faible ecart train/test (~1-2 points) indique un **sous-apprentissage modere** : l'arbre est trop simple pour capturer tous les patterns.
 
-### 3b: MDLPC stopping criterion
+### 3b : Critere d'arret MDLPC
 
-MDLPC (Minimum Description Length Principle for Classification) automatically determines the optimal tree size based on information theory. It stops growing the tree when adding a new node is not justified by the information gain relative to the added complexity.
+MDLPC (Minimum Description Length Principle for Classification) determine automatiquement la taille optimale de l'arbre en se basant sur la theorie de l'information. Il arrete la croissance de l'arbre quand l'ajout d'un nouveau noeud n'est pas justifie par le gain d'information relativement a la complexite ajoutee.
 
 ```bash
-# Build tree with MDLPC
+# Construire l'arbre avec MDLPC
 ../bonzaiboost -S adult -mdlpc
 
-# Evaluate on training data
+# Evaluer sur les donnees d'entrainement
 ../bonzaiboost -S adult -C < adult.data > /dev/null
 
-# Evaluate on test data
+# Evaluer sur les donnees de test
 ../bonzaiboost -S adult -C < adult.test > /dev/null
 
-# Visualize
+# Visualiser
 dot -Tpng adult.tree.dot > adult_mdlpc.png
 ```
 
-**Expected output:**
-- Training accuracy: ~83-85%
-- Test accuracy: ~82-84%
-- Train/test gap: ~1-2 points
+**Sortie attendue :**
+- Accuracy entrainement : ~83-85%
+- Accuracy test : ~82-84%
+- Ecart train/test : ~1-2 points
 
-### How does MDLPC compare to depth-limited? What is the overfitting gap?
+### Comment MDLPC se compare-t-il a la profondeur limitee ? Quel est l'ecart d'overfitting ?
 
-**Answer:**
+**Reponse :**
 
-MDLPC produces a deeper tree than d=2 but not as deep as Tmax. Performance is better than the depth-limited tree (+2-3 points). The train/test gap remains small, indicating a good **bias-variance tradeoff**. MDLPC is a principled, automatic stopping criterion that avoids both underfitting and overfitting.
+MDLPC produit un arbre plus profond que d=2 mais pas aussi profond que Tmax. Les performances sont meilleures que l'arbre a profondeur limitee (+2-3 points). L'ecart train/test reste faible, indiquant un bon **compromis biais-variance**. MDLPC est un critere d'arret automatique base sur des principes solides qui evite a la fois le sous-apprentissage et le sur-apprentissage.
 
-### 3c: Full tree (no stopping criterion)
+### 3c : Arbre complet (pas de critere d'arret)
 
 ```bash
-# Build full tree (verbose mode, no stopping)
+# Construire l'arbre complet (mode verbose, pas d'arret)
 ../bonzaiboost -S adult -v
 
-# Evaluate on training data
+# Evaluer sur les donnees d'entrainement
 ../bonzaiboost -S adult -C < adult.data > /dev/null
 
-# Evaluate on test data
+# Evaluer sur les donnees de test
 ../bonzaiboost -S adult -C < adult.test > /dev/null
 ```
 
-**Expected output:**
-- Training accuracy: **~100%**
-- Test accuracy: ~82-84%
-- Train/test gap: **~16-18 points** (severe overfitting)
+**Sortie attendue :**
+- Accuracy entrainement : **~100%**
+- Accuracy test : ~82-84%
+- Ecart train/test : **~16-18 points** (overfitting severe)
 
-### How do training vs test accuracies compare? What phenomenon occurs?
+### Comment les accuracies train et test se comparent-elles ? Quel phenomene se produit ?
 
-**Answer:**
+**Reponse :**
 
-The full tree achieves perfect training accuracy (100%) by memorizing every training example. However, the test accuracy (~82-84%) is no better than the MDLPC tree. This is the classic demonstration of **overfitting**: a model too complex that learns the noise of the training data instead of generalizable patterns. The tree has hundreds or thousands of nodes, making it also completely uninterpretable.
+L'arbre complet atteint une accuracy parfaite sur le train (100%) en memorisant chaque exemple d'entrainement. Cependant, l'accuracy test (~82-84%) n'est pas meilleure que l'arbre MDLPC. C'est la demonstration classique du **sur-apprentissage** : un modele trop complexe qui apprend le bruit des donnees d'entrainement au lieu de patterns generalisables. L'arbre a des centaines voire des milliers de noeuds, ce qui le rend aussi completement ininterpretable.
 
-### Summary of Exercise 3
+### Resume de l'exercice 3
 
-| Stopping Criterion | Train Acc | Test Acc | Gap | Diagnosis |
-|-------------------|-----------|----------|-----|-----------|
-| Depth 2 (4 leaves) | ~80-82% | ~79-81% | ~1-2% | Moderate underfitting |
-| MDLPC (automatic) | ~83-85% | ~82-84% | ~1-2% | **Good tradeoff** |
-| None (full tree) | ~100% | ~82-84% | ~16-18% | **Severe overfitting** |
+| Critere d'arret | Acc. train | Acc. test | Ecart | Diagnostic |
+|-----------------|-----------|----------|-------|-----------|
+| Profondeur 2 (4 feuilles) | ~80-82% | ~79-81% | ~1-2% | Sous-apprentissage modere |
+| MDLPC (automatique) | ~83-85% | ~82-84% | ~1-2% | **Bon compromis** |
+| Aucun (arbre complet) | ~100% | ~82-84% | ~16-18% | **Sur-apprentissage severe** |
 
-**Key observation:** The full tree's test accuracy is NOT better than MDLPC despite 100% on training. Overfitting does not improve generalization.
+**Observation cle :** L'accuracy test de l'arbre complet n'est PAS meilleure que MDLPC malgre 100% sur le train. Le sur-apprentissage n'ameliore pas la generalisation.
 
 ---
 
-## Exercise 4: AdaBoost
+## Exercice 4 : AdaBoost
 
-### Question 5: How do boosting results compare to single trees?
+### Question 5 : Comment les resultats du boosting se comparent-ils aux arbres simples ?
 
-**Answer:**
+**Reponse :**
 
 ```bash
-# Train AdaBoost with 100 iterations of stumps
+# Entrainer AdaBoost avec 100 iterations de stumps
 ../bonzaiboost -S adult -boost adamh -n 100
 
-# Evaluate on training data
+# Evaluer sur les donnees d'entrainement
 ../bonzaiboost -S adult -boost adamh -C < adult.data > /dev/null
 
-# Evaluate on test data
+# Evaluer sur les donnees de test
 ../bonzaiboost -S adult -boost adamh -C < adult.test > /dev/null
 ```
 
-**Expected output:**
-- Training accuracy: ~87-90%
-- Test accuracy: **~85-87%**
-- Train/test gap: ~2-3 points
+**Sortie attendue :**
+- Accuracy entrainement : ~87-90%
+- Accuracy test : **~85-87%**
+- Ecart train/test : ~2-3 points
 
-AdaBoost (85-87% test) significantly outperforms:
-- The naive classifier (+10-11 points)
-- The depth-2 tree (+5-7 points)
-- The MDLPC tree (+2-4 points)
-- The full tree (+2-4 points on test, despite 100% train for the full tree)
+AdaBoost (85-87% test) surpasse significativement :
+- Le classifieur naif (+10-11 points)
+- L'arbre de profondeur 2 (+5-7 points)
+- L'arbre MDLPC (+2-4 points)
+- L'arbre complet (+2-4 points sur le test, malgre 100% train pour l'arbre complet)
 
-**Explanation:** Boosting 100 stumps (very weak classifiers, barely better than random) produces a classifier more powerful than any single complex tree. This is the fundamental principle of boosting: combining weak learners produces a strong learner.
+**Explication :** Le boosting de 100 stumps (classifieurs tres faibles, a peine meilleurs que le hasard) produit un classifieur plus puissant que n'importe quel arbre complexe unique. C'est le principe fondamental du boosting : combiner des classifieurs faibles produit un classifieur fort.
 
-### Question 6: Error rate analysis -- Analyze the training/test error curves
+### Question 6 : Analyse du taux d'erreur -- Analyser les courbes d'erreur train/test
 
 ```bash
-# Generate detailed HTML report with iteration-by-iteration results
+# Generer un rapport HTML detaille avec les resultats iteration par iteration
 ../bonzaiboost -S adult -boost adamh -n 100 --info > adult.boost.log.html
 
-# Open in a browser to see the curves
+# Ouvrir dans un navigateur pour voir les courbes
 ```
 
-**Answer:**
+**Reponse :**
 
-| Curve Property | Observation |
-|----------------|-------------|
-| Training error | Decreases monotonically (or quasi-monotonically) with iterations |
-| Test error | Decreases rapidly (iterations 1-20), then stabilizes or decreases slowly |
-| Overfitting | Mild: the train/test gap increases with iterations but remains moderate |
-| Convergence | Most of the gain comes in the first 20-50 iterations |
-| Optimal iterations | ~50-100 (beyond that, marginal gains) |
+| Propriete de la courbe | Observation |
+|------------------------|-------------|
+| Erreur train | Diminue de maniere monotone (ou quasi-monotone) avec les iterations |
+| Erreur test | Diminue rapidement (iterations 1-20), puis se stabilise ou diminue lentement |
+| Overfitting | Leger : l'ecart train/test augmente avec les iterations mais reste modere |
+| Convergence | L'essentiel du gain vient des 20-50 premieres iterations |
+| Iterations optimales | ~50-100 (au-dela, gains marginaux) |
 
-**Explanation:** Unlike a single tree that overfits severely when complexity increases, boosting shows much more moderate overfitting. The test error continues to decrease (or stabilize) even after the training error reaches very low values. This is a remarkable property of AdaBoost, explained by the progressive increase in classification margins.
+**Explication :** Contrairement a un arbre unique qui fait du sur-apprentissage severe quand la complexite augmente, le boosting montre un overfitting bien plus modere. L'erreur test continue a diminuer (ou se stabiliser) meme apres que l'erreur train atteint des valeurs tres basses. C'est une propriete remarquable d'AdaBoost, expliquee par l'augmentation progressive des marges de classification.
 
-### Question 7: Feature importance -- Based on the boosting model, which features are most discriminative for predicting income > 50K?
+### Question 7 : Importance des features -- Quelles features sont les plus discriminantes pour predire un revenu > 50K ?
 
-**Answer:**
+**Reponse :**
 
-The HTML report indicates which features are used by the stumps at each iteration.
+Le rapport HTML indique quelles features sont utilisees par les stumps a chaque iteration.
 
 | Feature | Importance |
 |---------|-----------|
-| marital-status | Very high -- "Married-civ-spouse" is the best predictor |
-| education / education-num | High -- more education = higher income |
-| age | High -- 35-55 year olds earn the most |
-| hours-per-week | Medium -- working > 40h/week increases probability |
-| occupation | Medium -- "Exec-managerial" and "Prof-specialty" associated with >50K |
-| workclass | Low to medium |
-| relationship | Correlated with marital-status |
+| marital-status | Tres elevee -- "Married-civ-spouse" est le meilleur predicteur |
+| education / education-num | Elevee -- plus d'education = revenu plus eleve |
+| age | Elevee -- les 35-55 ans gagnent le plus |
+| hours-per-week | Moyenne -- travailler > 40h/semaine augmente la probabilite |
+| occupation | Moyenne -- "Exec-managerial" et "Prof-specialty" associes a >50K |
+| workclass | Faible a moyenne |
+| relationship | Correlee avec marital-status |
 
-**Explanation:** The features selected by boosting align with intuitive socioeconomic factors. Marital status dominates because being married (especially "Married-civ-spouse") is a strong proxy for household income levels and economic stability.
-
----
-
-## Overall Model Comparison
-
-| Model | Train Acc | Test Acc | Gap | Complexity |
-|-------|-----------|----------|-----|-----------|
-| Naive (majority) | ~76% | ~76% | 0% | None |
-| Manual tree (4 leaves) | Variable | Variable | Variable | Very low |
-| Auto tree d=2 | ~80-82% | ~79-81% | ~1-2% | Low |
-| MDLPC tree | ~83-85% | ~82-84% | ~1-2% | Medium |
-| Full tree | ~100% | ~82-84% | ~16-18% | Very high |
-| **AdaBoost (n=100)** | ~87-90% | **~85-87%** | ~2-3% | High (100 stumps) |
-
-**Key takeaways:**
-
-1. **Always establish a baseline.** A model at 78% on a dataset with 76% majority class adds almost nothing.
-2. **Overfitting = train >> test.** The full tree has 100% train but ~83% test. MDLPC has ~84% train and ~83% test: better generalization with a much simpler model.
-3. **MDLPC** is a good automatic stopping criterion based on the Minimum Description Length principle.
-4. **Boosting outperforms single trees.** 100 stumps combined beat any single complex tree. Boosting reduces bias (underfitting) while controlling variance (overfitting).
-5. **Diminishing returns.** Going from 1 to 20 stumps gains a lot; going from 50 to 100 gains little.
+**Explication :** Les features selectionnees par le boosting correspondent a des facteurs socio-economiques intuitifs. Le statut marital domine car etre marie (surtout "Married-civ-spouse") est un fort indicateur du niveau de revenu du foyer et de la stabilite economique.
 
 ---
 
-## AdaBoost Formulas (for exam reference)
+## Comparaison globale des modeles
 
-### Weight of weak classifier t
+| Modele | Acc. train | Acc. test | Ecart | Complexite |
+|--------|-----------|----------|-------|-----------|
+| Naif (majorite) | ~76% | ~76% | 0% | Aucune |
+| Arbre manuel (4 feuilles) | Variable | Variable | Variable | Tres faible |
+| Arbre auto d=2 | ~80-82% | ~79-81% | ~1-2% | Faible |
+| Arbre MDLPC | ~83-85% | ~82-84% | ~1-2% | Moyenne |
+| Arbre complet | ~100% | ~82-84% | ~16-18% | Tres elevee |
+| **AdaBoost (n=100)** | ~87-90% | **~85-87%** | ~2-3% | Elevee (100 stumps) |
+
+**Enseignements cles :**
+
+1. **Toujours etablir une baseline.** Un modele a 78% sur un dataset avec 76% de classe majoritaire n'apporte presque rien.
+2. **Overfitting = train >> test.** L'arbre complet a 100% train mais ~83% test. MDLPC a ~84% train et ~83% test : meilleure generalisation avec un modele beaucoup plus simple.
+3. **MDLPC** est un bon critere d'arret automatique base sur le principe de longueur de description minimale.
+4. **Le boosting surpasse les arbres simples.** 100 stumps combines battent n'importe quel arbre complexe unique. Le boosting reduit le biais (sous-apprentissage) tout en controlant la variance (sur-apprentissage).
+5. **Rendements decroissants.** Passer de 1 a 20 stumps apporte beaucoup ; passer de 50 a 100 apporte peu.
+
+---
+
+## Formules AdaBoost (reference pour l'examen)
+
+### Poids du classifieur faible t
 
 ```
 alpha_t = (1/2) * ln((1 - epsilon_t) / epsilon_t)
 ```
 
-- epsilon_t = weighted error of weak classifier t (between 0 and 0.5 for a useful classifier)
-- If epsilon_t = 0.5 (no better than random), alpha_t = 0 (no contribution)
-- If epsilon_t is close to 0, alpha_t is large (very reliable classifier)
+- epsilon_t = erreur ponderee du classifieur faible t (entre 0 et 0.5 pour un classifieur utile)
+- Si epsilon_t = 0.5 (pas mieux que le hasard), alpha_t = 0 (pas de contribution)
+- Si epsilon_t est proche de 0, alpha_t est grand (classifieur tres fiable)
 
-### Weight update for examples
+### Mise a jour des poids des exemples
 
 ```
 w_i^(t+1) = w_i^(t) * exp(-alpha_t * y_i * h_t(x_i)) / Z_t
 ```
 
-- y_i = true class of example i (+1 or -1)
-- h_t(x_i) = prediction of weak classifier t for example i (+1 or -1)
-- If correct prediction (y_i * h_t(x_i) > 0): weight decreases
-- If incorrect prediction (y_i * h_t(x_i) < 0): weight increases
-- Z_t = normalization factor
+- y_i = vraie classe de l'exemple i (+1 ou -1)
+- h_t(x_i) = prediction du classifieur faible t pour l'exemple i (+1 ou -1)
+- Si prediction correcte (y_i * h_t(x_i) > 0) : le poids diminue
+- Si prediction incorrecte (y_i * h_t(x_i) &lt; 0) : le poids augmente
+- Z_t = facteur de normalisation
 
-### Final prediction (weighted vote)
+### Prediction finale (vote pondere)
 
 ```
 H(x) = sign(sum_{t=1}^{T} alpha_t * h_t(x))
 ```
 
-Sum the weighted votes of all T weak classifiers. The sign of the sum determines the predicted class.
+Sommer les votes ponderes des T classifieurs faibles. Le signe de la somme determine la classe predite.

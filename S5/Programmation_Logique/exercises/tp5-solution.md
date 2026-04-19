@@ -1,6 +1,6 @@
 # TP5 - Arithmetique
 
-> Following teacher instructions from: `S5/Programmation_Logique/data/moodle/tp/tp5/README.md`
+> Instructions du TP : `S5/Programmation_Logique/data/moodle/tp/tp5/README.md`
 
 ---
 
@@ -18,7 +18,7 @@ Les entiers sont representes en notation unaire :
 
 **Principe** : 0 + Y = Y ; s(X) + Y = s(X + Y)
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 add1(zero, X, X).
@@ -28,7 +28,7 @@ add1(s(X), Y, s(Res)) :-
 
 L'addition se reduit a l'unification structurelle. Aucune operation arithmetique native n'est utilisee. La multi-directionnalite est un avantage majeur de Peano.
 
-**Query test:**
+**Test :**
 
 ```
 ?- add1(s(s(zero)), s(s(s(zero))), Z).
@@ -52,7 +52,7 @@ false.
 
 **Principe** : X - 0 = X ; s(X) - s(Y) = X - Y
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 sub1(X, zero, X).
@@ -62,7 +62,7 @@ sub1(s(X), s(Y), Res) :-
 
 On "epluche" un `s` de chaque cote simultanement. Quand Y atteint `zero`, ce qui reste de X est le resultat.
 
-**Query test:**
+**Test :**
 
 ```
 ?- sub1(s(s(s(zero))), s(zero), Z).
@@ -78,7 +78,7 @@ Z = zero.          % 2 - 2 = 0
 
 **Principe** : 0 * Y = 0 ; s(X) * Y = X*Y + Y
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 prod1(zero, _, zero).
@@ -89,7 +89,7 @@ prod1(s(X), Y, Res) :-
 
 Reduction a l'addition : chaque appel recursif effectue une addition de Y.
 
-**Query test:**
+**Test :**
 
 ```
 ?- prod1(s(s(zero)), s(s(s(zero))), Z).
@@ -108,7 +108,7 @@ Z = zero.    % 0 * 2 = 0
 
 **Principe** : 0! = 1 = s(zero) ; s(N)! = s(N) * N!
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 factorial1(zero, s(zero)).
@@ -117,7 +117,7 @@ factorial1(s(X), Res) :-
     prod1(s(X), Y, Res).
 ```
 
-**Query test:**
+**Test :**
 
 ```
 ?- factorial1(zero, F).
@@ -141,7 +141,7 @@ Les entiers sont en binaire avec le bit de poids faible (LSB) en tete :
 ### Table add_bit/5
 
 ```prolog
-% add_bit(Cin, B1, B2, Sum, Cout)
+% add_bit(B1, B2, Cin, Sum, Cout)
 add_bit(0, 0, 0, 0, 0).
 add_bit(0, 0, 1, 1, 0).
 add_bit(0, 1, 0, 1, 0).
@@ -156,7 +156,7 @@ add_bit(1, 1, 1, 1, 1).
 
 ### add2(+L1, +L2, -L) : Addition binaire avec retenue
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 add2(L1, L2, L) :- addc(L1, L2, 0, L).
@@ -165,14 +165,14 @@ addc([], X, 0, X).
 addc(X, [], 0, X).
 addc([], X, 1, Res) :- addc([1], X, 0, Res).
 addc(X, [], 1, Res) :- addc([1], X, 0, Res).
-addc([E1 | R1], [E2 | R2], Cin, [Res | End]) :-
-    add_bit(E1, E2, Cin, Res, Cout),
-    addc(R1, R2, Cout, End).
+addc([B1 | R1], [B2 | R2], Cin, [Sum | Rest]) :-
+    add_bit(B1, B2, Cin, Sum, Cout),
+    addc(R1, R2, Cout, Rest).
 ```
 
 L'additionneur `addc` traite les bits un par un en propageant la retenue. Si un operande est vide sans retenue, l'autre est le resultat. Si retenue avec un operande vide, on transforme la retenue en `[1]`.
 
-**Query test:**
+**Test :**
 
 ```
 ?- add2([1,1], [1], R).
@@ -189,7 +189,7 @@ R = [1, 1, 0, 0, 1, 0, 0, 0, 0, 1].    % 22 + 510 = 532
 
 ### sub2(+L1, +L2, -L) : Soustraction (definie via `add2`)
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 sub2(L1, L2, L) :- add2(L2, L, L1).
@@ -197,7 +197,7 @@ sub2(L1, L2, L) :- add2(L2, L, L1).
 
 Defini par reduction a l'addition : L2 + L = L1. L'unification multi-directionnelle de `add2` trouve L. Aucune logique de soustraction n'est implementee.
 
-**Query test:**
+**Test :**
 
 ```
 ?- sub2([0,0,0,0,0,0,1], [1], Res).
@@ -211,7 +211,7 @@ Res = [].    % N - N = 0
 
 ### prod2(+X, +Y, -Res) : Multiplication binaire
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 prod2([], _, []).
@@ -223,7 +223,7 @@ prod2(X, Y, Res) :-
 
 `0 * Y = 0`. `X * Y = (X-1)*Y + Y`. On decremente X par 1 et on accumule Y a chaque etape.
 
-**Query test:**
+**Test :**
 
 ```
 ?- prod2([1,0,1], [1,1], Res).
@@ -237,7 +237,7 @@ Res = [1, 0, 1, 1, 0, 1].    % 5 * 9 = 45
 
 ### factorial2(+X, -Res) : Factorielle en binaire
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 factorial2([], [1]).
@@ -249,7 +249,7 @@ factorial2(X, Res) :-
 
 `0! = 1 = [1]`. `X! = X * (X-1)!`.
 
-**Query test:**
+**Test :**
 
 ```
 ?- factorial2([1,1], Res).
@@ -268,7 +268,7 @@ Res = [0, 0, 0, 1, 1, 1, 1].    % 5! = 120 = 1111000 en binaire
 
 ### factorial3(+N, -F) : F = N! avec `is/2`
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 factorial3(0, 1).
@@ -281,7 +281,7 @@ factorial3(N, Fact) :-
 
 `is/2` exige que le cote droit soit entierement instancie. Le mode est (+, -) uniquement -- on ne peut PAS utiliser `factorial3` pour trouver N etant donne Fact (contrairement a Peano).
 
-**Query test:**
+**Test :**
 
 ```
 ?- factorial3(0, F).

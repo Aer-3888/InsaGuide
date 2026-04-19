@@ -34,8 +34,8 @@ flowchart TD
 ## Prerequis
 
 - **Savoir ce qu'est une moyenne** -- additionner des valeurs et diviser par leur nombre.
-- **Avoir R installe** -- <https://cran.r-project.org/>
-- **Avoir RStudio installe** -- <https://posit.co/downloads/>
+- **Avoir R installe** -- &lt;https://cran.r-project.org/>
+- **Avoir RStudio installe** -- &lt;https://posit.co/downloads/>
 
 ---
 

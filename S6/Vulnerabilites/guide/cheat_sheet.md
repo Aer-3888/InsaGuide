@@ -18,7 +18,7 @@ URL d'action sur un param sans token/nonce        --> CSRF
 
 | Log | Type |
 |-----|------|
-| `/search="<SCRipt>alert(42)</SCRipt>"` | XSS |
+| `/search="&lt;SCRipt&gt;alert(42)&lt;/SCRipt&gt;"` | XSS |
 | `/stuff.php?id=42 UNION SELECT 1,1,null --` | SQL |
 | `/test.php?traceroute="\|\| echo reboot > /etc/rc.local"` | CMD |
 | `/dostuff.php?dir=; dd if=/dev/urandom of=/dev/sda` | CMD |

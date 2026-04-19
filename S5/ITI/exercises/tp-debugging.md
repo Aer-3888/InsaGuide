@@ -218,7 +218,7 @@ valgrind --track-origins=yes ./buggy
 | Error | Cause | Fix |
 |-------|-------|-----|
 | "Conditional jump depends on uninitialised value" | Reading before assigning | `int x = 0;` |
-| "Invalid write of size 4" | Writing past array bounds | `i <= 10` -> `i < 10` |
+| "Invalid write of size 4" | Writing past array bounds | `i <= 10` → `i < 10` |
 | "definitely lost: N bytes" | `malloc` without `free` | Add `free(ptr);` |
 | "Invalid read of size 4" | Reading freed memory | Do not access after `free` |
 | "Invalid free()" | Double free | Set `ptr = NULL` after free |

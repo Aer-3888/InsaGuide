@@ -23,7 +23,7 @@ Identifier s'il s'agit d'une tautologie, contradiction ou contingence.
 
 **Etape 3 :** Construire la table colonne par colonne.
 
-| a | b | a /\ b | ~b | (a /\ b) -> ~b | b -> ((a /\ b) -> ~b) | ~a | ~a \/ (b -> ((a /\ b) -> ~b)) |
+| a | b | a /\ b | ~b | (a /\ b) → ~b | b → ((a /\ b) → ~b) | ~a | ~a \/ (b → ((a /\ b) → ~b)) |
 |---|---|--------|----|-----------------|------------------------|----|-------------------------------|
 | F | F | F      | V  | V               | V                      | V  | **V** |
 | F | V | F      | F  | V               | V                      | V  | **V** |
@@ -34,16 +34,16 @@ Identifier s'il s'agit d'une tautologie, contradiction ou contingence.
 
 - **a /\ b :** Vrai uniquement quand a=V ET b=V. Ligne 4 seule.
 - **~b :** Inverse de b. V quand b=F (lignes 1, 3), F quand b=V (lignes 2, 4).
-- **(a /\ b) -> ~b :** Rappel : X -> Y est faux UNIQUEMENT quand X=V et Y=F.
-  - Ligne 1 : F -> V = V (premisse fausse, implication vraie)
-  - Ligne 2 : F -> F = V (premisse fausse, implication vraie)
-  - Ligne 3 : F -> V = V (premisse fausse, implication vraie)
-  - Ligne 4 : V -> F = **F** (seul cas ou la premisse est vraie et la conclusion fausse)
-- **b -> ((a /\ b) -> ~b) :**
-  - Ligne 1 : F -> V = V
-  - Ligne 2 : V -> V = V
-  - Ligne 3 : F -> V = V
-  - Ligne 4 : V -> F = **F**
+- **(a /\ b) → ~b :** Rappel : X → Y est faux UNIQUEMENT quand X=V et Y=F.
+  - Ligne 1 : F → V = V (premisse fausse, implication vraie)
+  - Ligne 2 : F → F = V (premisse fausse, implication vraie)
+  - Ligne 3 : F → V = V (premisse fausse, implication vraie)
+  - Ligne 4 : V → F = **F** (seul cas ou la premisse est vraie et la conclusion fausse)
+- **b → ((a /\ b) → ~b) :**
+  - Ligne 1 : F → V = V
+  - Ligne 2 : V → V = V
+  - Ligne 3 : F → V = V
+  - Ligne 4 : V → F = **F**
 - **~a :** V quand a=F (lignes 1, 2), F quand a=V (lignes 3, 4).
 - **Formule finale (~a \/ ...) :**
   - Ligne 1 : V \/ V = V
@@ -76,7 +76,7 @@ Identifier les lignes ou la formule est vraie. Est-ce une tautologie ?
 
 **Etape 3 :** Table complete.
 
-| p | q | r | p -> q | q -> r | (p -> q) /\ (q -> r) |
+| p | q | r | p → q | q → r | (p → q) /\ (q → r) |
 |---|---|---|--------|--------|----------------------|
 | V | V | V | V      | V      | **V** |
 | V | V | F | V      | F      | **F** |
@@ -89,16 +89,16 @@ Identifier les lignes ou la formule est vraie. Est-ce une tautologie ?
 
 **Verification colonne par colonne :**
 
-- **p -> q :** Faux uniquement quand p=V et q=F, soit lignes 3 et 4.
-  - Ligne 1 : V -> V = V
-  - Ligne 2 : V -> V = V
-  - Ligne 3 : V -> F = **F**
-  - Ligne 4 : V -> F = **F**
-  - Ligne 5 : F -> V = V
-  - Ligne 6 : F -> V = V
-  - Ligne 7 : F -> F = V
-  - Ligne 8 : F -> F = V
-- **q -> r :** Faux uniquement quand q=V et r=F, soit lignes 2 et 6.
+- **p → q :** Faux uniquement quand p=V et q=F, soit lignes 3 et 4.
+  - Ligne 1 : V → V = V
+  - Ligne 2 : V → V = V
+  - Ligne 3 : V → F = **F**
+  - Ligne 4 : V → F = **F**
+  - Ligne 5 : F → V = V
+  - Ligne 6 : F → V = V
+  - Ligne 7 : F → F = V
+  - Ligne 8 : F → F = V
+- **q → r :** Faux uniquement quand q=V et r=F, soit lignes 2 et 6.
 - **Conjonction :** Vraie uniquement quand les DEUX sont vraies.
   - Lignes vraies : 1, 5, 7, 8.
 
@@ -109,7 +109,7 @@ Identifier les lignes ou la formule est vraie. Est-ce une tautologie ?
 ## Exercice 3 : Trouver des valuations (type DS)
 
 ### Enonce
-Soit F = (p1 -> (p2 \/ ~p3)) /\ (p2 <-> p3).
+Soit F = (p1 → (p2 \/ ~p3)) /\ (p2 ↔ p3).
 
 Q1 : Trouver une valuation v telle que v(F) = 1.
 Q2 : Trouver une valuation v telle que v(F) = 0.
@@ -132,13 +132,13 @@ Commencons par la partie droite (la plus contraignante) :
 
 Verifions la partie gauche avec ce choix :
 - `p2 \/ ~p3` = V \/ ~V = V \/ F = V
-- `p1 -> V` = V quel que soit p1 (car X -> V = V toujours).
+- `p1 -> V` = V quel que soit p1 (car X → V = V toujours).
 - **Choix :** p1 = V (ou F, ca marche dans les deux cas).
 
 **Verification complete :**
 - v(p1) = V, v(p2) = V, v(p3) = V
-- Partie gauche : V -> (V \/ F) = V -> V = V
-- Partie droite : V <-> V = V
+- Partie gauche : V → (V \/ F) = V → V = V
+- Partie droite : V ↔ V = V
 - F = V /\ V = **V**
 
 **Q2 -- Trouver v(F) = 0 :**
@@ -154,8 +154,8 @@ Quel que soit p1 :
 
 **Verification complete :**
 - v(p1) = V, v(p2) = V, v(p3) = F
-- Partie gauche : V -> (V \/ V) = V -> V = V
-- Partie droite : V <-> F = F
+- Partie gauche : V → (V \/ V) = V → V = V
+- Partie droite : V ↔ F = F
 - F = V /\ F = **F**
 
 ---
@@ -180,7 +180,7 @@ Simplifier chaque formule en utilisant les equivalences logiques. Citer la loi u
 - Si ~p = V : tout est V.
 - Si ~p = F : (q /\ F) = F, donc F \/ F = F = ~p.
 
-Resultat : **~(p /\ (q -> p)) = ~p**
+Resultat : **~(p /\ (q → p)) = ~p**
 
 ### 4b : `(p -> q) /\ (p -> ~q)`
 
@@ -192,7 +192,7 @@ Resultat : **~(p /\ (q -> p)) = ~p**
 = ~p                              [element neutre : A \/ F = A]
 ```
 
-Resultat : **(p -> q) /\ (p -> ~q) = ~p**
+Resultat : **(p → q) /\ (p → ~q) = ~p**
 
 Interpretation : "Si p implique q ET p implique non-q, alors p doit etre faux." En effet, si p etait vrai, on aurait q et ~q, contradiction.
 
@@ -252,15 +252,15 @@ Montrer que le syllogisme hypothetique est une tautologie :
 | F | F | F | V    | V    | V              | V    | **V** |
 
 **Verification de la colonne finale :**
-- L'implication principale est A -> B. Elle est fausse UNIQUEMENT quand A=V et B=F.
-- Ligne 1 : V -> V = V
-- Ligne 2 : F -> F = V (antecedent faux, implication vraie)
-- Ligne 3 : F -> V = V (antecedent faux)
-- Ligne 4 : F -> F = V (antecedent faux)
-- Ligne 5 : V -> V = V
-- Ligne 6 : F -> V = V (antecedent faux)
-- Ligne 7 : V -> V = V
-- Ligne 8 : V -> V = V
+- L'implication principale est A → B. Elle est fausse UNIQUEMENT quand A=V et B=F.
+- Ligne 1 : V → V = V
+- Ligne 2 : F → F = V (antecedent faux, implication vraie)
+- Ligne 3 : F → V = V (antecedent faux)
+- Ligne 4 : F → F = V (antecedent faux)
+- Ligne 5 : V → V = V
+- Ligne 6 : F → V = V (antecedent faux)
+- Ligne 7 : V → V = V
+- Ligne 8 : V → V = V
 
 **Toutes les lignes donnent V. C'est une TAUTOLOGIE.**
 
@@ -269,7 +269,7 @@ Montrer que le syllogisme hypothetique est une tautologie :
 ## Exercice 6 : Consequence logique par table de verite
 
 ### Enonce
-Montrer que p, p -> (q -> r), q |= r.
+Montrer que p, p → (q → r), q |= r.
 
 ### Solution detaillee
 
@@ -295,12 +295,12 @@ La seule ligne ou les trois premisses sont TOUTES vraies est la ligne 1 (p=V, q=
 
 Il n'existe AUCUNE ligne ou toutes les premisses sont vraies et r est faux.
 
-**Conclusion :** r est bien consequence logique de p, p -> (q -> r) et q.
+**Conclusion :** r est bien consequence logique de p, p → (q → r) et q.
 
 **Raisonnement deductif (verification) :**
 1. p est vrai (premisse 1)
-2. p -> (q -> r) est vrai (premisse 2)
-3. Par modus ponens sur 1 et 2 : q -> r est vrai
+2. p → (q → r) est vrai (premisse 2)
+3. Par modus ponens sur 1 et 2 : q → r est vrai
 4. q est vrai (premisse 3)
 5. Par modus ponens sur 4 et 3 : **r est vrai**
 
@@ -455,7 +455,7 @@ Avec n propositions atomiques, combien existe-t-il de tables de verite different
 - Negation : `~p`
 - Toujours F (contradiction) : `p /\ ~p`
 
-**Pour n = 2 :** Les 16 tables correspondent aux 16 connecteurs binaires possibles (dont /\, \/, ->, <->, NAND, NOR, XOR, etc.).
+**Pour n = 2 :** Les 16 tables correspondent aux 16 connecteurs binaires possibles (dont /\, \/, →, ↔, NAND, NOR, XOR, etc.).
 
 ---
 
@@ -466,7 +466,7 @@ Verifier par table de verite que le modus ponens `(p /\ (p -> q)) -> q` est une 
 
 ### Solution detaillee
 
-| p | q | p -> q | p /\ (p -> q) | (p /\ (p -> q)) -> q |
+| p | q | p → q | p /\ (p → q) | (p /\ (p → q)) → q |
 |---|---|--------|---------------|----------------------|
 | V | V | V      | V             | **V** |
 | V | F | F      | F             | **V** |
@@ -476,24 +476,24 @@ Verifier par table de verite que le modus ponens `(p /\ (p -> q)) -> q` est une 
 **Verification ligne par ligne :**
 
 - **Ligne 1 (p=V, q=V) :**
-  - p -> q = V -> V = V
+  - p → q = V → V = V
   - p /\ V = V
-  - V -> q = V -> V = V
+  - V → q = V → V = V
 
 - **Ligne 2 (p=V, q=F) :**
-  - p -> q = V -> F = F
+  - p → q = V → F = F
   - p /\ F = F
-  - F -> q = F -> F = V (antecedent faux, implication vraie)
+  - F → q = F → F = V (antecedent faux, implication vraie)
 
 - **Ligne 3 (p=F, q=V) :**
-  - p -> q = F -> V = V
+  - p → q = F → V = V
   - p /\ V = F /\ V = F
-  - F -> q = F -> V = V (antecedent faux)
+  - F → q = F → V = V (antecedent faux)
 
 - **Ligne 4 (p=F, q=F) :**
-  - p -> q = F -> F = V
+  - p → q = F → F = V
   - p /\ V = F /\ V = F
-  - F -> q = F -> F = V (antecedent faux)
+  - F → q = F → F = V (antecedent faux)
 
 **Toutes les lignes donnent V. C'est une TAUTOLOGIE.**
 
@@ -501,7 +501,7 @@ Observation : dans les lignes 2, 3 et 4, l'antecedent `p /\ (p -> q)` est faux, 
 
 ---
 
-## Exercice 11 : Traduction francais -> propositions (type ExoCours Diapo 9)
+## Exercice 11 : Traduction francais → propositions (type ExoCours Diapo 9)
 
 ### Enonce
 
@@ -553,9 +553,9 @@ H3 = l -> (~c -> (~n /\ a))
 ```
 
 Decomposition :
-- "Si Jerome etudie la logique" = l -> ...
+- "Si Jerome etudie la logique" = l → ...
 - "il n'est pas dans le coup" = ~c (c'est le B dans "B seulement si C")
-- "seulement si" = -> (le B implique le C)
+- "seulement si" = → (le B implique le C)
 - "il ne prend pas de notes et fait attention" = ~n /\ a (c'est le C)
 
 **Piege :** "A seulement si B" = `A -> B`, PAS `B -> A`. "Seulement si" introduit une condition NECESSAIRE, pas suffisante.
@@ -573,7 +573,7 @@ Essayons c = F (~c = V) :
 - H1 = (~V /\ r) \/ (F /\ V) = (F /\ r) \/ F = F.
 
 H1 serait faux. Essayons c = V :
-- ~c = F, donc H3 donne F -> ... = V (trivial). Pas de contrainte.
+- ~c = F, donc H3 donne F → ... = V (trivial). Pas de contrainte.
 - H2 = V \/ ~r = ~r (car c = V, ~c = F, donc ~c \/ ~r = F \/ ~r = ~r). Donc r = F.
 - H1 = (~a /\ F) \/ (n /\ F) = F \/ F = F.
 
@@ -601,34 +601,34 @@ Verifier les propositions suivantes sont des tautologies. Methode : chercher un 
 
 **a)** `r -> (s -> r)`
 
-Pour avoir un contre-exemple, il faut V -> F, donc r = V et (s -> r) = F.
-- r = V, et s -> V = V pour tout s. Donc (s -> r) = V.
-- Contradiction : on a besoin de (s -> r) = F mais on obtient V.
+Pour avoir un contre-exemple, il faut V → F, donc r = V et (s → r) = F.
+- r = V, et s → V = V pour tout s. Donc (s → r) = V.
+- Contradiction : on a besoin de (s → r) = F mais on obtient V.
 
 Pas de contre-exemple. **Tautologie.**
 
 **b)** `r -> ((~r) -> s)`
 
-Pour avoir un contre-exemple, il faut r = V et (~r) -> s = F.
+Pour avoir un contre-exemple, il faut r = V et (~r) → s = F.
 - r = V force ~r = F.
-- (~r) -> s = F -> s = V pour tout s (premisse fausse, implication vraie).
+- (~r) → s = F → s = V pour tout s (premisse fausse, implication vraie).
 - Contradiction : on a besoin de F mais on obtient V.
 
 Pas de contre-exemple. **Tautologie.**
 
 **c)** `(r -> s) -> ((s -> t) -> (r -> t))`
 
-Pour avoir un contre-exemple, il faut V -> F, donc le cote gauche doit etre vrai et le cote droit faux.
+Pour avoir un contre-exemple, il faut V → F, donc le cote gauche doit etre vrai et le cote droit faux.
 
 Analysons le cote droit d'abord (plus contraignant car c'est celui qui doit etre F) :
 ```
 (s -> t) -> (r -> t) = F
 ```
-Il faut (s -> t) = V et (r -> t) = F.
-- (r -> t) = F force r = V et t = F.
-- (s -> t) = (s -> F) = ~s. Il faut V, donc s = F.
+Il faut (s → t) = V et (r → t) = F.
+- (r → t) = F force r = V et t = F.
+- (s → t) = (s → F) = ~s. Il faut V, donc s = F.
 
-Verifions le cote gauche : (r -> s) = (V -> F) = F. Or on a besoin que le cote gauche soit V. **Contradiction.**
+Verifions le cote gauche : (r → s) = (V → F) = F. Or on a besoin que le cote gauche soit V. **Contradiction.**
 
 Pas de contre-exemple. **Tautologie.**
 

@@ -311,10 +311,10 @@ Iteration k :
 
 | Critere | Operateur de chemin | Comparaison | Init diag | Init sans arc | Init avec arc |
 |---------|-------------------|-------------|-----------|---------------|---------------|
-| Cout min | + | < | 0 | +inf | poids |
+| Cout min | + | &lt; | 0 | +inf | poids |
 | Probabilite max | * | > | 1 | 0 | p(i,j) |
 | Capacite max | min | > | +inf | 0 | c(i,j) |
-| Longueur min | + (poids=1) | < | 0 | +inf | 1 |
+| Longueur min | + (poids=1) | &lt; | 0 | +inf | 1 |
 
 ---
 
@@ -324,7 +324,7 @@ Iteration k :
 
 ### Principe
 
-On utilise un **critere lexicographique** : (cout, longueur). Le chemin (c1, l1) est meilleur que (c2, l2) si c1 < c2, ou si c1 = c2 et l1 < l2.
+On utilise un **critere lexicographique** : (cout, longueur). Le chemin (c1, l1) est meilleur que (c2, l2) si c1 &lt; c2, ou si c1 = c2 et l1 &lt; l2.
 
 ```
 Initialisation :

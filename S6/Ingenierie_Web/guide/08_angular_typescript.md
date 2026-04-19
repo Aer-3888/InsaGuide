@@ -120,10 +120,10 @@ export class AppComponent {
 
 | Type | Syntaxe | Direction |
 |------|---------|-----------|
-| Interpolation | `{{ expr }}` | TS -> HTML |
-| Property binding | `[prop]` | TS -> HTML |
-| Event binding | `(event)` | HTML -> TS |
-| Two-way binding | `[(ngModel)]` | TS <-> HTML |
+| Interpolation | `&#123;&#123; expr &#125;&#125;` | TS → HTML |
+| Property binding | `[prop]` | TS → HTML |
+| Event binding | `(event)` | HTML → TS |
+| Two-way binding | `[(ngModel)]` | TS &lt;-> HTML |
 
 ### Exemples
 

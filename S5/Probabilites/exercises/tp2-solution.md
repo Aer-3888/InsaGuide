@@ -1,8 +1,8 @@
-# TP2 - Law of Large Numbers and Central Limit Theorem
+# TP2 - Loi des grands nombres et theoreme central limite
 
-> Following teacher instructions from: `S5/Probabilites/data/moodle/tp/tp2/README.md`
+> En suivant les instructions de : `S5/Probabilites/data/moodle/tp/tp2/README.md`
 
-## Setup
+## Preparation
 
 ```r
 # Install MASS package if not already installed
@@ -18,7 +18,7 @@ The `MASS` package provides the `michelson` dataset containing Michelson's 1879 
 
 ### 1. Load and explore the `michelson` dataset from MASS library
 
-**Answer:**
+**Reponse :**
 ```r
 library(MASS)
 
@@ -32,7 +32,7 @@ cat("\nNumber of measurements:", nrow(michelson), "\n")
 cat("Number of experiments:", length(unique(michelson$Expt)), "\n")
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
       Expt          Run            Speed
  Min.   :1    Min.   : 1.00   Min.   : 620
@@ -60,14 +60,14 @@ Number of measurements: 100
 Number of experiments: 5
 ```
 
-**Explanation:**
+**Explication :**
 Speed values are in km/s with 299,000 subtracted (so 850 means 299,850 km/s). The actual speed of light is 299,792.458 km/s, so in these units the "true" value would be 792.458 -- Michelson's measurements systematically overestimate.
 
 ---
 
 ### 2. Calculate mean and standard deviation
 
-**Answer:**
+**Reponse :**
 ```r
 mu <- mean(michelson$Speed)
 sigma <- sd(michelson$Speed)
@@ -79,7 +79,7 @@ cat("Standard deviation:", round(sigma, 2), "\n")
 cat("Variance:", round(var(michelson$Speed), 2), "\n")
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 Overall statistics:
 Mean speed: 852.4
@@ -87,7 +87,7 @@ Standard deviation: 79.01
 Variance: 6242.67
 ```
 
-**Mathematical explanation:**
+**Explication mathematique :**
 R's `sd()` computes the sample standard deviation with Bessel's correction (divides by $n-1$):
 
 $$S' = \sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(X_i - \bar{X})^2}$$
@@ -102,7 +102,7 @@ This gives an unbiased estimator of the population variance. With $n = 100$, the
 
 $$\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i \xrightarrow{P} \mu \quad \text{as } n \to \infty$$
 
-**Answer:**
+**Reponse :**
 ```r
 # Calculate cumulative mean using cumsum
 cumulative_means <- cumsum(michelson$Speed) / (1:n)
@@ -121,7 +121,7 @@ legend("topright",
        col = c("blue", "red"), lty = c(1, 2), lwd = 2)
 ```
 
-**Expected output:**
+**Sortie attendue :**
 Blue line starting at the first measurement (850), fluctuating significantly for the first ~20 measurements, then progressively stabilizing toward the final mean 852.4 (red dashed line). The path zigzags but the trend is convergent.
 
 ```r
@@ -139,7 +139,7 @@ for (i in key_points) {
 }
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 Convergence of empirical mean:
 n      | Emp. Mean    | Error
@@ -152,7 +152,7 @@ n      | Emp. Mean    | Error
    100 |      852.400 |      0.000
 ```
 
-**Mathematical explanation:**
+**Explication mathematique :**
 The standard error $\text{SE} = \sigma/\sqrt{n}$ governs the rate of convergence:
 
 $$\text{Var}(\bar{X}_n) = \frac{\sigma^2}{n}, \quad \text{SD}(\bar{X}_n) = \frac{\sigma}{\sqrt{n}}$$
@@ -179,14 +179,14 @@ legend("topright",
 grid()
 ```
 
-**Expected output:**
+**Sortie attendue :**
 Funnel-shaped confidence envelope that narrows as $n$ increases. At $n = 1$, $\text{SE} = 79.01$. At $n = 100$, $\text{SE} = 79.01/10 = 7.90$.
 
 ---
 
 ### 4. Create histogram with theoretical normal overlay (Central Limit Theorem)
 
-**Answer:**
+**Reponse :**
 ```r
 hist(michelson$Speed,
      freq = FALSE, breaks = 25,
@@ -204,14 +204,14 @@ legend("topright",
        col = c(NA, "red"), lwd = c(NA, 2))
 ```
 
-**Expected output:**
+**Sortie attendue :**
 Roughly bell-shaped histogram of 100 measurements with the red $\mathcal{N}(852.4, 79.01)$ curve overlaid. Distribution ranges from about 620 to 1070.
 
 ---
 
 ### 5. Group by experiment and compare distributions
 
-**Answer:**
+**Reponse :**
 ```r
 # Calculate mean for each experiment using tapply()
 experiment_means <- tapply(michelson$Speed, michelson$Expt, mean)
@@ -232,7 +232,7 @@ cat("Mean of experiment means:", round(mean(experiment_means), 2), "\n")
 cat("SD of experiment means:", round(sd(experiment_means), 2), "\n")
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 Experiment means (n=20 each):
     1     2     3     4     5
@@ -247,7 +247,7 @@ Mean of experiment means: 852.4
 SD of experiment means: 34.28
 ```
 
-**Mathematical explanation:**
+**Explication mathematique :**
 By the CLT, the distribution of sample means approaches:
 
 $$\bar{X}_n \sim \mathcal{N}\left(\mu, \frac{\sigma^2}{n}\right) \quad \text{approximately}$$
@@ -287,7 +287,7 @@ legend("topright",
        lwd = c(NA, 3, NA), pch = c(NA, NA, 19))
 ```
 
-**Expected output:**
+**Sortie attendue :**
 Bell-shaped histogram of 1000 simulated means, narrower than the original data distribution. The green $\mathcal{N}(852.4, 17.67)$ curve fits well. Red dots mark actual experiment means.
 
 ```r
@@ -313,7 +313,7 @@ for (n_sample in sample_sizes) {
 par(mfrow = c(1, 1))
 ```
 
-**Expected output:**
+**Sortie attendue :**
 Four panels showing increasingly narrow, more normal distributions of means:
 - $n = 5$: SE = 35.3, wide, somewhat irregular
 - $n = 10$: SE = 25.0, narrower, more bell-shaped
@@ -333,7 +333,7 @@ Four panels showing increasingly narrow, more normal distributions of means:
 
 ### 1. Calculate exact probability: $P(X \geq 6) = 1 - P(X \leq 5)$
 
-**Answer:**
+**Reponse :**
 ```r
 n_questions <- 10
 p_correct <- 0.25
@@ -362,7 +362,7 @@ for (i in 1:length(x_values)) {
 }
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 Exact probability calculation:
 P(pass) = P(X >= 6) = 0.01973
@@ -384,7 +384,7 @@ P(X =  9) = 0.00003 <-- PASS
 P(X = 10) = 0.00000 <-- PASS
 ```
 
-**Mathematical explanation:**
+**Explication mathematique :**
 For $X \sim B(n = 10, p = 0.25)$:
 
 $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}$$
@@ -397,7 +397,7 @@ A student guessing randomly has only a 1.97% chance of passing. The expected sco
 
 ### 2. Simulate 5000 exams using `rbinom()`
 
-**Answer:**
+**Reponse :**
 ```r
 n_simulations <- 5000
 set.seed(42)
@@ -414,7 +414,7 @@ cat("Exact pass rate:", round(prob_pass_exact, 5), "\n")
 cat("Difference:", round(abs(empirical_pass_rate - prob_pass_exact), 5), "\n")
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 Simulation results (5000 exams):
 Number passed: 103
@@ -427,7 +427,7 @@ Difference: 0.00087
 
 ### 3. Verify Law of Large Numbers for pass rate
 
-**Answer:**
+**Reponse :**
 ```r
 cumulative_passes <- cumsum(exam_passed)
 cumulative_pass_rate <- cumulative_passes / (1:n_simulations)
@@ -446,7 +446,7 @@ legend("topright",
 grid()
 ```
 
-**Expected output:**
+**Sortie attendue :**
 Blue cumulative pass rate line with large initial jumps, progressively converging toward the red dashed line at 0.01973.
 
 ```r
@@ -467,14 +467,14 @@ legend("topright",
        lwd = c(10, 2, 2), lty = c(1, 1, 3), pch = c(NA, 19, NA))
 ```
 
-**Expected output:**
+**Sortie attendue :**
 Histogram bars and red dots align closely. Almost all mass is in the fail region (left of the green threshold line).
 
 ---
 
 ### 4. Apply CLT: approximate with normal distribution
 
-**Answer:**
+**Reponse :**
 ```r
 # Check approximation suitability
 np <- n_questions * p_correct
@@ -503,7 +503,7 @@ cat("Error:", round(abs(prob_pass_exact - prob_pass_normal_no_cc), 6), "\n")
 cat("Relative error:", round(abs(prob_pass_exact - prob_pass_normal_no_cc) / prob_pass_exact * 100, 2), "%\n")
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 Normal approximation suitability check:
 np = 2.5 (should be >= 5)
@@ -519,18 +519,18 @@ Error: 0.014400
 Relative error: 72.97 %
 ```
 
-**Mathematical explanation:**
+**Explication mathematique :**
 For $X \sim B(n, p)$, the CLT gives $X \approx \mathcal{N}(\mu = np, \sigma^2 = np(1-p))$.
 
 Without continuity correction: $P(X \geq 6) \approx P\left(Z \geq \frac{6 - 2.5}{1.369}\right) = P(Z \geq 2.556) = 0.0053$.
 
-The 73% relative error shows the approximation is very poor when $np < 5$.
+The 73% relative error shows the approximation is very poor when $np \lt 5$.
 
 ---
 
 ### 5. Compare exact vs approximate probabilities (with continuity correction)
 
-**Answer:**
+**Reponse :**
 ```r
 # With continuity correction: P(X >= 6) ~ P(Y > 5.5)
 prob_pass_normal_cc <- 1 - pnorm(pass_threshold - 0.5, mean = mu_X, sd = sigma_X)
@@ -559,7 +559,7 @@ cat("With CC:", round(prob_pass_prop_cc, 6), "\n")
 cat("Exact:", round(prob_pass_exact, 6), "\n")
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 With continuity correction:
 Normal approx (with CC): 0.014209
@@ -577,7 +577,7 @@ With CC: 0.014209
 Exact: 0.019734
 ```
 
-**Mathematical explanation:**
+**Explication mathematique :**
 The **continuity correction** accounts for the discrete-to-continuous mismatch:
 - $P(X \geq k) \approx P(Y > k - 0.5)$ where $Y \sim \mathcal{N}(np, np(1-p))$
 
@@ -610,7 +610,7 @@ legend("topright",
 grid()
 ```
 
-**Expected output:**
+**Sortie attendue :**
 Blue vertical bars (exact binomial) with red smooth curve (normal approximation). Visible mismatch: binomial is right-skewed, normal is symmetric. The normal underestimates the right tail.
 
 ```r
@@ -634,12 +634,12 @@ for (n in n_values) {
 par(mfrow = c(1, 1))
 ```
 
-**Expected output:**
+**Sortie attendue :**
 Four panels with improving fit: $n = 10$ (poor), $n = 20$ (better at threshold), $n = 50$ (very good), $n = 100$ (excellent). The rule of thumb $np \geq 5$ marks where the approximation becomes visually acceptable.
 
 ---
 
-## Summary Comparison Table
+## Tableau comparatif recapitulatif
 
 | Method | $P(X \geq 6)$ for $B(10, 0.25)$ | Error vs exact |
 |--------|----------------------------------|----------------|
@@ -648,4 +648,4 @@ Four panels with improving fit: $n = 10$ (poor), $n = 20$ (better at threshold),
 | Normal, with CC | 0.014209 | 28.0% relative error |
 | Simulation (5000) | ~0.0206 | ~4.4% relative error |
 
-**Key takeaway:** For this problem ($n = 10$, $p = 0.25$), always use the exact binomial. The normal approximation is inadequate because $np = 2.5 < 5$. For larger $n$ ($\geq 20$ with $p = 0.25$), the normal approximation becomes acceptable, especially with continuity correction.
+**Key takeaway:** For this problem ($n = 10$, $p = 0.25$), always use the exact binomial. The normal approximation is inadequate because $np = 2.5 \lt 5$. For larger $n$ ($\geq 20$ with $p = 0.25$), the normal approximation becomes acceptable, especially with continuity correction.

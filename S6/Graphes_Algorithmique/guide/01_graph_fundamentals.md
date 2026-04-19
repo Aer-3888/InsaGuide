@@ -168,7 +168,7 @@ Matrice n x m (n sommets, m aretes).
 
 ## 7. Graphes ponderes (values)
 
-Un graphe pondere G = (S, A, w) ou w : A -> R est une fonction de poids.
+Un graphe pondere G = (S, A, w) ou w : A → R est une fonction de poids.
 
 ```
     A --5--> B
@@ -234,7 +234,7 @@ Peut etre dessine dans le plan sans croisement d'aretes.
 
 **Formule d'Euler :** n - m + f = 2 (graphe planaire connexe)
 - n = sommets, m = aretes, f = faces (y compris face exterieure)
-- Consequence : m <= 3n - 6 pour n >= 3
+- Consequence : m &lt;= 3n - 6 pour n >= 3
 
 ### Graphe regulier
 
@@ -247,7 +247,7 @@ Un graphe k-regulier : tous les sommets ont degre k.
 
 ## 9. Isomorphisme de graphes
 
-Deux graphes G1 et G2 sont isomorphes s'il existe une bijection f : S1 -> S2 qui preserve les aretes.
+Deux graphes G1 et G2 sont isomorphes s'il existe une bijection f : S1 → S2 qui preserve les aretes.
 
 Pour prouver que deux graphes ne sont PAS isomorphes, comparer :
 1. Nombre de sommets

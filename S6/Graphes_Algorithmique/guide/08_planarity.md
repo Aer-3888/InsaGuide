@@ -80,7 +80,7 @@ Verification : 3 faces. Correct !
 m <= 3n - 6
 ```
 
-**Preuve :** Chaque face est delimitee par au moins 3 aretes. Chaque arete borde 2 faces. Donc 3f <= 2m, soit f <= 2m/3. Par Euler : n - m + f = 2, donc f = 2 - n + m. Substituant : 2 - n + m <= 2m/3, soit m <= 3n - 6.
+**Preuve :** Chaque face est delimitee par au moins 3 aretes. Chaque arete borde 2 faces. Donc 3f &lt;= 2m, soit f &lt;= 2m/3. Par Euler : n - m + f = 2, donc f = 2 - n + m. Substituant : 2 - n + m &lt;= 2m/3, soit m &lt;= 3n - 6.
 
 **Pour un graphe planaire biparti connexe (pas de triangle) :**
 
@@ -96,7 +96,7 @@ m <= 2n - 4
 
 ### K_5 n'est pas planaire
 
-K_5 : n=5, m=10. Verifier : 10 <= 3(5) - 6 = 9. FAUX !
+K_5 : n=5, m=10. Verifier : 10 &lt;= 3(5) - 6 = 9. FAUX !
 Donc K_5 n'est pas planaire.
 
 ```
@@ -115,9 +115,9 @@ K_5 :
 
 ### K_{3,3} n'est pas planaire
 
-K_{3,3} : n=6, m=9. Test m <= 3n-6 : 9 <= 12. OK, le test ne conclut pas.
+K_{3,3} : n=6, m=9. Test m &lt;= 3n-6 : 9 &lt;= 12. OK, le test ne conclut pas.
 
-Mais K_{3,3} est biparti (pas de triangle). Test m <= 2n-4 : 9 <= 8. FAUX !
+Mais K_{3,3} est biparti (pas de triangle). Test m &lt;= 2n-4 : 9 &lt;= 8. FAUX !
 Donc K_{3,3} n'est pas planaire.
 
 ```
@@ -169,8 +169,8 @@ Un **mineur** est obtenu par contraction d'aretes (fusionner deux sommets adjace
 
 ### Etape 1 : Tests rapides
 
-1. m <= 3n - 6 ? Si non => non planaire.
-2. Si biparti : m <= 2n - 4 ? Si non => non planaire.
+1. m &lt;= 3n - 6 ? Si non => non planaire.
+2. Si biparti : m &lt;= 2n - 4 ? Si non => non planaire.
 3. Si oui aux deux => on ne peut pas conclure directement.
 
 ### Etape 2 : Chercher K_5 ou K_{3,3}
@@ -205,11 +205,11 @@ Le theoreme des 4 couleurs s'applique aux graphes planaires :
 Planaire => chi(G) <= 4
 ```
 
-Plus facile a demontrer : tout graphe planaire est 5-colorable (chi <= 5).
+Plus facile a demontrer : tout graphe planaire est 5-colorable (chi &lt;= 5).
 
 ### Preuve du theoreme des 5 couleurs (schema)
 
-Par recurrence sur n. On utilise le fait qu'un graphe planaire a toujours un sommet de degre <= 5 (consequence de m <= 3n - 6).
+Par recurrence sur n. On utilise le fait qu'un graphe planaire a toujours un sommet de degre &lt;= 5 (consequence de m &lt;= 3n - 6).
 
 ---
 

@@ -6,14 +6,14 @@
 
 ### Checklist de revision
 
-- [ ] Savoir derouler Dijkstra sur un graphe de 6-8 sommets (en < 5 min)
-- [ ] Savoir derouler Kruskal sur un graphe de 6-8 sommets (en < 5 min)
+- [ ] Savoir derouler Dijkstra sur un graphe de 6-8 sommets (en &lt; 5 min)
+- [ ] Savoir derouler Kruskal sur un graphe de 6-8 sommets (en &lt; 5 min)
 - [ ] Savoir derouler Ford-Fulkerson sur un reseau de 5-7 sommets
 - [ ] Connaitre les conditions d'Euler par coeur (degres pairs / d+ = d-)
 - [ ] Connaitre les conditions de Dirac et Ore (suffisantes, pas necessaires)
 - [ ] Savoir calculer ES, LS, MT pour l'ordonnancement
 - [ ] Connaitre les bornes du nombre chromatique
-- [ ] Connaitre la formule d'Euler (n - m + f = 2) et m <= 3n - 6
+- [ ] Connaitre la formule d'Euler (n - m + f = 2) et m &lt;= 3n - 6
 - [ ] Savoir prouver qu'un graphe est/n'est pas biparti
 - [ ] Connaitre les 6 equivalences d'un arbre
 
@@ -139,7 +139,7 @@ Iteration | Chemin augmentant | Cap. residuelle | |f| apres
 - Ecrire les hypotheses clairement
 - Raisonner par contradiction si possible
 - Pour les arbres : utiliser la recurrence sur n (supprimer une feuille)
-- Pour la planarite : utiliser m <= 3n - 6
+- Pour la planarite : utiliser m &lt;= 3n - 6
 
 ### Question "Modeliser en graphe"
 

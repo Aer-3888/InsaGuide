@@ -1,16 +1,16 @@
-# TD Solutions - Tutorials (MyPoint, Line, UML)
+# Solutions TD - Tutoriels (MyPoint, Line, UML)
 
-> Following teacher instructions from: `S5/CPOO/data/moodle/tp/tp3_gitlab_exercises/` (cours examples)
+> Instructions de l'enseignant : `S5/CPOO/data/moodle/tp/tp3_gitlab_exercises/` (exemples de cours)
 
-These TD exercises cover unit testing fundamentals, mocking, and UML diagram interpretation. They serve as preparation for the TP exercises.
+Ces exercices de TD couvrent les fondamentaux des tests unitaires, le mocking et l'interpretation de diagrammes UML. Ils servent de preparation aux exercices de TP.
 
 ---
 
-## TD: Line Testing (cours)
+## TD : Test de Line (cours)
 
-### Code Under Test
+### Code a tester
 
-The `Line` class represents a 2D line defined by two points. It computes the slope (a) and y-intercept (b) of the equation `y = ax + b`.
+La classe `Line` represente une droite 2D definie par deux points. Elle calcule la pente (a) et l'ordonnee a l'origine (b) de l'equation `y = ax + b`.
 
 **Line.java** (`cpoo1/cours/`):
 
@@ -57,7 +57,7 @@ public interface TranslationVector {
 }
 ```
 
-### Existing Test (provided by teacher)
+### Test existant (fourni par l'enseignant)
 
 **LineTest.java:**
 
@@ -90,9 +90,9 @@ class LineTest {
 }
 ```
 
-### Complete Test Solution
+### Solution de test complete
 
-The existing tests only cover the normal case (non-vertical line). For full coverage, we need to test vertical lines, horizontal lines, and edge cases.
+Les tests existants ne couvrent que le cas normal (droite non verticale). Pour une couverture complete, il faut tester les droites verticales, horizontales et les cas limites.
 
 ```java
 package cpoo1.cours;
@@ -158,15 +158,15 @@ class LineTestComplete {
 
 ---
 
-## TD: MyPoint Testing
+## TD : Test de MyPoint
 
-### Code Under Test (assumed structure)
+### Code a tester (structure supposee)
 
-`MyPoint` is a basic 2D point class used to teach unit testing, mocking, and interface-based design.
+`MyPoint` est une classe de point 2D basique utilisee pour enseigner les tests unitaires, le mocking et la conception basee sur les interfaces.
 
-### Test Solutions
+### Solutions de test
 
-#### Getters and Setters
+#### Getters et Setters
 
 ```java
 @Test
@@ -184,7 +184,7 @@ void testGetSetY() {
 }
 ```
 
-#### Constructors
+#### Constructeurs
 
 ```java
 // Default constructor: (0, 0)
@@ -233,9 +233,9 @@ void testScaleByZero() {
 }
 ```
 
-Note: `scale` returns a NEW point (immutability) -- the original is unchanged.
+Note : `scale` retourne un NOUVEAU point (immutabilite) -- l'original n'est pas modifie.
 
-#### Horizontal Symmetry
+#### Symetrie horizontale
 
 ```java
 @Test
@@ -265,9 +265,9 @@ void testTranslation() {
 }
 ```
 
-Note: `translate` modifies the point in place (mutation), unlike `scale` which returns a new point.
+Note : `translate` modifie le point en place (mutation), contrairement a `scale` qui retourne un nouveau point.
 
-#### Mocking Random
+#### Mocking de Random
 
 ```java
 @Test
@@ -282,9 +282,9 @@ void testSetPointRandom() {
 }
 ```
 
-Key point: `Random.nextInt()` is non-deterministic by nature. Mocking makes tests deterministic.
+Point cle : `Random.nextInt()` est non-deterministe par nature. Le mocking rend les tests deterministes.
 
-#### Mocking ITranslation Interface
+#### Mocking de l'interface ITranslation
 
 ```java
 @Test
@@ -306,55 +306,55 @@ void testNullITranslation() {
 }
 ```
 
-Key point: the cast `(ITranslation) null` is needed to disambiguate between the two `translate` overloads (`translate(double, double)` vs `translate(ITranslation)`).
+Point cle : le cast `(ITranslation) null` est necessaire pour desambiguer entre les deux surcharges de `translate` (`translate(double, double)` vs `translate(ITranslation)`).
 
 ---
 
-## TD UML -- Key Diagram Exercises
+## TD UML -- Exercices cles sur les diagrammes
 
-### Approach for UML Class Diagram Exercises
+### Approche pour les exercices de diagrammes de classes UML
 
-UML TD exercises ask you to convert textual descriptions to class diagrams. The systematic approach is:
+Les exercices de TD UML demandent de convertir des descriptions textuelles en diagrammes de classes. L'approche systematique est :
 
-1. **Identify nouns** -- these become classes or attributes
-2. **Identify verbs** -- these become methods or associations
-3. **Identify relationships**:
-   - "is a" = inheritance (`extends`)
-   - "has" = association/composition
-   - "uses" = dependency
-4. **Determine multiplicity**:
-   - "one" = `1`
-   - "zero or one" = `0..1`
-   - "zero or more" = `0..*`
-   - "at least one" = `1..*`
-5. **Identify constraints** -- "must," "cannot," "at most"
+1. **Identifier les noms** -- ils deviennent des classes ou des attributs
+2. **Identifier les verbes** -- ils deviennent des methodes ou des associations
+3. **Identifier les relations** :
+   - "est un" = heritage (`extends`)
+   - "possede" = association/composition
+   - "utilise" = dependance
+4. **Determiner la multiplicite** :
+   - "un" = `1`
+   - "zero ou un" = `0..1`
+   - "zero ou plusieurs" = `0..*`
+   - "au moins un" = `1..*`
+5. **Identifier les contraintes** -- "doit", "ne peut pas", "au plus"
 
-### Step-by-Step Approach for Exam UML Questions
+### Approche pas a pas pour les questions UML d'examen
 
-1. Read the text twice -- underline nouns (classes) and verbs (methods)
-2. Draw classes first (boxes with names and attributes)
-3. Add relationships (lines with arrows, diamonds, triangles)
-4. Add multiplicity to every relationship end
-5. Mark abstract classes and interfaces
-6. Add methods where the text specifies behavior
-7. Review: does every noun in the text appear in the diagram?
+1. Lire le texte deux fois -- souligner les noms (classes) et les verbes (methodes)
+2. Dessiner d'abord les classes (boites avec noms et attributs)
+3. Ajouter les relations (lignes avec fleches, losanges, triangles)
+4. Ajouter la multiplicite a chaque extremite de relation
+5. Marquer les classes abstraites et les interfaces
+6. Ajouter les methodes la ou le texte specifie un comportement
+7. Relire : chaque nom du texte apparait-il dans le diagramme ?
 
-### UML Notation Summary
+### Resume de la notation UML
 
-| Symbol | Meaning |
-|--------|---------|
-| Solid arrow (`-->`) | Unidirectional association |
-| Line with arrows both ends (`<-->`) | Bidirectional association |
-| Filled diamond (`<>---`) | Composition (strong ownership) |
-| Empty diamond (`<>---`) | Aggregation (weak ownership) |
-| Hollow triangle (`--triangleup>`) | Inheritance (`extends`) |
-| Dashed arrow (`-->`) | Dependency / Implementation (`implements`) |
-| `+` prefix | Public visibility |
-| `-` prefix | Private visibility |
-| `#` prefix | Protected visibility |
-| *italics* | Abstract class/method |
+| Symbole | Signification |
+|---------|--------------|
+| Fleche pleine (`-->`) | Association unidirectionnelle |
+| Ligne avec fleches aux deux bouts (`<-->`) | Association bidirectionnelle |
+| Losange plein (`<>---`) | Composition (possession forte) |
+| Losange creux (`<>---`) | Agregation (possession faible) |
+| Triangle creux (`--triangleup>`) | Heritage (`extends`) |
+| Fleche pointillee (`-->`) | Dependance / Implementation (`implements`) |
+| Prefixe `+` | Visibilite publique |
+| Prefixe `-` | Visibilite privee |
+| Prefixe `#` | Visibilite protegee |
+| *italiques* | Classe/methode abstraite |
 
-### Common Relationships in CPOO
+### Relations courantes en CPOO
 
 **Inheritance** (Arbre/Chene/Pin from Exercice 1):
 ```
@@ -372,7 +372,7 @@ Velo *-- Roue : 0..*
 Velo -- Guidon : 0..1
 ```
 
-**Generic/Parameterized** (Arbre<F> from Exercice 1 bonus):
+**Generic/Parameterized** (Arbre&lt;F> from Exercice 1 bonus):
 ```
 Arbre<F extends Fruit> <|-- Chene (extends Arbre<Gland>)
 ```

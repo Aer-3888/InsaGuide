@@ -1,6 +1,6 @@
 # TP4 : ORM et JPA
 
-> Following teacher instructions from: `S6/Ingenierie_Web/data/moodle/tp/tp4_orm_jpa/README.md`
+> Source : `S6/Ingenierie_Web/data/moodle/tp/tp4_orm_jpa/README.md`
 
 Ce TP couvre l'Object-Relational Mapping (ORM) avec JPA (Java Persistence API). Le projet modele un album de cartes de joueurs de baseball.
 
@@ -33,7 +33,7 @@ PositionConverter (@Converter)
 
 ### Q1 : Comprendre la configuration
 
-**Answer:**
+**Reponse :**
 
 ```xml
 <!-- Fichier : src/main/resources/META-INF/persistence.xml (fourni) -->
@@ -72,7 +72,7 @@ PositionConverter (@Converter)
 
 ### Q2 : Ecrire la superclasse abstraite
 
-**Answer:**
+**Reponse :**
 
 ```java
 // Fichier : model/ModelElement.java (fourni)
@@ -106,7 +106,7 @@ Points cles :
 
 ### Q3 : Ecrire l'entite Player
 
-**Answer:**
+**Reponse :**
 
 ```java
 // Fichier : model/Player.java (fourni)
@@ -157,7 +157,7 @@ CREATE TABLE PLAYER (
 
 ### Q4 : Ecrire la sous-classe
 
-**Answer:**
+**Reponse :**
 
 ```java
 // Fichier : model/BaseballPlayer.java (fourni)
@@ -214,9 +214,9 @@ Les 3 strategies d'heritage JPA :
 
 ## Exercice 5 : Position et PositionConverter
 
-### Q5 : Ecrire le converter enum -> string
+### Q5 : Ecrire le converter enum → string
 
-**Answer:**
+**Reponse :**
 
 ```java
 // Fichier : model/Position.java (fourni)
@@ -267,7 +267,7 @@ Le converter transforme `Position.CATCHER` en `"C"` dans la base et inversement.
 
 ### Q6 : Ecrire l'objet embarque
 
-**Answer:**
+**Reponse :**
 
 ```java
 // Fichier : model/Picture.java (fourni)
@@ -299,7 +299,7 @@ public class Picture {
 
 ### Q7 : Ecrire l'entite avec la relation
 
-**Answer:**
+**Reponse :**
 
 ```java
 // Fichier : model/Album.java (fourni)
@@ -339,7 +339,7 @@ Points cles :
 
 ### Q8 : Ecrire l'entite avec toutes ses relations
 
-**Answer:**
+**Reponse :**
 
 ```java
 // Fichier : model/PlayerCard.java (fourni)
@@ -410,7 +410,7 @@ Points cles :
 
 ### Q9.1 : Classe de base des tests
 
-**Answer:**
+**Reponse :**
 
 ```java
 // Fichier : test/JPATest.java (fourni)
@@ -440,7 +440,7 @@ abstract class JPATest {
 
 ### Q9.2 : Tests Player et BaseballPlayer
 
-**Answer:**
+**Reponse :**
 
 ```java
 // Fichier : test/TestPlayerJPA.java (fourni)
@@ -496,7 +496,7 @@ public class TestPlayerJPA extends JPATest {
 
 ### Q9.3 : Tests PlayerCard (INNER JOIN)
 
-**Answer:**
+**Reponse :**
 
 ```java
 // Fichier : test/TestPlayerCardJPA.java (fourni)
@@ -537,7 +537,7 @@ public class TestPlayerCardJPA extends JPATest {
 
 ### Q9.4 : Tests Album avec PlayerCards (relation bidirectionnelle)
 
-**Answer:**
+**Reponse :**
 
 ```java
 // Fichier : test/TestAlbumJPA.java (fourni)

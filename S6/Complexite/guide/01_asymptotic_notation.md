@@ -221,7 +221,7 @@ O(n^{log_b(a)}) reste correct ici car dans les deux cas f(n) = O(n^{log_b(a) - e
 
 1. Ecrire f(n)
 2. Majorer chaque terme par un multiple de g(n)
-3. Factoriser pour obtenir f(n) <= c * g(n) a partir d'un certain n0
+3. Factoriser pour obtenir f(n) &lt;= c * g(n) a partir d'un certain n0
 4. Conclure avec les valeurs de c et n0
 
 **Exemple :** Montrer que 3n^2 + 5n + 2 = O(n^2)

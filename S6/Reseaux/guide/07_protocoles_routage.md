@@ -2,7 +2,7 @@
 
 ## Vue d'ensemble
 
-Les protocoles de routage permettent aux routeurs de decouvrir automatiquement les chemins optimaux et de s'adapter aux changements de topologie. Ils se divisent en deux grandes families : IGP (intra-AS) et EGP (inter-AS).
+Les protocoles de routage permettent aux routeurs de decouvrir automatiquement les chemins optimaux et de s'adapter aux changements de topologie. Ils se divisent en deux grandes familles : IGP (intra-AS) et EGP (inter-AS).
 
 ---
 
@@ -165,11 +165,11 @@ Depuis A :
 ## Processus de routage complet (rappel)
 
 A chaque saut :
-1. Recevoir la trame -> retirer en-tete Ethernet.
-2. Lire IP destination -> consulter table de routage (**longest prefix match**).
-3. **Decrementer TTL** (si TTL=0 -> detruire + ICMP Time Exceeded).
+1. Recevoir la trame → retirer en-tete Ethernet.
+2. Lire IP destination → consulter table de routage (**longest prefix match**).
+3. **Decrementer TTL** (si TTL=0 → detruire + ICMP Time Exceeded).
 4. ARP pour trouver la MAC du prochain saut.
-5. Construire nouvelle trame Ethernet -> transmettre.
+5. Construire nouvelle trame Ethernet → transmettre.
 
 **Ce qui change** : MAC src, MAC dest, TTL, checksum IP.
 **Ce qui NE change PAS** : IP src, IP dest, donnees.

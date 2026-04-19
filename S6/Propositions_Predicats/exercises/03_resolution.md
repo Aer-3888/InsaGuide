@@ -229,7 +229,7 @@ Res(C1, C2) avec sigma = {x <- a}
 ## Exercice 5 : Resolution au premier ordre -- parite (type DS 2021)
 
 ### Enonce
-H = {P(0), Ax, (P(x) -> P(s(s(x))))}. Prouver que P(s(s(s(s(0))))) est consequence de H.
+H = {P(0), Ax, (P(x) → P(s(s(x))))}. Prouver que P(s(s(s(s(0))))) est consequence de H.
 
 ### Solution detaillee
 
@@ -240,7 +240,7 @@ Hypothese 1 : P(0)
 C1 = {P(0)}
 ```
 
-Hypothese 2 : Ax, (P(x) -> P(s(s(x))))
+Hypothese 2 : Ax, (P(x) → P(s(s(x))))
 ```
 = Ax, (~P(x) \/ P(s(s(x))))
 C2 = {~P(x), P(s(s(x)))}
@@ -289,7 +289,7 @@ Pas 3 : Res(C5, C3) sur P
    C6 = {}                          (clause vide !)
 ```
 
-**Conclusion :** P(s(s(s(s(0))))) est bien consequence de H. Intuitivement : P(0) est vrai, et P(x) -> P(s(s(x))) permet de "monter" de 2 en 2. Donc P(0) -> P(2) -> P(4).
+**Conclusion :** P(s(s(s(s(0))))) est bien consequence de H. Intuitivement : P(0) est vrai, et P(x) → P(s(s(x))) permet de "monter" de 2 en 2. Donc P(0) → P(2) → P(4).
 
 **Arbre de resolution :**
 ```
@@ -312,9 +312,9 @@ Pas 3 : Res(C5, C3) sur P
 
 ### Enonce
 Premisses :
-- A1 : Tous les bebes sont illogiques -- Ax, (BB(x) -> ~L(x))
-- A2 : Tous ceux qui domptent un crocodile sont respectes -- Ax, (DC(x) -> R(x))
-- A3 : Toutes les personnes illogiques ne sont pas respectees -- Ax, (~L(x) -> ~R(x))
+- A1 : Tous les bebes sont illogiques -- Ax, (BB(x) → ~L(x))
+- A2 : Tous ceux qui domptent un crocodile sont respectes -- Ax, (DC(x) → R(x))
+- A3 : Toutes les personnes illogiques ne sont pas respectees -- Ax, (~L(x) → ~R(x))
 
 Prouver : ~(Ex, (BB(x) /\ DC(x))) ("Aucun bebe ne peut dompter un crocodile")
 
@@ -388,9 +388,9 @@ Pas 4 : Res(C7, C8) sur R
 **Conclusion :** Clause vide derivee. Aucun bebe ne peut dompter un crocodile. CQFD.
 
 **Chaine logique :** Si un bebe (BB(a)) domptait un croco (DC(a)), alors :
-- BB(a) -> ~L(a) : il serait illogique
-- ~L(a) -> ~R(a) : il ne serait pas respecte
-- DC(a) -> R(a) : il serait respecte
+- BB(a) → ~L(a) : il serait illogique
+- ~L(a) → ~R(a) : il ne serait pas respecte
+- DC(a) → R(a) : il serait respecte
 - Contradiction : ~R(a) et R(a)
 
 ---
@@ -399,16 +399,16 @@ Pas 4 : Res(C7, C8) sur R
 
 ### Enonce
 Premisses :
-- A1 : Certains patients aiment tous les docteurs -- Ex, (P(x) /\ Ay, (D(y) -> A(x,y)))
-- A2 : Aucun patient n'aime les charlatans -- Ax, (P(x) -> Ay, (C(y) -> ~A(x,y)))
+- A1 : Certains patients aiment tous les docteurs -- Ex, (P(x) /\ Ay, (D(y) → A(x,y)))
+- A2 : Aucun patient n'aime les charlatans -- Ax, (P(x) → Ay, (C(y) → ~A(x,y)))
 
-Prouver : Ax, (D(x) -> ~C(x)) ("Aucun docteur n'est un charlatan")
+Prouver : Ax, (D(x) → ~C(x)) ("Aucun docteur n'est un charlatan")
 
 ### Solution detaillee
 
 **Etape 1 : Mise en clauses des premisses.**
 
-A1 : Ex, (P(x) /\ Ay, (D(y) -> A(x,y)))
+A1 : Ex, (P(x) /\ Ay, (D(y) → A(x,y)))
 - Skolemiser Ex par la constante a :
 ```
 P(a) /\ Ay, (~D(y) \/ A(a,y))
@@ -419,7 +419,7 @@ C1 = {P(a)}
 C2 = {~D(y), A(a,y)}
 ```
 
-A2 : Ax, (P(x) -> Ay, (C(y) -> ~A(x,y)))
+A2 : Ax, (P(x) → Ay, (C(y) → ~A(x,y)))
 ```
 = Ax, Ay, (~P(x) \/ ~C(y) \/ ~A(x,y))
 ```
@@ -487,11 +487,11 @@ Pas 4 : Res(C6, C8) sur A
 ### Enonce
 Hypotheses :
 - A1 : Ex, Dragon(x)
-- A2 : Ax, (Dragon(x) -> (Sleep(x) \/ Hunt(x)))
-- A3 : Ax, (Dragon(x) -> (Hungry(x) -> ~Sleep(x)))
-- A4 : Ax, (Dragon(x) -> (Tired(x) -> ~Hunt(x)))
+- A2 : Ax, (Dragon(x) → (Sleep(x) \/ Hunt(x)))
+- A3 : Ax, (Dragon(x) → (Hungry(x) → ~Sleep(x)))
+- A4 : Ax, (Dragon(x) → (Tired(x) → ~Hunt(x)))
 
-Montrer que F5 = Ax, ((Dragon(x) /\ Tired(x)) -> Sleep(x)) est consequence.
+Montrer que F5 = Ax, ((Dragon(x) /\ Tired(x)) → Sleep(x)) est consequence.
 
 ### Solution detaillee
 
@@ -507,13 +507,13 @@ A2 : Ax, (~Dragon(x) \/ Sleep(x) \/ Hunt(x))
 C2 = {~Dragon(x), Sleep(x), Hunt(x)}
 ```
 
-A3 : Ax, (Dragon(x) -> (Hungry(x) -> ~Sleep(x)))
+A3 : Ax, (Dragon(x) → (Hungry(x) → ~Sleep(x)))
 ```
 = Ax, (~Dragon(x) \/ ~Hungry(x) \/ ~Sleep(x))
 C3 = {~Dragon(x), ~Hungry(x), ~Sleep(x)}
 ```
 
-A4 : Ax, (Dragon(x) -> (Tired(x) -> ~Hunt(x)))
+A4 : Ax, (Dragon(x) → (Tired(x) → ~Hunt(x)))
 ```
 = Ax, (~Dragon(x) \/ ~Tired(x) \/ ~Hunt(x))
 C4 = {~Dragon(x), ~Tired(x), ~Hunt(x)}
@@ -582,7 +582,7 @@ Pas 5 : Res(C11, C6) sur Tired
 ## Exercice 9 : Non-consequence -- par interpretation (type DS 2023 suite)
 
 ### Enonce
-Montrer que F6 = Ax, ((Dragon(x) /\ Hungry(x)) -> ~Hunt(x)) n'est PAS consequence de {A1, A2, A3, A4}.
+Montrer que F6 = Ax, ((Dragon(x) /\ Hungry(x)) → ~Hunt(x)) n'est PAS consequence de {A1, A2, A3, A4}.
 
 ### Solution detaillee
 
@@ -602,29 +602,29 @@ F6 fausse signifie : il existe un dragon affame qui chasse.
 
 A1 : Ex, Dragon(x) = Dragon(d) = V. **OK.**
 
-A2 : Ax, (Dragon(x) -> (Sleep(x) \/ Hunt(x)))
-- Dragon(d) -> (Sleep(d) \/ Hunt(d))
-- V -> (F \/ V)
-- V -> V = **V. OK.**
+A2 : Ax, (Dragon(x) → (Sleep(x) \/ Hunt(x)))
+- Dragon(d) → (Sleep(d) \/ Hunt(d))
+- V → (F \/ V)
+- V → V = **V. OK.**
 
-A3 : Ax, (Dragon(x) -> (Hungry(x) -> ~Sleep(x)))
-- Dragon(d) -> (Hungry(d) -> ~Sleep(d))
-- V -> (V -> ~F)
-- V -> (V -> V)
-- V -> V = **V. OK.**
+A3 : Ax, (Dragon(x) → (Hungry(x) → ~Sleep(x)))
+- Dragon(d) → (Hungry(d) → ~Sleep(d))
+- V → (V → ~F)
+- V → (V → V)
+- V → V = **V. OK.**
 
-A4 : Ax, (Dragon(x) -> (Tired(x) -> ~Hunt(x)))
-- Dragon(d) -> (Tired(d) -> ~Hunt(d))
-- V -> (F -> ~V)
-- V -> (F -> F)
-- V -> V = **V. OK.** (Tired(d) = F, donc F -> ... = V)
+A4 : Ax, (Dragon(x) → (Tired(x) → ~Hunt(x)))
+- Dragon(d) → (Tired(d) → ~Hunt(d))
+- V → (F → ~V)
+- V → (F → F)
+- V → V = **V. OK.** (Tired(d) = F, donc F → ... = V)
 
 **Verification de F6 :**
 
-F6 : Ax, ((Dragon(x) /\ Hungry(x)) -> ~Hunt(x))
-- (Dragon(d) /\ Hungry(d)) -> ~Hunt(d)
-- (V /\ V) -> ~V
-- V -> F = **F !**
+F6 : Ax, ((Dragon(x) /\ Hungry(x)) → ~Hunt(x))
+- (Dragon(d) /\ Hungry(d)) → ~Hunt(d)
+- (V /\ V) → ~V
+- V → F = **F !**
 
 **Conclusion :** Les hypotheses A1-A4 sont toutes vraies mais F6 est fausse dans cette interpretation. Donc F6 n'est **pas** consequence logique de {A1, A2, A3, A4}.
 
@@ -739,4 +739,4 @@ Pas 8 : Res(C13, C8) sur w
 
 **Conclusion :** Clause vide derivee. `I -> ~t` est bien consequence de {H1, H2, H3}. CQFD.
 
-**Point methodologique -- conversion de H2 :** L'exercice illustre une difficulte courante : quand l'elimination de -> donne `~w \/ ((m /\ ~t) \/ ~I)`, il faut distribuer pour obtenir une conjonction de clauses. H2 produit donc DEUX clauses (C2 et C3), pas une seule. Oublier de distribuer est une erreur classique d'examen.
+**Point methodologique -- conversion de H2 :** L'exercice illustre une difficulte courante : quand l'elimination de → donne `~w \/ ((m /\ ~t) \/ ~I)`, il faut distribuer pour obtenir une conjonction de clauses. H2 produit donc DEUX clauses (C2 et C3), pas une seule. Oublier de distribuer est une erreur classique d'examen.

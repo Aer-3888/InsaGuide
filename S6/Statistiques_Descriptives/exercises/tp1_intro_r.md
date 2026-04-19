@@ -467,7 +467,7 @@ mortalite <- mortalite[order(mortalite$nom), ]   # Trier par nom
 intensite <- subset(intensite, noeuds >= 64)
 ```
 
-**Explication :** Un ouragan est defini comme un cyclone tropical dont la vitesse du vent depasse 64 noeuds. Les tempetes tropicales (noeuds < 64) sont exclues.
+**Explication :** Un ouragan est defini comme un cyclone tropical dont la vitesse du vent depasse 64 noeuds. Les tempetes tropicales (noeuds &lt; 64) sont exclues.
 
 **Methode alternative :**
 ```r

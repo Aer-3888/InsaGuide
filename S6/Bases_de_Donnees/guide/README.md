@@ -60,7 +60,7 @@ flowchart TD
 ## Prerequis
 
 - Savoir ce qu'est un tableau (lignes et colonnes).
-- Avoir un SGBD installe (SQLite suffit) : <https://www.sqlite.org/download.html>
+- Avoir un SGBD installe (SQLite suffit) : [sqlite.org](https://www.sqlite.org/download.html)
 
 ## Comment utiliser ce guide
 

@@ -88,11 +88,11 @@ Multiple R-squared:  0.5339
 
 **Valeurs des parametres :**
 - $\hat{\beta}_0 \approx -4460$ : ordonnee a l'origine (extrapolation sans sens pour Score = 0).
-- $\hat{\beta}_1 \approx 91.5$ : chaque point de score supplementaire augmente le salaire maximal de ~91.5$.
+- $\hat{\beta}_1 \approx 91.5$ : chaque point de score supplementaire augmente le salaire maximal d'environ 91.5 dollars.
 
 **Le score a-t-il une influence au risque de 5% ?**
 - $H_0 : \beta_1 = 0$ vs $H_1 : \beta_1 \neq 0$
-- $t = 23.76$, $p < 2 \times 10^{-16} \ll 0.05$
+- $t = 23.76$, $p \lt 2 \times 10^{-16} \ll 0.05$
 - **On rejette $H_0$** : le score a une influence **hautement significative** sur le salaire maximal.
 
 #### Q3b : Tracer la droite de regression
@@ -117,7 +117,7 @@ predict(mod1, newdata = data.frame(Score = 850))
 [1] 73286.7
 ```
 
-Le modele lineaire predit un salaire maximal de **73 287 $** pour un score de 850.
+Le modele lineaire predit un salaire maximal de **73 287 dollars** pour un score de 850.
 
 #### Q3d : Graphe des residus
 
@@ -167,7 +167,7 @@ Residual standard error: 10430 on 492 degrees of freedom
 Multiple R-squared:  0.6375
 ```
 
-Le coefficient de $\text{Score}^2$ est **negatif et significatif** ($p < 2 \times 10^{-16}$) : la courbe est concave, confirmant le ralentissement de la croissance du salaire pour les scores eleves.
+Le coefficient de $\text{Score}^2$ est **negatif et significatif** ($p \lt 2 \times 10^{-16}$) : la courbe est concave, confirmant le ralentissement de la croissance du salaire pour les scores eleves.
 
 #### Q4b : Tracer la courbe d'ajustement
 
@@ -199,7 +199,7 @@ Le modele polynomial donne une prediction differente, tenant compte de la courbu
 
 **Modele :** $\forall i \in \{1, \ldots, 495\}$,
 
-$$\text{MaxSalary}_i = \begin{cases} \beta_0 + \beta_1 \cdot \text{Score}_i + \varepsilon_i & \text{si } \text{Score}_i < \text{seuil} \\ \beta_0 + \beta_1 \cdot \text{seuil} + \beta_2 \cdot (\text{seuil} - \text{Score}_i) + \varepsilon_i & \text{si } \text{Score}_i \geq \text{seuil} \end{cases}$$
+$$\text{MaxSalary}_i = \begin{cases} \beta_0 + \beta_1 \cdot \text{Score}_i + \varepsilon_i & \text{si } \text{Score}_i \lt \text{seuil} \\ \beta_0 + \beta_1 \cdot \text{seuil} + \beta_2 \cdot (\text{seuil} - \text{Score}_i) + \varepsilon_i & \text{si } \text{Score}_i \geq \text{seuil} \end{cases}$$
 
 avec $\varepsilon_i \overset{iid}{\sim} \mathcal{N}(0, \sigma^2)$ et seuil = 650.
 
@@ -246,7 +246,7 @@ print(beta_hat)
 
 **Interpretation :**
 - $\hat{\beta}_0 \approx -14146$ : ordonnee a l'origine.
-- $\hat{\beta}_1 \approx 126.3$ : pente avant le seuil (Score < 650). Chaque point de score ajoute ~126$ au salaire.
+- $\hat{\beta}_1 \approx 126.3$ : pente avant le seuil (Score &lt; 650). Chaque point de score ajoute environ 126 dollars au salaire.
 - $\hat{\beta}_2 \approx 45.8$ : modification de la pente apres le seuil. La pente effective apres le seuil est $\beta_1 - \beta_2 \approx 126.3 - 45.8 = 80.5$.
 
 La croissance du salaire **ralentit** apres le seuil de 650.
@@ -589,7 +589,7 @@ La multicolinearite entre ces variables pose des **problemes d'estimation** : le
 
 ### Q4 : Selection manuelle -- variables significatives
 
-On ne conserve que les variables dont le coefficient est significatif ($p < 0.05$) dans le modele 2.
+On ne conserve que les variables dont le coefficient est significatif ($p \lt 0.05$) dans le modele 2.
 
 ```r
 # Variables significatives dans modele2 : GIR et BirdieConversion
@@ -792,7 +792,7 @@ anova(mod_chol1)
 **Test :**
 - $H_0 : \alpha_1 = \alpha_2 = \alpha_3 = 0$ (pas d'effet du medicament)
 - $H_1 : \exists\, i, \alpha_i \neq 0$
-- Si $p < 0.05$ : on rejette $H_0$ -- le medicament a un effet significatif.
+- Si $p \lt 0.05$ : on rejette $H_0$ -- le medicament a un effet significatif.
 
 #### Q4d : Construction matricielle et retrouver $\hat{\beta}$
 
@@ -862,7 +862,7 @@ Residuals   67   XX.XX   XX.XX
 
 Pour chaque facteur, on teste :
 - $H_0$ : pas d'effet vs $H_1$ : effet significatif
-- Si $p < 0.05$ : le facteur a un effet significatif.
+- Si $p \lt 0.05$ : le facteur a un effet significatif.
 
 L'ajout de `genre` et `risque` permet de **controler** ces facteurs parasites, reduisant le CCR et ameliorant la puissance des tests, comme dans l'exercice 3 du TP4.
 
@@ -876,7 +876,7 @@ print(coef_M3)
 
 **Test :** $H_0 : \alpha_3 = 0$ vs $H_1 : \alpha_3 \neq 0$
 
-- Si $p < 0.05$ pour le coefficient `medicamentM3` : on rejette $H_0$.
+- Si $p \lt 0.05$ pour le coefficient `medicamentM3` : on rejette $H_0$.
 - **Interpretation concrete :** Si significatif, le taux de cholesterol moyen des patients sous M3 est significativement different de celui des patients sous M1 (reference). Si le coefficient est negatif, M3 reduit davantage le cholesterol que M1.
 
 #### Q5d : M3 vs M2 -- comparaison avec emmeans
@@ -895,7 +895,7 @@ print(comp_med)
  M2 - M3     X.XXX  X.XXX  67   X.XX  X.XXX
 ```
 
-Le contraste `M2 - M3` avec sa p-value (corrigee par Bonferroni) permet de repondre directement : si $p < 0.05$, le taux moyen sous M3 est significativement different de celui sous M2.
+Le contraste `M2 - M3` avec sa p-value (corrigee par Bonferroni) permet de repondre directement : si $p \lt 0.05$, le taux moyen sous M3 est significativement different de celui sous M2.
 
 #### Q5e : Quel medicament preconiser ?
 

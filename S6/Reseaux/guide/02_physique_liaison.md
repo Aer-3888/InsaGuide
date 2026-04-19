@@ -59,7 +59,7 @@ ipconfig /all       # Windows
 | 0x8100 | VLAN (802.1Q) |
 
 **Tailles :**
-- Minimum : 64 octets (14 header + 46 payload + 4 FCS). Si payload < 46 octets, **padding** ajoute.
+- Minimum : 64 octets (14 header + 46 payload + 4 FCS). Si payload &lt; 46 octets, **padding** ajoute.
 - Maximum : 1518 octets (14 + 1500 + 4).
 - **MTU** (Maximum Transmission Unit) Ethernet : **1500 octets**.
 
@@ -168,7 +168,7 @@ PC A (192.168.1.10, MAC AA) veut communiquer avec PC B (192.168.1.20, MAC BB) :
 1. **MAC vs IP** : MAC = physique, locale, 6 octets, fixe. IP = logique, routable, 4 octets, peut changer.
 2. **ARP Request = broadcast, ARP Reply = unicast** : asymetrie frequente en DS.
 3. **Switch != routeur** : switch = couche 2 (MAC), routeur = couche 3 (IP).
-4. **Padding Ethernet** : si donnees < 46 octets, padding ajoute.
+4. **Padding Ethernet** : si donnees &lt; 46 octets, padding ajoute.
 5. **Hub != switch** : hub = tout a tous (couche 1), switch = table MAC (couche 2).
 
 ---

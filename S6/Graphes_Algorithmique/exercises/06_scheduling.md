@@ -148,7 +148,7 @@ Verifions :
   F --5--> fin : ES(fin) = 14+5 = 19. OK.
 ```
 
-**Chemin critique : debut -> B -> E -> F -> fin. Les taches critiques sont B, E, F.**
+**Chemin critique : debut → B → E → F → fin. Les taches critiques sont B, E, F.**
 
 ### Question 1.3 -- Ordonnancement au plus tard (dates LS) et marges
 
@@ -264,7 +264,7 @@ ES(fin) = max(ES(E)+6, ES(F)+8, ES(G)+4) = max(11+6, 11+8, 7+4) = max(17, 19, 11
 
 **T1 = 19 jours.**
 
-**Chemin critique :** debut -> A -> B -> D -> F -> fin
+**Chemin critique :** debut → A → B → D → F → fin
 
 ```
 Verification : 0 + 4(A) + 4(B apres A) + 4(D apres B+4) + 3(F apres D) + 8(F) = ?
@@ -298,7 +298,7 @@ LS(debut) = min(LS(A), LS(B)-2) = min(0, 4-2) = min(0, 2) = 0
 | F | 11 | 8 | 19 | 11 | 19 | **0** |
 | G | 7 | 4 | 11 | 15 | 19 | 8 |
 
-**Chemin critique (MT = 0) : A -> B -> D -> F. Duree T1 = 19 jours.**
+**Chemin critique (MT = 0) : A → B → D → F. Duree T1 = 19 jours.**
 
 ### Question 2.4 -- Couts
 
@@ -344,7 +344,7 @@ Delta_C = alpha_A * delta_A^2 + alpha_B * delta_B^2 + alpha_D * delta_D^2 + 30 *
         = 10 * delta_A^2 + 20 * delta_B^2 + 15 * delta_D^2 + 30 * retard
 ```
 
-A, B, D sont sur le chemin critique : A -> B -> D -> F. Allonger une tache critique allonge le projet de la meme duree (si elle reste critique).
+A, B, D sont sur le chemin critique : A → B → D → F. Allonger une tache critique allonge le projet de la meme duree (si elle reste critique).
 
 Allongement total du chemin critique = delta_A + delta_B + delta_D = 3 jours.
 Donc T_new = T1 + 3 = 22 jours. Retard = 3 jours. Penalite = 3 * 30 = 90 milliers EUR.

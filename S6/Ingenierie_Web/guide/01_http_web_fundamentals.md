@@ -315,7 +315,7 @@ src/main/java/fr/insarennes/
 - GET ne doit PAS avoir de body. Utiliser @PathVariable ou @RequestParam.
 
 ### Piege 3 : Confondre @PathVariable et @RequestParam
-- `@PathVariable` : dans l'URI `/user/{id}` -> `/user/42`
+- `@PathVariable` : dans l'URI `/user/{id}` → `/user/42`
 - `@RequestParam` : dans la query string `/user?id=42`
 
 ### Piege 4 : Toujours retourner 200

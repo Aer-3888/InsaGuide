@@ -293,8 +293,8 @@ Regle du prefixe gauche : index (A, B, C) utile pour (A), (A,B), (A,B,C) mais PA
 
 - [ ] Fermeture X+ : algorithme iteratif, montrer chaque etape
 - [ ] Cles candidates : attributs jamais a droite = obligatoires
-- [ ] Couverture minimale : decomposer -> reduire -> supprimer
-- [ ] 3NF synthese : couverture min -> relations par partie gauche -> cle
+- [ ] Couverture minimale : decomposer → reduire → supprimer
+- [ ] 3NF synthese : couverture min → relations par partie gauche → cle
 - [ ] BCNF : tout determinant est super-cle, attention perte de DF
 - [ ] SQL : WHERE vs HAVING, IS NULL pas = NULL, NOT IN + NULL
 - [ ] Division : double NOT EXISTS

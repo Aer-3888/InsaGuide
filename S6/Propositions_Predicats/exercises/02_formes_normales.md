@@ -9,13 +9,13 @@ Mettre en FNC : `(p <-> q) -> r`
 
 ### Solution detaillee
 
-**Etape 1 : Eliminer les equivalences (<->)**
+**Etape 1 : Eliminer les equivalences (↔)**
 ```
 (p <-> q) -> r
 = ((p -> q) /\ (q -> p)) -> r       [definition de <-> : A <-> B = (A -> B) /\ (B -> A)]
 ```
 
-**Etape 2 : Eliminer les implications (->)**
+**Etape 2 : Eliminer les implications (→)**
 ```
 = ((~p \/ q) /\ (~q \/ p)) -> r     [elimination de -> : A -> B = ~A \/ B, appliquee aux deux implications internes]
 = ~((~p \/ q) /\ (~q \/ p)) \/ r    [elimination de -> sur l'implication principale]
@@ -83,9 +83,9 @@ Mettre en FND : `(p -> q) /\ r`
 
 ### Solution detaillee
 
-**Etape 1 : Pas d'equivalence (<->).** Rien a faire.
+**Etape 1 : Pas d'equivalence (↔).** Rien a faire.
 
-**Etape 2 : Eliminer les implications (->)**
+**Etape 2 : Eliminer les implications (→)**
 ```
 (p -> q) /\ r
 = (~p \/ q) /\ r                    [elimination de -> : p -> q = ~p \/ q]
@@ -122,7 +122,7 @@ Trouver la FNC et la FND de `p <-> q`.
 
 **Etape 1 : Construire la table de verite.**
 
-| p | q | p <-> q |
+| p | q | p ↔ q |
 |---|---|---------|
 | V | V | **V**   |
 | V | F | **F**   |
@@ -132,8 +132,8 @@ Trouver la FNC et la FND de `p <-> q`.
 **Etape 2 : Construire la FND (a partir des lignes ou la formule vaut V).**
 
 Regles : pour chaque ligne a V, construire un monome :
-- Variable a V dans la ligne -> la variable telle quelle
-- Variable a F dans la ligne -> la negation de la variable
+- Variable a V dans la ligne → la variable telle quelle
+- Variable a F dans la ligne → la negation de la variable
 
 Lignes a V : ligne 1 et ligne 4.
 
@@ -156,8 +156,8 @@ FND = (p /\ q) \/ (~p /\ ~q)
 **Etape 3 : Construire la FNC (a partir des lignes ou la formule vaut F).**
 
 Regles : pour chaque ligne a F, construire une clause :
-- Variable a V dans la ligne -> la NEGATION de la variable
-- Variable a F dans la ligne -> la variable telle quelle
+- Variable a V dans la ligne → la NEGATION de la variable
+- Variable a F dans la ligne → la variable telle quelle
 
 (Attention : c'est l'inverse de la FND ! On nie les variables pour "bloquer" la combinaison qui rend la formule fausse.)
 
@@ -271,12 +271,12 @@ Mettre `(p <-> q) -> r` en FNC et en FND.
 
 **Etapes communes (1-3) :**
 
-Etape 1 -- Eliminer <-> :
+Etape 1 -- Eliminer ↔ :
 ```
 ((p -> q) /\ (q -> p)) -> r
 ```
 
-Etape 2 -- Eliminer -> :
+Etape 2 -- Eliminer → :
 ```
 ~((~p \/ q) /\ (~q \/ p)) \/ r
 ```
@@ -340,13 +340,13 @@ Il faut que les deux conjoncts soient vrais simultanement.
 
 **Analyse de la partie droite :** `~(p /\ ~r) -> p`
 
-Strategie : rendre la conclusion vraie. Si p = V, alors X -> V = V toujours. Posons **p = V**.
+Strategie : rendre la conclusion vraie. Si p = V, alors X → V = V toujours. Posons **p = V**.
 
 **Analyse de la partie gauche :** `p /\ q -> r \/ s`
 
 Avec p = V, la formule devient `V /\ q -> r \/ s` = `q -> r \/ s`.
 
-Strategie : rendre l'antecedent faux. Si q = F, alors F -> ... = V.
+Strategie : rendre l'antecedent faux. Si q = F, alors F → ... = V.
 
 Posons **q = F**. Les valeurs de r et s n'importent plus.
 
@@ -387,7 +387,7 @@ Trouver la FNC et la FND de `(p -> q) \/ r` par la methode de la table de verite
 
 **Etape 1 : Table de verite complete.**
 
-| # | p | q | r | p -> q | (p -> q) \/ r |
+| # | p | q | r | p → q | (p → q) \/ r |
 |---|---|---|---|--------|---------------|
 | 1 | V | V | V | V      | V |
 | 2 | V | V | F | V      | V |
@@ -420,9 +420,9 @@ FND = (p /\ q /\ r) \/ (p /\ q /\ ~r) \/ (p /\ ~q /\ r)
 **Etape 3 : FNC (lignes a F : uniquement la ligne 4).**
 
 Ligne 4 (p=V, q=F, r=F) : clause = `~p \/ q \/ r`
-- p est a V -> on met ~p
-- q est a F -> on met q
-- r est a F -> on met r
+- p est a V → on met ~p
+- q est a F → on met q
+- r est a F → on met r
 
 ```
 FNC = ~p \/ q \/ r
@@ -452,12 +452,12 @@ Mettre en FNC : `~~p -> (q <-> r)`
 
 ### Solution detaillee
 
-**Etape 1 : Eliminer <->**
+**Etape 1 : Eliminer ↔**
 ```
 ~~p -> ((q -> r) /\ (r -> q))
 ```
 
-**Etape 2 : Eliminer ->**
+**Etape 2 : Eliminer →**
 ```
 = ~(~~p) \/ ((~q \/ r) /\ (~r \/ q))     [elimination des trois implications]
 ```

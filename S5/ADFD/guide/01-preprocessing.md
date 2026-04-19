@@ -1,36 +1,34 @@
-# Chapter 1: Data Preprocessing (Pretraitement des donnees)
+# Chapitre 1 : Pretraitement des donnees
 
-## Overview
+## Presentation
 
-Data preprocessing is the first and most critical step in any data analysis or mining pipeline. Real-world data is almost never clean -- it contains missing values, outliers, inconsistencies, and biases. The quality of your analysis depends entirely on the quality of your preprocessing.
+Le pretraitement des donnees est la premiere etape, et la plus critique, dans tout pipeline d'analyse ou de fouille de donnees. Les donnees reelles ne sont presque jamais propres -- elles contiennent des valeurs manquantes, des valeurs aberrantes, des incoherences et des biais. La qualite de votre analyse depend entierement de la qualite du pretraitement.
 
-**French term**: Pretraitement des donnees
-
-## 1. The Data Analysis Pipeline
+## 1. Le pipeline d'analyse de donnees
 
 ```
-Raw Data --> Preprocessing --> Analysis (PCA, Clustering) --> Interpretation --> Knowledge
+Donnees brutes --> Pretraitement --> Analyse (ACP, Clustering) --> Interpretation --> Connaissances
 ```
 
-The preprocessing stage includes:
-1. Understanding the data (types, distributions, dimensions)
-2. Handling missing values (valeurs manquantes)
-3. Detecting and treating outliers (points aberrants / valeurs aberrantes)
-4. Transforming variables (normalization, log transforms, encoding)
-5. Selecting or extracting relevant variables (reduction de dimension)
+L'etape de pretraitement comprend :
+1. Comprendre les donnees (types, distributions, dimensions)
+2. Traiter les valeurs manquantes
+3. Detecter et traiter les valeurs aberrantes (points aberrants)
+4. Transformer les variables (normalisation, transformations log, encodage)
+5. Selectionner ou extraire les variables pertinentes (reduction de dimension)
 
-## 2. Types of Variables
+## 2. Types de variables
 
-| Type | French | Examples | Operations |
-|------|--------|----------|------------|
-| **Quantitative continuous** | Quantitative continue | Temperature, height, price | Mean, std, correlation |
-| **Quantitative discrete** | Quantitative discrete | Number of rooms, count | Mode, frequency |
-| **Qualitative ordinal** | Qualitative ordinale | Quality rating (1-10), education level | Median, rank |
-| **Qualitative nominal** | Qualitative nominale | Color, city, gender | Mode, frequency |
+| Type | Exemples | Operations |
+|------|----------|------------|
+| **Quantitative continue** | Temperature, taille, prix | Moyenne, ecart-type, correlation |
+| **Quantitative discrete** | Nombre de pieces, comptage | Mode, frequence |
+| **Qualitative ordinale** | Note de qualite (1-10), niveau d'etudes | Mediane, rang |
+| **Qualitative nominale** | Couleur, ville, genre | Mode, frequence |
 
-**Key point for exams**: Variables coded as integers (e.g., OverallQual = 1-10) may actually be categorical (qualitative), not numerical. Always check semantics, not just dtype.
+**Point cle pour les examens** : Les variables codees en entiers (ex. OverallQual = 1-10) peuvent etre categorielles (qualitatives) et non numeriques. Toujours verifier la semantique, pas seulement le dtype.
 
-## 3. Missing Values (Valeurs Manquantes)
+## 3. Valeurs manquantes
 
 ### Detection
 
@@ -46,33 +44,33 @@ import seaborn as sns
 sns.heatmap(df.isnull(), cbar=True)
 ```
 
-### Treatment Strategies
+### Strategies de traitement
 
-| Strategy | French | When to Use | Code |
-|----------|--------|-------------|------|
-| **Drop rows** | Suppression des lignes | Very few missing values (<5%) | `df.dropna()` |
-| **Drop columns** | Suppression des colonnes | Column has >50% missing | `df.drop(columns=[...])` |
-| **Mean imputation** | Imputation par la moyenne | Numerical, symmetric distribution | `SimpleImputer(strategy="mean")` |
-| **Median imputation** | Imputation par la mediane | Numerical, skewed distribution | `SimpleImputer(strategy="median")` |
-| **Mode imputation** | Imputation par le mode | Categorical variables | `SimpleImputer(strategy="most_frequent")` |
-| **Constant imputation** | Imputation par constante | Specific domain logic | `SimpleImputer(strategy="constant", fill_value=0)` |
+| Strategie | Quand l'utiliser | Code |
+|-----------|-----------------|------|
+| **Suppression des lignes** | Tres peu de valeurs manquantes (&lt;5%) | `df.dropna()` |
+| **Suppression des colonnes** | Colonne avec >50% de valeurs manquantes | `df.drop(columns=[...])` |
+| **Imputation par la moyenne** | Variable numerique, distribution symetrique | `SimpleImputer(strategy="mean")` |
+| **Imputation par la mediane** | Variable numerique, distribution asymetrique | `SimpleImputer(strategy="median")` |
+| **Imputation par le mode** | Variables categorielles | `SimpleImputer(strategy="most_frequent")` |
+| **Imputation par constante** | Logique metier specifique | `SimpleImputer(strategy="constant", fill_value=0)` |
 
-### Worked Example (from TP1)
+### Exemple pratique (TP1)
 
-The House Prices dataset has 81 variables. Missing value analysis reveals:
+Le jeu de donnees House Prices contient 81 variables. L'analyse des valeurs manquantes revele :
 
 ```
-PoolQC         99.5%   --> Drop (too many missing)
-MiscFeature    96.3%   --> Drop
-Alley          93.8%   --> Drop
-Fence          80.8%   --> Drop
-MasVnrType     59.7%   --> Consider context
-LotFrontage    17.7%   --> Impute with median
-GarageYrBlt     5.5%   --> Impute with median
-MasVnrArea      0.55%  --> Impute with median (only 8 values)
+PoolQC         99.5%   --> Supprimer (trop de valeurs manquantes)
+MiscFeature    96.3%   --> Supprimer
+Alley          93.8%   --> Supprimer
+Fence          80.8%   --> Supprimer
+MasVnrType     59.7%   --> Examiner le contexte
+LotFrontage    17.7%   --> Imputer par la mediane
+GarageYrBlt     5.5%   --> Imputer par la mediane
+MasVnrArea      0.55%  --> Imputer par la mediane (seulement 8 valeurs)
 ```
 
-**Decision rule**: If a column has >50% missing values, it carries little information -- dropping is usually best. For numerical columns with <20% missing, median imputation is the standard approach.
+**Regle de decision** : Si une colonne a >50% de valeurs manquantes, elle porte peu d'information -- la supprimer est generalement la meilleure option. Pour les colonnes numeriques avec &lt;20% de valeurs manquantes, l'imputation par la mediane est l'approche standard.
 
 ```python
 from sklearn.impute import SimpleImputer
@@ -85,18 +83,18 @@ df_imputed = pd.DataFrame(
 )
 ```
 
-## 4. Outliers (Points Aberrants)
+## 4. Valeurs aberrantes (Points Aberrants)
 
-### Detection Methods
+### Methodes de detection
 
-**1. Percentile-based (used in the course)**:
+**1. Basee sur les percentiles (utilisee dans le cours)** :
 ```python
 q99 = df.quantile(0.99)
 mask = (df <= q99).all(axis=1)
 df_clean = df[mask]
 ```
 
-**2. IQR (Interquartile Range)**:
+**2. IQR (Ecart interquartile)** :
 ```python
 Q1 = df.quantile(0.25)
 Q3 = df.quantile(0.75)
@@ -106,36 +104,36 @@ upper = Q3 + 1.5 * IQR
 mask = ((df >= lower) & (df <= upper)).all(axis=1)
 ```
 
-**3. Z-score**: Points with |z| > 3 are considered outliers.
+**3. Z-score** : Les points avec |z| > 3 sont consideres comme aberrants.
 ```python
 from scipy import stats
 z_scores = np.abs(stats.zscore(df))
 mask = (z_scores < 3).all(axis=1)
 ```
 
-### Treatment
+### Traitement
 
-- **Remove**: When outliers are errors or extreme noise
-- **Cap/Floor** (winsorize): Replace extreme values with the percentile boundary
-- **Log transform**: Reduces the impact of extreme values
+- **Suppression** : Quand les valeurs aberrantes sont des erreurs ou du bruit extreme
+- **Plafonnement** (winsorization) : Remplacer les valeurs extremes par la borne du percentile
+- **Transformation log** : Reduit l'impact des valeurs extremes
 
-### Worked Example (from TP1)
+### Exemple pratique (TP1)
 
-Before removing outliers: 1460 observations
-After removing 99th percentile outliers: 1326 observations (~9% removed)
+Avant suppression des valeurs aberrantes : 1460 observations
+Apres suppression au 99e percentile : 1326 observations (~9% supprimees)
 
-Impact on linear regression:
-- RMSE without cleaning: ~$39,280
-- RMSE with cleaning: ~$32,393
-- **Improvement: ~$6,888 reduction in prediction error**
+Impact sur la regression lineaire :
+- RMSE sans nettoyage : ~39 280$
+- RMSE avec nettoyage : ~32 393$
+- **Amelioration : reduction de ~6 888$ de l'erreur de prediction**
 
-## 5. Variable Transformations
+## 5. Transformations de variables
 
-### Standardization (Standardisation / Centrage-Reduction)
+### Standardisation (Centrage-Reduction)
 
-**Essential for PCA.** Centers data to mean=0 and scales to std=1.
+**Indispensable pour l'ACP.** Centre les donnees a moyenne=0 et reduit a ecart-type=1.
 
-Formula: `z = (x - mean) / std`
+Formule : `z = (x - moyenne) / ecart-type`
 
 ```python
 from sklearn.preprocessing import StandardScaler
@@ -144,96 +142,96 @@ scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 ```
 
-**When to use**: Always before PCA (ACP normee) and when variables have different units or scales.
+**Quand l'utiliser** : Toujours avant l'ACP (ACP normee) et quand les variables ont des unites ou des echelles differentes.
 
-### Log Transform (Transformation Logarithmique)
+### Transformation logarithmique
 
-Used for right-skewed distributions (many small values, few large values).
+Utilisee pour les distributions asymetriques a droite (beaucoup de petites valeurs, peu de grandes valeurs).
 
 ```python
 # log1p = log(1 + x), handles zeros
 df_log = np.log1p(df[cols_to_log])
 ```
 
-**Common use case**: Area variables (LotArea, GarageArea), price variables, count data.
+**Cas d'usage courant** : Variables de surface (LotArea, GarageArea), variables de prix, donnees de comptage.
 
-**Pitfall**: Zero-inflated variables (like WoodDeckSF where 52% of values are 0) will have a spike at log(1) = 0 after transformation. This is normal but should be noted.
+**Piege** : Les variables avec beaucoup de zeros (comme WoodDeckSF ou 52% des valeurs sont 0) auront un pic en log(1) = 0 apres transformation. C'est normal mais doit etre note.
 
-### Encoding Categorical Variables
+### Encodage des variables categorielles
 
-| Method | Use Case | Example |
-|--------|----------|---------|
-| **One-hot encoding** | Nominal variables with few categories | `pd.get_dummies(df, columns=['Color'])` |
-| **Label encoding** | Ordinal variables | `LabelEncoder().fit_transform(df['Quality'])` |
-| **Target encoding** | High-cardinality categorical with target | Mean of target per category |
+| Methode | Cas d'usage | Exemple |
+|---------|------------|---------|
+| **One-hot encoding** | Variables nominales avec peu de categories | `pd.get_dummies(df, columns=['Color'])` |
+| **Label encoding** | Variables ordinales | `LabelEncoder().fit_transform(df['Quality'])` |
+| **Target encoding** | Categorielle a haute cardinalite avec cible | Moyenne de la cible par categorie |
 
-## 6. Variable Selection (Selection de Variables)
+## 6. Selection de variables
 
-The course presents four families of methods:
+Le cours presente quatre familles de methodes :
 
-### Filter Methods (Methodes a base de filtres)
-- Independent of the learning algorithm
-- Fast but moderate performance
-- Examples: **Variance threshold**, **Correlation filter**, **Mutual Information**
+### Methodes a base de filtres
+- Independantes de l'algorithme d'apprentissage
+- Rapides mais performance moderee
+- Exemples : **Seuil de variance**, **Filtre de correlation**, **Information mutuelle**
 
-### Wrapper Methods (Methodes enveloppantes)
-- Depend on the learning model
-- Expensive but good performance
-- Examples: **Forward selection**, **Backward elimination**, **Exhaustive search**
+### Methodes enveloppantes (Wrapper)
+- Dependent du modele d'apprentissage
+- Couteuses mais bonne performance
+- Exemples : **Selection forward**, **Elimination backward**, **Recherche exhaustive**
 
-### Embedded Methods (Methodes integrees)
-- Selection happens during learning
-- Compromise between speed and performance
-- Examples: **Decision tree-based selection**, **Lasso**, **Ridge**, **Elastic Net**
+### Methodes integrees (Embedded)
+- La selection se fait pendant l'apprentissage
+- Compromis entre vitesse et performance
+- Exemples : **Selection par arbres de decision**, **Lasso**, **Ridge**, **Elastic Net**
 
-### Hybrid Methods (Methodes hybrides)
-- Combine filter + wrapper or filter + embedded
-- Examples: **Permutation importance**, **Recursive Feature Elimination**
+### Methodes hybrides
+- Combinent filtre + wrapper ou filtre + embedded
+- Exemples : **Importance par permutation**, **Elimination recursive de variables (RFE)**
 
-## 7. Variable Extraction (Extraction de Variables)
+## 7. Extraction de variables
 
-Instead of selecting existing variables, create new ones that summarize the data:
+Au lieu de selectionner des variables existantes, on cree de nouvelles variables qui resument les donnees :
 
-| Method | Description | Use Case |
-|--------|-------------|----------|
-| **PCA** | Linear projection maximizing variance | General-purpose, continuous data |
-| **t-SNE** | Non-linear embedding for visualization | High-dimensional data visualization |
+| Methode | Description | Cas d'usage |
+|---------|-------------|------------|
+| **ACP** | Projection lineaire maximisant la variance | Usage general, donnees continues |
+| **t-SNE** | Plongement non lineaire pour la visualisation | Visualisation de donnees de haute dimension |
 
-PCA is covered in detail in [Chapter 2](02-pca.md).
+L'ACP est detaillee dans le [Chapitre 2](02-pca.md).
 
-## Common Pitfalls
+## Pieges courants
 
-1. **Imputing before splitting train/test**: Imputation should be fit on training data only, then applied to test data to avoid data leakage.
-2. **Forgetting to standardize before PCA**: PCA on non-standardized data will be dominated by variables with larger scales.
-3. **Dropping too many rows**: If dropping NaN removes >10% of data, consider imputation instead.
-4. **Treating integer-coded categoricals as numerical**: Always check the semantic meaning of variables.
-5. **Applying log transform to zero or negative values**: Use `log1p` (log(1+x)) for data containing zeros.
+1. **Imputer avant de separer train/test** : L'imputation doit etre ajustee sur les donnees d'entrainement uniquement, puis appliquee aux donnees de test pour eviter la fuite de donnees.
+2. **Oublier de standardiser avant l'ACP** : L'ACP sur des donnees non standardisees sera dominee par les variables ayant les plus grandes echelles.
+3. **Supprimer trop de lignes** : Si la suppression des NaN enleve >10% des donnees, privilegier l'imputation.
+4. **Traiter des variables categorielles codees en entiers comme numeriques** : Toujours verifier la semantique des variables.
+5. **Appliquer une transformation log a des valeurs nulles ou negatives** : Utiliser `log1p` (log(1+x)) pour les donnees contenant des zeros.
 
 ---
 
-## CHEAT SHEET
+## AIDE-MEMOIRE
 
-### Missing Values Quick Reference
+### Valeurs manquantes -- Reference rapide
 
 | Situation | Action |
 |-----------|--------|
-| Column >50% missing | Drop column |
-| Numerical, <20% missing | Impute with median |
-| Categorical, <20% missing | Impute with mode |
-| Few rows affected (<5%) | Drop rows |
-| Structured pattern | Investigate cause first |
+| Colonne >50% manquante | Supprimer la colonne |
+| Numerique, &lt;20% manquant | Imputer par la mediane |
+| Categorielle, &lt;20% manquant | Imputer par le mode |
+| Peu de lignes concernees (&lt;5%) | Supprimer les lignes |
+| Schema structure | Investiguer la cause d'abord |
 
-### Key Formulas
+### Formules cles
 
-| Transform | Formula | Python |
-|-----------|---------|--------|
-| Standardize | z = (x - mu) / sigma | `StandardScaler()` |
+| Transformation | Formule | Python |
+|---------------|---------|--------|
+| Standardisation | z = (x - mu) / sigma | `StandardScaler()` |
 | Min-Max | x' = (x - min) / (max - min) | `MinMaxScaler()` |
 | Log | x' = log(1 + x) | `np.log1p(x)` |
-| Z-score outlier | \|z\| > 3 is outlier | `stats.zscore(x)` |
-| IQR outlier | x < Q1 - 1.5*IQR or x > Q3 + 1.5*IQR | Manual calculation |
+| Valeur aberrante (Z-score) | \|z\| > 3 = aberrante | `stats.zscore(x)` |
+| Valeur aberrante (IQR) | x &lt; Q1 - 1.5*IQR ou x > Q3 + 1.5*IQR | Calcul manuel |
 
-### Preprocessing Pipeline
+### Pipeline de pretraitement
 
 ```python
 # 1. Load

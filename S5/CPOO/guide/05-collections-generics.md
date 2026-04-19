@@ -1,10 +1,10 @@
-# Collections and Generics
+# Collections et Generiques
 
-## Theory
+## Theorie
 
-### Java Collections Framework
+### Framework Collections de Java
 
-The Collections Framework provides interfaces and implementations for storing and manipulating groups of objects.
+Le framework Collections fournit des interfaces et des implementations pour stocker et manipuler des groupes d'objets.
 
 ```
               Iterable
@@ -19,7 +19,7 @@ The Collections Framework provides interfaces and implementations for storing an
 
 ### List
 
-Ordered collection (maintains insertion order), allows duplicates.
+Collection ordonnee (maintient l'ordre d'insertion), autorise les doublons.
 
 ```java
 List<Arbre> arbres = new ArrayList<>();       // most common
@@ -37,7 +37,7 @@ arbres.isEmpty();                              // check if empty
 
 ### Set
 
-No duplicates, no guaranteed order (HashSet) or sorted order (TreeSet).
+Pas de doublons, pas d'ordre garanti (HashSet) ou ordre trie (TreeSet).
 
 ```java
 Set<String> names = new HashSet<>();
@@ -48,7 +48,7 @@ names.add("Chene");          // ignored, already present
 
 ### Map
 
-Key-value pairs. Each key maps to at most one value.
+Paires cle-valeur. Chaque cle correspond a au plus une valeur.
 
 ```java
 Map<String, Integer> prices = new HashMap<>();
@@ -57,16 +57,16 @@ prices.put("Pin", 500);
 int oakPrice = prices.get("Chene");    // 1000
 ```
 
-### Iterating Collections
+### Parcours des collections
 
-**For-each loop** (preferred for reading):
+**Boucle for-each** (privilegiee pour la lecture) :
 ```java
 for (Arbre arbre : arbres) {
     System.out.println(arbre.getPrix());
 }
 ```
 
-**Iterator** (required when modifying during iteration):
+**Iterator** (necessaire pour modifier pendant l'iteration) :
 ```java
 Iterator<Arbre> iterator = arbres.iterator();
 while (iterator.hasNext()) {
@@ -79,7 +79,7 @@ while (iterator.hasNext()) {
 }
 ```
 
-**Streams** (functional style):
+**Streams** (style fonctionnel) :
 ```java
 double total = arbres.stream()
     .mapToDouble(Arbre::getPrix)
@@ -92,9 +92,9 @@ int totalLatency = services.stream()
 
 ### ConcurrentModificationException
 
-This is the most commonly tested collection pitfall in CPOO exams.
+C'est le piege le plus frequemment teste sur les collections aux examens CPOO.
 
-**WRONG** -- modifying a list during for-each iteration:
+**FAUX** -- modifier une liste pendant une iteration for-each :
 ```java
 for (Arbre arbre : arbres) {
     if (arbre.peutEtreCoupe()) {
@@ -103,7 +103,7 @@ for (Arbre arbre : arbres) {
 }
 ```
 
-**CORRECT** -- use Iterator.remove():
+**CORRECT** -- utiliser Iterator.remove() :
 ```java
 Iterator<Arbre> it = arbres.iterator();
 while (it.hasNext()) {
@@ -116,7 +116,7 @@ while (it.hasNext()) {
 }
 ```
 
-**CORRECT** -- use reverse index loop:
+**CORRECT** -- utiliser une boucle par indice inverse :
 ```java
 for (int i = arbres.size() - 1; i >= 0; i--) {
     if (arbres.get(i).peutEtreCoupe()) {
@@ -127,7 +127,7 @@ for (int i = arbres.size() - 1; i >= 0; i--) {
 }
 ```
 
-### Unmodifiable Collections
+### Collections non modifiables
 
 ```java
 private final List<Pion> pions;
@@ -140,25 +140,25 @@ public List<Pion> getPions() {
 
 ---
 
-## Generics
+## Generiques
 
-### Why Generics?
+### Pourquoi les generiques ?
 
-Without generics, collections store `Object` and require casting:
+Sans generiques, les collections stockent des `Object` et necessitent des casts :
 ```java
 List arbres = new ArrayList();
 arbres.add(new Chene(10, 2.0));
 Chene c = (Chene) arbres.get(0);   // unsafe cast, may fail at runtime
 ```
 
-With generics, the compiler enforces type safety:
+Avec les generiques, le compilateur impose la surete de type :
 ```java
 List<Arbre> arbres = new ArrayList<>();
 arbres.add(new Chene(10, 2.0));
 Arbre a = arbres.get(0);            // no cast needed, type-safe
 ```
 
-### Generic Classes
+### Classes generiques
 
 ```java
 public abstract class Arbre<F extends Fruit> {
@@ -173,12 +173,12 @@ public class Chene extends Arbre<Gland> {
 }
 ```
 
-The type parameter `<F extends Fruit>` means:
-- `F` is a type variable
-- `F` must be `Fruit` or a subclass of `Fruit`
-- Concrete subclasses bind `F` to a specific type (e.g., `Gland`, `Cone`)
+Le parametre de type `<F extends Fruit>` signifie :
+- `F` est une variable de type
+- `F` doit etre `Fruit` ou une sous-classe de `Fruit`
+- Les sous-classes concretes lient `F` a un type specifique (ex. `Gland`, `Cone`)
 
-### Generic Interfaces
+### Interfaces generiques
 
 ```java
 public abstract class Animal<F extends Fruit> {
@@ -196,7 +196,7 @@ public class Ecureuil extends Animal<Cone> {
 }
 ```
 
-### Type Safety in Action
+### Surete de type en action
 
 ```java
 Chene oak = new Chene(15, 2.5);
@@ -209,7 +209,7 @@ Cone cone = new Cone();
 pig.manger(cone);                        // COMPILE ERROR: Cochon expects Gland
 ```
 
-### Wildcards (for reference)
+### Wildcards (pour reference)
 
 ```java
 List<?> anything;                        // unknown type
@@ -217,25 +217,25 @@ List<? extends Arbre> trees;             // Arbre or any subclass
 List<? super Chene> acceptsOaks;         // Chene or any superclass
 ```
 
-### Raw Types (to avoid)
+### Types bruts (a eviter)
 
-Using generic classes without type parameters creates raw types:
+Utiliser des classes generiques sans parametres de type cree des types bruts :
 ```java
 List list = new ArrayList();             // raw type -- avoid!
 List<Arbre> list = new ArrayList<>();    // correct -- type-safe
 ```
 
-The diamond operator `<>` infers the type from context.
+L'operateur losange `<>` infere le type a partir du contexte.
 
 ---
 
-## Common Pitfalls
+## Pieges courants
 
-1. **ConcurrentModificationException**: never modify a collection inside a for-each loop. Use `Iterator.remove()` or index-based removal.
-2. **Not initializing collections**: `private List<Arbre> arbres;` without initialization in the constructor causes `NullPointerException` on first use.
-3. **Returning mutable internal state**: `return arbres;` lets callers modify your internal list. Use `Collections.unmodifiableList()`.
-4. **Incorrect generic bounds**: `Arbre<Fruit>` is not the same as `Arbre<? extends Fruit>`. The first is a concrete type, the second is a wildcard.
-5. **Using `instanceof` excessively**: if you find yourself doing `if (arbre instanceof Chene)` everywhere, consider redesigning with polymorphism.
+1. **ConcurrentModificationException** : ne jamais modifier une collection dans une boucle for-each. Utiliser `Iterator.remove()` ou la suppression par indice.
+2. **Ne pas initialiser les collections** : `private List<Arbre> arbres;` sans initialisation dans le constructeur provoque une `NullPointerException` a la premiere utilisation.
+3. **Retourner l'etat interne mutable** : `return arbres;` permet aux appelants de modifier votre liste interne. Utiliser `Collections.unmodifiableList()`.
+4. **Bornes generiques incorrectes** : `Arbre<Fruit>` n'est pas la meme chose que `Arbre<? extends Fruit>`. Le premier est un type concret, le second est un wildcard.
+5. **Utilisation excessive de `instanceof`** : si vous vous retrouvez a ecrire `if (arbre instanceof Chene)` partout, envisagez une refonte avec le polymorphisme.
 
 ---
 

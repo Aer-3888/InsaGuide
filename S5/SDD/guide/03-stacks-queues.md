@@ -1,12 +1,12 @@
 # Stacks & Queues
 
-## Theory
+## Theorie
 
-Stacks and queues are **restricted-access** data structures. They are used extensively in the SDD course as building blocks for algorithms (expression evaluation, BFS, Dijkstra, reverse Polish notation).
+Les piles et files sont des structures de donnees a **acces restreint**. Elles sont largement utilisees dans le cours SDD comme briques de base pour les algorithmes (evaluation d'expressions, BFS, Dijkstra, notation polonaise inverse).
 
-### Stack (Pile) -- LIFO
+### Pile (Stack) -- LIFO
 
-**Last In, First Out.** Think of a stack of plates.
+**Dernier entre, premier sorti.** Pensez a une pile d'assiettes.
 
 ```
   push(C)    push(D)    pop() -> D    pop() -> C
@@ -21,15 +21,15 @@ Stacks and queues are **restricted-access** data structures. They are used exten
              +---+
 ```
 
-Operations:
-- `push(x)` -- add to top: O(1)
-- `pop()` -- remove from top: O(1)
-- `peek()` -- see top without removing: O(1)
-- `isEmpty()` -- check if empty: O(1)
+Operations :
+- `push(x)` -- ajouter au sommet : O(1)
+- `pop()` -- retirer du sommet : O(1)
+- `peek()` -- voir le sommet sans retirer : O(1)
+- `isEmpty()` -- verifier si vide : O(1)
 
-### Queue (File) -- FIFO
+### File (Queue) -- FIFO
 
-**First In, First Out.** Think of a queue at a shop.
+**Premier entre, premier sorti.** Pensez a une file d'attente dans un magasin.
 
 ```
   enqueue(A)  enqueue(B)  enqueue(C)  dequeue() -> A
@@ -38,16 +38,16 @@ Operations:
   [A]        [A][B]      [A][B][C]     [B][C]
 ```
 
-Operations:
-- `enqueue(x)` -- add to back: O(1)
-- `dequeue()` -- remove from front: O(1)
-- `peek()` -- see front without removing: O(1)
-- `isEmpty()` -- check if empty: O(1)
+Operations :
+- `enqueue(x)` -- ajouter a l'arriere : O(1)
+- `dequeue()` -- retirer de l'avant : O(1)
+- `peek()` -- voir l'avant sans retirer : O(1)
+- `isEmpty()` -- verifier si vide : O(1)
 
 
 ## Implementations
 
-### Array-Based Stack
+### Pile avec tableau
 
 ```java
 public class StackArray<T> {
@@ -81,7 +81,7 @@ public class StackArray<T> {
 }
 ```
 
-### Linked-List-Based Stack
+### Pile avec liste chainee
 
 ```java
 public class StackLinked<T> {
@@ -113,7 +113,7 @@ public class StackLinked<T> {
 }
 ```
 
-### Queue with Circular Array
+### File avec tableau circulaire
 
 ```java
 public class QueueCircular<T> {
@@ -146,11 +146,11 @@ public class QueueCircular<T> {
 ```
 
 
-## Applications in SDD
+## Applications dans le cours SDD
 
-### 1. Reverse Polish Notation (Notation Polonaise Inverse)
+### 1. Notation Polonaise Inverse (Reverse Polish Notation)
 
-Used in TP6 (ExprArith) and TP8 (Le Compte est Bon). A stack evaluates postfix expressions.
+Utilisee dans le TP6 (ExprArith) et le TP8 (Le Compte est Bon). Une pile evalue les expressions postfixes.
 
 ```
 Expression: (3 + 4) * 2
@@ -167,7 +167,7 @@ Evaluation with stack:
   Result: 14
 ```
 
-From ExprArith.evaluer() (TP6) -- recursive tree evaluation, not stack-based RPN:
+Extrait de ExprArith.evaluer() (TP6) -- evaluation recursive par arbre, pas par pile NPI :
 ```java
 private double recursiveEvaluation(Arbre root) {
     Arbre gauche = root.arbreG();
@@ -232,20 +232,20 @@ DFS from A using a stack:
 Order: A, B, D, E, C  (goes deep first)
 ```
 
-### 4. Dijkstra -- Priority Queue (see Chapter 6-7)
+### 4. Dijkstra -- File de priorite (voir Chapitres 6-7)
 
-Dijkstra uses a **priority queue** (min-heap) which is a specialized queue where dequeue always returns the minimum element.
+Dijkstra utilise une **file de priorite** (tas min) qui est une file specialisee ou le retrait retourne toujours l'element minimum.
 
 
-## Java Standard Library
+## Bibliotheque standard Java
 
-| Structure | Java Class | Key Methods |
-|-----------|-----------|-------------|
-| Stack | `java.util.ArrayDeque` | `push()`, `pop()`, `peek()` |
-| Queue | `java.util.ArrayDeque` | `offer()`, `poll()`, `peek()` |
-| Priority Queue | `java.util.PriorityQueue` | `add()`, `poll()`, `peek()` |
+| Structure | Classe Java | Methodes cles |
+|-----------|------------|---------------|
+| Pile | `java.util.ArrayDeque` | `push()`, `pop()`, `peek()` |
+| File | `java.util.ArrayDeque` | `offer()`, `poll()`, `peek()` |
+| File de priorite | `java.util.PriorityQueue` | `add()`, `poll()`, `peek()` |
 
-Note: `java.util.Stack` exists but is legacy. Prefer `ArrayDeque`.
+Note : `java.util.Stack` existe mais est obsolete. Preferer `ArrayDeque`.
 
 ```java
 Deque<Integer> stack = new ArrayDeque<>();
@@ -260,20 +260,20 @@ int front = queue.poll();  // 1
 ```
 
 
-## Complexity
+## Complexite
 
-| Operation | Array Stack | Linked Stack | Circular Queue | Linked Queue |
-|-----------|------------|--------------|---------------|--------------|
+| Operation | Pile tableau | Pile chainee | File circulaire | File chainee |
+|-----------|-------------|-------------|-----------------|-------------|
 | push/enqueue | O(1)* | O(1) | O(1) | O(1) |
 | pop/dequeue | O(1) | O(1) | O(1) | O(1) |
 | peek | O(1) | O(1) | O(1) | O(1) |
 | isEmpty | O(1) | O(1) | O(1) | O(1) |
 | Space | O(n) | O(n) | O(n) | O(n) |
 
-*Amortized O(1) if array needs resizing.
+*O(1) amorti si le tableau necessite un redimensionnement.
 
 
-## CHEAT SHEET
+## AIDE-MEMOIRE
 
 ```
 STACK (LIFO)                         QUEUE (FIFO)

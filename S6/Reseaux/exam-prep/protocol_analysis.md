@@ -32,9 +32,9 @@ Hypertext Transfer Protocol
 
 | Couche | Protocole | Adresses | Info cle |
 |--------|-----------|----------|----------|
-| 2 (Liaison) | Ethernet | MAC a4:4e:31:08:ac:84 -> 0c:70:4a:f8:8a:47 | Type=0x0800 (IPv4) |
-| 3 (Reseau) | IPv4 | 192.168.1.10 -> 93.184.216.34 | TTL=64, Protocol=TCP |
-| 4 (Transport) | TCP | Port 54321 -> Port 80 | Flags=PSH+ACK |
+| 2 (Liaison) | Ethernet | MAC a4:4e:31:08:ac:84 → 0c:70:4a:f8:8a:47 | Type=0x0800 (IPv4) |
+| 3 (Reseau) | IPv4 | 192.168.1.10 → 93.184.216.34 | TTL=64, Protocol=TCP |
+| 4 (Transport) | TCP | Port 54321 → Port 80 | Flags=PSH+ACK |
 | 7 (Application) | HTTP | - | GET /index.html HTTP/1.1 |
 
 ---
@@ -137,7 +137,7 @@ Q2 : Pourquoi le paquet 2 n'est pas en broadcast ?
 R : L'ARP Reply est en **unicast** : le destinataire est connu (c'est celui qui a pose la question).
 
 Q3 : Que met PC A dans son cache ARP apres cet echange ?
-R : 192.168.1.1 -> BB:BB:BB:BB:BB:BB.
+R : 192.168.1.1 → BB:BB:BB:BB:BB:BB.
 
 ---
 
@@ -163,9 +163,9 @@ LAN2 : 10.0.0.0/24
 
 | Saut | MAC src | MAC dest | IP src | IP dest | TTL |
 |------|---------|----------|--------|---------|-----|
-| A -> R1 | AA | R1A | 192.168.1.10 | 10.0.0.20 | 64 |
-| R1 -> R2 | R1B | R2A | 192.168.1.10 | 10.0.0.20 | 63 |
-| R2 -> B | R2B | BB | 192.168.1.10 | 10.0.0.20 | 62 |
+| A → R1 | AA | R1A | 192.168.1.10 | 10.0.0.20 | 64 |
+| R1 → R2 | R1B | R2A | 192.168.1.10 | 10.0.0.20 | 63 |
+| R2 → B | R2B | BB | 192.168.1.10 | 10.0.0.20 | 62 |
 
 **Points cles :**
 - IP src et IP dest **ne changent jamais** (sauf NAT).
@@ -211,7 +211,7 @@ R : Pour les reponses > 512 octets ou les transferts de zone entre serveurs DNS.
 | Navigateur web | TCP | Fiabilite necessaire (pages completes) |
 | Streaming video | UDP | Latence critique, perte acceptable |
 | Transfert de fichier | TCP | Integrite des donnees obligatoire |
-| Jeu en ligne (FPS) | UDP | Latence < fiabilite |
+| Jeu en ligne (FPS) | UDP | Latence &lt; fiabilite |
 | Resolution DNS | UDP | Requete courte, retransmission par l'app |
 | Email (envoi) | TCP | Fiabilite necessaire |
 | VoIP | UDP | Latence critique, silence > retard |

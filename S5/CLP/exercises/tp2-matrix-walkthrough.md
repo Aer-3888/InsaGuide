@@ -1,18 +1,18 @@
-# TP2 - Matrix Multiplication in ARM Assembly
+# TP2 - Multiplication de matrices en assembleur ARM
 
-> Following teacher instructions from: S5/CLP/data/moodle/tp/tp2/README.md
+> D'apres les instructions enseignant de : S5/CLP/data/moodle/tp/tp2/README.md
 
-This TP implements 3x3 matrix multiplication in ARM assembly. Two implementations are provided: `matrix.s` (English-style, passes matrix addresses as parameters) and `produitMatrices.s` (French-style, passes result address too). Both compute RES = M1 x M2 using three nested loops.
+Ce TP implemente la multiplication de matrices 3x3 en assembleur ARM. Deux implementations sont fournies : `matrix.s` (style anglais, passe les adresses des matrices en parametres) et `produitMatrices.s` (style francais, passe aussi l'adresse du resultat). Les deux calculent RES = M1 x M2 avec trois boucles imbriquees.
 
 ---
 
-## Exercise 1: matrix.s -- Matrix Product with Two Parameters
+## Exercice 1 : matrix.s -- Produit matriciel a deux parametres
 
 ### Understand the constants, data layout, and stack frame
 
-**Question:** Define the matrix data, explain the row-major memory layout, and set up the stack frame offsets.
+**Question :** Define the matrix data, explain the row-major memory layout, and set up the stack frame offsets.
 
-**Answer:**
+**Reponse :**
 
 ```arm
 .set    N, 3                    @ Matrix dimension (3x3)
@@ -69,15 +69,15 @@ High addresses
 Low addresses
 ```
 
-**How it works:** Matrices are stored row by row in contiguous memory. The `.bss` section allocates zeroed memory for the result. Local loop counters (i, j, k) live on the stack at negative offsets from FP, while parameters are at positive offsets.
+**Fonctionnement :** Matrices are stored row by row in contiguous memory. The `.bss` section allocates zeroed memory for the result. Local loop counters (i, j, k) live on the stack at negative offsets from FP, while parameters are at positive offsets.
 
 ---
 
 ### Trace the _start entry point and function call setup
 
-**Question:** How does `_start` prepare the parameters and call the `produit` function?
+**Question :** How does `_start` prepare the parameters and call the `produit` function?
 
-**Answer:**
+**Reponse :**
 
 ```arm
 _start:
@@ -89,15 +89,15 @@ loop_end:
     b       loop_end            @ Halt
 ```
 
-**How it works:** Only the addresses of the matrices are passed (not the data itself). The caller pushes two 4-byte pointers onto the stack. The result is written to the global `res` matrix, so no return value slot is needed.
+**Fonctionnement :** Only the addresses of the matrices are passed (not the data itself). The caller pushes two 4-byte pointers onto the stack. The result is written to the global `res` matrix, so no return value slot is needed.
 
 ---
 
 ### Analyze the produit function: prologue and outer loop
 
-**Question:** Walk through the function prologue and the outer loop (i = 0 to N-1).
+**Question :** Walk through the function prologue and the outer loop (i = 0 to N-1).
 
-**Answer:**
+**Reponse :**
 
 ```arm
 produit:
@@ -116,15 +116,15 @@ loop_i:
     bhs     loop_i_out          @ Exit if i >= 3 (unsigned: Branch if Higher or Same)
 ```
 
-**How it works:** `BHS` (Branch if Higher or Same) is the unsigned equivalent of `BGE`. For non-negative loop counters, it works identically. The function saves 8 registers it will use, ensuring the caller's values are preserved.
+**Fonctionnement :** `BHS` (Branch if Higher or Same) is the unsigned equivalent of `BGE`. For non-negative loop counters, it works identically. The function saves 8 registers it will use, ensuring the caller's values are preserved.
 
 ---
 
 ### Analyze the address calculation for res[i][j]
 
-**Question:** How is the address of `res[i][j]` computed using MLA and LSL?
+**Question :** How is the address of `res[i][j]` computed using MLA and LSL?
 
-**Answer:**
+**Reponse :**
 
 ```arm
     @ Calculate linear index: N*i + j
@@ -147,15 +147,15 @@ Byte offset  = 5 * 4 = 20
 Address      = base_res + 20
 ```
 
-**How it works:** `MLA` (Multiply-Accumulate) computes `rd = rm * rs + rn` in one instruction, giving the linear index. `LSL #2` shifts left by 2 bits, which multiplies by 4 (since each word is 4 bytes). This is faster than a `MUL` by 4.
+**Fonctionnement :** `MLA` (Multiply-Accumulate) computes `rd = rm * rs + rn` in one instruction, giving the linear index. `LSL #2` shifts left by 2 bits, which multiplies by 4 (since each word is 4 bytes). This is faster than a `MUL` by 4.
 
 ---
 
 ### Trace the inner loop: the multiplication core
 
-**Question:** Walk through the inner k-loop showing how m1[i][k] and m2[k][j] are loaded and accumulated.
+**Question :** Walk through the inner k-loop showing how m1[i][k] and m2[k][j] are loaded and accumulated.
 
-**Answer:**
+**Reponse :**
 
 ```arm
 loop_k:
@@ -188,17 +188,17 @@ loop_k:
     b       loop_k
 ```
 
-**How it works:** `MLA r7, r6, r5, r7` does `r7 = m2[k][j] * m1[i][k] + r7` in a single instruction -- three operations (multiply, add to accumulator, store to register) combined. The accumulator r7 carries the running sum across all k iterations.
+**Fonctionnement :** `MLA r7, r6, r5, r7` does `r7 = m2[k][j] * m1[i][k] + r7` in a single instruction -- three operations (multiply, add to accumulator, store to register) combined. The accumulator r7 carries the running sum across all k iterations.
 
 ---
 
-## Exercise 2: produitMatrices.s -- Three-Parameter Version
+## Exercice 2 : produitMatrices.s -- Version a trois parametres
 
 ### Identify the key differences from matrix.s
 
-**Question:** How does this version differ in parameter passing and code style?
+**Question :** How does this version differ in parameter passing and code style?
 
-**Answer:**
+**Reponse :**
 
 ```arm
 .set a_res, 8           @ Result matrix address at FP+8
@@ -224,17 +224,17 @@ _Start:
     add sp, sp, #12     @ Clean up 3 parameters
 ```
 
-**How it works:** By passing the result address as a parameter, the function becomes more flexible -- it can write to any destination matrix, not just a hardcoded global. The barrel shifter in `add r3, r3, r2, lsl #2` computes `r3 = r3 + r2*4` in one instruction.
+**Fonctionnement :** By passing the result address as a parameter, the function becomes more flexible -- it can write to any destination matrix, not just a hardcoded global. The barrel shifter in `add r3, r3, r2, lsl #2` computes `r3 = r3 + r2*4` in one instruction.
 
 ---
 
-## Complete Execution Trace: Computing res[1][2]
+## Trace d'execution complete : Calcul de res[1][2]
 
 ### RES[1][2] = M1[1][0]*M2[0][2] + M1[1][1]*M2[1][2] + M1[1][2]*M2[2][2]
 
-**Question:** Trace each iteration of the k-loop for i=1, j=2.
+**Question :** Trace each iteration of the k-loop for i=1, j=2.
 
-**Answer:**
+**Reponse :**
 
 **Iteration k=0:**
 ```
@@ -261,11 +261,11 @@ r7 = 3 * 6 + 14 = 32
 
 ---
 
-### Complete Result Matrix
+### Matrice resultat complete
 
-**Question:** Verify the full result matrix.
+**Question :** Verify the full result matrix.
 
-**Answer:**
+**Reponse :**
 
 ```
          j=0    j=1    j=2
@@ -297,14 +297,14 @@ res + 32        50      res[2][2]
 
 ---
 
-## Key Concepts Summary
+## Resume des concepts cles
 
-### Why loop counters live on the stack
+### Pourquoi les compteurs de boucle vivent sur la pile
 
-In these implementations, i, j, k are stored on the stack rather than kept purely in registers because:
-1. **Teaching convention:** The course uses a systematic approach where ALL local variables use the stack frame
-2. **Register pressure:** With 3 loop counters, base addresses, and temporaries, many registers are needed
-3. **Nested function calls:** If `produit` called another function, register values would be lost unless saved
+Dans ces implementations, i, j, k sont stockes sur la pile plutot que gardes uniquement dans des registres car :
+1. **Convention pedagogique :** Le cours utilise une approche systematique ou TOUTES les variables locales utilisent le cadre de pile
+2. **Pression sur les registres :** Avec 3 compteurs de boucle, des adresses de base et des temporaires, beaucoup de registres sont necessaires
+3. **Appels de fonctions imbriques :** Si `produit` appelait une autre fonction, les valeurs des registres seraient perdues sauf si sauvegardees
 
 ### Addressing modes used
 
@@ -315,7 +315,7 @@ In these implementations, i, j, k are stored on the stack rather than kept purel
 | Base + shifted register | `add r3, r3, r2, lsl #2` | r3 = r3 + r2*4 |
 | MLA (multiply-accumulate) | `mla r8, r7, r0, r1` | r8 = r7*r0 + r1 |
 
-### Debugging with GDB
+### Debogage avec GDB
 
 ```bash
 arm-linux-gnueabi-gdb matrix

@@ -1,16 +1,16 @@
-# TP9 - Propositional Logic and Parsing
+# TP9 - Logique propositionnelle et analyse syntaxique
 
-> Following teacher instructions from: `data/moodle/tp/tp9/README.md`
+> D'apres les instructions du TP : `data/moodle/tp/tp9/README.md`
 
 ---
 
-## Type Definitions
+## Definitions de types
 
 ```ocaml
 type formula =
   | True
   | False
-  | P of string                    (* Propositional variable *)
+  | P of string                    (* Variable propositionnelle *)
   | Not of formula
   | And of formula * formula
   | Or of formula * formula
@@ -22,28 +22,28 @@ type valuation = (string * bool) list
 
 ---
 
-## Exercise 1
+## Exercice 1
 
-### Parse logical formulas from strings
+### Analyser des formules logiques a partir de chaines
 
-Operators: `~` (not), `.` (and), `+` (or), `=>` (implies), `<=>` (iff).
-Precedence: Not > And > Or > Imp > Iff.
+Operateurs : `~` (non), `.` (et), `+` (ou), `=>` (implique), `<=>` (equivalent).
+Precedence : Not > And > Or > Imp > Iff.
 
-The full parser uses the Opal parser combinator library. See the original TP source for the complete implementation with `string_to_formula`.
+L'analyseur complet utilise la bibliotheque de combinateurs Opal. Voir le code source original du TP pour l'implementation complete avec `string_to_formula`.
 
 ---
 
-## Exercise 2
+## Exercice 2
 
-### Evaluate a formula given a valuation (`eval`)
+### Evaluer une formule selon une valuation (`eval`)
 
-**Answer:**
+**Reponse :**
 ```ocaml
-(* Look up variable value in valuation *)
+(* Rechercher la valeur d'une variable dans la valuation *)
 let get_value (p : string) (v : valuation) : bool =
   List.assoc p v
 
-(* Evaluate formula under a valuation *)
+(* Evaluer une formule sous une valuation *)
 let rec eval (fm : formula) (v : valuation) : bool =
   match fm with
   | True -> true
@@ -56,7 +56,7 @@ let rec eval (fm : formula) (v : valuation) : bool =
   | Iff (f, g) -> (eval f v) = (eval g v)
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # eval (Imp (P "p", P "q")) [("p", true); ("q", false)];;
 - : bool = false
@@ -72,13 +72,13 @@ let rec eval (fm : formula) (v : valuation) : bool =
 
 ---
 
-## Exercise 3
+## Exercice 3
 
-### Find all propositional variables in a formula (`atoms`)
+### Trouver toutes les variables propositionnelles d'une formule (`atoms`)
 
-Collects variable names without duplicates using an accumulator and `List.mem`.
+Collecte les noms de variables sans doublons en utilisant un accumulateur et `List.mem`.
 
-**Answer:**
+**Reponse :**
 ```ocaml
 let atoms (fm : formula) : string list =
   let rec atoms_internal (fm : formula) (curlist : string list) : string list =
@@ -92,7 +92,7 @@ let atoms (fm : formula) : string list =
   atoms_internal fm []
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # atoms (And (P "p", Or (P "q", P "p")));;
 - : string list = ["q"; "p"]
@@ -106,13 +106,13 @@ let atoms (fm : formula) : string list =
 
 ---
 
-## Exercise 4
+## Exercice 4
 
-### Check if a formula is always true (`tautology`)
+### Verifier si une formule est toujours vraie (`tautology`)
 
-Exhaustive truth table generation: for each variable, try both true and false, combine with `&&`.
+Generation exhaustive de la table de verite : pour chaque variable, essayer true et false, combiner avec `&&`.
 
-**Answer:**
+**Reponse :**
 ```ocaml
 let tautology (fm : formula) : bool =
   let rec tautology_atomic_descent
@@ -127,7 +127,7 @@ let tautology (fm : formula) : bool =
   tautology_atomic_descent [] (atoms fm)
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # tautology (Or (P "p", Not (P "p")));;
 - : bool = true
@@ -143,13 +143,13 @@ let tautology (fm : formula) : bool =
 
 ---
 
-## Exercise 5
+## Exercice 5
 
-### Find all valuations that make a formula true (`find_truth`)
+### Trouver toutes les valuations qui rendent une formule vraie (`find_truth`)
 
-Same structure as `tautology` but applies a callback `f` to each satisfying valuation. Uses `;` to sequence both branches instead of `&&`.
+Meme structure que `tautology` mais applique un callback `f` a chaque valuation satisfaisante. Utilise `;` pour sequencer les deux branches au lieu de `&&`.
 
-**Answer:**
+**Reponse :**
 ```ocaml
 let find_truth (f : valuation -> unit) (fm : formula) : unit =
   let rec truth_in_depth (v : valuation) (undecided : string list) : unit =
@@ -162,7 +162,7 @@ let find_truth (f : valuation -> unit) (fm : formula) : unit =
   truth_in_depth [] (atoms fm)
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # let print_valuation v =
     List.iter (fun (k, b) -> Printf.printf "%s=%b " k b) v;
@@ -180,42 +180,42 @@ p=true q=false
 
 ---
 
-## Exercise 6
+## Exercice 6
 
-### Convert to Negation Normal Form (`nnf`)
+### Convertir en forme normale de negation (`nnf`)
 
-NNF rules:
-- Eliminate `Imp`: `p => q` becomes `~p + q`
-- Eliminate `Iff`: `p <=> q` becomes `(p . q) + (~p . ~q)`
-- Double negation: `~~p` becomes `p`
-- De Morgan: `~(p . q)` becomes `~p + ~q`, `~(p + q)` becomes `~p . ~q`
+Regles NNF :
+- Eliminer `Imp` : `p => q` devient `~p + q`
+- Eliminer `Iff` : `p <=> q` devient `(p . q) + (~p . ~q)`
+- Double negation : `~~p` devient `p`
+- De Morgan : `~(p . q)` devient `~p + ~q`, `~(p + q)` devient `~p . ~q`
 
-**Answer:**
+**Reponse :**
 ```ocaml
 let rec nnf : formula -> formula = fun fm ->
   match fm with
   | True -> True
   | False -> False
   | P x -> P x
-  (* Eliminate implications and bi-implications *)
+  (* Eliminer les implications et bi-implications *)
   | Imp (x, y) -> nnf (Or (Not x, y))
   | Iff (x, y) -> nnf (Or (And (x, y), And (Not x, Not y)))
   (* Double negation *)
   | Not (Not x) -> nnf x
-  (* De Morgan's laws *)
+  (* Lois de De Morgan *)
   | Not (And (x, y)) -> nnf (Or (Not x, Not y))
   | Not (Or (x, y)) -> nnf (And (Not x, Not y))
-  (* De Morgan for negated implications *)
+  (* De Morgan pour les implications niees *)
   | Not (Imp (x, y)) -> nnf (And (x, Not y))
   | Not (Iff (x, y)) -> nnf (Or (And (x, Not y), And (Not x, y)))
-  (* Recurse on subformulas *)
+  (* Recursion sur les sous-formules *)
   | And (x, y) -> And (nnf x, nnf y)
   | Or (x, y) -> Or (nnf x, nnf y)
-  (* Negation of an atom: already in NNF *)
+  (* Negation d'un atome : deja en NNF *)
   | Not x -> Not (nnf x)
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # nnf (Imp (P "p", P "q"));;
 - : formula = Or (Not (P "p"), P "q")
@@ -229,59 +229,59 @@ let rec nnf : formula -> formula = fun fm ->
 
 ---
 
-## Exercise 7
+## Exercice 7
 
-### Knights and Knaves puzzles
+### Enigmes des chevaliers et coquins
 
-Model: `c` = true means the person is a knight (always tells truth). If person `c` says declaration `D`, then `c <=> D` must hold.
+Modele : `c` = true signifie que la personne est un chevalier (dit toujours la verite). Si la personne `c` fait la declaration `D`, alors `c <=> D` doit etre verifie.
 
-### Puzzle 1: "A1 asserts that A1 and A2 are both knaves"
+### Enigme 1 : "A1 affirme que A1 et A2 sont tous deux des coquins"
 
 ```ocaml
-(* c1: A1 is a knight, c2: A2 is a knight *)
-(* Declaration: ~c1 . ~c2 *)
-(* Formula: c1 <=> (~c1 . ~c2) *)
+(* c1 : A1 est un chevalier, c2 : A2 est un chevalier *)
+(* Declaration : ~c1 . ~c2 *)
+(* Formule : c1 <=> (~c1 . ~c2) *)
 let puzzle1 = Iff (P "c1", And (Not (P "c1"), Not (P "c2")))
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # find_truth print_valuation puzzle1;;
 c1=false c2=true
 - : unit = ()
-(* A1 is a knave, A2 is a knight *)
+(* A1 est un coquin, A2 est un chevalier *)
 ```
 
-### Puzzle 2: "If I am a knight there is gold on the island"
+### Enigme 2 : "Si je suis un chevalier, il y a de l'or sur l'ile"
 
 ```ocaml
-(* k: knight, g: gold *)
-(* Declaration: k => g *)
-(* Formula: k <=> (k => g) *)
+(* k : chevalier, g : or *)
+(* Declaration : k => g *)
+(* Formule : k <=> (k => g) *)
 let puzzle2 = Iff (P "k", Imp (P "k", P "g"))
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # find_truth print_valuation puzzle2;;
 k=true g=true
 - : unit = ()
-(* Is a knight and there is gold *)
+(* C'est un chevalier et il y a de l'or *)
 ```
 
-### Puzzle 3: "Either I am a knave or there is gold"
+### Enigme 3 : "Soit je suis un coquin, soit il y a de l'or"
 
 ```ocaml
-(* c1: knight, g: gold *)
-(* Declaration: ~c1 + g *)
-(* Formula: c1 <=> (~c1 + g) *)
+(* c1 : chevalier, g : or *)
+(* Declaration : ~c1 + g *)
+(* Formule : c1 <=> (~c1 + g) *)
 let puzzle3 = Iff (P "c1", Or (Not (P "c1"), P "g"))
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # find_truth print_valuation puzzle3;;
 c1=true g=true
 - : unit = ()
-(* Is a knight and there is gold *)
+(* C'est un chevalier et il y a de l'or *)
 ```

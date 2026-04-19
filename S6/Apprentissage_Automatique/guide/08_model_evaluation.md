@@ -161,7 +161,7 @@ $$\text{TFP} = \frac{FP}{FP + VN} \quad \text{(1 - specificite)}$$
 
 - **AUC = 1.0** : classifieur parfait.
 - **AUC = 0.5** : pas mieux que le hasard (diagonale).
-- **AUC < 0.5** : pire que le hasard (inverser les predictions !).
+- **AUC &lt; 0.5** : pire que le hasard (inverser les predictions !).
 
 ### Code Python
 

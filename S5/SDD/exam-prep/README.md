@@ -1,93 +1,93 @@
-# SDD -- Exam Preparation
+# SDD -- Preparation a l'examen
 
-## Exam Format
+## Format de l'examen
 
-The SDD exam (DS) is a written exam, typically 2-3 hours. Based on analysis of past exams from 2013-2025, the exam consistently tests:
+L'examen SDD (DS) est un examen ecrit, typiquement de 2-3 heures. Base sur l'analyse des annales de 2013 a 2025, l'examen teste de maniere constante :
 
-1. **Abstract Data Types (TAD)** -- formal specifications with SORTE, FONCTIONS, AXIOMES
-2. **Binary Search Trees** -- insertion, deletion, traversal, height analysis
-3. **Algorithm implementation** -- write Java code on paper
-4. **Complexity analysis** -- prove Big-O, compare data structures
-5. **Data structure design** -- novel structures combining known primitives
+1. **Types Abstraits de Donnees (TAD)** -- specifications formelles avec SORTE, FONCTIONS, AXIOMES
+2. **Arbres Binaires de Recherche** -- insertion, suppression, parcours, analyse de hauteur
+3. **Implementation d'algorithmes** -- ecrire du code Java sur papier
+4. **Analyse de complexite** -- prouver des O, comparer des structures
+5. **Conception de structures** -- structures nouvelles combinant des primitives connues
 
-## Topic Frequency Across Past Exams
+## Frequence des sujets dans les annales
 
-| Topic | Frequency | Typical Questions |
+| Sujet | Frequence | Questions typiques |
 |-------|-----------|-------------------|
-| Binary Trees / BST | Very high | Insert, delete, traversal, height, balance |
-| Abstract Data Types | Very high | Define TAD with axioms, prove theorems |
-| Complexity Analysis | High | Prove O/Theta, compare implementations |
-| Linked Lists | Medium | Implement operations, cursor navigation |
-| Hash Tables | Medium | Hash function design, collision analysis |
-| Heaps | Medium | HeapPQ operations, trace heapify |
-| Graphs / Dijkstra | Low-Medium | Trace algorithm, path reconstruction |
-| Advanced structures | Variable | Bloom filters (2021), Segment trees (2022), Interval sums |
+| Arbres binaires / ABR | Tres haute | Insertion, suppression, parcours, hauteur, equilibre |
+| Types Abstraits de Donnees | Tres haute | Definir un TAD avec axiomes, prouver des theoremes |
+| Analyse de complexite | Haute | Prouver O/Theta, comparer des implementations |
+| Listes chainees | Moyenne | Implementer des operations, navigation par curseur |
+| Tables de hachage | Moyenne | Conception de fonctions de hachage, analyse de collisions |
+| Tas | Moyenne | Operations HeapPQ, tracer heapify |
+| Graphes / Dijkstra | Moyenne-Basse | Tracer l'algorithme, reconstruction de chemin |
+| Structures avancees | Variable | Filtres de Bloom (2021), arbres de segments (2022), sommes d'intervalles |
 
-## Exam Strategy
+## Strategie d'examen
 
-### Time Allocation (2h exam)
+### Repartition du temps (examen 2h)
 
-1. **Read entire exam first** (5 min) -- identify easy vs. hard questions
-2. **TAD / Theory questions** (30 min) -- quick if you know the formalism
-3. **Tree / BST implementation** (30 min) -- most frequent, most points
-4. **Complexity analysis** (20 min) -- prove bounds carefully
-5. **Implementation questions** (25 min) -- write clean Java code
-6. **Review** (10 min) -- check edge cases, off-by-one errors
+1. **Lire l'examen entier d'abord** (5 min) -- identifier les questions faciles vs. difficiles
+2. **Questions TAD / theorie** (30 min) -- rapide si on connait le formalisme
+3. **Implementation arbre / ABR** (30 min) -- le plus frequent, le plus de points
+4. **Analyse de complexite** (20 min) -- prouver les bornes soigneusement
+5. **Questions d'implementation** (25 min) -- ecrire du code Java propre
+6. **Relecture** (10 min) -- verifier les cas limites, erreurs de un
 
-### Writing Java on Paper
+### Ecrire du Java sur papier
 
-- Write **clear method signatures** with return types
-- Handle **edge cases first** (null, empty, single element)
-- Use **early returns** to reduce nesting
-- Draw **ASCII diagrams** before and after operations
-- **State complexity** next to each method
+- Ecrire des **signatures de methodes claires** avec types de retour
+- Gerer les **cas limites en premier** (null, vide, un seul element)
+- Utiliser des **retours anticipes** pour reduire l'imbrication
+- Dessiner des **schemas ASCII** avant et apres les operations
+- **Indiquer la complexite** a cote de chaque methode
 
-## Past Exam Analysis
+## Analyse des annales
 
-### 2020 Exam -- BST Focus
+### Examen 2020 -- Focus ABR
 
-**Exercise 1: TAD and BST**
-- Q1: Distinguish axiom vs. theorem in formal specification
-- Q2: Define TAD Boolean with axioms for vrai/faux/non/et/ou
-- Q3: Prove De Morgan's laws from axioms (by case analysis)
-- Q4: Trace BST insertion of sequence [7, 3, 10, 1, 6, 14, 4, 7]
-- Q5: Implement `placer(int i)` -- BST insertion
-- Q6: Explain deletion with 2 children (replace with max of left subtree)
-- Q7: Implement `oterPlusGrandInf()` -- find and remove max in left subtree
-- Q8: Implement `supprimerEc()` -- full BST deletion
+**Exercice 1 : TAD et ABR**
+- Q1 : Distinguer axiome vs. theoreme dans une specification formelle
+- Q2 : Definir le TAD Booleen avec les axiomes pour vrai/faux/non/et/ou
+- Q3 : Prouver les lois de De Morgan a partir des axiomes (par analyse de cas)
+- Q4 : Tracer l'insertion ABR de la sequence [7, 3, 10, 1, 6, 14, 4, 7]
+- Q5 : Implementer `placer(int i)` -- insertion ABR
+- Q6 : Expliquer la suppression avec 2 enfants (remplacer par le max du sous-arbre gauche)
+- Q7 : Implementer `oterPlusGrandInf()` -- trouver et supprimer le max du sous-arbre gauche
+- Q8 : Implementer `supprimerEc()` -- suppression ABR complete
 
-**Key insight from student solution**: The BST deletion with 2 children requires finding the rightmost node in the left subtree (the in-order predecessor), not just any node.
+**Point cle de la solution** : La suppression ABR avec 2 enfants necessite de trouver le noeud le plus a droite du sous-arbre gauche (le predecesseur dans le parcours infixe), pas n'importe quel noeud.
 
-**Exercise 2: Tree Traversal (Exercise 3 in exam)**
-- Q9: Given a tree, produce different traversals and reconstruct from traversal
+**Exercice 2 : Parcours d'arbre (Exercice 3 de l'examen)**
+- Q9 : Etant donne un arbre, produire differents parcours et reconstruire a partir d'un parcours
 
-### 2021 Exam -- Bloom Filters
+### Examen 2021 -- Filtres de Bloom
 
-**Novel structure**: Bloom filter (probabilistic set membership)
-- Uses BitSet + multiple hash functions
-- `add()`: set k bits using k hash functions
-- `contains()`: check if all k bits are set
-- False positives possible, false negatives impossible
+**Structure nouvelle** : Filtre de Bloom (appartenance probabiliste a un ensemble)
+- Utilise BitSet + plusieurs fonctions de hachage
+- `add()` : mettre k bits a 1 en utilisant k fonctions de hachage
+- `contains()` : verifier si tous les k bits sont a 1
+- Faux positifs possibles, faux negatifs impossibles
 
-### 2022 Exam -- Segment Trees & Interval Sums
+### Examen 2022 -- Arbres de segments et sommes d'intervalles
 
-**IntervalSum**: prefix sum array for O(1) range queries, O(n) update
-**SegmentTree**: balanced binary tree for O(log n) range queries AND O(log n) update
+**IntervalSum** : tableau de sommes prefixes pour des requetes O(1), mise a jour O(n)
+**SegmentTree** : arbre binaire equilibre pour des requetes O(log n) ET mise a jour O(log n)
 
-Key methods:
-- `rsq(from, to)` -- range sum query
-- `rMinQ(from, to)` -- range minimum query
-- `update(i, value)` -- point update
+Methodes cles :
+- `rsq(from, to)` -- requete de somme sur un intervalle
+- `rMinQ(from, to)` -- requete de minimum sur un intervalle
+- `update(i, value)` -- mise a jour ponctuelle
 
-### 2023-2025 Exams
+### Examens 2023-2025
 
-Available as PDF, continuing patterns of BST operations, TAD formalism, and complexity analysis.
+Disponibles en PDF, continuant les schemas d'operations ABR, formalisme TAD et analyse de complexite.
 
-## Practice Problems
+## Exercices d'entrainement
 
-### Problem 1: BST Insertion Trace
+### Exercice 1 : Trace d'insertion ABR
 
-Insert the following values into an empty BST: 15, 8, 23, 4, 12, 18, 30, 6
+Inserer les valeurs suivantes dans un ABR vide : 15, 8, 23, 4, 12, 18, 30, 6
 
 ```
 Solution:
@@ -100,12 +100,12 @@ Solution:
         [6]
 ```
 
-### Problem 2: BST Deletion
+### Exercice 2 : Suppression ABR
 
-Delete 15 from the tree above (root has 2 children):
-1. Find max in left subtree: 12
-2. Replace 15 with 12
-3. Delete old 12 node (has no children)
+Supprimer 15 de l'arbre ci-dessus (la racine a 2 enfants) :
+1. Trouver le max dans le sous-arbre gauche : 12
+2. Remplacer 15 par 12
+3. Supprimer l'ancien noeud 12 (n'a pas d'enfants)
 
 ```
            [12]
@@ -117,11 +117,11 @@ Delete 15 from the tree above (root has 2 children):
         [6]
 ```
 
-### Problem 3: Heap Operations
+### Exercice 3 : Operations sur un tas
 
-Given min-heap array: [2, 5, 3, 8, 7, 6, 4]
+Tableau tas min donne : [2, 5, 3, 8, 7, 6, 4]
 
-Draw the tree:
+Dessiner l'arbre :
 ```
            [2]
           /   \
@@ -130,10 +130,10 @@ Draw the tree:
       [8] [7][6] [4]
 ```
 
-After `poll()` (remove 2):
-1. Replace root with last: [4, 5, 3, 8, 7, 6]
-2. ShiftDown 4: compare with min(5,3)=3, swap
-3. [3, 5, 4, 8, 7, 6]: compare 4 with min(6)=6, 4 < 6, done
+Apres `poll()` (retirer 2) :
+1. Remplacer la racine par le dernier : [4, 5, 3, 8, 7, 6]
+2. ShiftDown 4 : comparer avec min(5,3)=3, echanger
+3. [3, 5, 4, 8, 7, 6] : comparer 4 avec min(6)=6, 4 &lt; 6, termine
 
 ```
            [3]
@@ -143,13 +143,13 @@ After `poll()` (remove 2):
       [8] [7][6]
 ```
 
-After `add(1)`:
-1. Place at end: [3, 5, 4, 8, 7, 6, 1]
-2. ShiftUp 1: parent(6)=2, heap[2]=4 > 1, swap
-3. [3, 5, 1, 8, 7, 6, 4]: parent(2)=0, heap[0]=3 > 1, swap
+Apres `add(1)` :
+1. Placer a la fin : [3, 5, 4, 8, 7, 6, 1]
+2. ShiftUp 1 : parent(6)=2, heap[2]=4 > 1, echanger
+3. [3, 5, 1, 8, 7, 6, 4] : parent(2)=0, heap[0]=3 > 1, echanger
 4. [1, 5, 3, 8, 7, 6, 4]
 
-### Problem 4: Dijkstra Trace
+### Exercice 4 : Trace de Dijkstra
 
 ```
 Graph:
@@ -170,13 +170,13 @@ Step  PQ                          cost              prev
 4     [(D,5)]                     {A:0,B:2,E:3,C:5} {...,C:A}
 5     []                          {...,D:5}          {...,D:B}
 
-Shortest path A->E: A -> B -> E (cost 3)
-Shortest path A->D: A -> B -> D (cost 5)
+Plus court chemin A->E : A -> B -> E (cout 3)
+Plus court chemin A->D : A -> B -> D (cout 5)
 ```
 
-### Problem 5: Complexity
+### Exercice 5 : Complexite
 
-Prove that the `size()` method of ListeEngine is O(n):
+Prouver que la methode `size()` de ListeEngine est O(n) :
 
 ```java
 public int size() {
@@ -186,15 +186,15 @@ public int size() {
 }
 ```
 
-**Proof**: The for-each loop calls `iterator()`, then `hasNext()`/`next()` for each element. With n elements in the list:
-- `hasNext()` is O(1) (checks estSorti)
-- `next()` is O(1) (valec + succ)
-- Loop executes n times
-- Total: n * O(1) = O(n)
+**Preuve** : La boucle for-each appelle `iterator()`, puis `hasNext()`/`next()` pour chaque element. Avec n elements dans la liste :
+- `hasNext()` est O(1) (verifie estSorti)
+- `next()` est O(1) (valec + succ)
+- La boucle s'execute n fois
+- Total : n * O(1) = O(n)
 
-### Problem 6: TAD Boolean
+### Exercice 6 : TAD Booleen
 
-Define TAD Boolean:
+Definir le TAD Booleen :
 ```
 SORTE Boolean
 UTILISE
@@ -217,19 +217,19 @@ AXIOMES
     ou(faux, faux) = faux
 ```
 
-Prove De Morgan: non(et(x,y)) = ou(non(x), non(y))
-Method: enumerate all 4 cases (x,y) in {vrai,faux}^2.
+Prouver De Morgan : non(et(x,y)) = ou(non(x), non(y))
+Methode : enumerer les 4 cas (x,y) dans {vrai,faux}^2.
 
-## Revision Checklist
+## Liste de revision
 
-- [ ] Can draw BST after sequence of insertions
-- [ ] Can delete from BST (0, 1, and 2 children cases)
-- [ ] Can write TAD specifications with axioms
-- [ ] Can prove theorems from axioms by case analysis
-- [ ] Can trace Dijkstra step by step
-- [ ] Can trace heap add/poll with shiftUp/shiftDown
-- [ ] Can compute complexity of given code
-- [ ] Can prove O/Theta using definition (find c, n0)
-- [ ] Can implement linked list operations on paper
-- [ ] Can design hash functions and analyze collisions
-- [ ] Know the complexity of all major data structures (see guide/README.md table)
+- [ ] Savoir dessiner un ABR apres une sequence d'insertions
+- [ ] Savoir supprimer dans un ABR (cas 0, 1 et 2 enfants)
+- [ ] Savoir ecrire des specifications TAD avec axiomes
+- [ ] Savoir prouver des theoremes a partir d'axiomes par analyse de cas
+- [ ] Savoir tracer Dijkstra etape par etape
+- [ ] Savoir tracer add/poll du tas avec shiftUp/shiftDown
+- [ ] Savoir calculer la complexite d'un code donne
+- [ ] Savoir prouver O/Theta en utilisant la definition (trouver c, n0)
+- [ ] Savoir implementer des operations de liste chainee sur papier
+- [ ] Savoir concevoir des fonctions de hachage et analyser les collisions
+- [ ] Connaitre la complexite de toutes les structures principales (voir tableau dans guide/README.md)

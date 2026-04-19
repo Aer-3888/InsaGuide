@@ -30,7 +30,7 @@
 
 ### Principe
 
-La matrice est de dimension (N+2)x(M+2) : les lignes et colonnes supplementaires representent les bords maintenus a temperature constante MAX. L'interieur (indices 1..N, 1..M) est initialise a 0. A chaque iteration, chaque cellule interieure est remplacee par la moyenne de ses 4 voisins et d'elle-meme (stencil a 5 points). On itere jusqu'a convergence (delta < seuil).
+La matrice est de dimension (N+2)x(M+2) : les lignes et colonnes supplementaires representent les bords maintenus a temperature constante MAX. L'interieur (indices 1..N, 1..M) est initialise a 0. A chaque iteration, chaque cellule interieure est remplacee par la moyenne de ses 4 voisins et d'elle-meme (stencil a 5 points). On itere jusqu'a convergence (delta &lt; seuil).
 
 Le pattern **double buffering** (T en lecture, T1 en ecriture, puis swap des pointeurs) evite les conflits lecture/ecriture pendant une iteration.
 
@@ -58,8 +58,8 @@ int main(void)
     for (int i = 0; i < N + 2; i++) {
         for (int j = 0; j < M + 2; j++) {
             if (i == 0 || i == N + 1 || j == 0 || j == M + 1) {
-                T[i * (N + 2) + j]  = MAX;
-                T1[i * (N + 2) + j] = MAX;
+                T[i * (M + 2) + j]  = MAX;
+                T1[i * (M + 2) + j] = MAX;
             }
         }
     }
@@ -68,10 +68,10 @@ int main(void)
     do {
         delta = 0;
         for (int k = 1; k < N + 1; k++) {
-            int offset = k * (N + 2);
+            int offset = k * (M + 2);
             for (int j = 1; j < M + 1; j++) {
                 T1[offset + j] = (T[offset + j + 1] + T[offset + j - 1] +
-                                  T[offset + j + (N + 2)] + T[offset + j - (N + 2)] +
+                                  T[offset + j + (M + 2)] + T[offset + j - (M + 2)] +
                                   T[offset + j]) / 5.0;
                 delta += fabs(T1[offset + j] - T[offset + j]);
             }
@@ -117,8 +117,8 @@ int main(void)
     for (int i = 0; i < N + 2; i++) {
         for (int j = 0; j < M + 2; j++) {
             if (i == 0 || i == N + 1 || j == 0 || j == M + 1) {
-                T[i * (N + 2) + j]  = MAX;
-                T1[i * (N + 2) + j] = MAX;
+                T[i * (M + 2) + j]  = MAX;
+                T1[i * (M + 2) + j] = MAX;
             }
         }
     }
@@ -130,10 +130,10 @@ int main(void)
         delta = 0;
         #pragma omp parallel for reduction(+:delta)
         for (int k = 1; k < N + 1; k++) {
-            int machin = k * (N + 2);
+            int machin = k * (M + 2);
             for (int j = 1; j < M + 1; j++) {
                 T1[machin + j] = (T[machin + j + 1] + T[machin + j - 1] +
-                                  T[machin + j + (N + 2)] + T[machin + j - (N + 2)] +
+                                  T[machin + j + (M + 2)] + T[machin + j - (M + 2)] +
                                   T[machin + j]) / 5.0;
                 delta += fabs(T1[machin + j] - T[machin + j]);
             }
@@ -394,7 +394,7 @@ Trois facteurs expliquent ce comportement :
 > ```
 >
 > Pour le test de convergence, on peut utiliser la formule suivante :
-> |sum(j=0..n-1) a_i,j * x_j^k - b_i| < epsilon, pour tout i=0,...,n-1
+> |sum(j=0..n-1) a_i,j * x_j^k - b_i| &lt; epsilon, pour tout i=0,...,n-1
 >
 > Ecrivez une implementation sequentielle de la methode. Parallelisez le code avec OpenMP et mesurez les performances.
 

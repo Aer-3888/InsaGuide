@@ -1,14 +1,14 @@
-# OOP Fundamentals
+# Fondamentaux de la POO
 
-## Theory
+## Theorie
 
-### What is Object-Oriented Programming?
+### Qu'est-ce que la programmation orientee objet ?
 
-OOP organizes software around **objects** -- bundles of data (attributes) and behavior (methods) -- rather than around functions and logic. The four pillars are: encapsulation, abstraction, inheritance, and polymorphism.
+La POO organise le logiciel autour d'**objets** -- des regroupements de donnees (attributs) et de comportements (methodes) -- plutot qu'autour de fonctions et de logique. Les quatre piliers sont : l'encapsulation, l'abstraction, l'heritage et le polymorphisme.
 
-### Classes and Objects
+### Classes et objets
 
-A **class** is a blueprint; an **object** (instance) is a concrete realization of that blueprint.
+Une **classe** est un modele (blueprint) ; un **objet** (instance) est une realisation concrete de ce modele.
 
 ```java
 // Class definition (blueprint)
@@ -28,9 +28,9 @@ public class Velo {
 Velo monVelo = new Velo();
 ```
 
-### The `this` Keyword
+### Le mot-cle `this`
 
-`this` refers to the current object instance. It disambiguates between field names and parameter names and allows passing the current object to other methods.
+`this` fait reference a l'instance courante de l'objet. Il permet de distinguer les noms de champs des noms de parametres et de passer l'objet courant a d'autres methodes.
 
 ```java
 public void setGuidon(Guidon guidon) {
@@ -38,9 +38,9 @@ public void setGuidon(Guidon guidon) {
 }
 ```
 
-### Constructors
+### Constructeurs
 
-Constructors initialize objects. If you write no constructor, Java provides a default no-arg constructor. Once you write any constructor, the default disappears.
+Les constructeurs initialisent les objets. Si vous n'ecrivez aucun constructeur, Java fournit un constructeur par defaut sans argument. Des que vous ecrivez un constructeur, le constructeur par defaut disparait.
 
 ```java
 public class Arbre {
@@ -63,7 +63,7 @@ public class Chene extends Arbre {
 }
 ```
 
-**Constructor chaining** with `this()`:
+**Chainage de constructeurs** avec `this()` :
 
 ```java
 public class MyPoint {
@@ -87,16 +87,16 @@ public class MyPoint {
 
 ### Encapsulation
 
-Encapsulation bundles data with the methods that operate on it, and restricts direct access to the internal state.
+L'encapsulation regroupe les donnees avec les methodes qui les manipulent, et restreint l'acces direct a l'etat interne.
 
-| Modifier | Class | Package | Subclass | World |
-|----------|-------|---------|----------|-------|
-| `private` | Yes | No | No | No |
-| (default) | Yes | Yes | No | No |
-| `protected` | Yes | Yes | Yes | No |
-| `public` | Yes | Yes | Yes | Yes |
+| Modificateur | Classe | Package | Sous-classe | Monde |
+|--------------|--------|---------|-------------|-------|
+| `private` | Oui | Non | Non | Non |
+| (defaut) | Oui | Oui | Non | Non |
+| `protected` | Oui | Oui | Oui | Non |
+| `public` | Oui | Oui | Oui | Oui |
 
-**Best practice**: fields are `private`, accessed through `public` getters/setters. Internal fields shared with subclasses use `protected`.
+**Bonne pratique** : les champs sont `private`, accessibles via des getters/setters `public`. Les champs internes partages avec les sous-classes utilisent `protected`.
 
 ```java
 public abstract class Arbre {
@@ -111,11 +111,11 @@ public abstract class Arbre {
 }
 ```
 
-### Associations (UML to Java)
+### Associations (UML vers Java)
 
-Associations represent "uses" or "has" relationships between classes.
+Les associations representent des relations "utilise" ou "possede" entre classes.
 
-**Unidirectional 0..1 association**:
+**Association unidirectionnelle 0..1** :
 ```java
 // Velo --guidon--> Guidon (0..1)
 public class Velo {
@@ -126,7 +126,7 @@ public class Velo {
 }
 ```
 
-**Bidirectional 0..1 association with referential integrity**:
+**Association bidirectionnelle 0..1 avec integrite referentielle** :
 ```java
 // In Velo.java
 public void setGuidon(Guidon gd) {
@@ -143,7 +143,7 @@ public void setGuidon(Guidon gd) {
 }
 ```
 
-**One-to-many association (0..\*)**:
+**Association un-a-plusieurs (0..\*)** :
 ```java
 public class Velo {
     private List<Roue> roues;
@@ -165,7 +165,7 @@ public class Velo {
 }
 ```
 
-**Composition with bidirectional navigation**:
+**Composition avec navigation bidirectionnelle** :
 ```java
 // In Velo.java -- the "whole"
 public Boolean addRoue(Roue r) {
@@ -192,7 +192,7 @@ public void setVelo(Velo vl) {
 }
 ```
 
-### The `final` Keyword
+### Le mot-cle `final`
 
 ```java
 public static final int SIZE = 5;       // constant: value cannot change
@@ -201,13 +201,13 @@ private final List<Pion> pions;          // reference cannot change, but
                                          // list contents CAN be modified
 ```
 
-Key distinction:
-- `final` on a **primitive**: the value itself cannot change
-- `final` on a **reference**: the reference cannot point to a different object, but the object's internal state can still be modified
+Distinction cle :
+- `final` sur un **type primitif** : la valeur elle-meme ne peut pas changer
+- `final` sur une **reference** : la reference ne peut pas pointer vers un autre objet, mais l'etat interne de l'objet peut toujours etre modifie
 
-### `static` Members
+### Membres `static`
 
-`static` belongs to the class, not to instances.
+`static` appartient a la classe, pas aux instances.
 
 ```java
 public class Chene extends Arbre<Gland> {
@@ -224,12 +224,12 @@ public static A create(final B b) {
 }
 ```
 
-## Common Pitfalls
+## Pieges courants
 
-1. **Forgetting to initialize collections**: `private List<Arbre> arbres;` without `= new ArrayList<>()` in the constructor causes `NullPointerException`.
-2. **Infinite recursion in bidirectional setters**: always check `if (gd != this.guidon)` before calling the other side's setter.
-3. **Breaking referential integrity**: when setting one side of a bidirectional association, always update the other side.
-4. **Exposing mutable internal state**: returning `this.roues` directly allows callers to modify the list. Consider `Collections.unmodifiableList(roues)`.
+1. **Oublier d'initialiser les collections** : `private List<Arbre> arbres;` sans `= new ArrayList<>()` dans le constructeur provoque une `NullPointerException`.
+2. **Recursion infinie dans les setters bidirectionnels** : toujours verifier `if (gd != this.guidon)` avant d'appeler le setter de l'autre cote.
+3. **Rompre l'integrite referentielle** : quand on modifie un cote d'une association bidirectionnelle, il faut toujours mettre a jour l'autre cote.
+4. **Exposer l'etat interne mutable** : retourner `this.roues` directement permet aux appelants de modifier la liste. Utiliser plutot `Collections.unmodifiableList(roues)`.
 
 ---
 

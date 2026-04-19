@@ -32,7 +32,7 @@ Donc le nombre de sommets de degre impair est pair.
 
 **Base :** n = 1. L'arbre a 1 sommet et 0 arete = 1-1 = 0. OK.
 
-**Hypothese de recurrence :** Tout arbre a k sommets (k < n) a k-1 aretes.
+**Hypothese de recurrence :** Tout arbre a k sommets (k &lt; n) a k-1 aretes.
 
 **Etape :** Soit T un arbre a n sommets (n >= 2). T a au moins une feuille v (sommet de degre 1).
 
@@ -68,7 +68,7 @@ Donc T a au moins 2 feuilles.
 
 Si G est biparti avec partition (X, Y), tout cycle C = (v_0, v_1, ..., v_k = v_0) alterne entre X et Y. Si v_0 est dans X, alors v_1 est dans Y, v_2 dans X, ... v_i est dans X si i est pair, dans Y si i est impair. Pour que v_k = v_0 soit dans X, il faut k pair. Donc tout cycle est de longueur paire.
 
-### Preuve (sens <=)
+### Preuve (sens &lt;=)
 
 Supposons que G n'a pas de cycle impair. On construit une 2-coloration par BFS depuis un sommet arbitraire s :
 - Colorier s en 0. dist(s) = 0.
@@ -92,7 +92,7 @@ Si G n'a pas de cycle, G est un arbre. Alors m = n-1 et f = 1 (pas de face inter
 
 ---
 
-## 6. m <= 3n - 6 pour un graphe planaire simple (n >= 3)
+## 6. m &lt;= 3n - 6 pour un graphe planaire simple (n >= 3)
 
 ### Preuve
 
@@ -100,9 +100,9 @@ Par Euler : f = 2 - n + m.
 
 Chaque face est delimitee par au moins 3 aretes (graphe simple, pas de boucle ni arete multiple). Chaque arete borde au plus 2 faces.
 
-Donc : 3f <= 2m (somme des longueurs de toutes les faces = 2m, et chaque longueur >= 3).
+Donc : 3f &lt;= 2m (somme des longueurs de toutes les faces = 2m, et chaque longueur >= 3).
 
-Substituant f : 3(2 - n + m) <= 2m => 6 - 3n + 3m <= 2m => m <= 3n - 6.
+Substituant f : 3(2 - n + m) &lt;= 2m => 6 - 3n + 3m &lt;= 2m => m &lt;= 3n - 6.
 
 ---
 
@@ -112,7 +112,7 @@ Substituant f : 3(2 - n + m) <= 2m => 6 - 3n + 3m <= 2m => m <= 3n - 6.
 
 K_5 a n = 5 sommets et m = n(n-1)/2 = 10 aretes.
 
-Si K_5 etait planaire : m <= 3n - 6 = 3(5) - 6 = 9.
+Si K_5 etait planaire : m &lt;= 3n - 6 = 3(5) - 6 = 9.
 
 Or m = 10 > 9. Contradiction.
 
@@ -126,15 +126,15 @@ Donc K_5 n'est pas planaire.
 
 K_{3,3} a n = 6 sommets et m = 3*3 = 9 aretes.
 
-Test m <= 3n - 6 : 9 <= 12. OK, ce test ne suffit pas.
+Test m &lt;= 3n - 6 : 9 &lt;= 12. OK, ce test ne suffit pas.
 
 K_{3,3} est biparti, donc sans triangle. Chaque face est delimitee par au moins 4 aretes.
 
-Donc : 4f <= 2m => f <= m/2 = 9/2 = 4.5 => f <= 4.
+Donc : 4f &lt;= 2m => f &lt;= m/2 = 9/2 = 4.5 => f &lt;= 4.
 
 Par Euler : f = 2 - n + m = 2 - 6 + 9 = 5.
 
-Mais f <= 4 et f = 5. Contradiction.
+Mais f &lt;= 4 et f = 5. Contradiction.
 
 Donc K_{3,3} n'est pas planaire.
 
@@ -156,11 +156,11 @@ Si tous les poids sont >= 0, Dijkstra calcule les distances exactes depuis la so
 
 **Etape :** Supposons que pour tous les sommets deja visites, dist = delta.
 
-Soit u le prochain sommet visite (non visite de dist minimale). Supposons par l'absurde que dist(u) > delta(s, u). Alors il existe un chemin P de s a u de poids < dist(u). Ce chemin quitte l'ensemble des sommets visites a un certain moment : soit (x, y) le premier arc ou x est visite et y ne l'est pas.
+Soit u le prochain sommet visite (non visite de dist minimale). Supposons par l'absurde que dist(u) > delta(s, u). Alors il existe un chemin P de s a u de poids &lt; dist(u). Ce chemin quitte l'ensemble des sommets visites a un certain moment : soit (x, y) le premier arc ou x est visite et y ne l'est pas.
 
-dist(y) <= dist(x) + w(x, y) = delta(s, x) + w(x, y) <= poids de P jusqu'a y <= delta(s, u) < dist(u).
+dist(y) &lt;= dist(x) + w(x, y) = delta(s, x) + w(x, y) &lt;= poids de P jusqu'a y &lt;= delta(s, u) &lt; dist(u).
 
-Mais u est le sommet non visite de dist minimale, donc dist(u) <= dist(y). Contradiction.
+Mais u est le sommet non visite de dist minimale, donc dist(u) &lt;= dist(y). Contradiction.
 
 ---
 
@@ -168,7 +168,7 @@ Mais u est le sommet non visite de dist minimale, donc dist(u) <= dist(y). Contr
 
 ### Idees cles
 
-1. Pour tout flot f et toute coupe (S, T) : |f| <= c(S, T). (Le flot ne peut pas depasser la capacite de la coupe.)
+1. Pour tout flot f et toute coupe (S, T) : |f| &lt;= c(S, T). (Le flot ne peut pas depasser la capacite de la coupe.)
 
 2. Ford-Fulkerson termine quand il n'y a plus de chemin augmentant dans le graphe residuel. A ce moment, l'ensemble S des sommets accessibles depuis s dans le residuel et T = V \ S forment une coupe.
 

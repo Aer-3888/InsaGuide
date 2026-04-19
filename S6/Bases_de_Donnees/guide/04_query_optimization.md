@@ -134,7 +134,7 @@ CREATE INDEX idx_composite ON facture(customerId, amount);
 | Colonne dans `JOIN ... ON` | Index simple |
 | Colonnes dans `WHERE` avec `=` et `>` | Index composite (`=` d'abord, `>` ensuite) |
 | Colonne dans `ORDER BY` | Index simple |
-| Petite table (< 1000 lignes) | Pas necessaire |
+| Petite table (&lt; 1000 lignes) | Pas necessaire |
 | Colonne tres souvent modifiee | Attention au cout de maintenance |
 | Table frequemment inseree en masse | Creer l'index apres les insertions |
 

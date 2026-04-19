@@ -1,12 +1,12 @@
-# TP1 - Introduction to R and Probability Distributions
+# TP1 - Introduction a R et distributions de probabilite
 
-> Following teacher instructions from: `S5/Probabilites/data/moodle/tp/tp1/README.md`
+> En suivant les instructions de : `S5/Probabilites/data/moodle/tp/tp1/README.md`
 
-## Part 1: Type Conversion and String Manipulation
+## Partie 1 : Conversion de types et manipulation de chaines
 
-### 1.1 Convert a string to integer and verify the type
+### 1.1 Convertir une chaine en entier et verifier le type
 
-**Answer:**
+**Reponse :**
 ```r
 txt <- "33"
 nbr <- as.integer(txt)
@@ -15,20 +15,20 @@ print(is.numeric(nbr))
 print(is.integer(nbr))
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 [1] TRUE
 [1] TRUE
 ```
 
-**Explanation:**
+**Explication :**
 `as.integer()` converts the string `"33"` to integer 33. In R, integers are a subtype of numeric, so both `is.numeric()` and `is.integer()` return TRUE. Type conversion is essential when loading data from CSV files where numeric columns may be read as strings.
 
 ---
 
 ### 1.2 Concatenate strings with `paste()` and count characters with `nchar()`
 
-**Answer:**
+**Reponse :**
 ```r
 mot <- "petite"
 text1 <- paste("une", mot, "phrase")
@@ -38,20 +38,20 @@ text2 <- paste(text1, "compte", nchar(text1), "lettres")
 print(text2)
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 [1] "une petite phrase"
 [1] "une petite phrase compte 17 lettres"
 ```
 
-**Explanation:**
+**Explication :**
 `paste()` concatenates its arguments with a space separator by default. `nchar()` returns the number of characters including spaces: `"une petite phrase"` has 17 characters.
 
 ---
 
 ### 1.3 Variable management with `rm()` and `ls()`
 
-**Answer:**
+**Reponse :**
 ```r
 pipo <- "une var texte"
 nombre <- 3
@@ -63,20 +63,20 @@ print("Les variables sont :")
 print(variables)
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 [1] "Les variables sont :"
 [1] "nombre" "text1" "text2" "txt" "nbr" "mot" "variables"
 ```
 
-**Explanation:**
+**Explication :**
 `rm()` removes a variable from the environment. After removing `pipo`, it no longer appears in `ls()`. The exact list depends on what variables exist in the current session.
 
 ---
 
 ### 1.4 Special values: `Inf` and `NA`
 
-**Answer:**
+**Reponse :**
 ```r
 tmp <- 3/0
 print(tmp)
@@ -87,13 +87,13 @@ resultat <- paste(tmp, tmp+1, tmp+nsp)
 print(resultat)
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 [1] Inf
 [1] "Inf Inf NA"
 ```
 
-**Explanation:**
+**Explication :**
 Division by zero produces `Inf` (infinity). `Inf + 1` remains `Inf`. Any arithmetic involving `NA` (missing value) produces `NA`. This propagation behavior is critical in real data analysis -- one missing value can invalidate an entire computation unless handled with `na.rm = TRUE`.
 
 ---
@@ -102,7 +102,7 @@ Division by zero produces `Inf` (infinity). `Inf + 1` remains `Inf`. Any arithme
 
 ### Four construction methods for vectors
 
-**Answer:**
+**Reponse :**
 ```r
 # Method 1: Explicit construction with c()
 vecteur1 <- c(1, 3, 5, 7, 9)
@@ -122,7 +122,7 @@ print(vecteur3)
 print(vecteur4)
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 [1] 1 3 5 7 9
 [1]  0  2  4  6  8 10
@@ -130,7 +130,7 @@ print(vecteur4)
 [1] 1 2 1 2 1 2 1 2 1 2
 ```
 
-**Mathematical explanation:**
+**Explication mathematique :**
 R's `:` operator generates inclusive sequences: `0:10` produces 11 elements (0 through 10). This differs from Python's `range()` which excludes the upper bound. R's `for(i in 1:10)` loops include both endpoints.
 
 ---
@@ -139,7 +139,7 @@ R's `:` operator generates inclusive sequences: `0:10` produces 11 elements (0 t
 
 ### Create a data frame with named columns, access data, and export
 
-**Answer:**
+**Reponse :**
 ```r
 v1 <- c(175, 182, 165, 187, 158)  # Heights
 v2 <- c(19, 18, 21, 22, 20)       # Ages
@@ -159,7 +159,7 @@ str(tableau)
 summary(tableau)
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 [1] "prenom" "taille" "age"
 [1] "Louis"  "Paule"  "Pierre" "Remi"   "Claude"
@@ -181,7 +181,7 @@ summary(tableau)
                     Max.   :187.0   Max.   :22.0
 ```
 
-**Explanation:**
+**Explication :**
 Data frames are R's primary structure for tabular data. `$` accesses columns by name, `[row, col]` uses positional indexing. `summary()` provides the five-number summary plus mean for numeric columns.
 
 ---
@@ -201,7 +201,7 @@ R uses a systematic naming scheme for all distributions:
 
 ### 4.1 Normal distribution density and visualization
 
-**Answer:**
+**Reponse :**
 ```r
 # Density at specific points for N(1, 0.2)
 densities <- dnorm(c(0.8, 1, 1.2), mean=1, sd=0.2)
@@ -224,12 +224,12 @@ legend("topright",
        lwd=2)
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 [1] 0.1209854 1.9947114 0.1209854
 ```
 
-**Mathematical explanation:**
+**Explication mathematique :**
 For $X \sim \mathcal{N}(\mu=1, \sigma=0.2)$, the PDF is:
 
 $$f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
@@ -238,7 +238,7 @@ At $x = 1$ (the mean), density is maximal: $f(1) = \frac{1}{0.2\sqrt{2\pi}} \app
 
 ### 4.2 Binomial distribution
 
-**Answer:**
+**Reponse :**
 ```r
 x <- 0:10
 y <- dbinom(x, size=10, prob=0.2)
@@ -251,10 +251,10 @@ plot(x, y,
 points(x, y, pch=19, col="darkgreen", cex=1.5)
 ```
 
-**Expected output:**
+**Sortie attendue :**
 Plot showing vertical bars at each integer 0 to 10. Right-skewed distribution with mode at $x = 2$.
 
-**Mathematical explanation:**
+**Explication mathematique :**
 For $X \sim B(n=10, p=0.2)$:
 
 $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}$$
@@ -263,7 +263,7 @@ Example: $P(X = 2) = \binom{10}{2} \times 0.2^2 \times 0.8^8 = 45 \times 0.04 \t
 
 ### 4.3 CDF and quantile computations
 
-**Answer:**
+**Reponse :**
 ```r
 # P(X <= 5) for X ~ B(10, 0.2)
 prob_at_most_5 <- pbinom(5, size=10, prob=0.2)
@@ -281,7 +281,7 @@ q95_std_normal <- qnorm(0.95, mean=0, sd=1)
 print(paste("95th percentile of N(0,1):", round(q95_std_normal, 3)))
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 [1] "P(X <= 5) = 0.9936"
 [1] "P(X >= 6) = 0.0064"
@@ -289,12 +289,12 @@ print(paste("95th percentile of N(0,1):", round(q95_std_normal, 3)))
 [1] "95th percentile of N(0,1): 1.645"
 ```
 
-**Mathematical explanation:**
+**Explication mathematique :**
 The quantile function is the inverse CDF: $q_p = F^{-1}(p) = \inf\{x : F(x) \geq p\}$. For the symmetric $\mathcal{N}(0,1)$, the median is exactly 0. The value 1.645 is the critical value used in one-sided hypothesis tests at $\alpha = 0.05$.
 
 ### 4.4 Random generation and histogram overlay
 
-**Answer:**
+**Reponse :**
 ```r
 set.seed(42)
 normal_samples <- rnorm(1000, mean=100, sd=15)
@@ -316,7 +316,7 @@ legend("topright",
        lwd=c(NA, 2))
 ```
 
-**Expected output:**
+**Sortie attendue :**
 Histogram of 1000 samples centered around 100 with the red $\mathcal{N}(100, 15)$ density curve overlaid. Setting `freq=FALSE` normalizes the histogram to density (area = 1), enabling direct comparison with the theoretical PDF.
 
 ---
@@ -331,7 +331,7 @@ Histogram of 1000 samples centered around 100 with the red $\mathcal{N}(100, 15)
 - Variance: $\text{Var}(X) = 1/\lambda^2$
 - Standard deviation: $\sigma = 1/\lambda$
 
-**Answer:**
+**Reponse :**
 ```r
 # Part 1: Plot density curves for different lambda values
 plot(NULL,
@@ -355,7 +355,7 @@ legend("topright",
 grid()
 ```
 
-**Expected output:**
+**Sortie attendue :**
 Three exponential decay curves:
 - Blue ($\lambda = 2$): starts at $f(0) = 2$, decays fastest, mean = 0.5
 - Red ($\lambda = 1$): starts at $f(0) = 1$, standard exponential, mean = 1
@@ -380,7 +380,7 @@ cat("Theoretical SD:", theoretical_sd, "\n")
 cat("Empirical SD:", round(empirical_sd, 3), "\n")
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 Exponential Distribution with lambda = 2:
 Theoretical mean: 0.5
@@ -408,10 +408,10 @@ legend("topright",
        col = c(NA, "red"), lwd = c(NA, 2))
 ```
 
-**Expected output:**
+**Sortie attendue :**
 Right-skewed histogram with tallest bar near 0, overlaid by the red $f(x) = 2e^{-2x}$ curve.
 
-**Mathematical explanation:**
+**Explication mathematique :**
 With 80 samples, the empirical mean (0.482) is close to $E[X] = 1/\lambda = 0.5$ but not exact. The Law of Large Numbers guarantees convergence as $n \to \infty$. The standard error is $\text{SE} = \sigma/\sqrt{n} = 0.5/\sqrt{80} \approx 0.056$.
 
 ---
@@ -428,7 +428,7 @@ With $N = p + q$, $K = p$ (red balls), $n = k$ (draws):
 - $E[X] = n \cdot K/N = k \cdot p/(p+q)$
 - $\text{Var}(X) = n \cdot \frac{K}{N} \cdot \frac{N-K}{N} \cdot \frac{N-n}{N-1}$
 
-**Answer:**
+**Reponse :**
 ```r
 # Define the urn function
 Urne <- function(k, p, q) {
@@ -453,7 +453,7 @@ print("Counts:")
 print(counts)
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 [1] "Single draw result:"
 [1] "Noire" "Rouge" "Rouge" "Noire" "Rouge" "Rouge"
@@ -482,7 +482,7 @@ cat("Theoretical mean:", round(theoretical_mean, 3), "\n")
 cat("Empirical SD:", round(sd(red_counts), 3), "\n")
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 Statistics for 1000 draws:
 Empirical mean: 3.681
@@ -512,7 +512,7 @@ barplot(rbind(theoretical_probs, empirical_probs[as.character(possible_values)])
         args.legend = list(x = "topright"))
 ```
 
-**Expected output:**
+**Sortie attendue :**
 Paired bar chart showing close agreement between theoretical hypergeometric and empirical probabilities. Distribution peaks around 3-4 red balls.
 
 | Red balls drawn | $P(X = x)$ theoretical | Empirical approximation |
@@ -525,7 +525,7 @@ Paired bar chart showing close agreement between theoretical hypergeometric and 
 | 5 | 0.1632 | ~0.162 |
 | 6 | 0.0326 | ~0.034 |
 
-**Mathematical explanation:**
+**Explication mathematique :**
 `dhyper(x, m, n, k)` computes $P(X = x) = \frac{\binom{m}{x}\binom{n}{k-x}}{\binom{m+n}{k}}$. The expected number of red balls is $E[X] = k \cdot p/(p+q) = 6 \times 8/13 \approx 3.692$, matching the empirical result.
 
 ---
@@ -538,7 +538,7 @@ Paired bar chart showing close agreement between theoretical hypergeometric and 
 
 $$\text{SE}(\hat{f}_n) = \sqrt{\frac{p(1-p)}{n}} = \sqrt{\frac{5}{36n}}$$
 
-**Answer:**
+**Reponse :**
 ```r
 # Define frequency function
 Freq <- function(n, cible) {
@@ -564,7 +564,7 @@ for (n in experience) {
 }
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 Observing frequency of rolling a 5 :
 Theoretical probability: 1/6 = 0.1667
@@ -611,7 +611,7 @@ legend("topright",
 grid()
 ```
 
-**Expected output:**
+**Sortie attendue :**
 Blue line starting with wild fluctuations, gradually settling toward the red dashed line at $1/6 \approx 0.1667$. Gray confidence bands form a funnel shape that narrows as $n$ increases.
 
 ```r
@@ -644,7 +644,7 @@ legend("topright",
 grid()
 ```
 
-**Expected output:**
+**Sortie attendue :**
 10 colored lines all converging toward the black dashed line at $1/6$, demonstrating that the LLN holds for every realization.
 
 ```r
@@ -671,7 +671,7 @@ for (face in 1:6) {
 cat("\nMax deviation from 1/6:", round(max(abs(face_frequencies - 1/6)), 4), "\n")
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 Frequency distribution after 10000 rolls:
 Face 1: 0.1686 (error: 0.0019)
@@ -684,7 +684,7 @@ Face 6: 0.1660 (error: 0.0007)
 Max deviation from 1/6: 0.0045
 ```
 
-**Mathematical explanation:**
+**Explication mathematique :**
 The **Law of Large Numbers** states that for i.i.d. random variables $X_1, \ldots, X_n$ with $E[X_i] = \mu$:
 
 $$\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i \xrightarrow{P} \mu \quad \text{as } n \to \infty$$
@@ -693,7 +693,7 @@ The standard error $\text{SE} = \sqrt{p(1-p)/n}$ decreases as $1/\sqrt{n}$. At $
 
 ---
 
-## Summary
+## Resume
 
 | Exercise | Concept | Key result |
 |----------|---------|------------|

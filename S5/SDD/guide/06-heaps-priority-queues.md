@@ -1,26 +1,26 @@
-# Heaps & Priority Queues (Tas et Files de Priorite)
+# Tas et Files de Priorite (Heaps & Priority Queues)
 
-## Theory
+## Theorie
 
-### Priority Queue (File de Priorite)
+### File de priorite (Priority Queue)
 
-A **priority queue** is an abstract data type where each element has a priority. The element with highest priority (smallest value for min-heap) is dequeued first.
+Une **file de priorite** est un type abstrait de donnees ou chaque element a une priorite. L'element de plus haute priorite (plus petite valeur pour un tas min) est retire en premier.
 
-Operations:
-- `add(e)` -- insert element with its priority
-- `poll()` -- remove and return element with highest priority
-- `peek()` -- return highest priority element without removing
+Operations :
+- `add(e)` -- inserer un element avec sa priorite
+- `poll()` -- retirer et retourner l'element de plus haute priorite
+- `peek()` -- retourner l'element de plus haute priorite sans le retirer
 - `isEmpty()` / `size()`
 
-### Binary Heap (Tas Binaire)
+### Tas binaire (Binary Heap)
 
-A **binary heap** is the standard implementation of a priority queue.
+Un **tas binaire** est l'implementation standard d'une file de priorite.
 
-Properties:
-1. **Complete binary tree**: all levels full except possibly the last, filled left to right
-2. **Heap property**:
-   - **Min-heap**: parent <= children (root is minimum)
-   - **Max-heap**: parent >= children (root is maximum)
+Proprietes :
+1. **Arbre binaire complet** : tous les niveaux sont remplis sauf eventuellement le dernier, rempli de gauche a droite
+2. **Propriete de tas** :
+   - **Tas min** : parent &lt;= enfants (la racine est le minimum)
+   - **Tas max** : parent >= enfants (la racine est le maximum)
 
 ```
 Min-heap:
@@ -34,9 +34,9 @@ Array representation: [1, 3, 2, 5, 4, 6]
 Index:                 0  1  2  3  4  5
 ```
 
-### Array Representation
+### Representation en tableau
 
-A complete binary tree maps perfectly to an array:
+Un arbre binaire complet se mappe parfaitement dans un tableau :
 
 ```
 Tree:          [10]                Array: [10, 20, 30, 40, 50]
@@ -56,7 +56,7 @@ left(1)   = 2*1+1   = 3  -> array[3] = 40  (correct)
 
 ### ShiftUp (Percolation vers le haut)
 
-After inserting at the end, bubble up to restore heap property.
+Apres insertion a la fin, remonter pour restaurer la propriete de tas.
 
 ```
 Insert 1 into min-heap:
@@ -80,7 +80,7 @@ private void shiftUp(int i) {
 
 ### ShiftDown (Percolation vers le bas)
 
-After removing root (replaced by last element), bubble down.
+Apres suppression de la racine (remplacee par le dernier element), descendre.
 
 ```
 Poll from min-heap [1, 3, 2, 5, 4, 6]:
@@ -116,10 +116,10 @@ private void shiftDown(int i) {
 }
 ```
 
-Note: The condition `compare_at(index, rightChild(k)) > 0` checks if leftChild > rightChild. The guard `index < size` should technically be `rightChild(k) < size` to verify the right child exists. In the actual TP8 source code, this boundary check is `index < size` which may access `heap[rightChild(k)]` even when rightChild(k) >= size. This works only because Java arrays are zero-initialized and the comparator handles null, but it is a latent boundary issue.
+Note : La condition `compare_at(index, rightChild(k)) > 0` verifie si l'enfant gauche est plus grand que le droit. La garde `index < size` devrait techniquement etre `rightChild(k) < size` pour verifier que l'enfant droit existe. Dans le code source du TP8, cette verification est `index < size` qui peut acceder a `heap[rightChild(k)]` meme quand rightChild(k) >= size. Cela fonctionne uniquement parce que les tableaux Java sont initialises a zero et le comparateur gere null, mais c'est un probleme de limite latent.
 
 
-## Java Implementation (from TP8)
+## Implementation Java (du TP8)
 
 ### Interface
 
@@ -133,7 +133,7 @@ public interface PriorityQueue<T> {
 }
 ```
 
-### HeapPQ -- Heap-based Priority Queue
+### HeapPQ -- File de priorite a base de tas
 
 ```java
 public class HeapPQ<T> implements PriorityQueue<T> {
@@ -180,7 +180,7 @@ public class HeapPQ<T> implements PriorityQueue<T> {
 }
 ```
 
-### OrderedArrayPQ -- Sorted Array Alternative
+### OrderedArrayPQ -- Alternative avec tableau trie
 
 ```java
 public class OrderedArrayPQ<T> implements PriorityQueue<T> {
@@ -192,7 +192,7 @@ public class OrderedArrayPQ<T> implements PriorityQueue<T> {
 ```
 
 
-## Comparison: Heap vs. Sorted Array
+## Comparaison : Tas vs. Tableau trie
 
 | Operation | HeapPQ | OrderedArrayPQ |
 |-----------|--------|----------------|
@@ -200,15 +200,15 @@ public class OrderedArrayPQ<T> implements PriorityQueue<T> {
 | poll | **O(log n)** | O(n) |
 | peek | O(1) | O(1) |
 | isEmpty | O(1) | O(1) |
-| Build from n elements | **O(n)** | O(n log n) |
+| Construction depuis n elements | **O(n)** | O(n log n) |
 
-The heap is dramatically faster for Dijkstra's algorithm.
+Le tas est considerablement plus rapide pour l'algorithme de Dijkstra.
 
 
-## Heap Sort
+## Tri par tas (Heap Sort)
 
-1. Build a max-heap from the array: O(n)
-2. Repeatedly extract max and place at end: O(n log n)
+1. Construire un tas max a partir du tableau : O(n)
+2. Extraire le max de maniere repetee et le placer a la fin : O(n log n)
 
 ```
 Array: [4, 1, 3, 2, 5]
@@ -227,14 +227,14 @@ Extract max:
 Result: [1, 2, 3, 4, 5]
 ```
 
-**Complexity**: O(n log n) time, O(1) extra space (in-place).
+**Complexite** : O(n log n) en temps, O(1) en espace supplementaire (en place).
 
 
-## Heapify (Build Heap)
+## Heapify (Construction du tas)
 
-To build a heap from an unsorted array in O(n):
-- Start from the last internal node (index n/2 - 1)
-- Apply shiftDown to each node going up to the root
+Pour construire un tas a partir d'un tableau non trie en O(n) :
+- Commencer au dernier noeud interne (index n/2 - 1)
+- Appliquer shiftDown a chaque noeud en remontant vers la racine
 
 ```java
 for (int i = size / 2 - 1; i >= 0; i--) {
@@ -242,12 +242,12 @@ for (int i = size / 2 - 1; i >= 0; i--) {
 }
 ```
 
-Why O(n) and not O(n log n)?
-- Most nodes are near the bottom and need few swaps
-- Sum: n/4 * 1 + n/8 * 2 + n/16 * 3 + ... = O(n)
+Pourquoi O(n) et non O(n log n) ?
+- La plupart des noeuds sont pres du bas et necessitent peu d'echanges
+- Somme : n/4 * 1 + n/8 * 2 + n/16 * 3 + ... = O(n)
 
 
-## CHEAT SHEET
+## AIDE-MEMOIRE
 
 ```
 BINARY HEAP (MIN-HEAP)

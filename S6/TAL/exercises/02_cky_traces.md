@@ -590,7 +590,7 @@ Arbre 2 (VP --> V NP avec NP --> NP PP) :
   Produit des facteurs structurels distincts : 0.7 * 0.3 * 0.7 = 0.147
 ```
 
-L'arbre 2 fait intervenir un NP supplementaire (NP --> Det N pour "the door" a l'interieur du NP complexe), ce qui ajoute un facteur 0.7 en plus. Cela rend le produit plus petit (0.147 < 0.21), expliquant pourquoi l'arbre 1 est plus probable malgre une regle VP moins probable (0.3 vs 0.7).
+L'arbre 2 fait intervenir un NP supplementaire (NP --> Det N pour "the door" a l'interieur du NP complexe), ce qui ajoute un facteur 0.7 en plus. Cela rend le produit plus petit (0.147 &lt; 0.21), expliquant pourquoi l'arbre 1 est plus probable malgre une regle VP moins probable (0.3 vs 0.7).
 
 ---
 

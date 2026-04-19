@@ -36,8 +36,8 @@ C(dort)     = 1
 
 | Bigramme | Comptage | Source |
 |----------|---------|--------|
-| <s> le | 2 | phrase 1, phrase 3 |
-| <s> la | 1 | phrase 2 |
+| &lt;s> le | 2 | phrase 1, phrase 3 |
+| &lt;s> la | 1 | phrase 2 |
 | le chat | 2 | phrase 1, phrase 3 |
 | chat mange | 1 | phrase 1 |
 | chat dort | 1 | phrase 3 |
@@ -45,10 +45,10 @@ C(dort)     = 1
 | mange du | 1 | phrase 2 |
 | la souris | 2 | phrase 1, phrase 2 |
 | souris mange | 1 | phrase 2 |
-| souris </s> | 1 | phrase 1 |
+| souris &lt;/s> | 1 | phrase 1 |
 | du fromage | 1 | phrase 2 |
-| fromage </s> | 1 | phrase 2 |
-| dort </s> | 1 | phrase 3 |
+| fromage &lt;/s> | 1 | phrase 2 |
+| dort &lt;/s> | 1 | phrase 3 |
 
 **Etape 3 : Probabilites bigrammes P(w | h) = C(h w) / C(h)**
 
@@ -70,7 +70,7 @@ P(</s> | dort)    = C(dort </s>) / C(dort)    = 1/1 = 1.0000
 
 **Etape 4 : P("le chat mange du fromage")**
 
-Phrase avec marqueurs : "<s> le chat mange du fromage </s>"
+Phrase avec marqueurs : "&lt;s> le chat mange du fromage &lt;/s>"
 
 ```
 P = P(le|<s>) * P(chat|le) * P(mange|chat) * P(du|mange) * P(fromage|du) * P(</s>|fromage)
@@ -94,13 +94,13 @@ Modele bigramme de l'exercice 1. Calculer la perplexite de "le chat mange".
 ```
 PP(modele, texte) = 2^{-1/n * SUM_{i=1}^{n} log2(P(w_i | w_{i-1}))}
 ```
-ou n = nombre de tokens du texte (incluant </s>, excluant <s>).
+ou n = nombre de tokens du texte (incluant &lt;/s>, excluant &lt;s>).
 
 ### Solution
 
-Phrase test avec marqueurs : "<s> le chat mange </s>"
+Phrase test avec marqueurs : "&lt;s> le chat mange &lt;/s>"
 
-n = 4 tokens (le, chat, mange, </s>)
+n = 4 tokens (le, chat, mange, &lt;/s>)
 
 **Probabilites necessaires** :
 ```
@@ -110,11 +110,11 @@ P(mange | chat) = 1/2  = 0.5000
 P(</s> | mange) = C(mange </s>) / C(mange) = 0/2 = 0.0000
 ```
 
-**Probleme** : P(</s> | mange) = 0 car dans le corpus, "mange" n'est jamais suivi de "</s>" (il est suivi de "la" ou "du"). Sans lissage, la perplexite est **infinie** (un seul zero dans un log annule tout).
+**Probleme** : P(&lt;/s> | mange) = 0 car dans le corpus, "mange" n'est jamais suivi de "&lt;/s>" (il est suivi de "la" ou "du"). Sans lissage, la perplexite est **infinie** (un seul zero dans un log annule tout).
 
 ### Solution avec lissage de Laplace
 
-Vocabulaire : {<s>, le, la, chat, mange, souris, du, fromage, dort, </s>} --> |V| = 10
+Vocabulaire : {&lt;s>, le, la, chat, mange, souris, du, fromage, dort, &lt;/s>} --> |V| = 10
 
 **Formule avec Laplace** : P(w | h) = (C(hw) + 1) / (C(h) + |V|)
 
@@ -250,7 +250,7 @@ P_I[dort | le chat] = 0.6 * 0.30 + 0.3 * 0.35 + 0.1 * 0.01
 
 ### Enonce
 
-Phrase test : "la souris dort" (n=4 avec </s>)
+Phrase test : "la souris dort" (n=4 avec &lt;/s>)
 
 Modele A (bigramme ML) et Modele B (bigramme Laplace, |V|=10).
 
@@ -293,7 +293,7 @@ PP_B = 2^{2.6862} = 6.45
 
 Corpus : `<s> <s> a b c a b </s>`
 
-Estimer P(c | a b) et P(</s> | a b) en trigramme ML.
+Estimer P(c | a b) et P(&lt;/s> | a b) en trigramme ML.
 
 ### Solution
 
@@ -304,7 +304,7 @@ P(c | a b)   = C(a b c) / C(a b)   = 1/2 = 0.50
 P(</s> | a b) = C(a b </s>) / C(a b) = 1/2 = 0.50
 ```
 
-**Verification** : P(c | a b) + P(</s> | a b) = 1.0 (les deux seuls continuations observees somment a 1).
+**Verification** : P(c | a b) + P(&lt;/s> | a b) = 1.0 (les deux seuls continuations observees somment a 1).
 
 ---
 
@@ -376,9 +376,9 @@ INTERPOLATION :           P_I = lambda_n * P_ML[w|h_n]
 ## Pieges courants en DS
 
 1. **Perplexite BASSE = meilleur** : piege le plus courant en DS
-2. **n dans la formule de PP** : nombre de tokens du test (excluant <s>, incluant </s>)
+2. **n dans la formule de PP** : nombre de tokens du test (excluant &lt;s>, incluant &lt;/s>)
 3. **Logarithme base 2** : la perplexite utilise log2 (pas log10 ni ln)
 4. **Un seul zero** : sans lissage, un P=0 rend PP=infini
 5. **Bigramme regarde 1 mot** : bigramme = n=2 mais l'historique est de taille n-1 = 1
 6. **Ne pas confondre C(h) et C(hw)** : C("le") est le nombre de fois que "le" apparait, C("le chat") est le nombre de fois que "le chat" apparait en sequence
-7. **<s> et </s>** : <s> n'est jamais predit (pas de P(<s>|...)), mais </s> l'est toujours
+7. **&lt;s> et &lt;/s>** : &lt;s> n'est jamais predit (pas de P(&lt;s>|...)), mais &lt;/s> l'est toujours

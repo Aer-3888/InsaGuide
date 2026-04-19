@@ -24,7 +24,7 @@ L'analyse amortie s'interesse au **cout total** d'une sequence de n operations, 
 
 Un compteur de k bits. Incrementer peut changer plusieurs bits.
 
-**Pire cas d'un increment :** O(k) (tous les bits changent, ex : 01111 -> 10000)
+**Pire cas d'un increment :** O(k) (tous les bits changent, ex : 01111 → 10000)
 
 **Analyse amortie :** Sur n increments :
 ```
@@ -158,7 +158,7 @@ Les trois methodes donnent toujours le meme resultat. Le choix depend du problem
 
 1. **Confondre amorti et moyen** : L'analyse amortie ne fait aucune hypothese probabiliste. C'est un pire cas garanti sur la sequence.
 
-2. **Potentiel negatif** : Si Phi(D_n) < Phi(D_0), le cout amorti ne majore plus le cout reel.
+2. **Potentiel negatif** : Si Phi(D_n) &lt; Phi(D_0), le cout amorti ne majore plus le cout reel.
 
 3. **Oublier que l'amorti est par operation** : Le cout amorti O(1) signifie que sur n operations, le total est O(n), meme si certaines operations individuelles coutent O(n).
 

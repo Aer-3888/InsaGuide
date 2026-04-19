@@ -1,6 +1,6 @@
 # TP1 : JavaScript -- Introduction
 
-> Following teacher instructions from: `S6/Ingenierie_Web/data/moodle/tp/tp1_javascript/README.md`
+> Source : `S6/Ingenierie_Web/data/moodle/tp/tp1_javascript/README.md`
 
 Ce TP couvre les fondamentaux de JavaScript a travers trois exercices progressifs issus du sujet `TP-intro-JS.pdf` :
 1. **First Step** : generateur d'histoires (variables, fonctions, DOM, evenements)
@@ -62,14 +62,14 @@ Le fichier `index.html` est fourni. Il contient un champ texte, deux boutons rad
 </html>
 ```
 
-**File changes:**
+**Fichiers modifies :**
 - `First Step/index.html` : fourni, aucune modification necessaire
 
 ---
 
 ### Q2 : Ecrire la logique JavaScript
 
-**Answer:**
+**Reponse :**
 
 ```javascript
 // Fichier : First Step/main.js
@@ -146,7 +146,7 @@ newStory = newStory.replace("300 pounds", weight);
 
 Note : il y a aussi une faute d'orthographe dans le code original ("farenheit" au lieu de "fahrenheit") qui fait que le replace ne matche pas le texte du template.
 
-**File changes:**
+**Fichiers modifies :**
 - `First Step/main.js` : ecriture complete de la logique de generation
 
 ---
@@ -155,7 +155,7 @@ Note : il y a aussi une faute d'orthographe dans le code original ("farenheit" a
 
 ### Q1 : Creer dynamiquement les vignettes et gerer les interactions
 
-**Answer:**
+**Reponse :**
 
 ```html
 <!-- Fichier : Building Blocks/index.html (fourni) -->
@@ -260,7 +260,7 @@ btn.onclick = function(event) {
 - `thumbBar.onclick` avec `event.target.src` : delegation d'evenements (un seul handler sur le conteneur parent)
 - Toggle entre classes `dark`/`light` pour basculer l'etat
 
-**File changes:**
+**Fichiers modifies :**
 - `Building Blocks/main.js` : ecriture complete de la galerie
 
 ---
@@ -273,7 +273,7 @@ btn.onclick = function(event) {
 
 ### Q3 : Creer les balles et la boucle d'animation
 
-**Answer:**
+**Reponse :**
 
 ```javascript
 // Fichier : Intro Objects/main-finished.js
@@ -393,7 +393,7 @@ loop();
 - `requestAnimationFrame(loop)` : animation fluide a ~60fps
 - `Math.sqrt(dx*dx + dy*dy)` : distance euclidienne pour la detection de collision
 
-**File changes:**
+**Fichiers modifies :**
 - `Intro Objects/main-finished.js` : ecriture complete de l'animation
 
 ---
@@ -420,7 +420,7 @@ test("testColor", () => { expect(rec.color).toBe('red'); });
 test("testLinewidth", () => { expect(rec.linewidth).toBe(11); });
 ```
 
-**Answer:**
+**Reponse :**
 
 ```javascript
 export class Rectangle extends Shape {
@@ -446,7 +446,7 @@ test("testY1", () => { expect(line.y1).toBe(2); });
 test("testY2", () => { expect(line.y2).toBe(4); });
 ```
 
-**Answer:**
+**Reponse :**
 
 ```javascript
 export class Line extends Shape {
@@ -469,7 +469,7 @@ export class Line extends Shape {
 test("testArray", () => { expect(drawing.shapes).toHaveLength(0); });
 ```
 
-**Answer:**
+**Reponse :**
 
 ```javascript
 export class Drawing {
@@ -483,7 +483,7 @@ export class Drawing {
 
 ### Q4 : Implementer DnD (guide par les tests)
 
-**Answer:**
+**Reponse :**
 
 ```javascript
 // Fichier : es6_babel/src/main/interaction.js
@@ -569,7 +569,7 @@ npx jest                     # Lancer tous les tests
 npx jest Rectangle.test.js   # Lancer un test specifique
 ```
 
-**File changes:**
+**Fichiers modifies :**
 - `es6_babel/src/main/model.js` : ajout de Rectangle, Line, Drawing
 - `es6_babel/src/main/interaction.js` : nouveau fichier -- classe DnD
 

@@ -1,6 +1,6 @@
 # TP1 - Introduction au C : Pointeurs et Fonctions
 
-> Following teacher instructions from: `S5/Langage_C/data/moodle/tp/tp1/README.md`
+> Instructions de l'enseignant depuis : `S5/Langage_C/data/moodle/tp/tp1/README.md`
 
 ## Exercice 1
 
@@ -49,7 +49,7 @@ Apres *a *= *a :
 Retour dans main() : n vaut 25.0 -- modifie via le pointeur !
 ```
 
-**Answer:**
+**Solution :**
 
 ```c
 /*!
@@ -97,13 +97,13 @@ int main() {
 }
 ```
 
-**Compilation:**
+**Compilation :**
 
 ```bash
 gcc -Wall -Wextra -std=c11 -g -o main main.c -lm
 ```
 
-**Expected output:**
+**Sortie attendue :**
 
 ```
 Nombre a elever au carre : 
@@ -140,7 +140,7 @@ Les copies x et y sont independantes de x_main et y_main.
 Modifier x dans norme() ne changerait PAS x_main.
 ```
 
-**Answer:**
+**Solution :**
 
 ```c
 /*!
@@ -200,7 +200,7 @@ int main() {
 }
 ```
 
-**Makefile:**
+**Makefile :**
 
 ```makefile
 CC = gcc
@@ -228,7 +228,7 @@ run: $(TARGET)
 .PHONY: all clean run
 ```
 
-**Compilation:**
+**Compilation :**
 
 ```bash
 cd tp1/src
@@ -236,7 +236,7 @@ make
 ./main
 ```
 
-**Expected output:**
+**Sortie attendue :**
 
 ```
 Nombre a elever au carre : 

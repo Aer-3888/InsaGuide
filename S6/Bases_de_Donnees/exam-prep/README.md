@@ -102,7 +102,7 @@ flowchart TD
 ### DF et Normalisation
 - [ ] Je sais calculer une fermeture X+ en montrant chaque etape
 - [ ] Je sais trouver les cles candidates (attributs jamais a droite + fermeture)
-- [ ] Je sais calculer la couverture minimale (decomposer -> reduire -> supprimer)
+- [ ] Je sais calculer la couverture minimale (decomposer → reduire → supprimer)
 - [ ] Je sais decomposer en 3NF par synthese (Bernstein)
 - [ ] Je sais decomposer en BCNF et identifier la perte de DF
 

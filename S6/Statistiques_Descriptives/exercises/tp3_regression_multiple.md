@@ -96,7 +96,7 @@ TV          0.047537   0.002691  17.67   <2e-16 ***
 Multiple R-squared:  0.6119
 ```
 
-**Interpretation :** $R^2 = 0.61$ : la TV seule explique **61%** de la variabilite des ventes. Le budget TV a une influence significative ($p < 2 \times 10^{-16}$).
+**Interpretation :** $R^2 = 0.61$ : la TV seule explique **61%** de la variabilite des ventes. Le budget TV a une influence significative ($p \lt 2 \times 10^{-16}$).
 
 **Analyse des residus :**
 
@@ -169,7 +169,7 @@ Peut-on affirmer, au risque de 5%, qu'au moins une des variables explicatives a 
 1. **Hypotheses :** $H_0 : \beta_1 = \beta_2 = \beta_3 = 0$ vs $H_1 :$ au moins un $\beta_j \neq 0$
 2. **Statistique de test :** $F = 570.3$
 3. **Distribution sous $H_0$ :** $F \sim F(3, 196)$
-4. **p-value :** $< 2.2 \times 10^{-16}$
+4. **p-value :** $\lt 2.2 \times 10^{-16}$
 5. **Decision :** On **rejette $H_0$**. Au moins un media a une influence significative sur les ventes.
 
 ### Q7 : Tests individuels (tests t)
@@ -178,8 +178,8 @@ Peut-on affirmer, au risque de 5%, que chaque variable a une influence sur les v
 
 | Variable | t value | p-value | Significatif a 5% ? |
 |----------|---------|---------|---------------------|
-| TV | 32.81 | $< 2 \times 10^{-16}$ | **Oui** |
-| Radio | 21.89 | $< 2 \times 10^{-16}$ | **Oui** |
+| TV | 32.81 | $\lt 2 \times 10^{-16}$ | **Oui** |
+| Radio | 21.89 | $\lt 2 \times 10^{-16}$ | **Oui** |
 | Newspaper | -0.18 | 0.86 | **Non** |
 
 **Pourquoi Newspaper n'est pas significatif malgre sa correlation bivariee avec Sales (r = 0.23) ?** Newspaper est correle avec Radio (r = 0.35). Quand Radio est deja dans le modele, Newspaper n'apporte pas d'information **supplementaire**. Son effet apparent en bivarie etait du a sa correlation avec Radio.
@@ -206,7 +206,7 @@ Radio       0.187994   0.008042  23.382   <2e-16 ***
 Multiple R-squared:  0.8972,  Adjusted R-squared:  0.8962
 ```
 
-**Interpretation :** $R^2$ ajuste quasi identique (0.8962 vs 0.8956). La Radio a un coefficient plus eleve que la TV (0.188 vs 0.046) : a budget egal, la Radio est **~4 fois plus efficace** que la TV. Pour un investissement de 10 000$ supplementaires, investir dans la Radio.
+**Interpretation :** $R^2$ ajuste quasi identique (0.8962 vs 0.8956). La Radio a un coefficient plus eleve que la TV (0.188 vs 0.046) : a budget egal, la Radio est **~4 fois plus efficace** que la TV. Pour un investissement supplementaire de 10 000 dollars, investir dans la Radio.
 
 ### Q9 : Visualisation 3D et equation de prevision
 
@@ -221,7 +221,7 @@ scatter3d(Sales ~ TV + Radio, data = pub,
 
 ### Q10 : Prediction pour TV = 100, Radio = 20
 
-Le client investit 100 000$ pour la TV et 20 000$ pour la Radio. Determiner le nombre moyen de produits vendus avec l'intervalle de prevision a 95%.
+Le client investit 100 000 dollars pour la TV et 20 000 dollars pour la Radio. Determiner le nombre moyen de produits vendus avec l'intervalle de prevision a 95%.
 
 ```r
 x0 <- data.frame(TV = 100, Radio = 20)

@@ -54,7 +54,7 @@ SELECT * FROM Livre WHERE prix > 10;
 
 **Proprietes :**
 - Le resultat a le meme schema que R.
-- La cardinalite du resultat est <= a celle de R.
+- La cardinalite du resultat est &lt;= a celle de R.
 - Selection commutative : `sigma_c1(sigma_c2(R))` = `sigma_c2(sigma_c1(R))`
 - Selection cascade : `sigma_{c1 AND c2}(R)` = `sigma_c1(sigma_c2(R))`
 

@@ -218,7 +218,7 @@ Si le message est trop grand pour le buffer interne MPI, `MPI_Send` **bloque** e
 Tracer l'ordre des operations :
 1. P0: Send vers P1 (bloque si buffer plein)
 2. P1: Send vers P0 (bloque si buffer plein)
-3. Ni P0 ni P1 ne fait Recv -> **DEADLOCK**
+3. Ni P0 ni P1 ne fait Recv → **DEADLOCK**
 
 ### Corrections (3 methodes)
 
@@ -332,7 +332,7 @@ MPI_Scatterv(data, counts, displs, MPI_DOUBLE,
 
 ---
 
-## 11. CUDA -- Oublier la garde if (i < N)
+## 11. CUDA -- Oublier la garde if (i &lt; N)
 
 ### Code FAUX
 
@@ -345,7 +345,7 @@ __global__ void kernel(float *tab, int N) {
 
 ### Pourquoi c'est faux
 
-Le nombre total de threads = `nb_blocs * taille_bloc`. Ce n'est pas toujours un multiple exact de N. Exemple : N=1000, taille_bloc=256 -> nb_blocs=4, total=1024 -> 24 threads excedentaires qui accedent hors limites.
+Le nombre total de threads = `nb_blocs * taille_bloc`. Ce n'est pas toujours un multiple exact de N. Exemple : N=1000, taille_bloc=256 → nb_blocs=4, total=1024 → 24 threads excedentaires qui accedent hors limites.
 
 ### Correction
 
@@ -426,8 +426,8 @@ VRAI : S(p) = 1 / ((1-f) + f/p)        <-- (1-f) = partie seq, f/p = partie par
 ### Methode de verification
 
 Pour verifier votre reponse, tester les cas limites :
-- Si f = 1 (100% parallelisable) : `S(p) = 1/(0 + 1/p) = p` -> speedup lineaire. Correct.
-- Si f = 0 (100% sequentiel) : `S(p) = 1/(1 + 0) = 1` -> pas d'amelioration. Correct.
+- Si f = 1 (100% parallelisable) : `S(p) = 1/(0 + 1/p) = p` → speedup lineaire. Correct.
+- Si f = 0 (100% sequentiel) : `S(p) = 1/(1 + 0) = 1` → pas d'amelioration. Correct.
 - Si p = 1 : `S(1) = 1/((1-f) + f) = 1`. Correct.
 
 ### Autre erreur : Amdahl vs Gustafson
@@ -479,7 +479,7 @@ pthread_create(&threads[i], NULL, func, (void*)(intptr_t)i);
 ### Pour chaque code OpenMP, verifier :
 
 - [ ] Les iterations sont-elles **independantes** ? (pas de `tab[i-1]`)
-- [ ] Y a-t-il un **accumulateur** ? -> `reduction`
+- [ ] Y a-t-il un **accumulateur** ? → `reduction`
 - [ ] Les variables temporaires sont-elles `private` ou declarees dans la boucle ?
 - [ ] Les variables lues mais jamais modifiees sont `shared` (defaut) ?
 - [ ] Le flag `-fopenmp` est mentionne pour la compilation ?
@@ -504,5 +504,5 @@ pthread_create(&threads[i], NULL, func, (void*)(intptr_t)i);
 ### Pour les calculs d'Amdahl :
 
 - [ ] La formule est `S = 1/((1-f) + f/p)` avec f = fraction parallelisable ?
-- [ ] Le resultat a ete verifie avec un cas limite (f=1 -> S=p) ?
+- [ ] Le resultat a ete verifie avec un cas limite (f=1 → S=p) ?
 - [ ] Le speedup infini est `1/(1-f)` ?

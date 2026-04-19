@@ -25,7 +25,7 @@ Implementer un dictionnaire bilingue utilisant une table de hachage avec chainag
 
 Creer une classe mot qui stocke le texte en minuscules, supporte l'egalite insensible a la casse, et possede une fonction de hachage basee sur les deux premiers caracteres.
 
-**Answer:**
+**Reponse :**
 
 ```java
 package main;
@@ -62,7 +62,7 @@ public class Word {
 }
 ```
 
-**How the code works:**
+**Fonctionnement du code :**
 - Le constructeur convertit en minuscules pour que `"Mustard"` et `"mustard"` soient egaux.
 - La fonction de hachage utilise `premier_char * 26 + deuxieme_char`. Cela mappe chaque prefixe de deux lettres a un bucket unique. La taille de la table est `256 * 26 + 256 = 6912`, couvrant toutes les combinaisons possibles de deux caracteres ASCII etendus.
 - Piege classique : oublier de mettre en minuscules dans le constructeur. Sans cela, `"Cat"` et `"cat"` auraient des hash codes differents.
@@ -80,7 +80,7 @@ Tests attendus :
 
 Creer une paire liant un mot source a sa traduction, avec une methode de recherche.
 
-**Answer:**
+**Reponse :**
 
 ```java
 package main;
@@ -108,7 +108,7 @@ public class Couple {
 }
 ```
 
-**How the code works:**
+**Fonctionnement du code :**
 - `compCoupleMot(Word m)` : si le mot donne correspond au mot source (`mot`), retourne la traduction. Sinon retourne `null`.
 - C'est une recherche unidirectionnelle -- l'implementation ne supporte pas la traduction inverse (francais vers anglais).
 
@@ -118,9 +118,9 @@ public class Couple {
 
 ### Implementer TableCouples -- la table de hachage avec chainage separe
 
-Construire une table de hachage utilisant un tableau de `ArrayList<Couple>`. Supporter l'ajout de traductions (avec mise a jour) et la recherche.
+Construire une table de hachage utilisant un tableau de `ArrayList&lt;Couple&gt;`. Supporter l'ajout de traductions (avec mise a jour) et la recherche.
 
-**Answer:**
+**Reponse :**
 
 ```java
 package main;
@@ -193,7 +193,7 @@ public class TableCouples {
 }
 ```
 
-**How the code works:**
+**Fonctionnement du code :**
 
 La methode `ajouter` a une valeur de retour nuancee :
 - Si le mot n'existait **pas** : l'ajoute et retourne `true` (de `ArrayList.add`)
@@ -225,7 +225,7 @@ if (chain == null) return null;
 for (Couple c : chain) { ... }
 ```
 
-**Answer:**
+**Reponse :**
 
 La version optimisee de `traduire()` irait directement a `lists[w.hashCode()]` au lieu de scanner toute la table.
 
@@ -242,7 +242,7 @@ public Word traduire(Word w) {
 }
 ```
 
-**How the code works:**
+**Fonctionnement du code :**
 La version de l'etudiant fonctionne mais annule l'interet du hachage en faisant un scan lineaire O(n). La version optimisee va directement au bon bucket en O(1) en moyenne.
 
 ---
@@ -255,7 +255,7 @@ La version de l'etudiant fonctionne mais annule l'interet du hachage en faisant 
 | `traduire` (optimise) | O(1) | O(k) |
 | `traduire` (version etudiant) | O(n) | O(n) |
 
-Avec une bonne fonction de hash et un facteur de charge < 0.7, les chaines sont courtes et la performance approche O(1).
+Avec une bonne fonction de hash et un facteur de charge &lt; 0.7, les chaines sont courtes et la performance approche O(1).
 
 ## Erreurs courantes
 

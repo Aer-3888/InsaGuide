@@ -366,7 +366,7 @@ $$Z = \frac{7.2 - 7}{2 / \sqrt{16}} = \frac{0.2}{0.5} = 0.4$$
 
 Region de rejet bilateral : $|Z| > z_{0.975} = 1.96$.
 
-$|0.4| = 0.4 < 1.96$ : on ne rejette pas $H_0$.
+$|0.4| = 0.4 \lt 1.96$ : on ne rejette pas $H_0$.
 
 ### Exercice : Test unilateral sur la moyenne
 
@@ -376,7 +376,7 @@ $|0.4| = 0.4 < 1.96$ : on ne rejette pas $H_0$.
 
 Region de rejet unilateral droit : $Z > z_{0.95} = 1.645$.
 
-$0.4 < 1.645$ : on ne rejette pas $H_0$.
+$0.4 \lt 1.645$ : on ne rejette pas $H_0$.
 
 ### Exercice : Test sur la variance
 
@@ -388,7 +388,7 @@ $$\chi^2 = \frac{(16-1) \times 5.1}{4} = \frac{76.5}{4} = 19.125$$
 
 Region de rejet : $\chi^2 > \chi^2_{15, 0.95} = 25.00$.
 
-$19.125 < 25.00$ : on ne rejette pas $H_0$.
+$19.125 \lt 25.00$ : on ne rejette pas $H_0$.
 
 ---
 

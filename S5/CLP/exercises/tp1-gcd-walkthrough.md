@@ -1,18 +1,18 @@
-# TP1 - Introduction to ARM Assembly: GCD Algorithm
+# TP1 - Introduction a l'assembleur ARM : Algorithme du PGCD
 
-> Following teacher instructions from: S5/CLP/data/moodle/tp/tp1/README.md
+> D'apres les instructions enseignant de : S5/CLP/data/moodle/tp/tp1/README.md
 
-This TP introduces ARM assembly fundamentals through two implementations of the Euclidean GCD algorithm: `assembleur_TP1.s` (exercise 2, French-style) and `pgcd.s` (English-style with cleaner structure).
+Ce TP introduit les fondamentaux de l'assembleur ARM a travers deux implementations de l'algorithme du PGCD d'Euclide : `assembleur_TP1.s` (exercice 2, style francais) et `pgcd.s` (style anglais avec structure plus propre).
 
 ---
 
-## Exercise 1: assembleur_TP1.s -- GCD with Full Register Saving
+## Exercice 1 : assembleur_TP1.s -- PGCD avec sauvegarde complete des registres
 
 ### Understand the data section and constants
 
-**Question:** What do the `.equ` directives define, and how do the `.data` values get loaded?
+**Question :** What do the `.equ` directives define, and how do the `.data` values get loaded?
 
-**Answer:**
+**Reponse :**
 
 ```arm
 .equ a, 12              @ Offset from FP to parameter a on stack
@@ -29,15 +29,15 @@ This TP introduces ARM assembly fundamentals through two implementations of the 
 .global _start          @ Make _start visible to linker
 ```
 
-**How it works:** The `.equ` constants define byte offsets from the frame pointer (FP) used to access parameters and return values on the stack. The `.data` section stores initialized 32-bit words. `.global _start` exports the entry point symbol so the linker can find it.
+**Fonctionnement :** The `.equ` constants define byte offsets from the frame pointer (FP) used to access parameters and return values on the stack. The `.data` section stores initialized 32-bit words. `.global _start` exports the entry point symbol so the linker can find it.
 
 ---
 
 ### Trace the _start entry point
 
-**Question:** How are the parameters loaded from memory and pushed onto the stack for the function call?
+**Question :** How are the parameters loaded from memory and pushed onto the stack for the function call?
 
-**Answer:**
+**Reponse :**
 
 ```arm
 _start:
@@ -59,7 +59,7 @@ end:
     b end                @ Infinite loop (halts program on bare metal)
 ```
 
-**How it works:** The two-step load pattern (`ldr r0, =x` then `ldr r0, [r0]`) first gets the ADDRESS of x, then dereferences it to get the VALUE. The caller pushes arguments, reserves space for the return value, calls `bl pgcd`, then retrieves the result and cleans the stack.
+**Fonctionnement :** The two-step load pattern (`ldr r0, =x` then `ldr r0, [r0]`) first gets the ADDRESS of x, then dereferences it to get the VALUE. The caller pushes arguments, reserves space for the return value, calls `bl pgcd`, then retrieves the result and cleans the stack.
 
 **Stack state before calling pgcd:**
 ```
@@ -78,9 +78,9 @@ Low addresses
 
 ### Analyze the pgcd function prologue and stack frame
 
-**Question:** Explain the function prologue and draw the complete stack frame.
+**Question :** Explain the function prologue and draw the complete stack frame.
 
-**Answer:**
+**Reponse :**
 
 ```arm
 pgcd:
@@ -116,15 +116,15 @@ High addresses
 Low addresses
 ```
 
-**How it works:** FP+12 reaches parameter `a` because: FP+0 = saved FP (4 bytes), FP+4 = saved LR (4 bytes), FP+8 = return value slot (4 bytes), FP+12 = first parameter. The three register saves protect the caller's register values across the recursive call.
+**Fonctionnement :** FP+12 reaches parameter `a` because: FP+0 = saved FP (4 bytes), FP+4 = saved LR (4 bytes), FP+8 = return value slot (4 bytes), FP+12 = first parameter. The three register saves protect the caller's register values across the recursive call.
 
 ---
 
 ### Trace the recursive algorithm logic
 
-**Question:** Explain each branch of the GCD algorithm and the recursive call mechanism.
+**Question :** Explain each branch of the GCD algorithm and the recursive call mechanism.
 
-**Answer:**
+**Reponse :**
 
 ```arm
     @ Base case: a == 0 or b == 0 -> return 0
@@ -176,17 +176,17 @@ fin:    @ Epilogue
     bx lr                     @ Return to caller
 ```
 
-**How it works:** The algorithm subtracts the smaller value from the larger until both are equal. Each recursive call pushes new arguments and a result slot onto the stack, calls itself, retrieves the result, cleans up, and stores the result in its own return slot at `[fp, #res]`.
+**Fonctionnement :** The algorithm subtracts the smaller value from the larger until both are equal. Each recursive call pushes new arguments and a result slot onto the stack, calls itself, retrieves the result, cleans up, and stores the result in its own return slot at `[fp, #res]`.
 
 ---
 
-## Exercise 2: pgcd.s -- Cleaner GCD Implementation
+## Exercice 2 : pgcd.s -- Implementation plus propre du PGCD
 
 ### Identify the structural differences from assembleur_TP1.s
 
-**Question:** What are the key differences between this implementation and the first one?
+**Question :** What are the key differences between this implementation and the first one?
 
-**Answer:**
+**Reponse :**
 
 ```arm
 .data
@@ -224,11 +224,11 @@ Low addresses
 
 ---
 
-### Complete execution trace for pgcd(24, 18)
+### Trace d'execution complete pour pgcd(24, 18)
 
-**Question:** Trace the full execution showing all recursive calls and the unwinding.
+**Question :** Trace the full execution showing all recursive calls and the unwinding.
 
-**Answer:**
+**Reponse :**
 
 **Call tree:**
 ```
@@ -284,9 +284,9 @@ Call 4 returns 6 -> Call 3 stores 6 -> Call 2 stores 6 -> Call 1 stores 6
 
 ### Stack depth at maximum recursion
 
-**Question:** Draw the full stack with all 4 frames nested.
+**Question :** Draw the full stack with all 4 frames nested.
 
-**Answer:**
+**Reponse :**
 
 ```
 High addresses
@@ -327,9 +327,9 @@ Low addresses (SP at deepest point)
 
 ---
 
-## Key Concepts Summary
+## Resume des concepts cles
 
-### Addressing Modes Used
+### Modes d'adressage utilises
 
 | Mode | Example | Description |
 |------|---------|-------------|
@@ -340,7 +340,7 @@ Low addresses (SP at deepest point)
 | Pre-decrement writeback | `stmfd sp!, {r0, r1}` | Push registers onto stack |
 | Post-increment writeback | `ldmfd sp!, {r0}` | Pop register from stack |
 
-### Common Mistakes
+### Erreurs courantes
 
 - **Forgetting step 2 of the two-step load:** `ldr r0, =x` gets the address, not the value. You must follow with `ldr r0, [r0]`.
 - **STMFD push order:** Registers are pushed in register-number order regardless of listing. After `stmfd sp!, {r0, r1}`, SP points to r0 (lower number at lower address).

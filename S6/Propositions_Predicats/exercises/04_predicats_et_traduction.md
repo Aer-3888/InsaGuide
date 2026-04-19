@@ -2,7 +2,7 @@
 
 ---
 
-## Exercice 1 : Traduction francais -> logique du premier ordre
+## Exercice 1 : Traduction francais → logique du premier ordre
 
 ### Enonce
 Traduire chaque phrase en logique du premier ordre. Definir explicitement les predicats.
@@ -27,9 +27,9 @@ Ax, (E(x) -> Ey, (C(y) /\ S(x,y)))
 ```
 
 Justification de chaque choix :
-- **Ax** : "tous les etudiants" -> quantificateur universel
+- **Ax** : "tous les etudiants" → quantificateur universel
 - **E(x) ->** : "tous les A sont B" se traduit avec IMPLIQUE (pas /\). Si on mettait /\, on dirait "tout objet est un etudiant et suit un cours", ce qui est faux.
-- **Ey** : "au moins un" -> quantificateur existentiel
+- **Ey** : "au moins un" → quantificateur existentiel
 - **C(y) /\** : "il existe un A qui est B" se traduit avec ET (pas ->). Si on mettait ->, la formule serait triviale.
 - **S(x,y)** : x suit y
 
@@ -42,12 +42,12 @@ Ey, (C(y) /\ Ax, (E(x) -> S(x,y)))
 Justification :
 - **Ey** en premier : il y a UN cours (fixe) qui satisfait la suite
 - **C(y)** : ce y est un cours
-- **Ax, (E(x) -> S(x,y))** : TOUS les etudiants le suivent
+- **Ax, (E(x) → S(x,y))** : TOUS les etudiants le suivent
 
 **Difference cruciale avec (a) :** En (a), chaque etudiant peut suivre un cours DIFFERENT (le y depend du x). En (b), il y a un SEUL cours y suivi par TOUS. L'ordre des quantificateurs change le sens.
 
-- (a) : `Ax Ey` -> pour chaque x, un y (possiblement different)
-- (b) : `Ey Ax` -> il existe un y fixe, pour tout x
+- (a) : `Ax Ey` → pour chaque x, un y (possiblement different)
+- (b) : `Ey Ax` → il existe un y fixe, pour tout x
 
 **c) "Aucun bebe ne peut dompter un crocodile."**
 
@@ -85,10 +85,10 @@ Ex, (P(x) /\ Ay, (D(y) -> A(x,y)))
 ```
 
 Justification :
-- **Ex** : "certains" -> il en existe au moins un
+- **Ex** : "certains" → il en existe au moins un
 - **P(x) /\** : cet x est un patient (avec ET car c'est un existentiel)
-- **Ay, (D(y) -> A(x,y))** : ce patient aime TOUS les docteurs
-  - "Tous les D sont aimes" = Ay, (D(y) -> ...)
+- **Ay, (D(y) → A(x,y))** : ce patient aime TOUS les docteurs
+  - "Tous les D sont aimes" = Ay, (D(y) → ...)
 
 **e) "Personne n'aime tout le monde."**
 
@@ -153,7 +153,7 @@ Mettre en forme prenexe : `(Ax, P(x)) -> (Ex, Q(x))`
 
 ### Solution detaillee
 
-**Etape 1 : Eliminer l'implication (->)**
+**Etape 1 : Eliminer l'implication (→)**
 ```
 (Ax, P(x)) -> (Ex, Q(x))
 = ~(Ax, P(x)) \/ (Ex, Q(x))        [elimination de -> : A -> B = ~A \/ B]
@@ -365,28 +365,28 @@ Il faut verifier : pour CHAQUE x dans D, il EXISTE un y dans D tel que `P(x) -> 
 **Cas x = 1 :**
 - P(1) = V
 
-Cherchons un y tel que V -> Q(1, y) = V. Il faut Q(1, y) = V.
-- y = 1 : Q(1,1) = F. Donc V -> F = F. Non.
-- y = 2 : Q(1,2) = V. Donc V -> V = V. **Oui !**
+Cherchons un y tel que V → Q(1, y) = V. Il faut Q(1, y) = V.
+- y = 1 : Q(1,1) = F. Donc V → F = F. Non.
+- y = 2 : Q(1,2) = V. Donc V → V = V. **Oui !**
 
 Il existe y = 2 qui marche pour x = 1.
 
 **Cas x = 2 :**
 - P(2) = F
 
-Il faut : F -> Q(2, y). Or F -> X = V pour TOUT X (premisse fausse).
-- y = 1 : F -> Q(2,1) = F -> V = V. **Oui !**
+Il faut : F → Q(2, y). Or F → X = V pour TOUT X (premisse fausse).
+- y = 1 : F → Q(2,1) = F → V = V. **Oui !**
 
 Il existe y = 1 qui marche pour x = 2 (en fait, n'importe quel y marche ici).
 
-**Resultat :** Pour tout x dans D, il existe y dans D tel que P(x) -> Q(x,y) est vrai. La formule vaut **V**.
+**Resultat :** Pour tout x dans D, il existe y dans D tel que P(x) → Q(x,y) est vrai. La formule vaut **V**.
 
 ---
 
 ## Exercice 7 : Contre-exemple d'interpretation (type DS 2021)
 
 ### Enonce
-H = {P(0), Ax, (P(x) -> P(s(s(x))))}. Trouver une interpretation I telle que I satisfait H et I satisfait P(s(0)) (c'est-a-dire que ~P(s(0)) n'est PAS consequence de H).
+H = {P(0), Ax, (P(x) → P(s(s(x))))}. Trouver une interpretation I telle que I satisfait H et I satisfait P(s(0)) (c'est-a-dire que ~P(s(0)) n'est PAS consequence de H).
 
 ### Solution detaillee
 
@@ -402,15 +402,15 @@ H = {P(0), Ax, (P(x) -> P(s(s(x))))}. Trouver une interpretation I telle que I s
 
 Hypothese 1 : P(0) = V. **OK.**
 
-Hypothese 2 : Ax, (P(x) -> P(s(s(x))))
-- Pour tout n dans N : P(n) -> P(n+2) = V -> V = V. **OK.**
+Hypothese 2 : Ax, (P(x) → P(s(s(x))))
+- Pour tout n dans N : P(n) → P(n+2) = V → V = V. **OK.**
 
 **Verification de P(s(0)) :**
 - P(s(0)) = P(1) = V. **OK.**
 
 **Conclusion :** Il existe une interpretation ou H est vraie et P(s(0)) est vraie. Donc H ne peut pas impliquer ~P(s(0)). Cela montre que H ne capture pas completement la notion de parite : H dit que P est vrai pour 0, 2, 4, 6..., mais ne dit RIEN sur les nombres impairs. Un nombre impair peut etre vrai ou faux pour P, ce qui est compatible avec H.
 
-Pour que H capture exactement "P(x) ssi x est pair", il faudrait ajouter une hypothese comme ~P(s(0)) et Ax, (~P(x) -> ~P(s(s(x)))).
+Pour que H capture exactement "P(x) ssi x est pair", il faudrait ajouter une hypothese comme ~P(s(0)) et Ax, (~P(x) → ~P(s(s(x)))).
 
 ---
 
@@ -426,14 +426,14 @@ Pour chaque phrase, donner la traduction correcte ET la traduction incorrecte fr
 - Correct : `Ax, (Chat(x) -> Mortel(x))`
 - **Incorrect :** `Ax, (Chat(x) /\ Mortel(x))` -- Ceci dit "tout objet est un chat ET est mortel", ce qui est faux (une table n'est pas un chat).
 
-Pourquoi -> et pas /\ ? Le quantificateur universel porte sur TOUT le domaine, pas seulement les chats. On veut dire "PARMI les chats, tous sont mortels", c'est-a-dire "SI c'est un chat, ALORS c'est mortel".
+Pourquoi → et pas /\ ? Le quantificateur universel porte sur TOUT le domaine, pas seulement les chats. On veut dire "PARMI les chats, tous sont mortels", c'est-a-dire "SI c'est un chat, ALORS c'est mortel".
 
 **b) "Certains oiseaux ne volent pas."**
 
 - Correct : `Ex, (Oiseau(x) /\ ~Vole(x))`
 - **Incorrect :** `Ex, (Oiseau(x) -> ~Vole(x))` -- Ceci est (presque) toujours vrai.
 
-Pourquoi /\ et pas -> ? `Ex, (Oiseau(x) -> ~Vole(x))` = `Ex, (~Oiseau(x) \/ ~Vole(x))`. Il suffit qu'il existe un objet qui N'EST PAS un oiseau pour que la formule soit vraie. C'est trivial. On veut au contraire dire "il existe un objet qui EST un oiseau ET qui ne vole pas".
+Pourquoi /\ et pas → ? `Ex, (Oiseau(x) -> ~Vole(x))` = `Ex, (~Oiseau(x) \/ ~Vole(x))`. Il suffit qu'il existe un objet qui N'EST PAS un oiseau pour que la formule soit vraie. C'est trivial. On veut au contraire dire "il existe un objet qui EST un oiseau ET qui ne vole pas".
 
 **Regle mnemotechnique :**
 - "Tous les A sont B" : `Ax, (A(x) -> B(x))` -- quantificateur universel + implication
@@ -576,7 +576,7 @@ Soit l'interpretation M :
 - D_M = N (entiers naturels)
 - a_M = 1
 - f_M = multiplication (f(y,z) = y * z)
-- P_M = < (strictement inferieur)
+- P_M = &lt; (strictement inferieur)
 - Q_M = = (egalite)
 
 Q1 : L'interpretation M est-elle modele de G ?
@@ -604,7 +604,7 @@ Autrement dit : il existe un entier strictement superieur a 1 qui, s'il peut s'e
 Puisqu'il existe des nombres premiers dans N (par exemple x = 2), la formule est **vraie** dans cette interpretation.
 
 Verification explicite pour x = 2 :
-- P(a, 2) = P(1, 2) = 1 < 2 = V
+- P(a, 2) = P(1, 2) = 1 &lt; 2 = V
 - Pour tout y, z : si 2 = y*z, alors y = 1 ou y = 2.
   - y = 1, z = 2 : 2 = 1*2, et y = 1. V.
   - y = 2, z = 1 : 2 = 2*1, et y = 2. V.
@@ -646,15 +646,15 @@ P_M3 = <             (strictement inferieur)
 ```
 
 Verification de {A1, A2, A3} :
-- A1 (transitivite) : Si x < y et y < z, alors x < z. **V** (transitivite de <).
-- A2 : Pour tout x, 0 < x ou x < 9. **V** (si x = 0, alors 0 < 9 est vrai).
-  - Pour x = 0 : P(0,0) = 0<0 = F, mais P(0,9) = 0<9 = V. V \/ V ou F \/ V selon le cote. Verifions : P(a,x) \/ P(x,b) = P(0,0) \/ P(0,9) = F \/ V = V. OK.
+- A1 (transitivite) : Si x &lt; y et y &lt; z, alors x &lt; z. **V** (transitivite de &lt;).
+- A2 : Pour tout x, 0 &lt; x ou x &lt; 9. **V** (si x = 0, alors 0 &lt; 9 est vrai).
+  - Pour x = 0 : P(0,0) = 0&lt;0 = F, mais P(0,9) = 0&lt;9 = V. V \/ V ou F \/ V selon le cote. Verifions : P(a,x) \/ P(x,b) = P(0,0) \/ P(0,9) = F \/ V = V. OK.
   - Pour x = 5 : P(0,5) = V, donc V \/ ... = V. OK.
-- A3 : Pour tout x, P(x, f(x)) = x < x+1. **V** pour tout x dans N.
+- A3 : Pour tout x, P(x, f(x)) = x &lt; x+1. **V** pour tout x dans N.
 
 Verification de `Ex, P(x, a)` :
-- `Ex, P(x, 0)` = il existe x tel que x < 0.
-- Dans N, il n'existe aucun x tel que x < 0. **F.**
+- `Ex, P(x, 0)` = il existe x tel que x &lt; 0.
+- Dans N, il n'existe aucun x tel que x &lt; 0. **F.**
 
 **Conclusion :** M3 satisfait A1, A2, A3 mais pas `Ex, P(x,a)`. Donc `Ex, P(x,a)` n'est **pas** consequence logique de {A1, A2, A3}.
 

@@ -86,20 +86,20 @@ L'application complete de Roy-Warshall necessite 14 iterations de pivot. Montron
 Analysons l'accessibilite de chaque sommet pour determiner les blocs de la matrice :
 
 **Depuis le sommet 1 :**
-1 -> 10 -> 6 -> {1, 6, 7, 8, 9}. Depuis 7 -> 5 -> {1, 2, 3}. Depuis 3 -> 4 -> 1. Depuis 2 -> {10, 11, 12, 13, 14}. Depuis 11 -> 9 -> {7, 12}. Depuis 12 -> {13, 14}.
+1 → 10 → 6 → {1, 6, 7, 8, 9}. Depuis 7 → 5 → {1, 2, 3}. Depuis 3 → 4 → 1. Depuis 2 → {10, 11, 12, 13, 14}. Depuis 11 → 9 → {7, 12}. Depuis 12 → {13, 14}.
 Donc 1 atteint TOUS les sommets.
 
 **Depuis le sommet 5 :**
-5 -> {1, 2, 3}. Depuis 1 on atteint tout. Donc 5 atteint tous les sommets.
+5 → {1, 2, 3}. Depuis 1 on atteint tout. Donc 5 atteint tous les sommets.
 
 **Depuis le sommet 3 :**
-3 -> 4 -> 1 -> tout. Donc 3 atteint tous les sommets.
+3 → 4 → 1 → tout. Donc 3 atteint tous les sommets.
 
 **Depuis le sommet 8 :**
-8 -> 10 -> 6 -> tout. Donc 8 atteint tous les sommets.
+8 → 10 → 6 → tout. Donc 8 atteint tous les sommets.
 
 **Depuis le sommet 12 :**
-12 -> {13, 14} -> {10, 11} -> {6, 9} -> {1, 7, 8, 12}. Et ainsi de suite. Donc 12 atteint tous les sommets.
+12 → {13, 14} → {10, 11} → {6, 9} → {1, 7, 8, 12}. Et ainsi de suite. Donc 12 atteint tous les sommets.
 
 **Verification :** Peut-on atteindre tout sommet depuis tout sommet ?
 
@@ -254,7 +254,7 @@ F  [   -   -   -   -   E   - ]
 (Les - indiquent qu'il n'y a pas de chemin, ce qui depend de la structure exacte du graphe.)
 
 Pour la reconstruction des chemins, on lit la matrice :
-- Chemin de A a F : R[A][F] = B, R[B][F] = D, R[D][F] = E, R[E][F] = F. Chemin : A -> B -> D -> E -> F.
+- Chemin de A a F : R[A][F] = B, R[B][F] = D, R[D][F] = E, R[E][F] = F. Chemin : A → B → D → E → F.
 
 ---
 

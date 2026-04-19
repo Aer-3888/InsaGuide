@@ -27,7 +27,7 @@ Si on suppose que G est connexe (n sommets, au moins n-1 aretes necessaires = 6,
 
 **c)** Verifier : un graphe biparti n'a pas de cycle impair. Avec la sequence donnee, G pourrait contenir un triangle (cycle de longueur 3), ce qui le rendrait non biparti. Sans connaitre la structure exacte, on ne peut pas conclure. Mais si G contient un K_4 (4 sommets de degre >= 3, dont un de degre 4), il contient des triangles et n'est **pas biparti**.
 
-**d)** Test : m <= 3n - 6 ? 9 <= 3(7) - 6 = 15. OUI, le test ne l'exclut pas.
+**d)** Test : m &lt;= 3n - 6 ? 9 &lt;= 3(7) - 6 = 15. OUI, le test ne l'exclut pas.
 G **pourrait etre planaire** (le test est necessaire, pas suffisant).
 
 ---
@@ -59,7 +59,7 @@ Sommets de degre impair : {2, 4, 5, 6} => 4 sommets.
 4 != 0 => pas de cycle eulerien.
 4 != 2 => **pas de chaine eulerienne non plus**.
 
-**b)** n = 6. Dirac : d_min = 2, n/2 = 3. 2 < 3 => Dirac ne s'applique pas.
+**b)** n = 6. Dirac : d_min = 2, n/2 = 3. 2 &lt; 3 => Dirac ne s'applique pas.
 
 Cherchons par backtracking :
 - 1-2-3-6-4-5-1 : arete 5-1 existe ? Oui. **Cycle hamiltonien : 1-2-3-6-4-5-1.**

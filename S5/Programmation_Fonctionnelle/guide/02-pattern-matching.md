@@ -2,7 +2,7 @@
 
 ## Theorie
 
-Le pattern matching est l'outil central d'OCaml. Il permet de deconstructeur une valeur pour en extraire les composants et d'agir differemment selon la forme de la donnee.
+Le pattern matching est l'outil central d'OCaml. Il permet de deconstruire une valeur pour en extraire les composants et d'agir differemment selon la forme de la donnee.
 
 ### Syntaxe de base
 

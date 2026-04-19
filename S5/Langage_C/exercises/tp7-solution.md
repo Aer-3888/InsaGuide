@@ -1,6 +1,6 @@
 # TP7 - Gestionnaire de Memoire Dynamique Personnalise
 
-> Following teacher instructions from: `S5/Langage_C/data/moodle/tp/tp7/README.md`
+> Instructions de l'enseignant depuis : `S5/Langage_C/data/moodle/tp/tp7/README.md`
 
 ## Contexte
 
@@ -23,7 +23,7 @@ Chaque bloc alloue a :
 
 ### Definir les structures de donnees -- myalloc.h avec le descripteur de bloc, les macros de remplacement et les prototypes
 
-**Answer:**
+**Solution :**
 
 ```c
 #include <stdio.h>
@@ -114,7 +114,7 @@ Pour chaque bloc du heap:
 Echec: plus de memoire disponible
 ```
 
-**Answer:**
+**Solution :**
 
 ```c
 #include <stdio.h>
@@ -311,7 +311,7 @@ Marquer le bloc comme LIBRE
 Parcourir le tas pour fusionner les blocs libres adjacents
 ```
 
-**Answer:**
+**Solution :**
 
 ```c
 /*
@@ -430,7 +430,7 @@ Apres regroupement_libre() :
 
 ### Implementer `Mon_calloc()` -- Allouer et initialiser a zero
 
-**Answer:**
+**Solution :**
 
 ```c
 /*
@@ -481,7 +481,7 @@ void *Mon_calloc(size_t count, size_t size) {
 4. `newsize > size` et le bloc suivant est libre et suffisant : etendre
 5. `newsize > size` sinon : allouer nouveau, copier, liberer ancien
 
-**Answer:**
+**Solution :**
 
 ```c
 /*
@@ -607,7 +607,7 @@ void *Mon_realloc(void *ptr, size_t newsize) {
 
 ### Fonctions de test et programme principal
 
-**Answer pour test.h :**
+**Solution pour test.h :**
 
 ```c
 #include <stdio.h>
@@ -623,7 +623,7 @@ void procedure_test(Type_test t, int nb);
 #endif /* TEST_H */
 ```
 
-**Answer pour test.c (extraits des procedures de test) :**
+**Solution pour test.c (extraits des procedures de test) :**
 
 ```c
 #include <stdio.h>
@@ -726,7 +726,7 @@ void procedure_test(Type_test t, int nb) {
 }
 ```
 
-**Answer pour main.c :**
+**Solution pour main.c :**
 
 ```c
 #include <stdio.h>
@@ -750,7 +750,7 @@ int main() {
 }
 ```
 
-**Makefile:**
+**Makefile :**
 
 ```makefile
 CC = gcc
@@ -777,7 +777,7 @@ run: $(TARGET)
 .PHONY: all clean run
 ```
 
-**Compilation:**
+**Compilation :**
 
 ```bash
 cd tp7/src
@@ -785,7 +785,7 @@ make
 ./main
 ```
 
-**Expected output (extrait, avec DEBUG active) :**
+**Sortie attendue (extrait, avec DEBUG active) :**
 
 ```
 initialisation memoire dynamique effectuee !

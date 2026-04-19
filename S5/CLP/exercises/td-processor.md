@@ -1,21 +1,21 @@
-# TD Solutions -- Processor Design: Complete Walkthroughs
+# Solutions TD -- Conception de processeurs : Corriges complets
 
-## Overview
+## Vue d'ensemble
 
-This file covers the complete design methodology for building dedicated processors, including the GCD machine (cours) and Fibonacci machine (TD5). The key pattern is always the same:
+Ce fichier couvre la methodologie complete de conception pour la construction de processeurs dedies, incluant la machine PGCD (cours) et la machine Fibonacci (TD5). Le patron cle est toujours le meme :
 
-1. Write the algorithm
-2. Identify registers, operations, conditions
-3. Design the UT (Processing Unit / Unite de Traitement)
-4. Design the UC (Control Unit / Unite de Commande)
-5. Choose implementation: hardwired (gates) or microprogrammed (ROM)
-6. Integrate UC + UT and test
+1. Ecrire l'algorithme
+2. Identifier les registres, operations, conditions
+3. Concevoir l'UT (Unite de Traitement)
+4. Concevoir l'UC (Unite de Commande)
+5. Choisir l'implementation : cablee (portes) ou microprogrammee (ROM)
+6. Integrer UC + UT et tester
 
 ---
 
-## GCD Machine Design (Course Example)
+## Conception de la machine PGCD (Exemple du cours)
 
-### Step 1: Algorithm
+### Etape 1 : Algorithme
 
 ```
 Input: A, B (integers)
@@ -30,7 +30,7 @@ LOOP:
 DONE: output A (or B, since A == B)
 ```
 
-### Step 2: Identify Hardware Needs
+### Etape 2 : Identifier les besoins materiels
 
 **Registers**: A (8-bit), B (8-bit)
 
@@ -44,7 +44,7 @@ DONE: output A (or B, since A == B)
 - Is A equal to B?
 - Is A greater than B?
 
-### Step 3: UT Design
+### Etape 3 : Conception de l'UT
 
 ```
                 +--------+
@@ -63,8 +63,8 @@ External In --> |   B    |---+---> Subtractor ---> B (on A<B)
 | Command | Action | Active when |
 |---------|--------|-------------|
 | INIT | Load external inputs into A and B | Initialization state |
-| A_SUB_B | A <- A - B | A > B |
-| B_SUB_A | B <- B - A | A < B |
+| A_SUB_B | A &lt;- A - B | A > B |
+| B_SUB_A | B &lt;- B - A | A &lt; B |
 | OUTPUT | Place A on output bus | Done state |
 
 **Condition signals** (from UT to UC):
@@ -74,7 +74,7 @@ External In --> |   B    |---+---> Subtractor ---> B (on A<B)
 | A_EQ_B | A equals B | Detecting termination |
 | A_GT_B | A greater than B | Choosing which subtraction |
 
-### Step 4: UC as State Machine
+### Etape 4 : UC comme machine a etats
 
 **5 states**:
 
@@ -109,7 +109,7 @@ S0 ---> S1 ---> S4 (A_EQ_B)   |
 | S3 | always | S1 | B_SUB_A |
 | S4 | always | S4 (or S0) | OUTPUT |
 
-### Step 5: Hardwired UC Implementation
+### Etape 5 : Implementation cablee de l'UC
 
 **3 flip-flops** (s2, s1, s0) encode the 5 states. Next-state logic is combinational.
 
@@ -177,7 +177,7 @@ B_SUB_A = /s2 . s1 . s0       @ State S3
 OUTPUT  = s2 . /s1 . /s0      @ State S4
 ```
 
-### Step 6: Microprogrammed UC Implementation
+### Etape 6 : Implementation microprogrammee de l'UC
 
 Instead of gates, use a ROM that maps (state, conditions) to (next state, commands).
 
@@ -236,7 +236,7 @@ Let me use a cleaner encoding:
 
 **Better approach**: Use dedicated microcode format where S1 is split into two test states:
 
-| Addr | Label | Test | True -> | False -> | Commands |
+| Addr | Label | Test | True → | False → | Commands |
 |------|-------|------|---------|----------|----------|
 | 000 | S0 | -- | 001 | 001 | INIT |
 | 001 | S1a | A_EQ_B? | 100 | 010 | -- |
@@ -263,7 +263,7 @@ Result: A = B = 6 = GCD(18, 12).
 
 ---
 
-## Fibonacci Machine Design (TD 5)
+## Conception de la machine Fibonacci (TD 5)
 
 ### Step 1: Algorithm
 
@@ -323,9 +323,9 @@ RES_0 / RES_1 (from UC): control Res latch
 | # | Command | Action |
 |---|---------|--------|
 | 0 | RESET | Load initial values: N0=0, N1=1, Q=0, N=input |
-| 1 | N1_2_N0 | Copy current N1 into N0 (N0 <- N1) |
-| 2 | SUM_N1 | Load adder output into N1 (N1 <- N0 + N1) |
-| 3 | INC_Q | Increment counter Q (Q <- Q + 1) |
+| 1 | N1_2_N0 | Copy current N1 into N0 (N0 &lt;- N1) |
+| 2 | SUM_N1 | Load adder output into N1 (N1 &lt;- N0 + N1) |
+| 3 | INC_Q | Increment counter Q (Q &lt;- Q + 1) |
 | 4 | RES_0 | Reset Res flag to 0 |
 | 5 | RES_1 | Set Res flag to 1 |
 | 6 | OUT_N0 | Place N0 on output bus |
@@ -435,7 +435,7 @@ Bit 6:  OUT_N0 / RESET (combined)
 - If /N_GT_Q is FALSE (N > Q): increment to state C (010)
 - No commands (just testing the condition)
 
-### Step 7: Verification -- Computing F(6)
+### Etape 7 : Verification -- Calcul de F(6)
 
 F(0)=0, F(1)=1, F(2)=1, F(3)=2, F(4)=3, F(5)=5, F(6)=8
 
@@ -465,20 +465,20 @@ F(0)=0, F(1)=1, F(2)=1, F(3)=2, F(4)=3, F(5)=5, F(6)=8
 **Cycle 3 detail** (the first iteration):
 - Before cycle 3: N0=0, N1=1
 - Adder computes: 0 + 1 = 1 (combinational, instant)
-- At clock edge: N0 <- N1 (old value) = 1, N1 <- adder output = 1, Q <- Q+1 = 1
+- At clock edge: N0 &lt;- N1 (old value) = 1, N1 &lt;- adder output = 1, Q &lt;- Q+1 = 1
 - After cycle 3: N0=1, N1=1, Q=1
 
 **Cycle 5 detail**:
 - Before: N0=1, N1=1
 - Adder: 1 + 1 = 2
-- At edge: N0 <- 1 (old N1), N1 <- 2 (adder), Q <- 2
+- At edge: N0 &lt;- 1 (old N1), N1 &lt;- 2 (adder), Q &lt;- 2
 - After: N0=1, N1=2, Q=2
 
 ---
 
-## Design Methodology Summary
+## Resume de la methodologie de conception
 
-### When Given an Algorithm, Follow This Recipe
+### Quand un algorithme est donne, suivre cette recette
 
 1. **Write pseudocode** clearly separating initialization, computation, and output
 2. **List all variables** -- each becomes a register in the UT
@@ -492,7 +492,7 @@ F(0)=0, F(1)=1, F(2)=1, F(3)=2, F(4)=3, F(5)=5, F(6)=8
    - Microprogrammed: encode state machine in ROM with jump codes and command fields
 9. **Verify** by tracing execution with known inputs/outputs
 
-### Common Exam Question Patterns
+### Patrons de questions d'examen courants
 
 - "Design a UT for algorithm X" -- list registers, ALU, signals
 - "Draw the state machine for the UC" -- 3-7 states typical

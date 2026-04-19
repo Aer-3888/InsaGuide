@@ -2,13 +2,13 @@
 
 > Following teacher instructions from: `TP-23-24-etud_without_NLP_task_todo.ipynb`
 
-**Technique**: Spatial clustering with DBSCAN on geolocated photo data, followed by cluster characterization using Apriori frequent itemset mining on photo tags.
+**Technique** : Clustering spatial avec DBSCAN sur des donnees de photos geolocalisees, suivi de la caracterisation des clusters par fouille d'itemsets frequents (Apriori) sur les tags des photos.
 
-**Goal**: Identify Points of Interest (POI) in Rennes from geolocated Flickr photos using unsupervised spatial analysis. A POI is defined as the location of photographs by a large number of distinct users.
+**Objectif** : Identifier les Points d'Interet (POI) a Rennes a partir de photos Flickr geolocalisees en utilisant l'analyse spatiale non supervisee. Un POI est defini comme le lieu de photographies par un grand nombre d'utilisateurs distincts.
 
-**Dataset**: `flickrRennes.csv` -- geolocated photos from the Flickr API, centered on Rennes, France.
+**Jeu de donnees** : `flickrRennes.csv` -- photos geolocalisees issues de l'API Flickr, centrees sur Rennes, France.
 
-**Duration**: Double session (TP3 + TP4).
+**Duree** : Double seance (TP3 + TP4).
 
 ---
 
@@ -46,7 +46,7 @@ photos = photos_orig.copy()
 photos.head()
 ```
 
-**Dataset columns:**
+**Colonnes du jeu de donnees :**
 - **id_photo** = identifiant de la photo
 - **title** = titre de la photo
 - **id_photographer** = identifiant du proprietaire (utilisateur)
@@ -94,7 +94,7 @@ print(photos["long"].median())
 -1.678194
 ```
 
-**Interpretation:** Both mean and median are very close to the Rennes city center (48.117, -1.678). This is coherent -- the data is geolocated around Rennes. The small mean-median gap indicates a roughly symmetric distribution centered on the city.
+**Interpretation :** La moyenne et la mediane sont tres proches du centre-ville de Rennes (48.117, -1.678). C'est coherent -- les donnees sont geolocalisees autour de Rennes. Le faible ecart moyenne-mediane indique une distribution a peu pres symetrique centree sur la ville.
 
 ---
 
@@ -112,7 +112,7 @@ print(photos["date_taken_year"].max())
 2019
 ```
 
-**Interpretation:** The photos span 15 years. Despite the TP saying "photos geolocalisees autour de Rennes en 2019," the "2019" refers to when the data was extracted from the API, not when all photos were taken.
+**Interpretation :** Les photos s'etendent sur 15 ans. Malgre le TP indiquant "photos geolocalisees autour de Rennes en 2019", le "2019" fait reference a la date d'extraction des donnees de l'API, pas a la date de prise de toutes les photos.
 
 ---
 
@@ -142,7 +142,7 @@ photos["id_photo"].nunique()
 4148
 ```
 
-**Key insight:** 29,541 rows but only 4,148 unique photo IDs means each photo appears ~7.1 times on average. The CSV contains exact duplicate rows.
+**Observation cle :** 29 541 lignes mais seulement 4 148 identifiants de photos uniques signifie que chaque photo apparait ~7.1 fois en moyenne. Le CSV contient des lignes en double exact.
 
 ---
 
@@ -173,7 +173,7 @@ len(photos)
 4148
 ```
 
-**Interpretation:** `drop_duplicates()` removes rows identical across ALL columns. The reduction from 29,541 to 4,148 confirms that ~86% of rows were exact duplicates.
+**Interpretation :** `drop_duplicates()` supprime les lignes identiques sur TOUTES les colonnes. La reduction de 29 541 a 4 148 confirme que ~86% des lignes etaient des doublons exacts.
 
 ---
 
@@ -219,7 +219,7 @@ print(single_photo_users)
 74
 ```
 
-**Interpretation:** 74 out of 213 users (35%) posted only one photo. These are likely casual tourists or one-time visitors.
+**Interpretation :** 74 utilisateurs sur 213 (35%) n'ont poste qu'une seule photo. Ce sont probablement des touristes occasionnels ou des visiteurs ponctuels.
 
 ---
 
@@ -238,7 +238,7 @@ plt.title('Distribution des photographes par nombre de photos')
 plt.show()
 ```
 
-**Expected output/plot:** A heavily right-skewed histogram. Very tall bar at x=1 (74 photographers), then rapidly decreasing. Most photographers have fewer than 20 photos, but a few have hundreds.
+**Sortie attendue/graphique :** Un histogramme tres asymetrique a droite. Barre tres haute a x=1 (74 photographes), puis decroissance rapide. La plupart des photographes ont moins de 20 photos, mais quelques-uns en ont des centaines.
 
 ---
 
@@ -258,7 +258,7 @@ plt.xticks(range(1, 13))
 plt.show()
 ```
 
-**Expected output/plot:** Seasonal pattern with more photos in spring/summer (April-September) and fewer in winter (November-February). Peak is typically around July-September (tourist season).
+**Sortie attendue/graphique :** Schema saisonnier avec plus de photos au printemps/ete (avril-septembre) et moins en hiver (novembre-fevrier). Le pic est typiquement autour de juillet-septembre (saison touristique).
 
 ---
 
@@ -704,7 +704,7 @@ for cluster_nb in cluster_labels:
 print(cluster_labels)
 ```
 
-**Why progressive minsup (0.5 -> 0.4 -> 0.3 -> 0.2)?** Starting strict (50%) ensures labels are meaningful and widely shared. If no itemset of length >= 2 is found, we relax progressively. This avoids labeling clusters with rare, noise-driven tag combinations.
+**Why progressive minsup (0.5 → 0.4 → 0.3 → 0.2)?** Starting strict (50%) ensures labels are meaningful and widely shared. If no itemset of length >= 2 is found, we relax progressively. This avoids labeling clusters with rare, noise-driven tag combinations.
 
 **Expected output (depends on actual data):**
 ```
@@ -795,18 +795,18 @@ rennes_map
 
 ---
 
-## Key Takeaways
+## Points cles a retenir
 
-1. **Data cleaning is critical:** 29,541 rows reduced to 1,232 after deduplication and album effect removal. Without cleaning, DBSCAN would find clusters around individual photographers' homes.
+1. **Le nettoyage des donnees est essentiel :** 29 541 lignes reduites a 1 232 apres deduplication et suppression de l'effet album. Sans nettoyage, DBSCAN trouverait des clusters autour des domiciles des photographes individuels.
 
-2. **The album photo effect** is the single biggest source of bias in geo-tagged photo data. A photographer taking 100 photos of their garden creates a false POI.
+2. **L'effet album photo** est la plus grande source de biais dans les donnees de photos geolocalisees. Un photographe prenant 100 photos de son jardin cree un faux POI.
 
-3. **DBSCAN is ideal** for spatial POI detection because it handles noise, discovers k automatically, and finds clusters of arbitrary shapes.
+3. **DBSCAN est ideal** pour la detection spatiale de POI car il gere le bruit, decouvre k automatiquement et trouve des clusters de formes arbitraires.
 
-4. **eps on raw GPS coordinates:** Using 0.00030 degrees works as an approximation because lat/long degrees at 48 N are similar enough in scale. For higher precision, convert to projected coordinates (Lambert 93) first.
+4. **eps sur des coordonnees GPS brutes :** Utiliser 0.00030 degres fonctionne comme approximation car les degres lat/long a 48 N sont suffisamment similaires en echelle. Pour plus de precision, convertir d'abord en coordonnees projetees (Lambert 93).
 
-5. **Tag preprocessing** (lowercase, accents, stopwords, special chars) is essential before Apriori. Without it, "Rennes" and "rennes" would be treated as different items.
+5. **Le pretraitement des tags** (minuscules, accents, mots vides, caracteres speciaux) est essentiel avant Apriori. Sans cela, "Rennes" et "rennes" seraient traites comme des items differents.
 
-6. **Apriori on cluster tags** provides semantic labels for otherwise anonymous spatial clusters. The progressive minsup strategy balances label quality with coverage.
+6. **Apriori sur les tags des clusters** fournit des etiquettes semantiques pour des clusters spatiaux autrement anonymes. La strategie de minsup progressif equilibre la qualite des etiquettes avec la couverture.
 
-7. **Limitations:** Flickr data is biased toward tourists and photography enthusiasts. Residential areas and workplaces are underrepresented.
+7. **Limitations :** Les donnees Flickr sont biaisees vers les touristes et les passionnes de photographie. Les zones residentielles et les lieux de travail sont sous-representes.

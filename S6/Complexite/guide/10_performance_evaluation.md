@@ -134,7 +134,7 @@ Ou :
 
 ### Implications
 
-- Meme une acceleration infinie (S -> inf) de la fraction p donne au maximum Speedup = 1/(1-p)
+- Meme une acceleration infinie (S → inf) de la fraction p donne au maximum Speedup = 1/(1-p)
 - **Identifier le goulot d'etranglement** avant d'optimiser (profiler d'abord!)
 
 ### Exemple DS 2024

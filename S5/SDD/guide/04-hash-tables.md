@@ -1,27 +1,27 @@
 # Hash Tables (Tables de Hachage)
 
-## Theory
+## Theorie
 
-A **hash table** maps keys to values using a **hash function** that computes an index into an array of buckets.
+Une **table de hachage** associe des cles a des valeurs en utilisant une **fonction de hachage** qui calcule un index dans un tableau de buckets.
 
 ```
   Key: "hello"  --->  hashCode("hello") = 42  --->  table[42] = value
 ```
 
-### Hash Function
+### Fonction de hachage
 
-A hash function `h(key)` must satisfy:
-1. **Deterministic**: same key always gives same hash
-2. **Uniform**: keys spread evenly across the table
-3. **Fast**: O(1) computation
+Une fonction de hachage `h(cle)` doit satisfaire :
+1. **Deterministe** : la meme cle donne toujours le meme hash
+2. **Uniforme** : les cles sont reparties uniformement dans la table
+3. **Rapide** : calcul en O(1)
 
-### Collision Resolution
+### Resolution des collisions
 
-When two keys hash to the same index:
+Quand deux cles hashent vers le meme index :
 
-#### 1. Chaining (Chainage) -- Used in SDD TPs
+#### 1. Chainage (Chaining) -- Utilise dans les TP SDD
 
-Each bucket stores a linked list of entries that hash to that index.
+Chaque bucket stocke une liste chainee des entrees qui hashent vers cet index.
 
 ```
   Index:
@@ -32,17 +32,17 @@ Each bucket stores a linked list of entries that hash to that index.
   [4] -> null
 ```
 
-- Insert: O(1) (add to head of chain)
-- Search: O(k) where k = chain length
-- Average case: O(1) if load factor is small
+- Insertion : O(1) (ajout en tete de chaine)
+- Recherche : O(k) ou k = longueur de la chaine
+- Cas moyen : O(1) si le facteur de charge est faible
 
-#### 2. Open Addressing (Adressage ouvert)
+#### 2. Adressage ouvert (Open Addressing)
 
-If bucket is occupied, probe for next free slot.
+Si le bucket est occupe, chercher le prochain emplacement libre.
 
-**Linear probing**: try index+1, index+2, ...
-**Quadratic probing**: try index+1, index+4, index+9, ...
-**Double hashing**: use a second hash function for step size
+**Sondage lineaire** : essayer index+1, index+2, ...
+**Sondage quadratique** : essayer index+1, index+4, index+9, ...
+**Double hachage** : utiliser une seconde fonction de hachage pour le pas
 
 ```
   h("hello") = 3, h("world") = 3 (collision!)
@@ -52,30 +52,30 @@ If bucket is occupied, probe for next free slot.
   empty    empty    empty    "hello"   "world"  <- placed at 3+1
 ```
 
-### Load Factor
+### Facteur de charge
 
 **alpha = n / m** where n = number of entries, m = table size
 
 | alpha | Performance | Action |
 |-------|-------------|--------|
-| < 0.5 | Excellent | -- |
-| 0.5-0.75 | Good | -- |
-| 0.75-1.0 | Degrading | Consider resize |
-| > 1.0 | Bad (chaining only) | Must resize |
+| &lt; 0.5 | Excellente | -- |
+| 0.5-0.75 | Bonne | -- |
+| 0.75-1.0 | Se degrade | Envisager un redimensionnement |
+| > 1.0 | Mauvaise (chainage uniquement) | Redimensionnement obligatoire |
 
-### Rehashing
+### Rehachage
 
-When load factor exceeds threshold:
-1. Create new table of larger size (typically 2x)
-2. Recompute hash for every existing entry
-3. Insert into new table
+Quand le facteur de charge depasse le seuil :
+1. Creer une nouvelle table de plus grande taille (typiquement 2x)
+2. Recalculer le hash pour chaque entree existante
+3. Inserer dans la nouvelle table
 
-Amortized cost of n insertions with doubling: O(n) total, O(1) amortized per insert.
+Cout amorti de n insertions avec doublement : O(n) total, O(1) amorti par insertion.
 
 
-## Java Implementation (from TP4-5)
+## Implementation Java (des TP4-5)
 
-### Custom Hash Function (Word class, TP5)
+### Fonction de hachage personnalisee (classe Word, TP5)
 
 ```java
 public class Word {
@@ -106,10 +106,10 @@ public class Word {
 }
 ```
 
-**Important contract**: If `a.equals(b)` then `a.hashCode() == b.hashCode()`.
-The reverse is not required (two different objects can have the same hash -- that is a collision).
+**Contrat important** : Si `a.equals(b)` alors `a.hashCode() == b.hashCode()`.
+L'inverse n'est pas requis (deux objets differents peuvent avoir le meme hash -- c'est une collision).
 
-### Hash Table with Chaining (TableCouples, TP5)
+### Table de hachage avec chainage (TableCouples, TP5)
 
 ```java
 public class TableCouples {
@@ -148,7 +148,7 @@ public class TableCouples {
 }
 ```
 
-### Using java.util.HashMap (TP4 -- TimeTable)
+### Utilisation de java.util.HashMap (TP4 -- TimeTable)
 
 ```java
 public class TimeTable {
@@ -170,7 +170,7 @@ public class TimeTable {
 }
 ```
 
-### Proper equals/hashCode (Schedule, TP4)
+### equals/hashCode corrects (Schedule, TP4)
 
 ```java
 public class Schedule {
@@ -193,10 +193,10 @@ public class Schedule {
 }
 ```
 
-**Rule of thumb for hashCode**: multiply by a prime (31 is standard in Java), combine fields.
+**Regle pratique pour hashCode** : multiplier par un nombre premier (31 est standard en Java), combiner les champs.
 
 
-## ASCII Visualization: Chaining
+## Visualisation ASCII : Chainage
 
 ```
 TableCouples with words "ab", "ac", "ba", "bb":
@@ -213,39 +213,39 @@ Table:
   [2645] -> [("ba", trad_ba)]
   [2646] -> [("bb", trad_bb)]
 
-No collisions! Good hash function.
+Pas de collisions ! Bonne fonction de hachage.
 
 Now suppose h("xy") = h("xz") = same_index (collision):
   [same_index] -> [("xy", trad_xy)] -> [("xz", trad_xz)]
 ```
 
 
-## Complexity
+## Complexite
 
-| Operation | Average Case | Worst Case | Notes |
-|-----------|-------------|------------|-------|
-| Insert (chaining) | O(1) | O(n) | Worst: all keys collide |
-| Search (chaining) | O(1) | O(n) | Average depends on alpha |
-| Delete (chaining) | O(1) | O(n) | Same as search |
-| Insert (open addr.) | O(1) | O(n) | Degrades as alpha -> 1 |
-| Rehash | O(n) | O(n) | Must reinsert all entries |
+| Operation | Cas moyen | Pire cas | Notes |
+|-----------|----------|----------|-------|
+| Insertion (chainage) | O(1) | O(n) | Pire cas : toutes les cles collisionnent |
+| Recherche (chainage) | O(1) | O(n) | Moyenne depend de alpha |
+| Suppression (chainage) | O(1) | O(n) | Comme la recherche |
+| Insertion (adr. ouvert) | O(1) | O(n) | Se degrade quand alpha tend vers 1 |
+| Rehachage | O(n) | O(n) | Doit reinserer toutes les entrees |
 
-### Amortized Analysis with Rehashing
+### Analyse amortie avec rehachage
 
-If we double the table when alpha > threshold:
-- n insertions cost O(n) total (geometric series: n + n/2 + n/4 + ...)
-- Amortized cost per insertion: O(1)
-
-
-## Common Exam Patterns
-
-1. **Implement hashCode** for a given class
-2. **Trace insertion** into a hash table (show chaining or probing)
-3. **Compute load factor** and decide whether to rehash
-4. **Compare** hash table vs. BST for a given use case
+Si on double la table quand alpha depasse le seuil :
+- n insertions coutent O(n) au total (serie geometrique : n + n/2 + n/4 + ...)
+- Cout amorti par insertion : O(1)
 
 
-## CHEAT SHEET
+## Questions d'examen frequentes
+
+1. **Implementer hashCode** pour une classe donnee
+2. **Tracer l'insertion** dans une table de hachage (montrer le chainage ou le sondage)
+3. **Calculer le facteur de charge** et decider s'il faut rehacher
+4. **Comparer** table de hachage vs. ABR pour un cas d'utilisation donne
+
+
+## AIDE-MEMOIRE
 
 ```
 HASH TABLE

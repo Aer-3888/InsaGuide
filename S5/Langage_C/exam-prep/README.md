@@ -45,7 +45,7 @@ L'examen de Langage C a INSA Rennes dure generalement 2h et comprend 2 a 3 exerc
 ### Priorite 2 : Pointeurs (30% de l'examen)
 - Tracage de pointeurs (exercice quasi-systematique)
 - Passage par reference
-- Operateur -> pour les structures
+- Operateur → pour les structures
 - &(struct_var.champ) pour scanf
 
 ### Priorite 3 : Chaines et memoire (20% de l'examen)

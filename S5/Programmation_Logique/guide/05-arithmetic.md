@@ -19,14 +19,14 @@ En Prolog, l'arithmetique n'est **pas** geree par unification. L'operateur `is` 
 
 | Operateur | Signification | Exemple |
 |-----------|---------------|---------|
-| `+` | Addition | `X is 3 + 4` -> 7 |
-| `-` | Soustraction | `X is 10 - 3` -> 7 |
-| `*` | Multiplication | `X is 3 * 4` -> 12 |
-| `//` | Division entiere | `X is 7 // 2` -> 3 |
-| `/` | Division reelle | `X is 7 / 2` -> 3.5 |
-| `mod` | Modulo | `X is 7 mod 3` -> 1 |
-| `**` | Puissance | `X is 2 ** 10` -> 1024 |
-| `abs` | Valeur absolue | `X is abs(-5)` -> 5 |
+| `+` | Addition | `X is 3 + 4` → 7 |
+| `-` | Soustraction | `X is 10 - 3` → 7 |
+| `*` | Multiplication | `X is 3 * 4` → 12 |
+| `//` | Division entiere | `X is 7 // 2` → 3 |
+| `/` | Division reelle | `X is 7 / 2` → 3.5 |
+| `mod` | Modulo | `X is 7 mod 3` → 1 |
+| `**` | Puissance | `X is 2 ** 10` → 1024 |
+| `abs` | Valeur absolue | `X is abs(-5)` → 5 |
 
 ### Operateurs de comparaison
 
@@ -36,7 +36,7 @@ En Prolog, l'arithmetique n'est **pas** geree par unification. L'operateur `is` 
 | `X =\= Y` | Difference arithmetique | evalue les deux cotes |
 | `X < Y` | Inferieur strict | evalue les deux cotes |
 | `X > Y` | Superieur strict | evalue les deux cotes |
-| `X =< Y` | Inferieur ou egal | **attention : =< et non <=** |
+| `X =< Y` | Inferieur ou egal | **attention : =&lt; et non &lt;=** |
 | `X >= Y` | Superieur ou egal | evalue les deux cotes |
 
 **Piege** : `=<` et non `<=` ! C'est une erreur tres frequente.

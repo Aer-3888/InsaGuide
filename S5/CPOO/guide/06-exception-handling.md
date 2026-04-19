@@ -1,8 +1,8 @@
-# Exception Handling
+# Gestion des exceptions
 
-## Theory
+## Theorie
 
-### Exception Hierarchy
+### Hierarchie des exceptions
 
 ```
              Throwable
@@ -20,12 +20,12 @@
           ConcurrentModificationException
 ```
 
-### Checked vs Unchecked Exceptions
+### Exceptions verifiees vs non verifiees
 
-| Type | Must declare (`throws`) | Must catch | Examples |
-|------|------------------------|------------|----------|
-| **Checked** | Yes | Yes (or declare) | `IOException`, `NetworkException`, `AnException` |
-| **Unchecked** (RuntimeException) | No | No (optional) | `NullPointerException`, `IllegalArgumentException` |
+| Type | Doit declarer (`throws`) | Doit capturer | Exemples |
+|------|--------------------------|---------------|----------|
+| **Verifiee (Checked)** | Oui | Oui (ou declarer) | `IOException`, `NetworkException`, `AnException` |
+| **Non verifiee (Unchecked)** (RuntimeException) | Non | Non (optionnel) | `NullPointerException`, `IllegalArgumentException` |
 
 ### try/catch/finally
 
@@ -45,7 +45,7 @@ public boolean connectServer(final String address) {
 }
 ```
 
-### Throwing Exceptions
+### Lancer des exceptions
 
 ```java
 public A(final B b) {
@@ -56,7 +56,7 @@ public A(final B b) {
 }
 ```
 
-### Custom Exception Classes
+### Classes d'exceptions personnalisees
 
 ```java
 // Checked exception (extends Exception)
@@ -71,9 +71,9 @@ public class AnException extends Exception {
 }
 ```
 
-### Declaring Exceptions with `throws`
+### Declarer les exceptions avec `throws`
 
-When a method can throw a checked exception, it must declare it:
+Quand une methode peut lancer une exception verifiee, elle doit la declarer :
 
 ```java
 public interface B {
@@ -89,9 +89,9 @@ public int al(final boolean value) throws SecurityException, NumberFormatExcepti
 }
 ```
 
-### Static Factory Methods and Exception Handling
+### Methodes fabrique statiques et gestion des exceptions
 
-A common pattern is to wrap constructor exceptions in a factory method:
+Un patron courant est d'envelopper les exceptions du constructeur dans une methode fabrique :
 
 ```java
 public static A create(final B b) {
@@ -103,9 +103,9 @@ public static A create(final B b) {
 }
 ```
 
-### Exception Handling in Tests
+### Gestion des exceptions dans les tests
 
-**Testing that an exception is thrown**:
+**Tester qu'une exception est lancee** :
 ```java
 @Test
 void testConstructWithNull() {
@@ -115,7 +115,7 @@ void testConstructWithNull() {
 }
 ```
 
-**Testing that an exception is NOT thrown (normal flow)**:
+**Tester qu'une exception n'est PAS lancee (flux normal)** :
 ```java
 @Test
 void testNormalFlow() throws AnException {
@@ -124,7 +124,7 @@ void testNormalFlow() throws AnException {
 }
 ```
 
-**Common exam mistake -- wrapping in try/catch instead of assertThrows**:
+**Erreur courante a l'examen -- envelopper dans un try/catch au lieu d'utiliser assertThrows** :
 ```java
 // WRONG (verbose, error-prone)
 @Test
@@ -144,9 +144,9 @@ void testGood() {
 }
 ```
 
-### The Bug in Exo9: IndexOutOfBoundsException
+### Le bug dans Exo9 : IndexOutOfBoundsException
 
-The course includes a deliberate bug to teach about exception boundaries:
+Le cours inclut un bug delibere pour enseigner les limites des exceptions :
 
 ```java
 public boolean contient(String str) {
@@ -160,13 +160,13 @@ public boolean contient(String str) {
 }
 ```
 
-When `i == taille`, `maListe.get(i)` throws `IndexOutOfBoundsException`. The fix: change `<=` to `<`.
+Quand `i == taille`, `maListe.get(i)` lance une `IndexOutOfBoundsException`. La correction : changer `<=` en `<`.
 
 ---
 
-## Exception Patterns from Exams
+## Patrons d'exceptions des examens
 
-### Pattern 1: Short-circuit evaluation and exceptions
+### Patron 1 : Evaluation en court-circuit et exceptions
 
 ```java
 // In A.al():
@@ -176,9 +176,9 @@ if (str == null || !value) {
 return str.length() * b.getB1();    // b.getB1() may throw AnException
 ```
 
-The `||` operator short-circuits: if `str == null` is true, `!value` is not evaluated. Similarly, if `str != null` and `value == true`, then `str.length()` is safe (no NPE) and `b.getB1()` is called (may throw `AnException`).
+L'operateur `||` court-circuite : si `str == null` est vrai, `!value` n'est pas evalue. De meme, si `str != null` et `value == true`, alors `str.length()` est sur (pas de NPE) et `b.getB1()` est appele (peut lancer `AnException`).
 
-### Pattern 2: Multiple exception types
+### Patron 2 : Types d'exceptions multiples
 
 ```java
 public int al(final boolean value) throws SecurityException, NumberFormatException, AnException {
@@ -186,9 +186,9 @@ public int al(final boolean value) throws SecurityException, NumberFormatExcepti
 }
 ```
 
-A method can declare multiple exception types. In tests, you should verify which exceptions are actually reachable.
+Une methode peut declarer plusieurs types d'exceptions. Dans les tests, il faut verifier quelles exceptions sont effectivement atteignables.
 
-### Pattern 3: Exception from mocked objects
+### Patron 3 : Exception depuis des objets mockes
 
 ```java
 B beh = Mockito.mock(B.class);
@@ -203,13 +203,13 @@ assertThrows(AnException.class, () -> {
 
 ---
 
-## Common Pitfalls
+## Pieges courants
 
-1. **Catching too broadly**: `catch (Exception e)` hides specific errors. Catch the most specific exception type.
-2. **Silently swallowing exceptions**: an empty `catch` block hides failures. At minimum, log the error.
-3. **Off-by-one in loops**: `i <= size` instead of `i < size` causes `IndexOutOfBoundsException` (as in Exo9).
-4. **Not testing exception paths**: achieving 100% coverage requires testing both normal and exception paths.
-5. **Using `fail()` instead of `assertThrows()`**: the modern JUnit 5 way is `assertThrows()`, which is cleaner and less error-prone.
+1. **Capturer trop large** : `catch (Exception e)` masque les erreurs specifiques. Capturer le type d'exception le plus specifique.
+2. **Avaler silencieusement les exceptions** : un bloc `catch` vide masque les echecs. Au minimum, journaliser l'erreur.
+3. **Erreur de borne dans les boucles** : `i <= size` au lieu de `i < size` provoque une `IndexOutOfBoundsException` (comme dans Exo9).
+4. **Ne pas tester les chemins d'exception** : atteindre 100% de couverture necessite de tester les chemins normaux et les chemins d'exception.
+5. **Utiliser `fail()` au lieu de `assertThrows()`** : la facon moderne avec JUnit 5 est `assertThrows()`, qui est plus propre et moins sujette aux erreurs.
 
 ---
 

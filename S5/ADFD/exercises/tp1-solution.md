@@ -65,7 +65,7 @@ Data columns (total 81 columns):
 dtypes: float64(3), int64(35), object(43)
 ```
 
-**Interpretation:** The dataset has 81 columns. The `info()` output reveals that many object columns have missing values (e.g., PoolQC has only 7 non-null out of 1460). Among the 38 numerical columns, not all are truly quantitative -- MSSubClass uses integer codes for categories.
+**Interpretation :** Le jeu de donnees a 81 colonnes. La sortie de `info()` revele que beaucoup de colonnes object ont des valeurs manquantes (ex. PoolQC n'a que 7 non-null sur 1460). Parmi les 38 colonnes numeriques, toutes ne sont pas veritablement quantitatives -- MSSubClass utilise des codes entiers pour des categories.
 
 ---
 
@@ -84,7 +84,7 @@ print("Nombre de variables non-object :", nb_non_object)
 Nombre de variables non-object : 38
 ```
 
-**Interpretation:** 38 columns have numeric types (int64 or float64). However, columns like MSSubClass (which encodes dwelling types as numbers like 20, 30, 60, 70) are categorical despite being int64.
+**Interpretation :** 38 colonnes ont des types numeriques (int64 ou float64). Cependant, des colonnes comme MSSubClass (qui encode des types de logements en nombres comme 20, 30, 60, 70) sont categorielles malgre leur type int64.
 
 ---
 
@@ -126,7 +126,7 @@ GarageCond      81   5.547945
 GarageType      81   5.547945
 ```
 
-**Interpretation:** PoolQC is 99.5% missing because very few houses in Ames have swimming pools -- this is "Missing Not At Random" (MNAR) where absence is informative. Alley (93.8% missing) means most properties have no alley access.
+**Interpretation :** PoolQC a 99.5% de valeurs manquantes car tres peu de maisons a Ames ont des piscines -- c'est du "Missing Not At Random" (MNAR) ou l'absence est informative. Alley (93.8% manquant) signifie que la plupart des proprietes n'ont pas d'acces par allee.
 
 ---
 
@@ -144,7 +144,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-**Expected output/plot:** A descending bar chart with PoolQC (~1453) as the tallest bar, followed by MiscFeature (~1406), Alley (~1369). The drop-off from FireplaceQu (690) to LotFrontage (259) is notable, and remaining variables have small bars (<100).
+**Sortie attendue/graphique :** Un diagramme en barres descendant avec PoolQC (~1453) comme la barre la plus haute, suivi de MiscFeature (~1406), Alley (~1369). La chute de FireplaceQu (690) a LotFrontage (259) est notable, et les variables restantes ont de petites barres (&lt;100).
 
 ---
 
@@ -230,21 +230,21 @@ df_num = df[cols_numeric].copy()
 print(df_num.info())
 ```
 
-**Variable descriptions (from notebook):**
-- **LotArea:** Lot size in square feet
-- **MasVnrArea:** Masonry veneer area in square feet
-- **BsmtFinSF1:** Type 1 finished square feet (basement)
-- **BsmtUnfSF:** Unfinished square feet of basement area
-- **TotalBsmtSF:** Total square feet of basement area
-- **1stFlrSF:** First Floor square feet
-- **2ndFlrSF:** Second floor square feet
-- **GrLivArea:** Above grade living area square feet
-- **GarageArea:** Size of garage in square feet
-- **WoodDeckSF:** Wood deck area in square feet
-- **OpenPorchSF:** Open porch area in square feet
-- **EnclosedPorch:** Enclosed porch area in square feet
-- **MiscVal:** Value of miscellaneous feature (dollars)
-- **SalePrice:** Sale price in dollars (target variable)
+**Description des variables (du notebook) :**
+- **LotArea :** Taille du terrain en pieds carres
+- **MasVnrArea :** Surface de placage en maconnerie en pieds carres
+- **BsmtFinSF1 :** Surface finie de type 1 au sous-sol en pieds carres
+- **BsmtUnfSF :** Surface non finie du sous-sol en pieds carres
+- **TotalBsmtSF :** Surface totale du sous-sol en pieds carres
+- **1stFlrSF :** Surface du premier etage en pieds carres
+- **2ndFlrSF :** Surface du deuxieme etage en pieds carres
+- **GrLivArea :** Surface habitable hors sous-sol en pieds carres
+- **GarageArea :** Surface du garage en pieds carres
+- **WoodDeckSF :** Surface de la terrasse en bois en pieds carres
+- **OpenPorchSF :** Surface du porche ouvert en pieds carres
+- **EnclosedPorch :** Surface du porche ferme en pieds carres
+- **MiscVal :** Valeur d'elements divers (dollars)
+- **SalePrice :** Prix de vente en dollars (variable cible)
 
 ---
 
@@ -262,7 +262,7 @@ plt.ylabel("Count")
 plt.show()
 ```
 
-**Expected output/plot:** A right-skewed distribution centered around 800-1200 sq ft, with a long right tail extending to ~4500 sq ft. Most houses have first floors between 600 and 1500 sq ft.
+**Sortie attendue/graphique :** Une distribution asymetrique a droite centree autour de 800-1200 sq ft, avec une longue queue a droite s'etendant jusqu'a ~4500 sq ft. La plupart des maisons ont des premiers etages entre 600 et 1500 sq ft.
 
 ---
 
@@ -278,7 +278,7 @@ plt.ylabel("Count")
 plt.show()
 ```
 
-**Expected output/plot:** Extremely right-skewed. The vast majority of lots are between 5,000 and 15,000 sq ft, but outliers reach up to 215,245 sq ft. The distribution has a massive spike on the left and a very long right tail.
+**Sortie attendue/graphique :** Extremement asymetrique a droite. La grande majorite des terrains font entre 5 000 et 15 000 sq ft, mais les valeurs aberrantes atteignent 215 245 sq ft. La distribution a un pic massif a gauche et une tres longue queue a droite.
 
 ---
 
@@ -294,7 +294,7 @@ plt.title("Living Area vs Sale Price")
 plt.show()
 ```
 
-**Expected output/plot:** A clear positive linear relationship. Most points form a cloud from lower-left (~800 sq ft, ~100k$) to upper-right (~3000 sq ft, ~500k$). There are 2 notable outliers in the bottom-right: houses with GrLivArea > 4000 sq ft but SalePrice < 200k$ (likely foreclosures or family transfers).
+**Sortie attendue/graphique :** Une relation lineaire positive claire. La plupart des points forment un nuage du coin inferieur gauche (~800 sq ft, ~100k$) au coin superieur droit (~3000 sq ft, ~500k$). Il y a 2 valeurs aberrantes notables en bas a droite : des maisons avec GrLivArea > 4000 sq ft mais SalePrice &lt; 200k$ (probablement des saisies ou des transferts familiaux).
 
 **Observation (from notebook):** Les variables GrLiveArea et SalePrice semblent tres correlees.
 
@@ -317,7 +317,7 @@ print(f"Before: {len(df_num)}, After: {len(df_dropped)}")
 Before: 1460, After: 1452
 ```
 
-**Interpretation:** Only 8 rows are lost (those with MasVnrArea = NaN). Since this is only 0.55% of data, dropping is acceptable. However, imputation is preferred because it preserves all observations and is a transferable practice for datasets with more missing values.
+**Interpretation :** Seulement 8 lignes sont perdues (celles avec MasVnrArea = NaN). Puisque cela ne represente que 0.55% des donnees, la suppression est acceptable. Cependant, l'imputation est preferee car elle preserve toutes les observations et est une pratique transferable pour des jeux de donnees avec plus de valeurs manquantes.
 
 ---
 
@@ -345,7 +345,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-**Expected output:** 0 remaining NaN. The median of MasVnrArea is 0.0 (because >50% of houses have no masonry veneer), so the 8 missing values are filled with 0.
+**Sortie attendue :** 0 NaN restants. La mediane de MasVnrArea est 0.0 (car >50% des maisons n'ont pas de placage en maconnerie), donc les 8 valeurs manquantes sont remplies par 0.
 
 ---
 
@@ -370,7 +370,7 @@ Avant : 1460
 Apres : 1326
 ```
 
-**Interpretation:** 134 rows (9.2%) are removed. The `.all(axis=1)` means a row is kept only if ALL 14 of its values are below their respective 99th percentiles. Outliers disproportionately affect PCA because they inflate variance along their direction.
+**Interpretation :** 134 lignes (9.2%) sont supprimees. Le `.all(axis=1)` signifie qu'une ligne est conservee seulement si TOUTES ses 14 valeurs sont en dessous de leur 99e percentile respectif. Les valeurs aberrantes affectent disproportionnellement l'ACP car elles gonflent la variance dans leur direction.
 
 ---
 
@@ -401,7 +401,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-**Why log1p?** `log1p(x) = log(1 + x)` compresses the right tail of skewed distributions and handles zeros correctly (`log1p(0) = 0`).
+**Pourquoi log1p ?** `log1p(x) = log(1 + x)` compresse la queue droite des distributions asymetriques et gere correctement les zeros (`log1p(0) = 0`).
 
 ---
 
@@ -428,7 +428,7 @@ WoodDeckSF
 Name: count, dtype: int64
 ```
 
-**Interpretation:** 761 out of 1326 houses (57%) have WoodDeckSF = 0 (no wood deck). This is a "zero-inflated" distribution, common for optional features.
+**Interpretation :** 761 maisons sur 1326 (57%) ont WoodDeckSF = 0 (pas de terrasse en bois). C'est une distribution "gonflees de zeros", courante pour les caracteristiques optionnelles.
 
 ---
 
@@ -480,7 +480,7 @@ RMSE : 39280.83
 RMSE : 32392.59
 ```
 
-**Interpretation:** Cleaning reduced prediction error by ~$6,888. The improvement comes from removing outliers and from the log transformation that makes relationships more linear.
+**Interpretation :** Le nettoyage a reduit l'erreur de prediction de ~6 888$. L'amelioration provient de la suppression des valeurs aberrantes et de la transformation log qui rend les relations plus lineaires.
 
 ---
 
@@ -494,7 +494,7 @@ scaler = StandardScaler()
 X_scaled = scaler.fit_transform(df_clean)
 ```
 
-**Why standardize?** PCA finds directions of maximum variance. Without standardization, SalePrice (range 0-755,000) would dominate over WoodDeckSF (range 0-857) purely because of scale. StandardScaler transforms each variable to have mean=0 and std=1.
+**Pourquoi standardiser ?** L'ACP trouve les directions de variance maximale. Sans standardisation, SalePrice (plage 0-755 000) dominerait WoodDeckSF (plage 0-857) uniquement a cause de l'echelle. StandardScaler transforme chaque variable pour avoir moyenne=0 et ecart-type=1.
 
 ---
 
@@ -534,7 +534,7 @@ PC13: 0.87%
 PC14: 0.35%
 ```
 
-**Interpretation:** The first 2 components capture only ~38.7% of variance. This is lower than the French cities temperature example (~87%) because these 14 housing variables are diverse and not as strongly correlated.
+**Interpretation :** Les 2 premieres composantes ne capturent que ~38.7% de la variance. C'est inferieur a l'exemple des temperatures des villes francaises (~87%) car ces 14 variables immobilieres sont diverses et pas aussi fortement correlees.
 
 ---
 
@@ -554,7 +554,7 @@ plt.axvline(0, color='k', linestyle='--', alpha=0.3)
 plt.show()
 ```
 
-**Expected output/plot:** A cloud of 1326 points with no obvious clustering. The cloud is roughly elliptical, extending more along PC1 than PC2. At this stage, the projection alone does not reveal much structure.
+**Sortie attendue/graphique :** Un nuage de 1326 points sans clustering evident. Le nuage est grosso modo elliptique, s'etendant plus le long de PC1 que de PC2. A ce stade, la projection seule ne revele pas beaucoup de structure.
 
 ---
 
@@ -590,14 +590,14 @@ The notebook provides a `correlation_circle_plotly` function. Use it:
 correlation_circle_plotly(pca, df_clean.columns, min_contrib=0.15)
 ```
 
-**Expected output/plot:** A unit circle with arrows from the origin. Variables near the circle boundary are well-represented on these 2 PCs.
+**Sortie attendue/graphique :** Un cercle unite avec des fleches depuis l'origine. Les variables pres du bord du cercle sont bien representees sur ces 2 composantes.
 
-**Expected positions of variables:**
-- **Clustered together along PC1 (right side):** TotalBsmtSF, 1stFlrSF, GrLivArea, GarageArea -- correlated, representing "house size"
-- **Pointing upward (positive PC2):** SalePrice, partially GrLivArea
-- **Near center (low contribution):** BsmtFinSF1, WoodDeckSF, OpenPorchSF, EnclosedPorch, MiscVal -- vary independently
+**Positions attendues des variables :**
+- **Regroupees le long de PC1 (cote droit) :** TotalBsmtSF, 1stFlrSF, GrLivArea, GarageArea -- correlees, representant la "taille de la maison"
+- **Pointant vers le haut (PC2 positif) :** SalePrice, partiellement GrLivArea
+- **Pres du centre (faible contribution) :** BsmtFinSF1, WoodDeckSF, OpenPorchSF, EnclosedPorch, MiscVal -- varient independamment
 
-**Answers to the questions:**
+**Reponses aux questions :**
 - Variables liees au premier axe: TotalBsmtSF, 1stFlrSF, GrLivArea, GarageArea (taille de la maison)
 - Variables liees au deuxieme axe: SalePrice, GrLivArea (valeur/qualite)
 - Variables correlees entre elles: TotalBsmtSF et 1stFlrSF (fleches dans la meme direction)
@@ -662,7 +662,7 @@ BsmtUnfSF        ~0.10
 BsmtFinSF1       ~0.09
 ```
 
-**Interpretation:** PC1 is driven by surface areas (basement, first floor, living area, garage). PC2 is driven by SalePrice and second floor area, a "value and multi-story" dimension.
+**Interpretation :** PC1 est porte par les surfaces (sous-sol, premier etage, surface habitable, garage). PC2 est porte par SalePrice et la surface du deuxieme etage, une dimension "valeur et multi-etages".
 
 ---
 
@@ -684,13 +684,13 @@ plt.title("PCA colored by SalePrice")
 plt.show()
 ```
 
-**Expected output/plot:** A gradient appears primarily along PC2. Points at the top (high PC2) are yellow (high SalePrice), while points at the bottom are purple (low SalePrice).
+**Sortie attendue/graphique :** Un gradient apparait principalement le long de PC2. Les points en haut (PC2 eleve) sont jaunes (SalePrice eleve), tandis que les points en bas sont violets (SalePrice faible).
 
 ---
 
 ### Q28 - Commenter cette visualisation
 
-**Answer:** SalePrice increases primarily along PC2 (vertical axis), confirming that PC2 captures the "value" dimension. The correlation circle predicted this -- SalePrice's arrow points mostly upward. There is also some gradient along PC1 (larger houses cost more), but the PC2 relationship is more pronounced.
+**Reponse :** SalePrice augmente principalement le long de PC2 (axe vertical), confirmant que PC2 capture la dimension "valeur". Le cercle des correlations l'avait predit -- la fleche de SalePrice pointe principalement vers le haut. Il y a aussi un gradient le long de PC1 (les maisons plus grandes coutent plus cher), mais la relation avec PC2 est plus prononcee.
 
 ---
 
@@ -708,13 +708,13 @@ plt.title("PCA colored by BsmtFinSF1")
 plt.show()
 ```
 
-**Expected output/plot:** Less clear gradient than SalePrice. Points with high BsmtFinSF1 are scattered throughout, with no strong correlation to either axis. This confirms that BsmtFinSF1 sits near the center of the correlation circle with low contribution to the first 2 PCs.
+**Sortie attendue/graphique :** Gradient moins clair que pour SalePrice. Les points avec un BsmtFinSF1 eleve sont disperses partout, sans forte correlation avec aucun des deux axes. Cela confirme que BsmtFinSF1 se situe pres du centre du cercle des correlations avec une faible contribution aux 2 premieres composantes.
 
 ---
 
 ### Q30 - Commenter cette visualisation
 
-**Answer:** BsmtFinSF1 (finished basement area) does not show a clear pattern on the first two principal components. The coloring appears relatively uniform across the PCA plane. This is expected since BsmtFinSF1 is near the center of the correlation circle, meaning its variance is captured by higher-order components (PC3 and beyond), not the first two.
+**Reponse :** BsmtFinSF1 (surface finie du sous-sol) ne montre pas de schema clair sur les deux premieres composantes principales. La coloration apparait relativement uniforme sur le plan ACP. C'est attendu puisque BsmtFinSF1 est pres du centre du cercle des correlations, ce qui signifie que sa variance est capturee par des composantes d'ordre superieur (PC3 et au-dela), pas les deux premieres.
 
 ---
 
@@ -812,4 +812,4 @@ plt.ylabel(f"PC2 ({pca.explained_variance_ratio_[1]*100:.1f}%)")
 plt.show()
 ```
 
-**Expected output/plot:** Blue points (low quality) form a cluster on the left side. Red points (high quality) form a cluster on the right side. There is clear separation along PC1, confirming that PC1 captures not just "size" but also "quality" -- larger and better-built houses project to the right.
+**Sortie attendue/graphique :** Les points bleus (faible qualite) forment un groupe a gauche. Les points rouges (haute qualite) forment un groupe a droite. Il y a une separation claire le long de PC1, confirmant que PC1 capture non seulement la "taille" mais aussi la "qualite" -- les maisons plus grandes et mieux construites se projettent a droite.

@@ -8,7 +8,7 @@
 
 ### Coloration propre
 
-Fonction c : S -> {1, 2, ..., k} telle que pour toute arete {u,v} : c(u) != c(v).
+Fonction c : S → {1, 2, ..., k} telle que pour toute arete {u,v} : c(u) != c(v).
 
 ### Nombre chromatique chi(G)
 
@@ -55,7 +55,7 @@ Delta(G) = degre maximal. L'algorithme glouton ne depasse jamais Delta+1 couleur
 | Cycle pair C_{2k} | 2 |
 | Cycle impair C_{2k+1} | 3 |
 | Graphe complet K_n | n |
-| Graphe planaire | <= 4 |
+| Graphe planaire | &lt;= 4 |
 
 ---
 
@@ -73,7 +73,7 @@ Exceptions (ou chi = Delta + 1) : graphes complets K_n et cycles impairs.
 
 ### Theoreme des 4 couleurs (1976)
 
-Tout graphe planaire est 4-colorable : chi(G) <= 4.
+Tout graphe planaire est 4-colorable : chi(G) &lt;= 4.
 
 Premier theoreme majeur prouve par ordinateur (Appel & Haken, 1976).
 

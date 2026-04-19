@@ -1,147 +1,147 @@
-# CLP Exam Preparation
+# Preparation aux examens CLP
 
-## Exam Structure
+## Structure des examens
 
-CLP has **two separate exams**:
+CLP comporte **deux examens distincts** :
 
-### DS Logique (Digital Logic Exam)
-
-| Aspect | Details |
-|--------|---------|
-| Duration | ~2 hours |
-| Topics | Combinational logic, sequential logic, state machines, UC/UT design |
-| Format | Written: truth tables, Karnaugh maps, state diagrams, circuit design |
-| Tools allowed | Usually none (no calculator) |
-
-**Typical question types**:
-1. Boolean algebra simplification (15-20 min)
-2. Karnaugh map simplification (15-20 min)
-3. State machine design from specification (30-40 min)
-4. UC/UT design or analysis (30-40 min)
-
-### DS Assembleur (Assembly Exam)
+### DS Logique (Examen de logique numerique)
 
 | Aspect | Details |
 |--------|---------|
-| Duration | ~2 hours |
-| Topics | ARM assembly: instruction reading, code writing, stack tracing |
-| Format | Written: read code, write code, trace execution |
-| Tools allowed | ARM cheatsheet usually provided |
+| Duree | ~2 heures |
+| Sujets | Logique combinatoire, logique sequentielle, machines a etats, conception UC/UT |
+| Format | Ecrit : tables de verite, tableaux de Karnaugh, diagrammes d'etats, conception de circuits |
+| Outils autorises | Generalement aucun (pas de calculatrice) |
 
-**Typical question types**:
-1. Read and explain existing assembly code (20-30 min)
-2. Write a function in ARM assembly (30-40 min)
-3. Trace stack/registers through function calls (20-30 min)
-4. Data structure manipulation in assembly (20-30 min)
+**Types de questions courants** :
+1. Simplification d'algebre de Boole (15-20 min)
+2. Simplification par tableau de Karnaugh (15-20 min)
+3. Conception de machine a etats a partir d'un cahier des charges (30-40 min)
+4. Conception ou analyse UC/UT (30-40 min)
 
----
+### DS Assembleur (Examen d'assembleur)
 
-## Study Strategy
+| Aspect | Details |
+|--------|---------|
+| Duree | ~2 heures |
+| Sujets | Assembleur ARM : lecture d'instructions, ecriture de code, trace de pile |
+| Format | Ecrit : lire du code, ecrire du code, tracer l'execution |
+| Outils autorises | Aide-memoire ARM generalement fourni |
 
-### For DS Logique
-
-**Week 1**: Review combinational logic fundamentals
-- Practice Boolean algebra simplifications (at least 10 exercises)
-- Master Karnaugh maps for 3 and 4 variables
-- Review number systems (binary, hex, two's complement)
-
-**Week 2**: Focus on sequential logic
-- Practice state machine design from scratch
-- Convert between flip-flop types
-- Draw timing diagrams from state tables
-
-**Week 3**: Processor architecture
-- Understand UC/UT decomposition
-- Practice microprogramming (writing microcode words)
-- Review the PGCD and Fibonacci machines end-to-end
-
-### For DS Assembleur
-
-**Week 1**: Instruction set mastery
-- Memorize the 15 most common instructions
-- Practice reading code snippets and predicting output
-- Understand addressing modes (immediate, register, indexed, scaled)
-
-**Week 2**: Function calling convention
-- Draw stack frames from memory
-- Practice writing complete functions (prologue + body + epilogue)
-- Trace recursive calls step by step
-
-**Week 3**: Data structures and past exams
-- Practice array and structure access in assembly
-- Work through all past exams under timed conditions
-- Focus on common patterns: loops, string processing, struct access
+**Types de questions courants** :
+1. Lire et expliquer du code assembleur existant (20-30 min)
+2. Ecrire une fonction en assembleur ARM (30-40 min)
+3. Tracer la pile/les registres a travers les appels de fonctions (20-30 min)
+4. Manipulation de structures de donnees en assembleur (20-30 min)
 
 ---
 
-## Time Allocation During the Exam
+## Strategie de revision
 
-### DS Logique (2 hours)
+### Pour le DS Logique
 
-| Phase | Time | Activity |
-|-------|------|----------|
-| Read | 10 min | Read ALL questions first. Identify easy wins. |
-| Easy questions | 30 min | Boolean algebra, conversions, simple truth tables |
-| Medium questions | 40 min | Karnaugh maps, flip-flop circuits |
-| Hard questions | 30 min | State machine design, UC/UT integration |
-| Review | 10 min | Check all truth tables, verify Karnaugh groupings |
+**Semaine 1** : Reviser les fondamentaux de la logique combinatoire
+- Pratiquer les simplifications d'algebre de Boole (au moins 10 exercices)
+- Maitriser les tableaux de Karnaugh pour 3 et 4 variables
+- Reviser les systemes de numeration (binaire, hexadecimal, complement a deux)
 
-### DS Assembleur (2 hours)
+**Semaine 2** : Se concentrer sur la logique sequentielle
+- Pratiquer la conception de machines a etats a partir de zero
+- Convertir entre les types de bascules
+- Dessiner des chronogrammes a partir des tables d'etats
 
-| Phase | Time | Activity |
-|-------|------|----------|
-| Read | 10 min | Read ALL questions. Identify data structures used. |
-| Code reading | 30 min | Annotate given code, trace execution |
-| Code writing | 40 min | Write requested functions with full prologue/epilogue |
-| Stack tracing | 20 min | Draw stack diagrams, trace register values |
-| Review | 20 min | Check stack balance, verify offsets, review edge cases |
+**Semaine 3** : Architecture des processeurs
+- Comprendre la decomposition UC/UT
+- Pratiquer la microprogrammation (ecriture de mots de microcode)
+- Revoir les machines PGCD et Fibonacci de bout en bout
+
+### Pour le DS Assembleur
+
+**Semaine 1** : Maitrise du jeu d'instructions
+- Memoriser les 15 instructions les plus courantes
+- Pratiquer la lecture d'extraits de code et la prediction de la sortie
+- Comprendre les modes d'adressage (immediat, registre, indexe, a echelle)
+
+**Semaine 2** : Convention d'appel de fonctions
+- Dessiner les cadres de pile de memoire
+- Pratiquer l'ecriture de fonctions completes (prologue + corps + epilogue)
+- Tracer les appels recursifs pas a pas
+
+**Semaine 3** : Structures de donnees et annales
+- Pratiquer l'acces aux tableaux et structures en assembleur
+- Travailler toutes les annales en conditions chronometrees
+- Se concentrer sur les patrons courants : boucles, traitement de chaines, acces aux structures
 
 ---
 
-## Common Mistakes to Avoid
+## Gestion du temps pendant l'examen
+
+### DS Logique (2 heures)
+
+| Phase | Temps | Activite |
+|-------|-------|----------|
+| Lecture | 10 min | Lire TOUTES les questions d'abord. Identifier les gains faciles. |
+| Questions faciles | 30 min | Algebre de Boole, conversions, tables de verite simples |
+| Questions moyennes | 40 min | Tableaux de Karnaugh, circuits a bascules |
+| Questions difficiles | 30 min | Conception de machine a etats, integration UC/UT |
+| Relecture | 10 min | Verifier toutes les tables de verite, valider les regroupements Karnaugh |
+
+### DS Assembleur (2 heures)
+
+| Phase | Temps | Activite |
+|-------|-------|----------|
+| Lecture | 10 min | Lire TOUTES les questions. Identifier les structures de donnees utilisees. |
+| Lecture de code | 30 min | Annoter le code donne, tracer l'execution |
+| Ecriture de code | 40 min | Ecrire les fonctions demandees avec prologue/epilogue complets |
+| Trace de pile | 20 min | Dessiner les schemas de pile, tracer les valeurs des registres |
+| Relecture | 20 min | Verifier l'equilibrage de pile, valider les offsets, revoir les cas limites |
+
+---
+
+## Erreurs courantes a eviter
 
 ### DS Logique
 
-1. **Karnaugh map column order**: 00, 01, 11, 10 (Gray code), NOT 00, 01, 10, 11
-2. **Missing state transitions**: Every state must define what happens for EVERY input
-3. **Forgetting to check for redundant states**: Minimize before implementing
-4. **Wrong microcode bit ordering**: Double-check which bit controls which command
+1. **Ordre des colonnes du tableau de Karnaugh** : 00, 01, 11, 10 (code de Gray), PAS 00, 01, 10, 11
+2. **Transitions d'etat manquantes** : Chaque etat doit definir ce qui se passe pour CHAQUE entree
+3. **Oublier de verifier les etats redondants** : Minimiser avant d'implementer
+4. **Mauvais ordre des bits de microcode** : Bien verifier quel bit commande quelle commande
 
 ### DS Assembleur
 
-1. **Not saving LR before BL**: Guaranteed crash or wrong return
-2. **Wrong stack offsets**: Draw the frame, count bytes from FP
-3. **Confusing LDR and LDRB**: Word (4 bytes) vs byte (1 byte)
-4. **Forgetting .align after .ascii**: Causes misalignment errors
-5. **Missing stack cleanup**: Every SUB sp must have matching ADD sp
+1. **Ne pas sauvegarder LR avant BL** : Crash garanti ou mauvais retour
+2. **Mauvais offsets de pile** : Dessiner le cadre, compter les octets depuis FP
+3. **Confondre LDR et LDRB** : Mot (4 octets) vs octet (1 octet)
+4. **Oublier .align apres .ascii** : Cause des erreurs de desalignement
+5. **Nettoyage de pile manquant** : Chaque SUB sp doit avoir un ADD sp correspondant
 
 ---
 
-## Past Exam Index
+## Index des annales
 
-### Assembly Exams
+### Examens d'assembleur
 
-| Year | Available Materials | Key Topics |
-|------|-------------------|------------|
-| 2017 | Subject PDF, 2 solutions (.s + .pdf) | String processing, counting characters |
-| 2018 | Subject PDF, 2 solutions (.s + .pdf) | Structures (lines/vectors), direction vectors, collinearity |
-| 2019 | Subject PDF, 2 solutions (.s + .pdf) | Structures (ingredients), counting, number parsing |
-| 2022 | Subject PDF | -- |
-| 2023 | Subject PDF | -- |
-| 2024 | Subject PDF | -- |
+| Annee | Materiel disponible | Sujets cles |
+|-------|---------------------|-------------|
+| 2017 | Sujet PDF, 2 solutions (.s + .pdf) | Traitement de chaines, comptage de caracteres |
+| 2018 | Sujet PDF, 2 solutions (.s + .pdf) | Structures (droites/vecteurs), vecteurs directeurs, colinearite |
+| 2019 | Sujet PDF, 2 solutions (.s + .pdf) | Structures (ingredients), comptage, analyse de nombres |
+| 2022 | Sujet PDF | -- |
+| 2023 | Sujet PDF | -- |
+| 2024 | Sujet PDF | -- |
 
-### Logic Exams
+### Examens de logique
 
-| Year | Available Materials |
-|------|-------------------|
-| 2008-2016 | Multiple logic exam PDFs (older format) |
+| Annee | Materiel disponible |
+|-------|---------------------|
+| 2008-2016 | Plusieurs PDF d'examens de logique (ancien format) |
 | 2021 | DS CLP Logique PDF |
 | 2022 | DS CLP Logique PDF |
 | 2023 | DS CLP Logique PDF + exam_clp_logique_23.pdf |
 
 ---
 
-## Exam Walkthroughs
+## Corriges detailles
 
-See the detailed walkthroughs:
-- [exam-assembly-walkthrough.md](exam-assembly-walkthrough.md) -- Step-by-step analysis of 2017, 2018, 2019 assembly exams
+Voir les corriges detailles :
+- [exam-assembly-walkthrough.md](exam-assembly-walkthrough.md) -- Analyse pas a pas des examens d'assembleur 2017, 2018, 2019

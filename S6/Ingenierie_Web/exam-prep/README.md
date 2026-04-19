@@ -37,8 +37,8 @@ Toutes les questions portent sur ce meme domaine, de la serialisation JSON jusqu
 5. Virgules entre les elements, PAS de trailing comma
 
 **Questions pieges** :
-- "Ce JSON/XML est-il bien forme ?" -> verifier la syntaxe strictement
-- "Est-il valide ?" -> bien forme ET conforme a un schema (si pas de schema, on ne peut pas dire "valide")
+- "Ce JSON/XML est-il bien forme ?" → verifier la syntaxe strictement
+- "Est-il valide ?" → bien forme ET conforme a un schema (si pas de schema, on ne peut pas dire "valide")
 - XML : verifier imbrication, un seul element racine, balises fermees
 - JSON : guillemets doubles obligatoires, pas de paires cle:valeur dans un tableau `[ ]`
 
@@ -64,9 +64,9 @@ Reponse :
 **Methode** :
 1. Pour chaque classe du diagramme : `@Entity` + `@Id` + `@GeneratedValue`
 2. Pour chaque association :
-   - `1..*` <-> `0..*` : `@ManyToMany`
-   - `1` <-> `0..*` : `@OneToMany` (cote 1) + `@ManyToOne` (cote *)
-   - `1` <-> `1` : `@OneToOne`
+   - `1..*` &lt;-> `0..*` : `@ManyToMany`
+   - `1` &lt;-> `0..*` : `@OneToMany` (cote 1) + `@ManyToOne` (cote *)
+   - `1` &lt;-> `1` : `@OneToOne`
 3. Identifier qui "possede" la relation (le cote sans `mappedBy`)
 4. Creer les `CrudRepository<Entity, Long>`
 

@@ -36,7 +36,7 @@ Un test d'hypothese fonctionne exactement comme un tribunal :
 |------|--------|--------|------------|
 | **Bilateral** | $\mu = \mu_0$ | $\mu \neq \mu_0$ | On cherche une difference (sans savoir le sens) |
 | **Unilateral a droite** | $\mu \leq \mu_0$ | $\mu > \mu_0$ | On cherche une augmentation |
-| **Unilateral a gauche** | $\mu \geq \mu_0$ | $\mu < \mu_0$ | On cherche une diminution |
+| **Unilateral a gauche** | $\mu \geq \mu_0$ | $\mu \lt \mu_0$ | On cherche une diminution |
 
 ---
 
@@ -96,15 +96,15 @@ La **p-value** est la probabilite d'observer un resultat **au moins aussi extrem
 
 | p-value | Interpretation | Decision (au seuil $\alpha = 0.05$) |
 |---------|---------------|--------------------------------------|
-| $p < 0.001$ | Evidence tres forte contre $H_0$ | Rejet |
-| $0.001 \leq p < 0.01$ | Evidence forte | Rejet |
-| $0.01 \leq p < 0.05$ | Evidence moderee | Rejet |
-| $0.05 \leq p < 0.10$ | Evidence faible ("tendance") | Non rejet |
+| $p \lt 0.001$ | Evidence tres forte contre $H_0$ | Rejet |
+| $0.001 \leq p \lt 0.01$ | Evidence forte | Rejet |
+| $0.01 \leq p \lt 0.05$ | Evidence moderee | Rejet |
+| $0.05 \leq p \lt 0.10$ | Evidence faible ("tendance") | Non rejet |
 | $p \geq 0.10$ | Pas d'evidence | Non rejet |
 
 ### 4.3 La regle de decision
 
-$$\boxed{\text{Si } p\text{-value} < \alpha \text{, on rejette } H_0}$$
+$$\boxed{\text{Si } p\text{-value} \lt \alpha \text{, on rejette } H_0}$$
 
 C'est **la** regle fondamentale.
 
@@ -148,7 +148,7 @@ La **region critique** (ou region de rejet) est l'ensemble des valeurs de la sta
 |-------------|----------------------------------|
 | Bilateral | $|T| > t_{n-1, 1-\alpha/2}$ |
 | Unilateral droit | $T > t_{n-1, 1-\alpha}$ |
-| Unilateral gauche | $T < -t_{n-1, 1-\alpha}$ |
+| Unilateral gauche | $T \lt -t_{n-1, 1-\alpha}$ |
 
 ---
 
@@ -199,7 +199,7 @@ Un resultat non significatif ($p \geq 0.05$) signifie qu'on n'a pas assez de pre
 
 ### Piege 2 : Confondre significativite statistique et importance pratique
 
-Un effet peut etre **statistiquement significatif** (p < 0.05) mais **pratiquement negligeable**. Avec un echantillon assez grand, meme une difference infime devient significative.
+Un effet peut etre **statistiquement significatif** (p &lt; 0.05) mais **pratiquement negligeable**. Avec un echantillon assez grand, meme une difference infime devient significative.
 
 ### Piege 3 : Tests multiples et inflation du risque alpha
 
@@ -227,7 +227,7 @@ Un t-test suppose la normalite (ou $n$ grand). Un test de chi-deux suppose des e
 3. Choisir le test (voir chapitre 04)
 4. Verifier les conditions (normalite, independance, etc.)
 5. Calculer la statistique de test et la p-value
-6. Conclure : si $p < \alpha$, rejeter $H_0$
+6. Conclure : si $p \lt \alpha$, rejeter $H_0$
 
 ### Tableau de decision
 
@@ -240,7 +240,7 @@ Un t-test suppose la normalite (ou $n$ grand). Un test de chi-deux suppose des e
 
 | Si... | Rediger : |
 |-------|----------|
-| $p < \alpha$ | "On rejette $H_0$ au risque $\alpha$. Au risque de 5%, la difference est significative." |
+| $p \lt \alpha$ | "On rejette $H_0$ au risque $\alpha$. Au risque de 5%, la difference est significative." |
 | $p \geq \alpha$ | "On ne rejette pas $H_0$ au risque $\alpha$. On ne peut pas conclure a une difference significative." |
 
 ### Fonctions R

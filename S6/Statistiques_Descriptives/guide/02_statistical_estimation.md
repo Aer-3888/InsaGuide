@@ -306,7 +306,7 @@ Le MLE divise par $n$, l'estimateur sans biais divise par $n-1$. `var()` en R ut
 
 ### Piege 4 : Appliquer le TCL avec $n$ trop petit
 
-Le TCL est asymptotique. Pour $n < 30$, l'approximation normale peut etre mauvaise, surtout si la distribution est tres asymetrique.
+Le TCL est asymptotique. Pour $n \lt 30$, l'approximation normale peut etre mauvaise, surtout si la distribution est tres asymetrique.
 
 ### Piege 5 : Confondre convergence en probabilite et convergence en moyenne
 

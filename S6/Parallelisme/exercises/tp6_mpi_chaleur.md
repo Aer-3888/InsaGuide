@@ -58,7 +58,7 @@ void afficheTab(double *T)
     for (int i = 0; i < N + 2; i++) {
         printf("\n");
         for (int j = 0; j < M + 2; j++) {
-            printf("%5.2f\t", T[i * (N + 2) + j]);
+            printf("%5.2f\t", T[i * (M + 2) + j]);
         }
     }
     printf("\n");
@@ -95,8 +95,8 @@ int main(void)
     for (int j = 0; j < M + 2; j++) {
         for (int i = 0; i < N + 2; i++) {
             if (i == 0 || j == 0 || i == N + 1 || j == M + 1) {
-                T[i * (N + 2) + j]  = MAX;
-                T1[i * (N + 2) + j] = MAX;
+                T[i * (M + 2) + j]  = MAX;
+                T1[i * (M + 2) + j] = MAX;
             }
         }
     }
@@ -137,7 +137,7 @@ gcc sequentiel.c -o sequentiel -Wall -Wextra -lm
 
 **Expected behavior/output:**
 
-La matrice initiale a les bords a 200.00 et l'interieur a 0.00. Toutes les K=10 iterations, la matrice est affichee avec le delta. Les valeurs interieures augmentent progressivement (diffusion de la chaleur depuis les bords). Le programme s'arrete quand delta < SEUIL=10.
+La matrice initiale a les bords a 200.00 et l'interieur a 0.00. Toutes les K=10 iterations, la matrice est affichee avec le delta. Les valeurs interieures augmentent progressivement (diffusion de la chaleur depuis les bords). Le programme s'arrete quand delta &lt; SEUIL=10.
 
 ---
 
@@ -197,7 +197,7 @@ void afficheTab(FILE *fichier, double *T, int tX, int tY)
     for (int i = 0; i < tX; i++) {
         fprintf(fichier, "\n");
         for (int j = 0; j < tY; j++) {
-            fprintf(fichier, "%5.2f\t", T[i * (N + 2) + j]);
+            fprintf(fichier, "%5.2f\t", T[i * (M + 2) + j]);
         }
     }
     fprintf(fichier, "\n");
@@ -258,8 +258,8 @@ int main(int argc, char *argv[])
         for (int j = 0; j < M + 2; j++) {
             for (int i = 0; i < N + 2; i++) {
                 if (i == 0 || j == 0 || i == N + 1 || j == M + 1) {
-                    T[i * (N + 2) + j]  = MAX;
-                    T1[i * (N + 2) + j] = MAX;
+                    T[i * (M + 2) + j]  = MAX;
+                    T1[i * (M + 2) + j] = MAX;
                 }
             }
         }

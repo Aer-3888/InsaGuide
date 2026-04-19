@@ -170,9 +170,9 @@ Retire IP. Passe au transport.
 
 | Saut | MAC src | MAC dest | IP src | IP dest | TTL |
 |------|---------|----------|--------|---------|-----|
-| A -> R1 | AA | R1A | 192.168.1.10 | 172.16.0.10 | 64 |
-| R1 -> R2 | R1B | R2A | 192.168.1.10 | 172.16.0.10 | 63 |
-| R2 -> B | R2B | BB | 192.168.1.10 | 172.16.0.10 | 62 |
+| A → R1 | AA | R1A | 192.168.1.10 | 172.16.0.10 | 64 |
+| R1 → R2 | R1B | R2A | 192.168.1.10 | 172.16.0.10 | 63 |
+| R2 → B | R2B | BB | 192.168.1.10 | 172.16.0.10 | 62 |
 
 ---
 
@@ -221,14 +221,14 @@ D --------------------------->E
 **Question** : quel chemin prend un paquet de A a C avec RIP ? Avec OSPF ?
 
 **RIP** (metrique = nombre de sauts) :
-- A -> B -> C = 2 sauts
-- A -> D -> E -> C = 3 sauts
-- **Choix RIP : A -> B -> C** (moins de sauts)
+- A → B → C = 2 sauts
+- A → D → E → C = 3 sauts
+- **Choix RIP : A → B → C** (moins de sauts)
 
 **OSPF** (metrique = cout basee sur la bande passante, reference = 100) :
-- A -> B : cout = 100/10 = 10. B -> C : cout = 100/100 = 1. Total = **11**.
-- A -> D : cout = 100/1000 = 1. D -> E : cout = 100/100 = 1. E -> C : cout = 100/10 = 10. Total = **12**.
-- **Choix OSPF : A -> B -> C** (cout total = 11 vs 12)
+- A → B : cout = 100/10 = 10. B → C : cout = 100/100 = 1. Total = **11**.
+- A → D : cout = 100/1000 = 1. D → E : cout = 100/100 = 1. E → C : cout = 100/10 = 10. Total = **12**.
+- **Choix OSPF : A → B → C** (cout total = 11 vs 12)
 
 Dans d'autres topologies, RIP et OSPF peuvent donner des resultats differents car la metrique differe.
 

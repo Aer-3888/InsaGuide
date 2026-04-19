@@ -95,8 +95,7 @@ begin
             fs.print "<#{balise} ID=\"#{$1}\">\n"
 
         # Class 1: NAME tag with "Given/SURNAME/" format
-        elsif remainder =~ /NAME ([\s\w].*)\/([A-Z\-].*)\/
-/
+        elsif remainder =~ /NAME ([\s\w].*)\/([A-Z\-].*)\/$/
             fs.print "<NAME>#{$1}<S>#{$2}</S></NAME>\n"
 
         # Class 3: Reference lines (FAMS, FAMC, HUSB, WIFE, CHIL + @ID@)

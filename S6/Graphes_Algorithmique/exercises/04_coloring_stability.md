@@ -109,18 +109,18 @@ Peut-on trouver une clique de taille 4 ? Testons {A, B, C, D} : A-B existe, A-C 
 Ordre par degre decroissant : C(4), A(3), B(3), D(3), E(3).
 
 ```
-Etape 1 : C reçoit couleur 1 (jour 1).
+Etape 1 : C recoit couleur 1 (jour 1).
 
-Etape 2 : A adjacent a C(1). A reçoit couleur 2 (jour 2).
+Etape 2 : A adjacent a C(1). A recoit couleur 2 (jour 2).
 
-Etape 3 : B adjacent a A(2), C(1). B reçoit couleur 3 (jour 3).
+Etape 3 : B adjacent a A(2), C(1). B recoit couleur 3 (jour 3).
 
 Etape 4 : D adjacent a A(2), C(1), E(?). D pas adjacent a B(3).
-          D reçoit couleur 3 (jour 3). Mais D-E sera un probleme ?
+          D recoit couleur 3 (jour 3). Mais D-E sera un probleme ?
           D pas adjacent a B : OK pour couleur 3.
           
 Etape 5 : E adjacent a B(3), C(1), D(3). E ne peut pas prendre 1, 3.
-          E reçoit couleur 2 (jour 2).
+          E recoit couleur 2 (jour 2).
 ```
 
 **Resultat :**
@@ -140,9 +140,9 @@ Etape 5 : E adjacent a B(3), C(1), D(3). E ne peut pas prendre 1, 3.
 ### Question 1.3 -- Application : quel est le nombre chromatique maximal dans un graphe ?
 
 **Regle :** chi(G) >= omega(G) (taille de la plus grande clique).
-**Regle :** chi(G) <= Delta(G) + 1 (theoreme de Brooks, avec egalite seulement pour les cliques et cycles impairs).
+**Regle :** chi(G) &lt;= Delta(G) + 1 (theoreme de Brooks, avec egalite seulement pour les cliques et cycles impairs).
 
-Ici : omega(G) = 3, Delta(G) = 4. Donc 3 <= chi(G) <= 5.
+Ici : omega(G) = 3, Delta(G) = 4. Donc 3 &lt;= chi(G) &lt;= 5.
 On a trouve une 3-coloration, donc chi(G) = 3. Optimal.
 
 ---
@@ -357,6 +357,6 @@ Etape 10 : Choisir 1. Voisins colories : 2(2), 4(2). Couleur 2 interdite.
 | Clique | Sous-graphe complet | omega(G) = taille max |
 
 **Relations fondamentales :**
-- omega(G) <= chi(G) <= Delta(G) + 1
-- alpha(G) + gamma(G) <= n (pas toujours egalite)
+- omega(G) &lt;= chi(G) &lt;= Delta(G) + 1
+- alpha(G) + gamma(G) &lt;= n (pas toujours egalite)
 - alpha(G) * chi(G) >= n (chaque classe de couleur est un stable)

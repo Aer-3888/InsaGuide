@@ -268,7 +268,7 @@ H(D,4) : via N = 0.04704 * 0.05 * 0.01 = 2.352e-5
 H(A,4) : via N = 0.04704 * 0.05 * 0.01 = 2.352e-5
 ```
 
-**Backtracking** : V <-- N <-- A <-- D
+**Backtracking** : V &lt;-- N &lt;-- A &lt;-- D
 
 **Resultat** : "le"=D, "gros"=A, "chat"=N, "mange"=V, P = 0.0301
 
@@ -293,12 +293,12 @@ Le/D chat/N dort/V
 
 | Transition | Comptage | Contexte |
 |-----------|---------|---------|
-| D -> N | 4 | (le chat, la souris, la souris, le chat) |
-| N -> V | 3 | (chat mange, souris dort, chat dort) |
-| N -> N | 0 | (aucun N suivi de N) |
-| V -> D | 1 | (mange la) |
-| D -> D | 0 | |
-| V -> FIN | 2 | (dort, dort) |
+| D → N | 4 | (le chat, la souris, la souris, le chat) |
+| N → V | 3 | (chat mange, souris dort, chat dort) |
+| N → N | 0 | (aucun N suivi de N) |
+| V → D | 1 | (mange la) |
+| D → D | 0 | |
+| V → FIN | 2 | (dort, dort) |
 
 Total depuis D : 4 (D->N=4, D->V=0, D->D=0)
 Total depuis N : 3 (N->V=3, N->N=0, N->D=0)

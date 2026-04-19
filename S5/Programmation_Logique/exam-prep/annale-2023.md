@@ -172,10 +172,10 @@ covid(X) :- gout(X, non), odorat(X, non).
 grippe(X) :- fievre(X), toux(X).
 ```
 
-- `covid(yann)` : fievre (38>=38) -> SUCCES ; aussi gout(non) + odorat(non)
-- `covid(bertrand)` : fievre (39>=38) -> SUCCES ; aussi toux
-- `grippe(bertrand)` : fievre(39>=38) ET toux -> SUCCES
-- `grippe(yann)` : fievre(38>=38) mais pas toux -> ECHEC
+- `covid(yann)` : fievre (38>=38) → SUCCES ; aussi gout(non) + odorat(non)
+- `covid(bertrand)` : fievre (39>=38) → SUCCES ; aussi toux
+- `grippe(bertrand)` : fievre(39>=38) ET toux → SUCCES
+- `grippe(yann)` : fievre(38>=38) mais pas toux → ECHEC
 
 ### Q13 : travail/1, travaillent/1
 

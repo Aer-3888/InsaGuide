@@ -1,6 +1,6 @@
 # TP Spring Boot -- Back-end REST CRUD pour des Todos
 
-> Following teacher instructions from: `S6/Ingenierie_Web/data/moodle/tp/tp_github_resources/tp-spring/README.md`
+> Source : `S6/Ingenierie_Web/data/moodle/tp/tp_github_resources/tp-spring/README.md`
 
 Le sujet des TP concerne la creation d'un back-end pour realiser des operations CRUD pour des todos.
 
@@ -33,10 +33,10 @@ Prerequis :
 > Lancer le back-end en allant dans `TpSpringApplication.java` et en lancant le `main`.
 > Vous pouvez aussi demarrer l'application en executant la commande suivante (dans le meme dossier que le `pom.xml`) : `mvn spring-boot:run`
 >
-> Dans Swagger Editor, supprimez le contenu affiche et ajoutez simplement le modele OpenAPI fourni. Executez cette commande REST avec `Try it out` -> `Execute`.
+> Dans Swagger Editor, supprimez le contenu affiche et ajoutez simplement le modele OpenAPI fourni. Executez cette commande REST avec `Try it out` → `Execute`.
 > Cette route est deja codee dans le controleur REST `HelloController` (package `tpspring.controller`). Regardez cette classe.
 
-**Answer:**
+**Reponse :**
 
 1. Lancer le back-end :
 ```bash
@@ -68,7 +68,7 @@ paths:
                 description: c'est bon
 ```
 
-3. Cliquer `Try it out` -> `Execute`. On doit recevoir `Hello World` avec un code 200.
+3. Cliquer `Try it out` → `Execute`. On doit recevoir `Hello World` avec un code 200.
 
 4. La classe `HelloController` fournie gere cette route :
 
@@ -117,7 +117,7 @@ public class HelloController {
 }
 ```
 
-**File changes:**
+**Fichiers modifies :**
 - Aucun fichier modifie a cette etape. On observe le code fourni.
 
 ---
@@ -129,7 +129,7 @@ public class HelloController {
 >
 > Affichez la console de developpement de votre navigateur. Allez dans l'onglet reseau et rafraichissez la page. Vous devriez pouvoir observer la requete et ses details.
 
-**Answer:**
+**Reponse :**
 
 1. Dans Firefox/Chrome, aller a : `http://localhost:8080/api/v1/public/hello/helloworld`
    - On voit s'afficher `Hello World`
@@ -137,7 +137,7 @@ public class HelloController {
 2. **Pourquoi la barre d'adresse gere le GET ?**
    La barre d'adresse d'un navigateur envoie toujours une requete HTTP GET lorsqu'on entre une URL. C'est le comportement par defaut du navigateur. **Non, la barre d'adresse ne peut pas gerer un POST** directement. Pour envoyer un POST, il faut soit un formulaire HTML, soit du JavaScript (XMLHttpRequest/fetch), soit un outil comme curl, Postman, ou Swagger.
 
-3. Ouvrir la console developpeur (F12) -> onglet `Reseau` (`Network`) -> rafraichir la page (F5).
+3. Ouvrir la console developpeur (F12) → onglet `Reseau` (`Network`) → rafraichir la page (F5).
    On observe :
    - Methode : GET
    - URL : `http://localhost:8080/api/v1/public/hello/helloworld`
@@ -145,7 +145,7 @@ public class HelloController {
    - Content-Type : `text/plain`
    - Response : `Hello World`
 
-**File changes:**
+**Fichiers modifies :**
 - Aucun fichier modifie.
 
 ---
@@ -156,7 +156,7 @@ public class HelloController {
 > Notamment, vous aurez besoin de definir et d'utiliser le schema de l'objet retourne (le `Todo`).
 > Avec Swagger, testez que la commande ne fonctionne pas.
 
-**Answer:**
+**Reponse :**
 
 Ajouter dans le Swagger Editor, apres les paths existants, la nouvelle route et les composants :
 
@@ -225,9 +225,9 @@ components:
             examples: ["WORK"]
 ```
 
-Tester avec `Try it out` -> `Execute` : la requete retourne une erreur 404 car la route n'est pas encore codee dans Spring.
+Tester avec `Try it out` → `Execute` : la requete retourne une erreur 404 car la route n'est pas encore codee dans Spring.
 
-**File changes:**
+**Fichiers modifies :**
 - Swagger Editor seulement (pas de fichier Java modifie).
 
 ---
@@ -243,7 +243,7 @@ Tester avec `Try it out` -> `Execute` : la requete retourne une erreur 404 car l
 > Tester a nouveau dans Swagger Editor. Tester dans le navigateur avec 1, 2 et 3 comme ID.
 > Pourquoi une `Map` plutot qu'une `List` ? Pourquoi un `Long` plutot qu'un `Integer` ?
 
-**Answer:**
+**Reponse :**
 
 Creer le fichier `TodoControllerV1.java` dans le package `tpspring.controller` :
 
@@ -283,10 +283,10 @@ public class TodoControllerV1 {
 ```
 
 Tester :
-- Swagger Editor -> `Try it out` avec id=1 : retourne le JSON du todo 1
-- Navigateur : `http://localhost:8080/api/v1/public/todo/todo/1` -> JSON du todo
-- Navigateur : `http://localhost:8080/api/v1/public/todo/todo/2` -> JSON du todo 2
-- Navigateur : `http://localhost:8080/api/v1/public/todo/todo/3` -> `null` (pas de todo avec cet id)
+- Swagger Editor → `Try it out` avec id=1 : retourne le JSON du todo 1
+- Navigateur : `http://localhost:8080/api/v1/public/todo/todo/1` → JSON du todo
+- Navigateur : `http://localhost:8080/api/v1/public/todo/todo/2` → JSON du todo 2
+- Navigateur : `http://localhost:8080/api/v1/public/todo/todo/3` → `null` (pas de todo avec cet id)
 
 Le format du JSON recu ne correspond pas exactement a celui defini dans Swagger Editor car on serialise directement l'objet `Todo` Java (avec tous ses attributs, y compris `list`, `owner`, etc.) alors que le schema OpenAPI ne definit que quelques champs. Nous verrons les DTO plus tard.
 
@@ -296,7 +296,7 @@ Une `Map<Long, Todo>` permet un acces O(1) par identifiant (clef = id). Avec une
 **Pourquoi un `Long` plutot qu'un `Integer` ?**
 Le type `long` (64 bits) est le type standard pour les identifiants en JPA/bases de donnees. Il offre une plage de valeurs beaucoup plus grande que `int` (32 bits). De plus, les cles primaires en JPA utilisent `Long` par convention.
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/controller/TodoControllerV1.java` : nouveau fichier -- controleur REST v1 avec GET par id
 
 ---
@@ -308,7 +308,7 @@ Le type `long` (64 bits) est le type standard pour les identifiants en JPA/bases
 > **Attention :** la sortie de `println` sera visible dans la console d'IntelliJ (et non dans votre navigateur).
 > Tester avec Swagger Editor
 
-**Answer:**
+**Reponse :**
 
 1. Ajouter dans le Swagger Editor la route POST :
 ```yaml
@@ -384,7 +384,7 @@ Tester dans Swagger Editor : `Try it out` avec un body JSON :
 
 Dans la console d'IntelliJ, on voit la sortie de `println`. La reponse HTTP est 200 (void).
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/controller/TodoControllerV1.java` : ajout de la methode POST `addTodo`
 
 ---
@@ -399,7 +399,7 @@ Dans la console d'IntelliJ, on voit la sortie de `println`. La reponse HTTP est 
 > Dans le controleur REST, ajoutez un attribut `cpt` (type `long`) qui sera incremente a chaque nouveau todo et utilise comme identifiant du nouveau todo. Modifiez la route `POST` en consequence et commentez les deux ajouts de `Todo` dans le constructeur. Cette pratique n'est pas propre du tout. Nous verrons plus tard comment faire cela de maniere correcte.
 > Cette route retournera maintenant l'objet `Todo` cree. Modifiez le Swagger Editor en consequence. Modifiez le `println` pour qu'il affiche la liste des todos.
 
-**Answer:**
+**Reponse :**
 
 Modifier `TodoControllerV1.java` :
 
@@ -474,7 +474,7 @@ Modifier le Swagger Editor pour que le POST retourne un `Todo` :
                             $ref: '#/components/schemas/Todo'
 ```
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/controller/TodoControllerV1.java` : ajout de `cpt`, auto-incrementation de l'id, retour du Todo cree
 
 ---
@@ -484,7 +484,7 @@ Modifier le Swagger Editor pour que le POST retourne un `Todo` :
 > Ajoutez (dans Swagger Editor et votre code Spring) une route `DELETE` `/v1/public/todo/todo/{id}` qui supprimera le todo dont l'id est celui donne en parametre de l'URI. Cette route devra alors chercher dans la structure le todo dont l'id est egal a celui du todo passe en parametre. Si la recherche echoue, alors retourner un code `400`. Si elle reussit, vous supprimerez l'objet de la liste des todos.
 > Testez avec Swagger Editor.
 
-**Answer:**
+**Reponse :**
 
 1. Ajouter dans Swagger Editor :
 ```yaml
@@ -539,9 +539,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.server.ResponseStatusException;
 ```
 
-Tester : creer un todo (POST), le supprimer (DELETE avec son id), puis tenter de le supprimer a nouveau -> 400.
+Tester : creer un todo (POST), le supprimer (DELETE avec son id), puis tenter de le supprimer a nouveau → 400.
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/controller/TodoControllerV1.java` : ajout de la route DELETE
 
 ---
@@ -551,7 +551,7 @@ Tester : creer un todo (POST), le supprimer (DELETE avec son id), puis tenter de
 > A l'instar du `delete` de la question precedente, ameliorez le `get` developpe lors du TP 1 (meilleure gestion d'un mauvais id fourni).
 > Testez avec Swagger Editor.
 
-**Answer:**
+**Reponse :**
 
 Modifier la methode `getTodo` pour retourner un code 400 si l'id n'existe pas :
 
@@ -588,9 +588,9 @@ Modifier le Swagger Editor pour ajouter la reponse 400 au GET :
                 description: Todo non trouve
 ```
 
-Tester : GET avec un id inexistant -> 400. GET avec un id existant -> 200 + JSON.
+Tester : GET avec un id inexistant → 400. GET avec un id existant → 200 + JSON.
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/controller/TodoControllerV1.java` : amelioration du GET avec gestion d'erreur
 
 ---
@@ -602,7 +602,7 @@ Tester : GET avec un id inexistant -> 400. GET avec un id existant -> 200 + JSON
 > Si l'objet n'existe pas (si l'ID donne ne correspond pas a un objet existant), alors une reponse avec un code `BAD_REQUEST` (code 400) sera retournee.
 > Testez avec Swagger Editor.
 
-**Answer:**
+**Reponse :**
 
 1. Ajouter dans Swagger Editor :
 ```yaml
@@ -641,7 +641,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 Tester : creer un todo (POST), puis le remplacer entierement (PUT avec le meme id mais des nouvelles donnees).
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/controller/TodoControllerV1.java` : ajout de la route PUT
 
 ---
@@ -651,7 +651,7 @@ Tester : creer un todo (POST), puis le remplacer entierement (PUT avec le meme i
 > Ajoutez une route `PATCH` `todo` qui modifiera un todo. Pour cela copier-coller-modifier la route `POST` `todo` car cette premiere version du patch est assez similaire. Cette route devra alors chercher dans la liste le todo dont l'id est egal a celui du todo passe en parametre. Si la recherche echoue, alors retourner un code `400`. Si elle reussit, alors vous utiliserez les setters de `Todo`.
 > Cette maniere de faire le patch souffre de plusieurs defauts importants. Lesquels selon vous ?
 
-**Answer:**
+**Reponse :**
 
 1. Ajouter dans Swagger Editor :
 ```yaml
@@ -704,7 +704,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 
 Lecture recommandee : https://stackoverflow.com/a/19111046/9649530
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/controller/TodoControllerV1.java` : ajout de la route PATCH
 
 ---
@@ -808,7 +808,7 @@ public class TodoControllerV1 {
 > Copiez-collez le controleur `TodoControllerV1.java` pour avoir un `TodoControllerV2.java` dont le `RequestMapping` indique `api/v2/public/todo`.
 > Dans Swagger, les routes creees aux TP precedents etaient destinees a la `v1`. Pour interagir avec la `v2` vous devrez copier-coller-adapter les routes de `v1` en fonction des besoins du controleur `v2`. Mettez en commentaire toutes les routes de ce nouveau controleur.
 
-**Answer:**
+**Reponse :**
 
 ```java
 // Fichier : src/main/java/tpspring/controller/TodoControllerV2.java
@@ -888,7 +888,7 @@ public class TodoControllerV2 {
 
 Dans Swagger Editor, dupliquer les routes `/v1/...` en `/v2/...`.
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/controller/TodoControllerV2.java` : nouveau fichier -- copie de V1 avec routes commentees et RequestMapping en v2
 
 ---
@@ -902,7 +902,7 @@ Dans Swagger Editor, dupliquer les routes `/v1/...` en `/v2/...`.
 > Que se passe-t-il si je mets un attribut `@Autowired TodoServiceV1...` dans un autre controleur ?
 > Quels sont les avantages d'un service par rapport a nos 2 TP precedents ?
 
-**Answer:**
+**Reponse :**
 
 1. Creer le service :
 
@@ -984,7 +984,7 @@ Spring injecte la MEME instance du service. C'est un singleton : tous les contro
 - Le service est testable independamment du controleur
 - Le controleur devient plus leger et plus lisible
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/service/TodoServiceV1.java` : nouveau fichier -- service avec logique CRUD
 
 ---
@@ -993,7 +993,7 @@ Spring injecte la MEME instance du service. C'est un singleton : tous les contro
 
 > Decommentez et adaptez au fur et a mesure les methodes du `TodoControllerV2` pour utiliser `TodoServiceV1`.
 
-**Answer:**
+**Reponse :**
 
 ```java
 // Fichier : src/main/java/tpspring/controller/TodoControllerV2.java (avec service)
@@ -1063,7 +1063,7 @@ public class TodoControllerV2 {
 }
 ```
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/controller/TodoControllerV2.java` : decommente et adapte pour utiliser le service
 
 ---
@@ -1079,7 +1079,7 @@ public class TodoControllerV2 {
 > Ajoutez les annotations necessaires dans la classe `Todo` pour que Spring identifie la cle unique.
 > Testez votre nouveau controleur avec Swagger Editor.
 
-**Answer:**
+**Reponse :**
 
 1. Creer le repository :
 
@@ -1284,7 +1284,7 @@ public class TodoControllerV2 {
 }
 ```
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/service/TodoCrudRepository.java` : nouveau fichier -- repository CRUD
 - `src/main/java/tpspring/service/TodoServiceV2.java` : nouveau fichier -- service utilisant le repository
 - `src/main/java/tpspring/model/Todo.java` : ajout de `@Entity`, `@Id`, `@GeneratedValue`
@@ -1309,7 +1309,7 @@ public class TodoControllerV2 {
 > public void deleteTodo(@PathVariable("id") final long id) { ... }
 > ```
 
-**Answer:**
+**Reponse :**
 
 **Pour le GET retournant `Todo` :**
 Non, ce n'est pas un objet Java `Todo` qui est retourne au client. Spring utilise Jackson pour **marshaller** (serialiser) l'objet Java `Todo` en **JSON**. Le client recoit donc une chaine de caracteres JSON representant le todo :
@@ -1343,7 +1343,7 @@ Quand une methode retourne `void`, Spring renvoie une reponse HTTP avec le **cod
 > }
 > ```
 
-**Answer:**
+**Reponse :**
 
 La difference est que `ResponseEntity<String>` permet un **controle fin de la reponse HTTP** :
 - On peut choisir le **code de statut** (200, 201, 204, etc.)
@@ -1351,9 +1351,9 @@ La difference est que `ResponseEntity<String>` permet un **controle fin de la re
 - On peut choisir le **type du body** (ici `String`, mais ca pourrait etre un objet)
 
 Avec un retour direct (`return user;`), Spring renvoie automatiquement 200 avec l'objet marshalle. Avec `ResponseEntity`, on a plus de flexibilite. Par exemple :
-- `ResponseEntity.ok().build()` -> 200 sans body
-- `ResponseEntity.status(HttpStatus.CREATED).body(user)` -> 201 avec l'objet
-- `ResponseEntity.noContent().build()` -> 204 sans body
+- `ResponseEntity.ok().build()` → 200 sans body
+- `ResponseEntity.status(HttpStatus.CREATED).body(user)` → 201 avec l'objet
+- `ResponseEntity.noContent().build()` → 204 sans body
 
 ---
 
@@ -1361,7 +1361,7 @@ Avec un retour direct (`return user;`), Spring renvoie automatiquement 200 avec 
 
 > Toujours avec le code du DELETE, qu'est-ce qui est retourne au client lorsqu'une exception est levee ?
 
-**Answer:**
+**Reponse :**
 
 Quand `throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not possible")` est execute, Spring intercepte l'exception et retourne au client :
 - **Code HTTP** : 400 Bad Request
@@ -1385,7 +1385,7 @@ Spring genere automatiquement ce JSON d'erreur. Le client recoit donc une repons
 > La classe `SpecificTodo` est une sous-classe de `Todo`. Modifiez temporairement la route `GET` `todo/todo/{id}` pour qu'elle retourne un `SpecificTodo`. Relancez le serveur et testez cette route. Utilisez le resultat retourne pour l'envoyer via la route `POST`. Pourquoi cette derniere ne cree-t-elle finalement pas un `SpecificTodo` mais un `Todo` ?
 > Ajoutez les annotations necessaires pour que cela fonctionne. Cf vers le slide 47. Il vous faudra aussi ajouter l'annotation `@Entity`.
 
-**Answer:**
+**Reponse :**
 
 1. Modifier temporairement le GET :
 ```java
@@ -1479,7 +1479,7 @@ public class SpecificTodo extends Todo {
 
 Maintenant le JSON contiendra un champ `"type": "specificTodo"` qui permet a Jackson de savoir quel type instancier. Penser a remettre le GET comme avant.
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/model/Todo.java` : ajout de `@JsonTypeInfo` et `@JsonSubTypes`
 - `src/main/java/tpspring/model/SpecificTodo.java` : ajout de `@Entity`
 
@@ -1489,7 +1489,7 @@ Maintenant le JSON contiendra un champ `"type": "specificTodo"` qui permet a Jac
 
 > Creez un nouveau controleur (URI `api/v2/public/todolist`), un nouveau service et un nouveau repository pour les `TodoList`.
 
-**Answer:**
+**Reponse :**
 
 1. Repository :
 
@@ -1590,7 +1590,7 @@ public class TodoListController {
 }
 ```
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/service/TodoListCrudRepository.java` : nouveau repository
 - `src/main/java/tpspring/service/TodoListService.java` : nouveau service
 - `src/main/java/tpspring/controller/TodoListController.java` : nouveau controleur
@@ -1602,7 +1602,7 @@ public class TodoListController {
 > Ajoutez dans Swagger Editor et dans votre nouveau controleur les routes REST suivantes :
 > - une route pour ajouter une `TodoList` vide. Vous devrez ajouter des annotations a `TodoList` a l'instar de `Todo`. Vous devrez egalement ajouter des annotations JPA pour identifier les cles etrangeres de `TodoList` et `Todo` : regardez les annotations `@OneToMany` et `@ManyToOne`.
 
-**Answer:**
+**Reponse :**
 
 Modifier `TodoList` avec les annotations JPA :
 
@@ -1695,7 +1695,7 @@ Et dans components/schemas :
           type: string
 ```
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/model/TodoList.java` : ajout de `@Entity`, `@Id`, `@GeneratedValue`, `@OneToMany`, getters/setters Lombok
 - `src/main/java/tpspring/model/Todo.java` : ajout de `@ManyToOne` sur l'attribut `list`
 
@@ -1709,7 +1709,7 @@ Et dans components/schemas :
 > A la place d'un objet `TodoList`, utilisez le record `NamedDTO` (package `tpspring/controller/dto`) contenant un attribut correspondant a un nom.
 > Les DTO ne devraient pas etre utilises en dehors des controleurs REST.
 
-**Answer:**
+**Reponse :**
 
 Le record `NamedDTO` fourni :
 
@@ -1769,7 +1769,7 @@ Et modifier la route POST pour utiliser le DTO :
                             $ref: '#/components/schemas/TodoList'
 ```
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/controller/dto/NamedDTO.java` : ajout du champ `description`
 - `src/main/java/tpspring/controller/TodoListController.java` : utilisation du DTO au lieu de TodoList
 
@@ -1780,7 +1780,7 @@ Et modifier la route POST pour utiliser le DTO :
 > Ajoutez une route pour ajouter un todo a une todo list (un todo peut etre dans plusieurs lists pour l'instant). Attention, vous aurez donc besoin de l'id du todo a ajouter et de l'id de la todo list concernee. Donc votre `TodoListService` aura les deux repositories.
 > Attention, une boucle infinie va survenir. Il faut casser cette boucle avec `@JsonIgnore` sur l'attribut `list` de `Todo`.
 
-**Answer:**
+**Reponse :**
 
 1. Ajouter `@JsonIgnore` dans `Todo` :
 
@@ -1871,7 +1871,7 @@ import org.springframework.web.bind.annotation.PutMapping;
     }
 ```
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/model/Todo.java` : ajout de `@JsonIgnore` sur `list`
 - `src/main/java/tpspring/service/TodoListService.java` : ajout du `todoRepository` et de `addTodoToList`
 - `src/main/java/tpspring/controller/TodoListController.java` : ajout de la route PUT pour ajouter un todo a une liste
@@ -1884,7 +1884,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 > Inspirez-vous du slide 31 (ou slides autour) pour modifier la requete et le service pour patch correctement le todo.
 > Modifiez le Swagger Editor et testez.
 
-**Answer:**
+**Reponse :**
 
 L'approche amelioree utilise `ObjectMapper.updateValue()` de Jackson qui permet de merger un `Map` de champs partiels dans un objet existant :
 
@@ -1949,7 +1949,7 @@ Cette approche est meilleure car :
 - Les champs presents a `null` sont mis a null (distinction possible)
 - Moins de code repetitif
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/controller/TodoControllerV2.java` : PATCH prend un `Map<String, Object>` au lieu d'un `Todo`
 - `src/main/java/tpspring/service/TodoServiceV2.java` : `modifyTodo` utilise `ObjectMapper.updateValue()`
 
@@ -1960,7 +1960,7 @@ Cette approche est meilleure car :
 > Ajoutez une query dans le repository des `Todo` pour retourner la liste des `Todo` dont le titre contient le texte donne en parametre.
 > Ajoutez la requete REST associee dans le controleur Todo v2 et testez avec Swagger Editor.
 
-**Answer:**
+**Reponse :**
 
 1. Ajouter la query dans le repository :
 
@@ -2027,7 +2027,7 @@ import java.util.List;
                                 $ref: '#/components/schemas/Todo'
 ```
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/service/TodoCrudRepository.java` : ajout de `findByTitleContaining`
 - `src/main/java/tpspring/service/TodoServiceV2.java` : ajout de `findByTitle`
 - `src/main/java/tpspring/controller/TodoControllerV2.java` : ajout de la route GET par titre
@@ -2042,7 +2042,7 @@ import java.util.List;
 > Completez la classe de tests `TestTodoServiceV2`. Nous fournissons un premier test pour vous aider. Cette suite de tests requiert l'utilisation de *mocks*.
 > Completez la classe de tests `TestTodoControllerV2`. L'utilisation de mocks est egalement necessaire.
 
-**Answer:**
+**Reponse :**
 
 ### Tests du service (TestTodoServiceV2)
 
@@ -2322,7 +2322,7 @@ public class TestTodoControllerV2 {
 }
 ```
 
-**File changes:**
+**Fichiers modifies :**
 - `src/test/java/tpspring/service/TestTodoServiceV2.java` : complete avec tous les tests du service
 - `src/test/java/tpspring/controller/TestTodoControllerV2.java` : complete avec tous les tests du controleur
 
@@ -2343,7 +2343,7 @@ public class TestTodoControllerV2 {
 > A quoi sert l'attribut `id` ?
 > Pourquoi on ne retrouve pas dans le code source du texte pourtant affiche par la page Web (le `Hello World`) ?
 
-**Answer:**
+**Reponse :**
 
 Le fichier `index.html` fourni :
 ```html
@@ -2388,10 +2388,10 @@ Le texte "Hello World" n'est pas dans le HTML statique. Il est **injecte dynamiq
 
 > Dans ces sources, vous pouvez voir un lien vers `style.css` et `script.js`.
 > Ouvrez `style.css` : a quoi sert ce fichier ?
-> Dans Firefox, clic-droit -> Inspecter. Cliquez sur la balise `h1`, et etudiez son CSS affiche a droite.
+> Dans Firefox, clic-droit → Inspecter. Cliquez sur la balise `h1`, et etudiez son CSS affiche a droite.
 > A quoi sert l'attribut `class` du premier `div` ?
 
-**Answer:**
+**Reponse :**
 
 Le fichier `style.css` :
 ```css
@@ -2428,7 +2428,7 @@ Ce fichier CSS definit les **styles visuels** de la page HTML. Il separe la pres
 > Ouvrez `script.js` : a quoi sert ce fichier ?
 > Etudiez la fonction `getHelloWorld` pour comprendre ce qu'elle fait.
 
-**Answer:**
+**Reponse :**
 
 Le fichier `script.js` fourni :
 ```javascript
@@ -2474,7 +2474,7 @@ La fonction est appelee immediatement (`getHelloWorld()`) au chargement du scrip
 
 > Ajoutez et appelez une nouvelle fonction JavaScript `function getTodo(id)` qui modifiera le DOM de la page pour afficher le TODO retourne par la requete REST qui demandera au back-end le TODO correspondant a l'id donne en parametre.
 
-**Answer:**
+**Reponse :**
 
 Modifier `script.js` :
 
@@ -2534,7 +2534,7 @@ getTodo(1);
 
 Note sur la securite : `innerHTML` est utilise ici pour le TP mais c'est une **passoire de securite** (XSS). En production, il faudrait utiliser `textContent` ou des methodes safe pour le DOM (cf. https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html).
 
-**File changes:**
+**Fichiers modifies :**
 - `tp7/script.js` : ajout de la fonction `getTodo(id)` avec requete XHR et modification du DOM
 
 ---
@@ -2547,7 +2547,7 @@ Note sur la securite : `innerHTML` est utilise ici pour le TP mais c'est une **p
 >
 > Dans `TodoControllerV2`, remplacez `@RequestMapping("api/v2/public/todo")` par `@RequestMapping("api/v2/private/todo")`, modifiez votre Swagger Editor. Faites de meme pour `TodoListController`. Testez : que se passe-t-il desormais ?
 
-**Answer:**
+**Reponse :**
 
 Le code de `SecurityConfig` fourni :
 ```java
@@ -2577,7 +2577,7 @@ A l'inverse :
 - `/api/v*/private/**` necessite le role `USER` (authentification requise)
 - `/api/v*/admin/**` necessite le role `ADMIN`
 
-**Que se passe-t-il apres le changement `public` -> `private` ?**
+**Que se passe-t-il apres le changement `public` → `private` ?**
 En changeant `@RequestMapping("api/v2/public/todo")` en `@RequestMapping("api/v2/private/todo")`, les routes tombent maintenant dans le pattern `.requestMatchers("/api/v*/private/**").hasRole("USER")`. Il faut donc etre authentifie avec le role `USER` pour y acceder. Sans authentification, on recoit une **erreur 401 Unauthorized** (ou 403 Forbidden).
 
 Modifier les controleurs :
@@ -2589,9 +2589,9 @@ Modifier les controleurs :
 @RequestMapping("api/v2/private/todolist")
 ```
 
-**File changes:**
-- `src/main/java/tpspring/controller/TodoControllerV2.java` : `public` -> `private` dans RequestMapping
-- `src/main/java/tpspring/controller/TodoListController.java` : `public` -> `private` dans RequestMapping
+**Fichiers modifies :**
+- `src/main/java/tpspring/controller/TodoControllerV2.java` : `public` → `private` dans RequestMapping
+- `src/main/java/tpspring/controller/TodoListController.java` : `public` → `private` dans RequestMapping
 
 ---
 
@@ -2602,7 +2602,7 @@ Modifier les controleurs :
 > Pour `UserDTO`, creez votre propre DTO.
 > Ajoutez ces deux routes dans Swagger Editor et testez. Apres avoir utilise la route pour s'identifier, regardez la console d'IntelliJ. Que voyez-vous de special concernant l'authentification par cookie ?
 
-**Answer:**
+**Reponse :**
 
 1. Creer le DTO :
 
@@ -2740,7 +2740,7 @@ Et le schema :
 **Que voit-on dans la console d'IntelliJ ?**
 On voit le **JSESSIONID** affiche : c'est l'identifiant de session HTTP. L'authentification par cookie fonctionne ainsi : apres le login, le serveur cree une session et envoie un cookie `JSESSIONID` au client. Ce cookie devra etre renvoye dans toutes les requetes suivantes vers les routes privees pour prouver que l'utilisateur est authentifie.
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/controller/dto/UserDTO.java` : nouveau fichier
 - `src/main/java/tpspring/controller/PublicUserController.java` : nouveau fichier -- signup et login
 
@@ -2752,7 +2752,7 @@ On voit le **JSESSIONID** affiche : c'est l'identifiant de session HTTP. L'authe
 > Ajoutez la route GET qui retourne le login de l'utilisateur authentifie.
 > Pour tester cette route, il faut passer dans le cookie de la requete le parametre `JSESSIONID`.
 
-**Answer:**
+**Reponse :**
 
 ```java
 // Fichier : src/main/java/tpspring/controller/PrivateUserController.java
@@ -2805,7 +2805,7 @@ securitySchemes:
     description: Use a session cookie to authenticate (see /login).
 ```
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/controller/PrivateUserController.java` : nouveau fichier -- route privee retournant le login
 
 ---
@@ -2815,7 +2815,7 @@ securitySchemes:
 > Il faut maintenant refaire fonctionner les routes de `TodoControllerV2`.
 > Pour la route 'todo', nous voulons que le `owner` du `todo` cree soit le `login` de l'utilisateur authentifie. Pour cela, dans toutes les requetes qui necessiteront cette information vous devrez ajouter en parametre de la methode Java de la route : `Principal principal` et utiliser `principal.getName()`.
 
-**Answer:**
+**Reponse :**
 
 Modifier la route POST dans `TodoControllerV2` :
 
@@ -2840,7 +2840,7 @@ curl -X POST 'http://localhost:8080/api/v2/private/todo/todo' \
 
 Le todo cree aura `owner` egal au login de l'utilisateur authentifie.
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/controller/TodoControllerV2.java` : ajout de `Principal` dans le POST
 
 ---
@@ -2851,7 +2851,7 @@ Le todo cree aura `owner` egal au login de l'utilisateur authentifie.
 > Attention : pour les routes *put*, *delete* et *patch* il faut verifier que le login de l'utilisateur soit bien le `owner` des todos concernes.
 > Cela vous demandera de modifier votre service `TodoService` pour ajouter a differentes methodes le login en parametre.
 
-**Answer:**
+**Reponse :**
 
 1. Modifier le service pour verifier le owner :
 
@@ -3046,6 +3046,6 @@ curl -X PATCH 'http://localhost:8080/api/v2/private/todo/todo' \
   -d '{"id":1,"title":"Titre modifie"}'
 ```
 
-**File changes:**
+**Fichiers modifies :**
 - `src/main/java/tpspring/service/TodoServiceV2.java` : ajout du parametre `login` dans `removeTodo`, `replaceTodo`, `modifyTodo` avec verification du owner
 - `src/main/java/tpspring/controller/TodoControllerV2.java` : ajout de `Principal` dans toutes les routes, verification de l'ownership

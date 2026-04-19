@@ -38,8 +38,8 @@ Pour un MLP a une couche cachee :
 $$\mathbf{h} = g_1(\mathbf{W}_1 \mathbf{x} + \mathbf{b}_1)$$
 $$\hat{\mathbf{y}} = g_2(\mathbf{W}_2 \mathbf{h} + \mathbf{b}_2)$$
 
-- $\mathbf{W}_1$ : matrice de poids entree -> cache (taille $n_h \times p$).
-- $\mathbf{W}_2$ : matrice de poids cache -> sortie (taille $K \times n_h$).
+- $\mathbf{W}_1$ : matrice de poids entree → cache (taille $n_h \times p$).
+- $\mathbf{W}_2$ : matrice de poids cache → sortie (taille $K \times n_h$).
 - $g_1, g_2$ : fonctions d'activation.
 
 ---

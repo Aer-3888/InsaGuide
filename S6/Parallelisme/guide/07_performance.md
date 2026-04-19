@@ -11,7 +11,7 @@ S(p) = T(1) / T(p)
 | Cas | Interpretation |
 |-----|----------------|
 | S(p) = p | Lineaire (ideal) |
-| S(p) < p | Sous-lineaire (typique) |
+| S(p) &lt; p | Sous-lineaire (typique) |
 | S(p) > p | Super-lineaire (rare, effets cache) |
 
 ### Efficacite

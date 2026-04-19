@@ -321,7 +321,7 @@ Diagonale : 0, 0, 0 => pas de circuit negatif.
 
 ### Detection de circuits negatifs
 
-Si dist[i][i] < 0 apres execution, il existe un circuit negatif passant par i.
+Si dist[i][i] &lt; 0 apres execution, il existe un circuit negatif passant par i.
 
 ### Complexite : O(n^3) temps, O(n^2) espace
 

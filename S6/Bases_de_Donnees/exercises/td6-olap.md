@@ -54,9 +54,9 @@ erDiagram
 | **Table de faits** | VENTE |
 | **Mesures** | montant, quantite |
 | **Dimensions** | PRODUIT, MAGASIN, TEMPS |
-| **Hierarchies** | TEMPS : jour -> mois -> trimestre -> annee |
-| | MAGASIN : magasin -> ville -> region -> pays |
-| | PRODUIT : produit -> categorie -> marque |
+| **Hierarchies** | TEMPS : jour → mois → trimestre → annee |
+| | MAGASIN : magasin → ville → region → pays |
+| | PRODUIT : produit → categorie → marque |
 
 ---
 

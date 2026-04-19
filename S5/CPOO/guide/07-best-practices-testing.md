@@ -1,26 +1,26 @@
-# Java Best Practices and Testing
+# Bonnes pratiques Java et Tests
 
-## SOLID Principles
+## Principes SOLID
 
-### S -- Single Responsibility
+### S -- Responsabilite unique (Single Responsibility)
 
-Each class should have one reason to change. Example: `Foret` manages the collection of trees; `Arbre` manages its own price and age logic.
+Chaque classe doit avoir une seule raison de changer. Exemple : `Foret` gere la collection d'arbres ; `Arbre` gere sa propre logique de prix et d'age.
 
-### O -- Open/Closed
+### O -- Ouvert/Ferme (Open/Closed)
 
-Classes should be open for extension but closed for modification. The `Arbre` abstract class allows adding new tree types (open for extension) without modifying existing code (closed for modification).
+Les classes doivent etre ouvertes a l'extension mais fermees a la modification. La classe abstraite `Arbre` permet d'ajouter de nouveaux types d'arbres (ouverte a l'extension) sans modifier le code existant (fermee a la modification).
 
-### L -- Liskov Substitution
+### L -- Substitution de Liskov
 
-Objects of a superclass should be replaceable with objects of a subclass without breaking the program. `List<Arbre>` can contain both `Chene` and `Pin` objects, and all operations on `Arbre` work correctly regardless of the actual type.
+Les objets d'une superclasse doivent etre remplacables par des objets d'une sous-classe sans casser le programme. `List<Arbre>` peut contenir des objets `Chene` et `Pin`, et toutes les operations sur `Arbre` fonctionnent correctement quel que soit le type reel.
 
-### I -- Interface Segregation
+### I -- Segregation des interfaces (Interface Segregation)
 
-Clients should not depend on interfaces they do not use. The course uses focused interfaces: `Service` has only `getLatency()`, `Network` has only `ping()` and `sendGetHTTPQuery()`.
+Les clients ne doivent pas dependre d'interfaces qu'ils n'utilisent pas. Le cours utilise des interfaces ciblees : `Service` n'a que `getLatency()`, `Network` n'a que `ping()` et `sendGetHTTPQuery()`.
 
-### D -- Dependency Inversion
+### D -- Inversion de dependances (Dependency Inversion)
 
-Depend on abstractions, not concretions. `Exo2` depends on the `Network` interface, not a concrete implementation. This enables testing with mocks.
+Dependre d'abstractions, pas de classes concretes. `Exo2` depend de l'interface `Network`, pas d'une implementation concrete. Cela permet les tests avec des mocks.
 
 ```java
 public class Exo2 {
@@ -34,9 +34,9 @@ public class Exo2 {
 
 ---
 
-## Unit Testing with JUnit 5
+## Tests unitaires avec JUnit 5
 
-### Test Structure (AAA Pattern)
+### Structure de test (Patron AAA)
 
 ```java
 @Test
@@ -52,7 +52,7 @@ void testVieillir() {
 }
 ```
 
-### Common Assertions
+### Assertions courantes
 
 ```java
 assertEquals(expected, actual);                 // equality
@@ -65,7 +65,7 @@ assertThrows(ExType.class, () -> code());       // exception expected
 assertSame(obj1, obj2);                         // same reference (==)
 ```
 
-### Lifecycle Annotations
+### Annotations de cycle de vie
 
 ```java
 @BeforeEach
@@ -86,7 +86,7 @@ static void initAll() { /* once before all tests */ }
 static void cleanAll() { /* once after all tests */ }
 ```
 
-### Parameterized Tests
+### Tests parametres
 
 ```java
 @ParameterizedTest
@@ -102,7 +102,7 @@ void testIsOut(int value, boolean expected) {
 }
 ```
 
-### Common Testing Anti-Patterns (from the course)
+### Anti-patrons de test courants (du cours)
 
 **Anti-pattern 1: assertTrue(a.equals(b))** -- use `assertEquals(a, b)` instead.
 
@@ -155,13 +155,13 @@ C c;
 
 ---
 
-## Mocking with Mockito
+## Mocking avec Mockito
 
-### Why Mock?
+### Pourquoi mocker ?
 
-When a class depends on an interface (e.g., `Network`, `Service`, `B`), you cannot test it without an implementation. Mocks simulate the interface behavior.
+Quand une classe depend d'une interface (ex. `Network`, `Service`, `B`), on ne peut pas la tester sans implementation. Les mocks simulent le comportement de l'interface.
 
-### Basic Mocking
+### Mocking de base
 
 ```java
 // Create a mock
@@ -175,7 +175,7 @@ Exo2 exo2 = new Exo2(network);
 assertTrue(exo2.connectServer("192.168.1.1"));
 ```
 
-### Mocking Exceptions
+### Mocker des exceptions
 
 ```java
 B beh = Mockito.mock(B.class);
@@ -185,7 +185,7 @@ A a = new A(beh);
 assertThrows(AnException.class, () -> a.al(true));
 ```
 
-### Verifying Method Calls
+### Verification des appels de methode
 
 ```java
 // Verify that sendGetHTTPQuery was called with the correct argument
@@ -195,7 +195,7 @@ Mockito.verify(network).sendGetHTTPQuery("192.168.1.1");
 Mockito.verify(network, Mockito.never()).sendGetHTTPQuery("bad");
 ```
 
-### Mocking Consecutive Returns
+### Mocker des retours consecutifs
 
 ```java
 Random random = Mockito.mock(Random.class);
@@ -206,9 +206,9 @@ assertEquals(892, mp.getX(), 1e-6);    // first call returns 892
 assertEquals(190, mp.getY(), 1e-6);    // second call returns 190
 ```
 
-### Mock Construction (Advanced -- Exo8)
+### Mock de construction (Avance -- Exo8)
 
-When a class instantiates an object internally, you cannot inject a mock normally. Use `mockConstruction()`:
+Quand une classe instancie un objet en interne, on ne peut pas injecter un mock normalement. Utiliser `mockConstruction()` :
 
 ```java
 @Test
@@ -223,9 +223,9 @@ void testUneFonctionInutile() {
 }
 ```
 
-### Mock Static Methods (Advanced -- Exo8)
+### Mock de methodes statiques (Avance -- Exo8)
 
-When a class calls a static method directly:
+Quand une classe appelle directement une methode statique :
 
 ```java
 @Test
@@ -243,35 +243,35 @@ void testUneAutreFonctionInutile() {
 
 ---
 
-## Code Coverage
+## Couverture de code
 
-### Types of Coverage
+### Types de couverture
 
-| Type | Description | Exam relevance |
-|------|-------------|---------------|
-| **Line coverage** | % of source lines executed | Commonly asked |
-| **Branch coverage** | % of decision branches taken (true + false) | Commonly asked |
-| **Condition coverage** | Each boolean sub-expression evaluated both true and false | Commonly asked |
+| Type | Description | Pertinence a l'examen |
+|------|-------------|----------------------|
+| **Couverture de lignes** | % de lignes source executees | Frequemment demande |
+| **Couverture de branches** | % de branches de decision prises (vrai + faux) | Frequemment demande |
+| **Couverture de conditions** | Chaque sous-expression booleenne evaluee vrai ET faux | Frequemment demande |
 
-### Short-Circuit Operators and Coverage
+### Operateurs court-circuit et couverture
 
 ```java
 if (s == null || services.contains(s))     // || short-circuits
 ```
 
-Truth table for coverage:
+Table de verite pour la couverture :
 
-| `s == null` | `services.contains(s)` | Evaluated? | Result |
-|-------------|----------------------|-----------|--------|
-| true | not evaluated | Only first | true |
-| false | true | Both | true |
-| false | false | Both | false |
+| `s == null` | `services.contains(s)` | Evalue ? | Resultat |
+|-------------|----------------------|----------|----------|
+| vrai | non evalue | Seulement le premier | vrai |
+| faux | vrai | Les deux | vrai |
+| faux | faux | Les deux | faux |
 
-To achieve **condition coverage**, you need tests where each sub-condition is true and false independently.
+Pour atteindre la **couverture de conditions**, il faut des tests ou chaque sous-condition est vraie et fausse independamment.
 
-### Control Flow Graphs
+### Graphes de flot de controle
 
-For the `getTotalLatency` method:
+Pour la methode `getTotalLatency` :
 ```java
 public double getTotalLatency() {    // A
     double sum = 0.0;                // B
@@ -288,9 +288,9 @@ public double getTotalLatency() {    // A
              +--(no more)--> E
 ```
 
-### Equivalence Classes
+### Classes d'equivalence
 
-Group inputs that produce the same behavior:
+Regrouper les entrees qui produisent le meme comportement :
 ```java
 // For addService(Service s):
 // Class 1: s == null            -> IllegalArgumentException
@@ -298,7 +298,7 @@ Group inputs that produce the same behavior:
 // Class 3: s valid, not in list -> added successfully
 ```
 
-For coordinates in `PlateauJeu` (SIZE = 5):
+Pour les coordonnees dans `PlateauJeu` (SIZE = 5) :
 ```
 // Class 1: x < 0            -> isOut = true
 // Class 2: 0 <= x < SIZE    -> isOut = false (valid)
@@ -308,37 +308,37 @@ For coordinates in `PlateauJeu` (SIZE = 5):
 
 ---
 
-## Mutation Testing (Pitest)
+## Tests de mutation (Pitest)
 
 ### Concept
 
-Mutation testing modifies your code (creates "mutants") and checks whether your tests detect the changes. If a test still passes after a mutation, the test is weak.
+Les tests de mutation modifient votre code (creent des "mutants") et verifient si vos tests detectent les changements. Si un test passe toujours apres une mutation, le test est faible.
 
-**Mutations include**:
-- Changing `>` to `>=` or `<`
-- Replacing `+` with `-`
-- Removing method calls
-- Changing return values
-- Negating conditions
+**Les mutations incluent** :
+- Changer `>` en `>=` ou `<`
+- Remplacer `+` par `-`
+- Supprimer des appels de methode
+- Changer les valeurs de retour
+- Nier les conditions
 
-### Running Pitest
+### Executer Pitest
 
 ```bash
 mvn clean install test org.pitest:pitest-maven:mutationCoverage
 # Report: target/pit-reports/index.html
 ```
 
-### The Three Problems with TestExo9
+### Les trois problemes de TestExo9
 
-The original `TestExo9` has three issues:
+Le `TestExo9` original a trois problemes :
 
-1. **No assertion on `ajouterElement`**: the test calls `ajouterElement("foo")` but never verifies the element was actually added (no `assertFalse(exo9.estVide())` or `assertTrue(exo9.contient("foo"))`).
+1. **Aucune assertion sur `ajouterElement`** : le test appelle `ajouterElement("foo")` mais ne verifie jamais que l'element a ete ajoute (pas de `assertFalse(exo9.estVide())` ni de `assertTrue(exo9.contient("foo"))`).
 
-2. **No test for `estVide` returning false**: only tests the empty case (`assertTrue(exo9.estVide())`), never the non-empty case.
+2. **Pas de test pour `estVide` retournant false** : ne teste que le cas vide (`assertTrue(exo9.estVide())`), jamais le cas non vide.
 
-3. **Does not detect the off-by-one bug in `contient()`**: the test only calls `contient("bar")` which finds the element before hitting the boundary. It never tests `contient("notPresent")` which would trigger the `IndexOutOfBoundsException`.
+3. **Ne detecte pas le bug off-by-one dans `contient()`** : le test appelle seulement `contient("bar")` qui trouve l'element avant d'atteindre la limite. Il ne teste jamais `contient("notPresent")` qui declencherait l'`IndexOutOfBoundsException`.
 
-### Fixed Tests (100% mutation score)
+### Tests corriges (score de mutation 100%)
 
 ```java
 @Test
@@ -375,12 +375,12 @@ void testContientAbsent() {
 
 ---
 
-## Common Pitfalls
+## Pieges courants
 
-1. **Testing the mock instead of the system under test**: `assertEquals(vb, b.getB1())` tests the mock setup, not the actual class.
-2. **Achieving 100% line coverage but weak assertions**: coverage measures execution, not correctness. Mutation testing catches this.
-3. **Forgetting `@ExtendWith(MockitoExtension.class)`**: required for `@Mock` annotations to work.
-4. **Not using `try-with-resources` for mock static/construction**: the mock scope must be closed properly.
+1. **Tester le mock au lieu du systeme sous test** : `assertEquals(vb, b.getB1())` teste la configuration du mock, pas la classe reelle.
+2. **Atteindre 100% de couverture de lignes mais avec des assertions faibles** : la couverture mesure l'execution, pas la correction. Les tests de mutation detectent cela.
+3. **Oublier `@ExtendWith(MockitoExtension.class)`** : necessaire pour que les annotations `@Mock` fonctionnent.
+4. **Ne pas utiliser `try-with-resources` pour les mock static/construction** : la portee du mock doit etre fermee correctement.
 
 ---
 

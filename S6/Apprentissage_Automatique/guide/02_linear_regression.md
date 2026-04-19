@@ -27,7 +27,7 @@ $$\hat{y} = w_0 + w_1 x$$
 ### Interpretation
 
 - Si $w_1 > 0$ : relation positive (quand $x$ augmente, $y$ augmente).
-- Si $w_1 < 0$ : relation negative.
+- Si $w_1 &lt; 0$ : relation negative.
 - $|w_1|$ : amplitude de l'effet de $x$ sur $y$.
 
 ### Exemple du cours : distance de freinage
@@ -167,7 +167,7 @@ $$R^2 = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar
 
 - $R^2 = 1$ : le modele explique toute la variance.
 - $R^2 = 0$ : le modele ne fait pas mieux que la moyenne.
-- $R^2 < 0$ : le modele fait pire que la moyenne (possible sur le test).
+- $R^2 &lt; 0$ : le modele fait pire que la moyenne (possible sur le test).
 
 ---
 

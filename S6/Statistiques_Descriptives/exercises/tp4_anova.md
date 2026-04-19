@@ -378,10 +378,10 @@ Bonferroni corrige en divisant $\alpha$ par le nombre de comparaisons : $\alpha'
 | Comparaison | Difference | p-value (Bonferroni) | Significatif ? |
 |-------------|-----------|---------------------|----------------|
 | Boeuf - Melange | -1.86 | 1.00 | **Non** |
-| Boeuf - Volaille | +38.09 | <0.0001 | **Oui** |
-| Melange - Volaille | +39.94 | <0.0001 | **Oui** |
+| Boeuf - Volaille | +38.09 | &lt;0.0001 | **Oui** |
+| Melange - Volaille | +39.94 | &lt;0.0001 | **Oui** |
 
-**Conclusion :** Le hotdog le moins calorique est celui a la **volaille** (Type 3, 118.8 cal). Il est **significativement moins calorique** que les types boeuf (p < 0.0001) et melange (p < 0.0001). La difference entre boeuf et melange n'est pas significative.
+**Conclusion :** Le hotdog le moins calorique est celui a la **volaille** (Type 3, 118.8 cal). Il est **significativement moins calorique** que les types boeuf (p &lt; 0.0001) et melange (p &lt; 0.0001). La difference entre boeuf et melange n'est pas significative.
 
 ---
 
@@ -510,7 +510,7 @@ Residuals 15   53.00    3.533
 
 3. **p-value :** $0.0191$
 
-4. **Au risque de 5% :** $p = 0.019 < 0.05$ -- on **rejette $H_0$**. Les cafes n'ont pas tous la meme acidite moyenne.
+4. **Au risque de 5% :** $p = 0.019 \lt 0.05$ -- on **rejette $H_0$**. Les cafes n'ont pas tous la meme acidite moyenne.
 
 5. **Au risque de 1% :** $p = 0.019 > 0.01$ -- on **ne rejette pas $H_0$** au risque de 1%.
 
@@ -560,12 +560,12 @@ Residuals 10    6.67    0.667
 
 **Test pour l'effet cafe :**
 - $H_0 : \alpha_1 = \alpha_2 = \alpha_3 = 0$ vs $H_1 : \exists\, i, \alpha_i \neq 0$
-- $F = 18.167 / 0.667 = 27.25$, $p = 0.000116 < 0.05$
+- $F = 18.167 / 0.667 = 27.25$, $p = 0.000116 \lt 0.05$
 - **On rejette $H_0$** : le type de cafe a un effet **significatif** sur l'acidite percue.
 
 **Test pour l'effet juge :**
 - $H_0 : \beta_1 = \cdots = \beta_6 = 0$ vs $H_1 : \exists\, j, \beta_j \neq 0$
-- $F = 9.267 / 0.667 = 13.90$, $p = 0.000436 < 0.05$
+- $F = 9.267 / 0.667 = 13.90$, $p = 0.000436 \lt 0.05$
 - **On rejette $H_0$** : le juge a un effet **significatif** sur la note.
 
 **Comparaison des deux modeles :**
@@ -885,7 +885,7 @@ cycle4       -25.50      4.95   -5.15  0.002117 **
 **Test :** $H_0 : \alpha_D = 0$ vs $H_1 : \alpha_D \neq 0$
 
 - Coefficient textileD = $-34.00$
-- $t = -6.87$, $p = 0.000472 < 0.05$
+- $t = -6.87$, $p = 0.000472 \lt 0.05$
 
 **Decision :** On **rejette $H_0$**. Le coefficient du textile D est **significativement different de 0**.
 

@@ -1,10 +1,10 @@
-# TP7 - N-ary Trees
+# TP7 - Arbres n-aires
 
-> Following teacher instructions from: `data/moodle/tp/tp7/README.md`
+> D'apres les instructions du TP : `data/moodle/tp/tp7/README.md`
 
 ---
 
-## Type Definition
+## Definition de type
 
 ```ocaml
 type 'a narbr =
@@ -14,30 +14,30 @@ type 'a narbr =
 
 ---
 
-## Exercise 1
+## Exercice 1
 
-### Tree construction and accessors: `feuille`, `noeud`, `valeur`, `sous_arbres`
+### Construction d'arbres et accesseurs : `feuille`, `noeud`, `valeur`, `sous_arbres`
 
-**Answer:**
+**Reponse :**
 ```ocaml
-(* Create a leaf *)
+(* Creer une feuille *)
 let feuille v = Feuille v
 
-(* Create a node with value and list of children *)
+(* Creer un noeud avec une valeur et une liste d'enfants *)
 let noeud (v : 'a) (l : 'a narbr list) = Noeud (v, l)
 
-(* Get the value at the root *)
+(* Obtenir la valeur a la racine *)
 let valeur a = match a with
   | Feuille d -> d
   | Noeud (c, d) -> c
 
-(* Get the list of children *)
+(* Obtenir la liste des enfants *)
 let sous_arbres a = match a with
   | Noeud (f, v) -> v
   | Feuille k -> []
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # let a1 = feuille 4;;
 # let a2 = noeud 3 [a1; a1];;
@@ -53,13 +53,13 @@ let sous_arbres a = match a with
 
 ---
 
-## Exercise 2
+## Exercice 2
 
-### Count total nodes in the tree (`compter`)
+### Compter le nombre total de noeuds dans l'arbre (`compter`)
 
-Uses mutual recursion: `compteur` handles a single node, `listeur` handles a list of children.
+Utilise la recursion mutuelle : `compteur` traite un noeud, `listeur` traite une liste d'enfants.
 
-**Answer:**
+**Reponse :**
 ```ocaml
 let rec compter a =
   let rec compteur a acc = match a with
@@ -72,7 +72,7 @@ let rec compter a =
   compteur a 0
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # compter a2;;
 - : int = 2
@@ -85,13 +85,13 @@ let rec compter a =
 
 ---
 
-## Exercise 3
+## Exercice 3
 
-### Find the length of the longest path from root to leaf (`pluslongue`)
+### Trouver la longueur du plus long chemin de la racine a une feuille (`pluslongue`)
 
-Uses mutual recursion with `max` to find the deepest branch.
+Utilise la recursion mutuelle avec `max` pour trouver la branche la plus profonde.
 
-**Answer:**
+**Reponse :**
 ```ocaml
 let rec pluslongue a =
   let rec arb a acc = match a with
@@ -104,7 +104,7 @@ let rec pluslongue a =
   arb a 0
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # pluslongue a3;;
 - : int = 3
@@ -116,13 +116,13 @@ let rec pluslongue a =
 
 ---
 
-## Exercise 4
+## Exercice 4
 
-### List all subtrees in the tree (`listsa`)
+### Lister tous les sous-arbres de l'arbre (`listsa`)
 
-Collects all subtrees (including the root itself) using mutual recursion.
+Collecte tous les sous-arbres (y compris la racine elle-meme) par recursion mutuelle.
 
-**Answer:**
+**Reponse :**
 ```ocaml
 let listsa a =
   let rec ads a = match a with
@@ -135,7 +135,7 @@ let listsa a =
   ads a
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # let f4 = feuille 4;;
 # let f10 = feuille 10;;
@@ -153,20 +153,20 @@ let listsa a =
 
 ---
 
-## Exercise 5
+## Exercice 5
 
-### List all root-to-leaf paths (`listbr`)
+### Lister tous les chemins racine vers feuille (`listbr`)
 
-`ajout n l` prepends value `n` to each list in `l`. `listbr` generates all paths from root to leaves.
+`ajout n l` ajoute la valeur `n` en tete de chaque liste dans `l`. `listbr` genere tous les chemins de la racine aux feuilles.
 
-**Answer:**
+**Reponse :**
 ```ocaml
-(* Prepend n to each list in l *)
+(* Ajouter n en tete de chaque liste dans l *)
 let rec ajout n l = match l with
   | [] -> []
   | x :: reste -> [n :: x] @ (ajout n reste)
 
-(* All root-to-leaf paths *)
+(* Tous les chemins racine vers feuille *)
 let listbr a =
   let rec arb a = match a with
     | Feuille f -> [[f]]
@@ -178,7 +178,7 @@ let listbr a =
   arb a
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # listbr n5;;
 - : int list list =
@@ -187,13 +187,13 @@ let listbr a =
 
 ---
 
-## Exercise 6
+## Exercice 6
 
-### Check if two trees are structurally equal (`egal`)
+### Verifier si deux arbres sont structurellement egaux (`egal`)
 
-Uses mutual recursion: `egala` compares two trees, `egalb` compares two lists of children.
+Utilise la recursion mutuelle : `egala` compare deux arbres, `egalb` compare deux listes d'enfants.
 
-**Answer:**
+**Reponse :**
 ```ocaml
 let egal a b =
   let rec egala a b = match (a, b) with
@@ -212,7 +212,7 @@ let egal a b =
   egala a b
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # egal n5 n5;;
 - : bool = true
@@ -226,13 +226,13 @@ let egal a b =
 
 ---
 
-## Exercise 7
+## Exercice 7
 
-### Replace all occurrences of one subtree with another (`remplace`)
+### Remplacer toutes les occurrences d'un sous-arbre par un autre (`remplace`)
 
-Uses `egal` to find matches and `List.map` with partial application to recursively replace in children.
+Utilise `egal` pour trouver les correspondances et `List.map` avec application partielle pour remplacer recursivement dans les enfants.
 
-**Answer:**
+**Reponse :**
 ```ocaml
 let rec remplace a1 a2 a =
   if egal a a1 then a2
@@ -241,7 +241,7 @@ let rec remplace a1 a2 a =
     | _ -> a
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # let n42 = noeud 42 [feuille 2048];;
 # let expected = noeud 5 [(noeud 3 [f4; n42; f20]); f21];;

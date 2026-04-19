@@ -1,33 +1,33 @@
-# Question Bank by Type
+# Banque de questions par type
 
-All questions extracted from the 2019-2025 CPOO exams, organized by topic.
+Toutes les questions extraites des examens CPOO 2019-2025, organisees par sujet.
 
 ---
 
-## Type 1: Write a Test Class
+## Type 1 : Ecrire une classe de test
 
-These questions give you a Java class + interface and ask you to write a complete test class with maximum coverage.
+Ces questions donnent une classe Java + interface et demandent d'ecrire une classe de test complete avec couverture maximale.
 
-### Question Pattern
+### Schema de question
 
-You receive:
-- A class to test (with constructor, methods, possibly a static factory)
-- An interface that the class depends on (must be mocked)
-- Sometimes a custom exception class
+On recoit :
+- Une classe a tester (avec constructeur, methodes, eventuellement une fabrique statique)
+- Une interface dont la classe depend (doit etre mockee)
+- Parfois une classe d'exception personnalisee
 
-You must write:
-- `@BeforeEach` with mock setup
-- Tests for constructor (including null input)
-- Tests for each method (normal case, edge cases, exception paths)
-- `verify()` calls where appropriate
+Il faut ecrire :
+- `@BeforeEach` avec configuration du mock
+- Tests pour le constructeur (y compris entree null)
+- Tests pour chaque methode (cas normal, cas limites, chemins d'exception)
+- Appels `verify()` quand c'est pertinent
 
-### Examples from Past Exams
+### Exemples des annales
 
 **2024-2025**: Test `Traitement` (Observateur interface, switch/case, defect to find)
 **2021-2022**: Test `A` (B interface, AnException, private doSomething, static createA)
 **2020-2021**: Test `Client` (Service interface, addService with validation, getTotalLatency)
 
-### Template Answer
+### Reponse type
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -66,19 +66,19 @@ public class TestClassName {
 
 ---
 
-## Type 2: Fix Assertions / Rewrite Tests
+## Type 2 : Corriger des assertions / Reecrire des tests
 
-### Common Fixes (appear every year)
+### Corrections courantes (reviennent chaque annee)
 
-| Wrong | Correct | Why |
-|-------|---------|-----|
-| `assertTrue(a.equals(b))` | `assertEquals(a, b)` | Better error message on failure |
-| `assertFalse(!a.foo())` | `assertTrue(a.foo())` | Double negation is confusing |
-| `assertTrue(a == b)` | `assertSame(a, b)` | Semantic clarity for reference equality |
-| `assertFalse(a.equals(b))` | `assertNotEquals(a, b)` | Clearer intent |
-| `assertTrue(!o.myMethod())` | `assertFalse(o.myMethod())` | Remove negation |
+| Faux | Correct | Pourquoi |
+|------|---------|----------|
+| `assertTrue(a.equals(b))` | `assertEquals(a, b)` | Meilleur message d'erreur en cas d'echec |
+| `assertFalse(!a.foo())` | `assertTrue(a.foo())` | La double negation est confuse |
+| `assertTrue(a == b)` | `assertSame(a, b)` | Clarte semantique pour l'egalite de reference |
+| `assertFalse(a.equals(b))` | `assertNotEquals(a, b)` | Intention plus claire |
+| `assertTrue(!o.myMethod())` | `assertFalse(o.myMethod())` | Supprimer la negation |
 
-### try/catch Antipattern
+### Anti-patron try/catch
 
 ```java
 // WRONG
@@ -97,7 +97,7 @@ public class TestClassName {
 }
 ```
 
-### if/fail Antipattern
+### Anti-patron if/fail
 
 ```java
 // WRONG
@@ -112,7 +112,7 @@ public class TestClassName {
 }
 ```
 
-### Duplicate Setup Antipattern
+### Anti-patron setup duplique
 
 ```java
 // WRONG
@@ -128,9 +128,9 @@ C c;
 
 ---
 
-## Type 3: UML Class Diagrams from Text
+## Type 3 : Diagrammes de classes UML a partir de texte
 
-### Exam Instances
+### Exemples des annales
 
 **2024-2025 (Devis)**: Devis, Client, Entreprise, Tache, UniteDeMesure (enum), Materiel, Fournisseur
 
@@ -138,35 +138,35 @@ C c;
 
 **2020-2021 (Arithmetic)**: FormuleArithmetique, Constante, Noeud (interface/abstract), Valeur, RefConstante, Operateur (abstract), Addition, Soustraction -- Composite pattern
 
-### Systematic Method
+### Methode systematique
 
-1. **List all nouns**: these are candidate classes or attributes
-2. **Classify nouns**: standalone entity = class; descriptor = attribute; fixed set of values = enum
-3. **Identify inheritance**: "X is a type of Y" or "X can be Y" = Y is parent
-4. **Identify associations**: "X has Y" or "X contains Y"
-5. **Determine multiplicity**: "one" = 1; "zero or more" = 0..*; "at least one" = 1..*; "optional" = 0..1
-6. **Aggregation vs Composition**: "belongs to exactly one" or lifecycle dependency = composition; "can exist independently" = aggregation
-7. **Add methods**: where behavior is described
-8. **Mark abstract**: classes that should not be instantiated directly
+1. **Lister tous les noms** : ce sont des classes ou attributs candidats
+2. **Classer les noms** : entite autonome = classe ; descripteur = attribut ; ensemble fixe de valeurs = enum
+3. **Identifier l'heritage** : "X est un type de Y" ou "X peut etre Y" = Y est le parent
+4. **Identifier les associations** : "X possede Y" ou "X contient Y"
+5. **Determiner la multiplicite** : "un" = 1 ; "zero ou plusieurs" = 0..* ; "au moins un" = 1..* ; "optionnel" = 0..1
+6. **Agregation vs Composition** : "appartient a exactement un" ou dependance de cycle de vie = composition ; "peut exister independamment" = agregation
+7. **Ajouter les methodes** : la ou un comportement est decrit
+8. **Marquer abstrait** : classes qui ne doivent pas etre instanciees directement
 
-### Common Mistakes
+### Erreurs courantes
 
-- Forgetting multiplicity on association ends
-- Making everything a class (some things are just attributes)
-- Missing the inheritance relationship when text says "X can be Y" or "X is a special kind of Y"
-- Not recognizing enumerations ("is either A, B, or C")
+- Oublier la multiplicite aux extremites des associations
+- Tout mettre en classe (certaines choses sont juste des attributs)
+- Manquer la relation d'heritage quand le texte dit "X peut etre Y" ou "X est un type particulier de Y"
+- Ne pas reconnaitre les enumerations ("est soit A, B, ou C")
 
 ---
 
-## Type 4: Control Flow Graphs
+## Type 4 : Graphes de flot de controle
 
-### What to Draw
+### Quoi dessiner
 
-- **Nodes**: statements, conditions, loop headers
-- **Edges**: control flow between nodes
-- **Branch nodes**: `if`, `switch`, loop conditions
+- **Noeuds** : instructions, conditions, en-tetes de boucle
+- **Aretes** : flot de controle entre les noeuds
+- **Noeuds de branchement** : `if`, `switch`, conditions de boucle
 
-### Short-Circuit Operators
+### Operateurs court-circuit
 
 For `if (a || b)`:
 ```
@@ -194,17 +194,17 @@ For `if (a && b)`:
   [then-body]
 ```
 
-### Exam Instances
+### Exemples des annales
 
-- **2024-2025**: `deplacerPoints` with two for-loops and `||` condition
-- **2021-2022**: `addService` with `||` condition, `getTotalLatency` with for-each loop
-- **2020-2021**: `foo` with `||` condition
+- **2024-2025** : `deplacerPoints` avec deux boucles for et condition `||`
+- **2021-2022** : `addService` avec condition `||`, `getTotalLatency` avec boucle for-each
+- **2020-2021** : `foo` avec condition `||`
 
 ---
 
-## Type 5: Truth Tables
+## Type 5 : Tables de verite
 
-### Method
+### Methode
 
 For `if (a || b)` with short-circuit:
 
@@ -224,72 +224,72 @@ For `if (a && b)` with short-circuit:
 
 ---
 
-## Type 6: Equivalence Classes
+## Type 6 : Classes d'equivalence
 
-### Method
+### Methode
 
-1. Identify the input parameter
-2. Identify conditions that partition the input space
-3. Name each partition
-4. Identify boundary values
+1. Identifier le parametre d'entree
+2. Identifier les conditions qui partitionnent l'espace des entrees
+3. Nommer chaque partition
+4. Identifier les valeurs aux limites
 
-### Example (positions in deplacerPoints, polygon with 3 points)
+### Exemple (positions dans deplacerPoints, polygone avec 3 points)
 
-| Class | Range | Behavior |
-|-------|-------|----------|
-| Invalid low | position < 0 | return (exit method) |
-| Valid | 0 <= position < 3 | translated |
-| Invalid high | position >= 3 | return (exit method) |
+| Classe | Intervalle | Comportement |
+|--------|-----------|-------------|
+| Invalide bas | position &lt; 0 | return (quitte la methode) |
+| Valide | 0 &lt;= position &lt; 3 | translate |
+| Invalide haut | position >= 3 | return (quitte la methode) |
 
-Boundaries: -1, 0, 2, 3
-
----
-
-## Type 7: QCM / Short Answer
-
-### Recurring Topics
-
-**Testing definitions**:
-- Testing brings confidence, does not prove correctness
-- Code coverage is dynamic analysis (code must run)
-- Mocks test the code that USES the mock, not the mock itself
-- Mutation testing evaluates test quality by introducing code changes
-
-**OOP definitions**:
-- Abstract classes can have constructors, concrete methods, and fields
-- An interface defines a contract; multiple implementation is possible
-- `final` on a reference: the reference cannot change, but the object can be mutated
-- Polymorphism: same method call, different behavior based on actual type
-
-**UML/Design definitions**:
-- User stories capture requirements; class diagrams capture design
-- Acceptance criteria/tests bridge requirements and verification
+Valeurs aux limites : -1, 0, 2, 3
 
 ---
 
-## Type 8: Coverage Analysis
+## Type 7 : QCM / Reponses courtes
 
-### "Can you achieve 100% line/branch/condition coverage?"
+### Sujets recurrents
 
-Check for:
-1. **Dead code**: code after `return` or `throw`
-2. **Unreachable branches**: short-circuit preventing evaluation
-3. **Private methods that change state**: e.g., `doSomething()` sets `str = "yolo"`, making the subsequent `str == null` branch dead
-4. **Declared but unthrowable exceptions**: `throws SecurityException` but no code path throws it
+**Definitions de test** :
+- Tester apporte de la confiance, ne prouve pas la correction
+- La couverture de code est de l'analyse dynamique (le code doit s'executer)
+- Les mocks testent le code qui UTILISE le mock, pas le mock lui-meme
+- Les tests de mutation evaluent la qualite des tests en introduisant des changements de code
 
-### 2021-2022 Analysis of Class A
+**Definitions POO** :
+- Les classes abstraites peuvent avoir des constructeurs, des methodes concretes et des champs
+- Une interface definit un contrat ; l'implementation multiple est possible
+- `final` sur une reference : la reference ne peut pas changer, mais l'objet peut etre modifie
+- Polymorphisme : meme appel de methode, comportement different selon le type reel
 
-- `doSomething()` always sets `str = "yolo"` before the `if` check
-- So `str == null` is always `false` in `al()` -- that sub-condition cannot be `true`
-- `SecurityException` and `NumberFormatException` are declared but never thrown by `al()` itself
-- Result: 100% **line** coverage IS achievable (all lines are reachable: `return 0` via `!value`, `return str.length() * b.getB1()` via `value == true`). But 100% **branch** and **condition** coverage are NOT achievable (`str == null` true-branch is dead)
+**Definitions UML/Conception** :
+- Les user stories capturent les besoins ; les diagrammes de classes capturent la conception
+- Les criteres/tests d'acceptation font le pont entre besoins et verification
 
 ---
 
-## Type 9: Bonus Questions
+## Type 8 : Analyse de couverture
 
-### Mutation Testing (2024-2025)
+### "Peut-on atteindre 100% de couverture de lignes/branches/conditions ?"
 
-Explain in a few sentences how mutation testing works and its value:
+Verifier :
+1. **Code mort** : code apres `return` ou `throw`
+2. **Branches inatteignables** : court-circuit empechant l'evaluation
+3. **Methodes privees qui changent l'etat** : ex. `doSomething()` fixe `str = "yolo"`, rendant la branche subsequente `str == null` morte
+4. **Exceptions declarees mais non lancables** : `throws SecurityException` mais aucun chemin de code ne la lance
+
+### Analyse 2021-2022 de la classe A
+
+- `doSomething()` fixe toujours `str = "yolo"` avant la verification `if`
+- Donc `str == null` est toujours `false` dans `al()` -- cette sous-condition ne peut pas etre `true`
+- `SecurityException` et `NumberFormatException` sont declarees mais jamais lancees par `al()` elle-meme
+- Resultat : 100% de couverture de **lignes** EST atteignable (toutes les lignes sont accessibles : `return 0` via `!value`, `return str.length() * b.getB1()` via `value == true`). Mais 100% de couverture de **branches** et de **conditions** NE SONT PAS atteignables (la branche vrai de `str == null` est morte)
+
+---
+
+## Type 9 : Questions bonus
+
+### Tests de mutation (2024-2025)
+
+Expliquer en quelques phrases comment fonctionnent les tests de mutation et leur interet :
 
 "Mutation testing automatically modifies the source code to create 'mutants' (e.g., changing `>` to `>=`, removing a method call, negating a condition). The test suite is then run against each mutant. If a test fails, the mutant is 'killed' (detected). If all tests pass, the mutant 'survives,' indicating a gap in the test suite. The mutation score (killed/total) measures the quality of tests -- a high score means the tests are effective at detecting code changes."

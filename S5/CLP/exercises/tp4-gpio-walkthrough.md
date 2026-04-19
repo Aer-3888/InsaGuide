@@ -1,18 +1,18 @@
-# TP4 - Raspberry Pi GPIO Control (Bare Metal)
+# TP4 - Controle GPIO Raspberry Pi (Bare Metal)
 
-> Following teacher instructions from: S5/CLP/data/moodle/tp/tp4/README.md
+> D'apres les instructions enseignant de : S5/CLP/data/moodle/tp/tp4/README.md
 
-This TP is a bare-metal programming exercise on the Raspberry Pi. There is no operating system -- the assembly code runs directly on the hardware. The program blinks the ACT (Activity) LED in an SOS Morse code pattern. This TP differs fundamentally from TPs 1-3: there is no stack, no function calling convention, and hardware registers are controlled through memory-mapped I/O.
+Ce TP est un exercice de programmation bare-metal sur le Raspberry Pi. Il n'y a pas de systeme d'exploitation -- le code assembleur s'execute directement sur le materiel. Le programme fait clignoter la LED ACT (Activite) selon le patron du code Morse SOS. Ce TP differe fondamentalement des TP 1-3 : il n'y a pas de pile, pas de convention d'appel de fonctions, et les registres materiels sont commandes par des E/S mappees en memoire.
 
 ---
 
-## Exercise 1: Hardware Background and GPIO Configuration
+## Exercice 1 : Contexte materiel et configuration GPIO
 
 ### Understand memory-mapped I/O and GPIO registers
 
-**Question:** What are the GPIO register addresses needed to control GPIO pin 47 (ACT LED)?
+**Question :** What are the GPIO register addresses needed to control GPIO pin 47 (ACT LED)?
 
-**Answer:**
+**Reponse :**
 
 ```arm
 .set GPSEL4, 0x3f200010     @ GPFSEL4: Function select for GPIO 40-49
@@ -31,15 +31,15 @@ This TP is a bare-metal programming exercise on the Raspberry Pi. There is no op
 | GPSET1 | 0x3F200020 | Set pins 32-53 high |
 | GPCLR1 | 0x3F20002C | Clear pins 32-53 low |
 
-**How it works:** On ARM processors, hardware peripherals are controlled by reading/writing to specific memory addresses. The same `LDR`/`STR` instructions used for regular memory work for hardware control -- there are no special I/O instructions.
+**Fonctionnement :** On ARM processors, hardware peripherals are controlled by reading/writing to specific memory addresses. The same `LDR`/`STR` instructions used for regular memory work for hardware control -- there are no special I/O instructions.
 
 ---
 
 ### Configure GPIO 47 as output
 
-**Question:** Calculate the bit positions needed to configure pin 47 as output and to set/clear it.
+**Question :** Calculate the bit positions needed to configure pin 47 as output and to set/clear it.
 
-**Answer:**
+**Reponse :**
 
 **Step 1: Function select (GPFSEL4)**
 - Pin 47 is in GPFSEL4 (handles pins 40-49)
@@ -74,13 +74,13 @@ Binary: 0000 0000 0000 0000 1000 0000 0000 0000 = 0x00008000
 
 ---
 
-## Exercise 2: main.s -- Complete LED Control Program
+## Exercice 2 : main.s -- Programme complet de commande LED
 
 ### Implement GPIO initialization
 
-**Question:** Write the `_start` code that configures GPIO 47 as output.
+**Question :** Write the `_start` code that configures GPIO 47 as output.
 
-**Answer:**
+**Reponse :**
 
 ```arm
 .section .text
@@ -95,15 +95,15 @@ _start:
                                 @ GPIO 47 is now configured as output
 ```
 
-**How it works:** Writing to the GPFSEL4 memory address tells the GPIO controller to configure pin 47 as a digital output. All other pins in this register default to input (000). No special I/O instruction is needed -- just a regular `STR`.
+**Fonctionnement :** Writing to the GPFSEL4 memory address tells the GPIO controller to configure pin 47 as a digital output. All other pins in this register default to input (000). No special I/O instruction is needed -- just a regular `STR`.
 
 ---
 
 ### Implement the SOS Morse code pattern loop
 
-**Question:** Write the main loop that blinks SOS pattern: 3 short, 3 long, 3 short, then pause and repeat.
+**Question :** Write the main loop that blinks SOS pattern: 3 short, 3 long, 3 short, then pause and repeat.
 
-**Answer:**
+**Reponse :**
 
 ```arm
 begin:
@@ -145,9 +145,9 @@ S:  ON-off ON-off ON-off     (3 short blinks)
 
 ### Implement the allumer (blink) function
 
-**Question:** Write the `allumer` function that turns the LED on, waits, turns it off, and waits. Why can it not use the stack?
+**Question :** Write the `allumer` function that turns the LED on, waits, turns it off, and waits. Why can it not use the stack?
 
-**Answer:**
+**Reponse :**
 
 ```arm
 allumer:
@@ -182,9 +182,9 @@ allumer:
 
 ### Implement the sleep (busy-wait delay) function
 
-**Question:** Write the `sleep` function that implements a software delay loop.
+**Question :** Write the `sleep` function that implements a software delay loop.
 
-**Answer:**
+**Reponse :**
 
 ```arm
 sleep:
@@ -210,13 +210,13 @@ end_sleep_loop:
 
 ---
 
-## Exercise 3: Execution Flow Trace
+## Exercice 3 : Trace du flux d'execution
 
 ### Trace one complete "S" (three short blinks)
 
-**Question:** Show the register state and LED state through one letter "S".
+**Question :** Show the register state and LED state through one letter "S".
 
-**Answer:**
+**Reponse :**
 
 ```
 Time  Action                    LED    r0            r1            r2           r3
@@ -238,13 +238,13 @@ T12     bx r3                   OFF    ...           ...           1800000      
 
 ---
 
-## Exercise 4: GPIO Calculation Reference
+## Exercice 4 : Reference de calcul GPIO
 
 ### General formula for any GPIO pin
 
-**Question:** Give the general formulas for configuring any GPIO pin P.
+**Question :** Give the general formulas for configuring any GPIO pin P.
 
-**Answer:**
+**Reponse :**
 
 **Function Select register:**
 - Register: GPFSEL(P / 10)
@@ -253,11 +253,11 @@ T12     bx r3                   OFF    ...           ...           1800000      
 - Value: 001 for output
 
 **Set register:**
-- If P < 32: GPSET0 (0x3F20001C), bit P
+- If P &lt; 32: GPSET0 (0x3F20001C), bit P
 - If P >= 32: GPSET1 (0x3F200020), bit (P - 32)
 
 **Clear register:**
-- If P < 32: GPCLR0 (0x3F200028), bit P
+- If P &lt; 32: GPCLR0 (0x3F200028), bit P
 - If P >= 32: GPCLR1 (0x3F20002C), bit (P - 32)
 
 **Worked example -- GPIO 17 (external LED):**
@@ -277,7 +277,7 @@ Value: 1 << 17 = 0x00020000
 
 ---
 
-## Key Differences from TPs 1-3
+## Differences cles from TPs 1-3
 
 | Aspect | TP1-3 (User-space) | TP4 (Bare-metal) |
 |--------|---------------------|-------------------|
@@ -289,7 +289,7 @@ Value: 1 << 17 = 0x00020000
 | Linking | Standard ld | ld -Ttext=0x8000 |
 | Output format | ELF executable | Raw binary (kernel.img) |
 
-## Build and Deploy
+## Compilation et deploiement
 
 ```bash
 arm-none-eabi-as -o main.o main.s

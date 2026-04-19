@@ -80,13 +80,13 @@ Soit G = {g_1, g_2, ..., g_k} la solution gloutonne, triee par fin croissante.
 Soit O = {o_1, o_2, ..., o_m} une solution optimale quelconque, triee par fin croissante.
 Supposons par l'absurde que m > k.
 
-**Lemme (invariant) :** Pour tout i de 1 a k, fin(g_i) <= fin(o_i).
+**Lemme (invariant) :** Pour tout i de 1 a k, fin(g_i) &lt;= fin(o_i).
 
 Preuve du lemme par recurrence sur i :
 
-**Base (i = 1) :** g_1 est l'activite de fin la plus precoce parmi toutes les activites (c'est le choix glouton). Donc fin(g_1) <= fin(o_1), quelle que soit o_1.
+**Base (i = 1) :** g_1 est l'activite de fin la plus precoce parmi toutes les activites (c'est le choix glouton). Donc fin(g_1) &lt;= fin(o_1), quelle que soit o_1.
 
-**Pas inductif :** Supposons fin(g_i) <= fin(o_i). Montrons fin(g_{i+1}) <= fin(o_{i+1}).
+**Pas inductif :** Supposons fin(g_i) &lt;= fin(o_i). Montrons fin(g_{i+1}) &lt;= fin(o_{i+1}).
 
 ```
 o_{i+1} est compatible avec o_1, ..., o_i, donc debut(o_{i+1}) >= fin(o_i).
@@ -97,9 +97,9 @@ Le glouton, a l'etape i+1, choisit l'activite compatible de fin la plus precoce.
 Donc fin(g_{i+1}) <= fin(o_{i+1}).  QED pour le lemme.
 ```
 
-**Conclusion :** Puisque fin(g_k) <= fin(o_k), et que O contient o_{k+1} avec debut(o_{k+1}) >= fin(o_k) >= fin(g_k), l'activite o_{k+1} est compatible avec g_1, ..., g_k. Le glouton l'aurait selectionnee, donc la solution gloutonne contiendrait au moins k+1 elements. Contradiction avec |G| = k.
+**Conclusion :** Puisque fin(g_k) &lt;= fin(o_k), et que O contient o_{k+1} avec debut(o_{k+1}) >= fin(o_k) >= fin(g_k), l'activite o_{k+1} est compatible avec g_1, ..., g_k. Le glouton l'aurait selectionnee, donc la solution gloutonne contiendrait au moins k+1 elements. Contradiction avec |G| = k.
 
-Donc m <= k, et puisque G est une solution valide et O est optimale, m = k. Le glouton est optimal.
+Donc m &lt;= k, et puisque G est une solution valide et O est optimale, m = k. Le glouton est optimal.
 
 ---
 
@@ -264,7 +264,7 @@ d3(i,j) = somme des c_ij plus petites valeurs non nulles de D_ij
 d4(i,j) = somme des minimums par anti-diagonale de D_ij
 ```
 
-**Precision croissante :** d1 <= d2 <= d3 <= d4 (comme minorants).
+**Precision croissante :** d1 &lt;= d2 &lt;= d3 &lt;= d4 (comme minorants).
 
 Plus l'heuristique est precise (donne un grand minorant), plus on elague de branches.
 

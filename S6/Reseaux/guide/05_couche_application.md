@@ -38,12 +38,12 @@ sequenceDiagram
 
 | Type | Description | Exemple |
 |------|-------------|---------|
-| A | Nom -> IPv4 | www -> 193.52.94.51 |
-| AAAA | Nom -> IPv6 | www -> 2a00:1450:... |
-| CNAME | Alias | blog -> example.github.io |
-| MX | Serveur mail | insa -> mail.insa-rennes.fr |
-| NS | Serveur DNS autoritaire | insa -> ns1.insa-rennes.fr |
-| PTR | IP -> nom (inverse) | 51 -> www.insa-rennes.fr |
+| A | Nom → IPv4 | www → 193.52.94.51 |
+| AAAA | Nom → IPv6 | www → 2a00:1450:... |
+| CNAME | Alias | blog → example.github.io |
+| MX | Serveur mail | insa → mail.insa-rennes.fr |
+| NS | Serveur DNS autoritaire | insa → ns1.insa-rennes.fr |
+| PTR | IP → nom (inverse) | 51 → www.insa-rennes.fr |
 
 ### Transport
 
@@ -165,7 +165,7 @@ Pour le cours et les TP, on cree ses propres protocoles. A definir :
 1. **Qui parle en premier ?** Client (HTTP) ou serveur (SMTP).
 2. **Format des messages :** texte (facile a debugger) ou binaire (compact).
 3. **Delimiteurs :** `\n`, longueur prefixee, marqueur de fin.
-4. **Machine a etats :** connecte -> authentifie -> en transfert.
+4. **Machine a etats :** connecte → authentifie → en transfert.
 5. **Gestion des erreurs :** codes d'erreur, messages explicites.
 6. **Terminaison :** commande QUIT, timeout, FIN TCP.
 

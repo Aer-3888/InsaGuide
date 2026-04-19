@@ -90,7 +90,7 @@ dp[3][3] = 1 + min(10, 11) = 1 + 10 = 11
 (0,1) = 4  : vient de (0,0)=1
 ```
 
-Chemin : (0,0) -> (0,1) -> (0,2) -> (1,2) -> (2,2) -> (2,3) -> (3,3).
+Chemin : (0,0) → (0,1) → (0,2) → (1,2) → (2,2) → (2,3) → (3,3).
 
 Verification : 1 + 3 + 1 + 1 + 1 + 3 + 1 = 11. Correct.
 
@@ -282,7 +282,7 @@ Complexite de l'algorithme : O(n^3) en temps, O(n^2) en espace.
     T   [  5   4   3   2 ]
 ```
 
-**Distance = c(5,3) = 2.** Operations : supprimer R, supprimer I. BRUIT -> BUIT -> BUT.
+**Distance = c(5,3) = 2.** Operations : supprimer R, supprimer I. BRUIT → BUIT → BUT.
 
 ---
 

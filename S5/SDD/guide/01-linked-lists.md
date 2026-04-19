@@ -1,51 +1,51 @@
 # Linked Lists (Listes Chainees)
 
-## Theory
+## Theorie
 
-A **linked list** is a linear data structure where elements (nodes) are connected via references (pointers). Unlike arrays, elements are not stored contiguously in memory.
+Une **liste chainee** est une structure de donnees lineaire ou les elements (noeuds) sont connectes par des references (pointeurs). Contrairement aux tableaux, les elements ne sont pas stockes de maniere contigue en memoire.
 
-### Singly Linked List
+### Liste simplement chainee
 
-Each node holds data and a pointer to the next node.
+Chaque noeud contient une donnee et un pointeur vers le noeud suivant.
 
 ```
   [A|*]--->[B|*]--->[C|*]--->null
 ```
 
-- Traversal: forward only
-- Insert at head: O(1)
-- Delete at head: O(1)
-- Access i-th element: O(n)
+- Parcours : en avant uniquement
+- Insertion en tete : O(1)
+- Suppression en tete : O(1)
+- Acces au i-eme element : O(n)
 
-### Doubly Linked List
+### Liste doublement chainee
 
-Each node holds data, a pointer to the next node, and a pointer to the previous node.
+Chaque noeud contient une donnee, un pointeur vers le noeud suivant et un pointeur vers le noeud precedent.
 
 ```
   null<---[*|A|*]<--->[*|B|*]<--->[*|C|*]--->null
 ```
 
-- Traversal: forward and backward
-- Insert/delete at known position: O(1)
-- pred() is O(1) instead of O(n) as in singly linked
+- Parcours : en avant et en arriere
+- Insertion/suppression a une position connue : O(1)
+- pred() est O(1) au lieu de O(n) comme en simplement chainee
 
 ### Sentinel Nodes (Noeuds Sentinelles)
 
-Sentinels are dummy nodes that simplify boundary conditions. The INSA SDD course uses **two sentinels** (head and tail):
+Les sentinelles sont des noeuds fictifs qui simplifient les conditions aux limites. Le cours SDD de l'INSA utilise **deux sentinelles** (head et tail) :
 
 ```
   head <---> [elem1] <---> [elem2] <---> [elem3] <---> tail
   (sentinel)                                          (sentinel)
 ```
 
-Benefits:
-- No null checks when inserting at front/back
-- Empty list = head.successor == tail
-- Cursor on sentinel = "out of list" (estSorti)
+Avantages :
+- Pas de verification de null lors de l'insertion en debut/fin
+- Liste vide = head.successor == tail
+- Curseur sur sentinelle = "hors liste" (estSorti)
 
 ### Cursor Pattern (Patron Curseur)
 
-The cursor is an internal pointer to the "current" element. All operations act relative to the cursor.
+Le curseur est un pointeur interne vers l'element "courant". Toutes les operations agissent relativement au curseur.
 
 ```
   head <---> [A] <---> [B] <---> [C] <---> tail
@@ -53,21 +53,21 @@ The cursor is an internal pointer to the "current" element. All operations act r
                        cursor
 ```
 
-Operations:
-- `entete()` -- cursor on first real element
-- `enqueue()` -- cursor on last real element
-- `succ()` -- move cursor forward
-- `pred()` -- move cursor backward
-- `valec()` -- value at cursor
-- `ajouterD(x)` -- insert x to the right of cursor, cursor moves to x
-- `oterec()` -- remove element at cursor, cursor moves to successor
-- `estSorti()` -- true if cursor is on a sentinel
-- `estVide()` -- true if head.successor == tail
+Operations :
+- `entete()` -- curseur sur le premier element reel
+- `enqueue()` -- curseur sur le dernier element reel
+- `succ()` -- avancer le curseur
+- `pred()` -- reculer le curseur
+- `valec()` -- valeur au curseur
+- `ajouterD(x)` -- inserer x a droite du curseur, le curseur se deplace sur x
+- `oterec()` -- supprimer l'element au curseur, le curseur se deplace sur le successeur
+- `estSorti()` -- vrai si le curseur est sur une sentinelle
+- `estVide()` -- vrai si head.successor == tail
 
 
-## Java Implementation
+## Implementation Java
 
-### Interface (from TP1)
+### Interface (du TP1)
 
 ```java
 public interface MyList<T> {
@@ -82,7 +82,7 @@ public interface MyList<T> {
 }
 ```
 
-### Doubly Linked List with Sentinels (from TP1)
+### Liste doublement chainee avec sentinelles (du TP1)
 
 ```java
 public class ListeDoubleChainage implements MyList<Object> {
@@ -106,6 +106,7 @@ public class ListeDoubleChainage implements MyList<Object> {
 
 #### Insertion -- ajouterD(o)
 
+
 ```java
     public void ajouterD(Object o) {
         if (!this.estVide() && this.estSorti())
@@ -125,7 +126,7 @@ public class ListeDoubleChainage implements MyList<Object> {
     }
 ```
 
-Step by step with ASCII art:
+Etape par etape avec schema ASCII :
 
 ```
 Before: head <-> [A] <-> tail       cursor on [A]
@@ -148,7 +149,7 @@ Step 4 -- cursor = nn
                           cursor
 ```
 
-#### Deletion -- oterec()
+#### Suppression -- oterec()
 
 ```java
     public void oterec() {
@@ -174,9 +175,9 @@ After:  head <-> [A] <---------> [C] <-> tail
 ```
 
 
-## Array-Backed List (ListeTabulee) -- from TP2
+## Liste avec tableau (ListeTabulee) -- du TP2
 
-An alternative implementation using an internal array:
+Une implementation alternative utilisant un tableau interne :
 
 ```java
 public class ListeTabulee<T> implements Liste<T> {
@@ -187,7 +188,7 @@ public class ListeTabulee<T> implements Liste<T> {
 }
 ```
 
-The iterator for this uses an integer index instead of a node pointer:
+L'iterateur utilise un index entier au lieu d'un pointeur de noeud :
 
 ```java
 public class ListeTabuleeIterateur<T> implements Iterateur<T> {
@@ -199,28 +200,28 @@ public class ListeTabuleeIterateur<T> implements Iterateur<T> {
 }
 ```
 
-Key difference: insert/delete requires shifting O(n) elements.
+Difference principale : l'insertion/suppression necessite un decalage de O(n) elements.
 
 
-## Complexity Comparison
+## Comparaison de complexite
 
-| Operation | Doubly Linked (at cursor) | Array-backed (at cursor) |
-|-----------|--------------------------|--------------------------|
+| Operation | Doublement chainee (au curseur) | Avec tableau (au curseur) |
+|-----------|-------------------------------|--------------------------|
 | entete() | O(1) | O(1) |
 | succ() | O(1) | O(1) |
 | pred() | O(1) | O(1) |
-| ajouterD() | **O(1)** | **O(n)** (shift) |
-| oterec() | **O(1)** | **O(n)** (shift) |
+| ajouterD() | **O(1)** | **O(n)** (decalage) |
+| oterec() | **O(1)** | **O(n)** (decalage) |
 | valec() | O(1) | O(1) |
 | estVide() | O(1) | O(1) |
-| Access by index | O(n) | **O(1)** |
-| Memory overhead | 2 pointers/node | None (contiguous) |
-| Cache locality | Poor | Excellent |
+| Acces par index | O(n) | **O(1)** |
+| Surcout memoire | 2 pointeurs/noeud | Aucun (contigu) |
+| Localite de cache | Mauvaise | Excellente |
 
 
-## Circular Linked List
+## Liste chainee circulaire
 
-A variant where the last element points back to the first:
+Une variante ou le dernier element pointe vers le premier :
 
 ```
   [A] ---> [B] ---> [C]
@@ -228,18 +229,18 @@ A variant where the last element points back to the first:
    |__________________|
 ```
 
-Not directly implemented in the TPs but sometimes appears in exams.
+Non directement implemente dans les TP mais apparait parfois aux examens.
 
 
-## Common Exam Patterns
+## Questions d'examen frequentes
 
-1. **Implement an operation** (e.g., reverse, merge, sort a linked list)
-2. **Trace execution** step by step on a given list
-3. **Complexity proof** for a given operation
-4. **Compare** linked vs. array-backed implementation
+1. **Implementer une operation** (ex : inverser, fusionner, trier une liste chainee)
+2. **Tracer l'execution** etape par etape sur une liste donnee
+3. **Preuve de complexite** pour une operation donnee
+4. **Comparer** implementation chainee vs. avec tableau
 
 
-## CHEAT SHEET
+## AIDE-MEMOIRE
 
 ```
 DOUBLY LINKED LIST WITH SENTINELS

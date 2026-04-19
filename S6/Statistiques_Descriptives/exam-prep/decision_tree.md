@@ -148,7 +148,7 @@ Toujours rediger la conclusion en 3 temps :
 1. **Rappeler les hypotheses** : "On teste $H_0: \mu = 50$ contre $H_1: \mu \neq 50$"
 2. **Donner le resultat** : "La statistique de test vaut $T = 2.5$, la p-value est $0.02$"
 3. **Conclure en francais** :
-   - Si $p < 0.05$ : "Au risque de 5%, on rejette $H_0$. On conclut que la moyenne differe significativement de 50."
+   - Si $p \lt 0.05$ : "Au risque de 5%, on rejette $H_0$. On conclut que la moyenne differe significativement de 50."
    - Si $p \geq 0.05$ : "Au risque de 5%, on ne rejette pas $H_0$. On ne peut pas conclure a une difference significative."
 
 **JAMAIS dire "on accepte $H_0$"** -- on dit "on ne rejette pas $H_0$".

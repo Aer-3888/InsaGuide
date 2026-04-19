@@ -185,7 +185,7 @@ barplot(table(categorie),
 |-----------|-------|--------------------------|
 | Distribution symetrique | Skewness $\approx 0$ | $\bar{x} \approx \text{Med}$ |
 | Queue a droite (asymetrie positive) | Skewness $> 0$ | $\bar{x} > \text{Med}$ |
-| Queue a gauche (asymetrie negative) | Skewness $< 0$ | $\bar{x} < \text{Med}$ |
+| Queue a gauche (asymetrie negative) | Skewness $\lt 0$ | $\bar{x} \lt \text{Med}$ |
 
 ### 6.2 Aplatissement (kurtosis)
 
@@ -193,7 +193,7 @@ Le kurtosis mesure l'epaisseur des queues de distribution par rapport a une loi 
 
 - **Leptokurtique** (kurtosis > 3) : queues epaisses, pic pointu.
 - **Mesokurtique** (kurtosis $\approx$ 3) : comparable a la normale.
-- **Platykurtique** (kurtosis < 3) : queues fines, distribution plate.
+- **Platykurtique** (kurtosis &lt; 3) : queues fines, distribution plate.
 
 ---
 

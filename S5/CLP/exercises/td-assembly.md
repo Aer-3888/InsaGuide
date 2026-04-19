@@ -1,18 +1,18 @@
-# TD Solutions -- ARM Assembly
+# Solutions TD -- Assembleur ARM
 
 > Following teacher instructions from: S5/CLP/data/moodle/td/TDAsm1.pdf and S5/CLP/data/moodle/td/Assembleur/
 
-This file covers the ARM assembly TD exercises: character-to-number conversion (carastruct.s), the Collatz sequence (collatz.s), factorial computation (factorial.s), and array analysis (CodeTest.s).
+Ce fichier couvre les exercices de TD sur l'assembleur ARM : conversion caractere vers nombre (carastruct.s), la suite de Collatz (collatz.s), le calcul de factorielle (factorial.s) et l'analyse de tableaux (CodeTest.s).
 
 ---
 
-## Exercise 1: Character-to-Number Conversion (carastruct.s)
+## Exercice 1 : Conversion caractere vers nombre (carastruct.s)
 
-### Convert a string of digit characters to an integer
+### Convertir une chaine de caracteres numeriques en entier
 
-**Question:** Given a struct containing a length field and a character array "5487", convert it to the integer 5487.
+**Question :** Given a struct containing a length field and a character array "5487", convert it to the integer 5487.
 
-**Answer:**
+**Reponse :**
 
 **Struct layout:**
 ```c
@@ -95,7 +95,7 @@ loop_done:
 | 3 | 3 | '7' (55) | 7 | 548 | 548*10 + 7 = 5487 |
 | 4 | 4 | -- | -- | 5487 | (loop exits: 4 >= 4) |
 
-**How it works:**
+**Fonctionnement :**
 - **LDRB for byte access:** `ldrb r7, [r8, r0]` loads exactly 1 byte, zero-extending to 32 bits. Using `LDR` would load 4 bytes (wrong).
 - **ASCII conversion:** Characters '0'-'9' have values 48-57. Subtracting '0' gives 0-9.
 - **BCS (Branch if Carry Set):** For unsigned `cmp r0, r9`, carry is set when r0 >= r9. Equivalent to BHS.
@@ -103,13 +103,13 @@ loop_done:
 
 ---
 
-## Exercise 2: Collatz Sequence (collatz.s)
+## Exercice 2 : Suite de Collatz (collatz.s)
 
-### Apply Collatz conjecture rules until reaching 1
+### Appliquer les regles de la conjecture de Collatz jusqu'a atteindre 1
 
-**Question:** Starting from x = 32 (0x20), apply: if x is even, x = x/2; if x is odd, x = 3x + 1. Stop when x = 1.
+**Question :** Starting from x = 32 (0x20), apply: if x is even, x = x/2; if x is odd, x = 3x + 1. Stop when x = 1.
 
-**Answer:**
+**Reponse :**
 
 ```arm
 .data
@@ -178,20 +178,20 @@ Starting value 32 = 2^5 is purely even, so it divides down in 5 steps. A more in
 | 12 | 5 | 1 | odd: 3*5+1 | 16 |
 | 13-17 | 16->1 | 0 | even path | 1 |
 
-**How it works:**
+**Fonctionnement :**
 - **Parity test with AND:** `and r3, r0, #1` isolates bit 0. Faster and cleaner than division.
 - **LSR for unsigned division:** `mov r0, r0, lsr #1` shifts all bits right by 1 = divide by 2. Vacated MSB filled with 0.
 - **MLA for 3x+1:** `mla r0, r0, r6, r7` computes x*3+1 in a single instruction.
 
 ---
 
-## Exercise 3: Factorial (factorial.s)
+## Exercice 3 : Factorielle (factorial.s)
 
-### Compute N! for N = 12
+### Calculer N! pour N = 12
 
-**Question:** Implement iterative factorial. Why is 12 the maximum for 32-bit?
+**Question :** Implement iterative factorial. Why is 12 the maximum for 32-bit?
 
-**Answer:**
+**Reponse :**
 
 ```arm
 .set N, 12
@@ -250,19 +250,19 @@ loop_done:
 
 **Why 12 is maximum:** 13! = 6,227,020,800 exceeds 2^32 - 1 = 4,294,967,295. A 32-bit `MUL` would silently overflow. For larger factorials, use `UMULL` (unsigned multiply long) for a 64-bit result.
 
-**How it works:**
+**Fonctionnement :**
 - **BHI (Branch if Higher):** Unsigned greater-than. Exits when i=13 > 12.
 - **Accumulator in register:** Unlike i (loaded/stored each iteration), fact stays in r0 throughout -- a natural optimization.
 
 ---
 
-## Exercise 4: Array Analysis (CodeTest.s)
+## Exercice 4 : Analyse de tableau (CodeTest.s)
 
-### Count negative, zero, and positive values in an array
+### Compter les valeurs negatives, nulles et positives dans un tableau
 
-**Question:** Given an array of 10 integers, count negative, zero, and positive values.
+**Question :** Given an array of 10 integers, count negative, zero, and positive values.
 
-**Answer:**
+**Reponse :**
 
 ```arm
 .data
@@ -324,7 +324,7 @@ Done:
     sub r5, r5, r4      @ r5 = N - negative - zero = positive count
 ```
 
-**How it works:**
+**Fonctionnement :**
 - **Post-increment addressing:** `ldr r0, [r1], #4` loads the word at r1, THEN adds 4 to r1. Standard array-walking pattern.
 - **Conditional execution:** ARM's signature feature. `addlt r3, r3, #1` only executes the ADD if the N!=V flag condition holds (signed less than). Avoids branches, more efficient on ARM pipeline.
 - **RSB (Reverse Subtract):** `rsb r3, r3, #N` computes `r3 = N - r3` (operands reversed from SUB).
@@ -333,11 +333,11 @@ Done:
 
 ## Annale 2017: Vector Dot Product and Orthogonality
 
-### Compute scalar product and test orthogonality
+### Calculer le produit scalaire et tester l'orthogonalite
 
-**Question:** Given vectors as structs with (letter, x, y), compute the dot product and determine if two vectors are orthogonal.
+**Question :** Given vectors as structs with (letter, x, y), compute the dot product and determine if two vectors are orthogonal.
 
-**Answer:**
+**Reponse :**
 
 **Data structure:**
 ```arm
@@ -384,11 +384,11 @@ strne r4, [r3]
 
 ## Annale 2018: Direction Vectors and Collinearity
 
-### Generate direction vectors and test collinearity
+### Generer les vecteurs directeurs et tester la colinearite
 
-**Question:** Given lines ax + by + c = 0, compute direction vectors (-b, a) and test collinearity via cross product.
+**Question :** Given lines ax + by + c = 0, compute direction vectors (-b, a) and test collinearity via cross product.
 
-**Answer:**
+**Reponse :**
 
 **Direction vector for D1 (a=3, b=2, c=12):**
 ```arm
@@ -414,11 +414,11 @@ Cross product is 0, so v1 and v2 are collinear (D1 and D2 are parallel).
 
 ## Annale 2019: Recipe Ingredients
 
-### Count non-empty ingredients and extract numeric values
+### Compter les ingredients non-vides et extraire les valeurs numeriques
 
-**Question:** Given ingredient structs with a 3-byte encoded quantity and a name string, implement CompterIngredients and TrouverNb.
+**Question :** Given ingredient structs with a 3-byte encoded quantity and a name string, implement CompterIngredients and TrouverNb.
 
-**Answer:**
+**Reponse :**
 
 **CompterIngredients -- count non-empty entries:**
 ```arm
@@ -438,7 +438,7 @@ finloop:
     str r1, [fp, #res]         @ Return count
 ```
 
-**TrouverNb -- extract 3-digit number (e.g., bytes 0,8,0 -> 80):**
+**TrouverNb -- extract 3-digit number (e.g., bytes 0,8,0 → 80):**
 ```arm
 TrouverNb:
     mov r0, #0                  @ j = 0 (byte index)

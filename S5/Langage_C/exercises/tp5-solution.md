@@ -1,6 +1,6 @@
 # TP5 - Allocation Dynamique et Listes Chainees
 
-> Following teacher instructions from: `S5/Langage_C/data/moodle/tp/tp5/README.md`
+> Instructions de l'enseignant depuis : `S5/Langage_C/data/moodle/tp/tp5/README.md`
 
 ## Contexte
 
@@ -31,7 +31,7 @@ Ce TP etend le TP4 (structure Tache) avec l'allocation dynamique et les listes c
 [Tache1|*]-->[Tache2|*]-->[Tache3|NULL]
 ```
 
-**Answer:**
+**Solution :**
 
 ```c
 /*!
@@ -82,7 +82,7 @@ Liste l (pointeur vers le premier element)
 
 ### Implementer la structure Tache avec allocation dynamique (tache.h et tache.c) -- Inclure `lireTachesFichierDyn()` pour lire un nombre variable de taches
 
-**Answer pour tache.h :**
+**Solution pour tache.h :**
 
 ```c
 /*!
@@ -121,7 +121,7 @@ Tache * lireTachesFichierDyn(char * nomFichier, int * nbtaches);
 #endif
 ```
 
-**Answer pour tache.c :**
+**Solution pour tache.c :**
 
 ```c
 #include "tache.h"
@@ -256,7 +256,7 @@ int ecrireTachesFichier(char * nomFichier, Tache *tab_t, int nbTaches) {
 
 ### Manipulation de base -- Implementer `ajoutdeb()` pour ajouter un element en debut de liste, `nbelement()` pour compter les elements, `afficheListe()` pour afficher la liste
 
-**Answer:**
+**Solution :**
 
 ```c
 #include <string.h>
@@ -334,7 +334,7 @@ l --> [Tache3|*]-->[Tache1|*]-->[Tache2|NULL]
 
 ### Insertion triee par ID -- Implementer `ajouttrield()` pour inserer un element en maintenant l'ordre par numero de tache
 
-**Answer:**
+**Solution :**
 
 ```c
 /*!
@@ -389,7 +389,7 @@ comparateur = &compareID;          /* Assignation */
 int resultat = comparateur(t1, t2); /* Appel */
 ```
 
-**Answer:**
+**Solution :**
 
 ```c
 /*!
@@ -456,7 +456,7 @@ int compareNom(Tache t, Tache c) {
 
 ### Programme principal -- Lire les taches dynamiquement et les inserer triees dans une liste chainee
 
-**Answer:**
+**Solution :**
 
 ```c
 #include <stdio.h>
@@ -489,7 +489,7 @@ int main() {
 }
 ```
 
-**Makefile:**
+**Makefile :**
 
 ```makefile
 CC = gcc
@@ -516,7 +516,7 @@ run: $(TARGET)
 .PHONY: all clean run
 ```
 
-**Compilation:**
+**Compilation :**
 
 ```bash
 cd tp5/src
@@ -524,7 +524,7 @@ make
 ./main
 ```
 
-**Expected output:**
+**Sortie attendue :**
 
 ```
 Nombre de taches: 7

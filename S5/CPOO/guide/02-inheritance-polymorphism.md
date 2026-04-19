@@ -1,10 +1,10 @@
-# Inheritance and Polymorphism
+# Heritage et Polymorphisme
 
-## Theory
+## Theorie
 
-### Inheritance (`extends`)
+### Heritage (`extends`)
 
-Inheritance creates an "is-a" relationship. A subclass inherits all non-private members of its parent class and can specialize or extend behavior.
+L'heritage cree une relation "est-un". Une sous-classe herite de tous les membres non-prives de sa classe parente et peut specialiser ou etendre le comportement.
 
 ```java
 public abstract class Arbre {
@@ -57,13 +57,13 @@ public class Pin extends Arbre {
 }
 ```
 
-### Abstract Classes
+### Classes abstraites
 
-An abstract class **cannot be instantiated** directly. It may contain:
-- Concrete methods (with implementation, e.g. `vieillir()`, `getPrix()`)
-- Abstract methods (no body, must be overridden by subclasses)
-- Constructors (called via `super()` from subclasses)
-- Fields (including `protected` fields shared with subclasses)
+Une classe abstraite **ne peut pas etre instanciee** directement. Elle peut contenir :
+- Des methodes concretes (avec implementation, ex. `vieillir()`, `getPrix()`)
+- Des methodes abstraites (sans corps, devant etre redefinies par les sous-classes)
+- Des constructeurs (appeles via `super()` depuis les sous-classes)
+- Des champs (y compris des champs `protected` partages avec les sous-classes)
 
 ```java
 public abstract class Arbre {
@@ -83,19 +83,19 @@ public abstract class Arbre {
 }
 ```
 
-**When to use abstract classes vs interfaces**:
+**Quand utiliser les classes abstraites vs les interfaces** :
 
-| Feature | Abstract Class | Interface |
-|---------|---------------|-----------|
-| Fields | Yes (any type) | Only `static final` constants |
-| Constructors | Yes | No |
-| Concrete methods | Yes | Yes (default methods since Java 8) |
-| Multiple inheritance | No (single extends) | Yes (implement multiple) |
-| Use when | Shared state + behavior | Contract / capability |
+| Caracteristique | Classe abstraite | Interface |
+|-----------------|-----------------|-----------|
+| Champs | Oui (tout type) | Seulement des constantes `static final` |
+| Constructeurs | Oui | Non |
+| Methodes concretes | Oui | Oui (methodes default depuis Java 8) |
+| Heritage multiple | Non (un seul extends) | Oui (implementation multiple) |
+| Utiliser quand | Etat + comportement partages | Contrat / capacite |
 
 ### Interfaces
 
-An interface defines a contract -- a set of methods that implementing classes must provide.
+Une interface definit un contrat -- un ensemble de methodes que les classes implementantes doivent fournir.
 
 ```java
 public interface Network {
@@ -118,11 +118,11 @@ public interface ITranslation {
 }
 ```
 
-Interfaces are central to **dependency inversion**: depend on abstractions, not concrete classes. This is what enables mocking in tests.
+Les interfaces sont centrales pour l'**inversion de dependances** : dependre d'abstractions, pas de classes concretes. C'est ce qui permet le mocking dans les tests.
 
-### Polymorphism
+### Polymorphisme
 
-Polymorphism means "many forms." The same method call produces different behavior depending on the actual object type at runtime.
+Le polymorphisme signifie "plusieurs formes." Le meme appel de methode produit un comportement different selon le type reel de l'objet a l'execution.
 
 ```java
 // Reference type: Arbre     Actual type: Chene or Pin
@@ -138,9 +138,9 @@ for (Arbre arbre : arbres) {
 }
 ```
 
-### Dynamic Binding (Late Binding)
+### Liaison dynamique (Late Binding)
 
-At compile time, Java checks that the **reference type** has the method. At runtime, Java dispatches to the **actual type's** implementation.
+A la compilation, Java verifie que le **type de reference** possede la methode. A l'execution, Java dispatche vers l'implementation du **type reel**.
 
 ```java
 Arbre tree = new Chene(15, 2.0);
@@ -149,9 +149,9 @@ tree.getPrix();          // Calls Chene's getPrixM3() at runtime
 // Runtime dispatches: actual type is Chene, so Chene.getPrixM3() is called.
 ```
 
-### The `instanceof` Operator
+### L'operateur `instanceof`
 
-Runtime type checking -- use sparingly (it often signals a design issue, but the course explicitly teaches it).
+Verification de type a l'execution -- a utiliser avec parcimonie (c'est souvent le signe d'un probleme de conception, mais le cours l'enseigne explicitement).
 
 ```java
 public int getNombreChenes() {
@@ -165,9 +165,9 @@ public int getNombreChenes() {
 }
 ```
 
-### Method Overriding vs Overloading
+### Redefinition vs Surcharge
 
-**Overriding** (runtime polymorphism): subclass redefines a parent method with the same signature.
+**Redefinition (Overriding)** (polymorphisme a l'execution) : une sous-classe redefinit une methode parente avec la meme signature.
 ```java
 @Override
 public Gland produireFruit() {   // same name, covariant return type
@@ -175,15 +175,15 @@ public Gland produireFruit() {   // same name, covariant return type
 }
 ```
 
-**Overloading** (compile-time): same class defines multiple methods with the same name but different parameter lists.
+**Surcharge (Overloading)** (a la compilation) : la meme classe definit plusieurs methodes avec le meme nom mais des listes de parametres differentes.
 ```java
 public void translate(double tx, double ty) { ... }
 public void translate(ITranslation translation) { ... }
 ```
 
-### The `@Override` Annotation
+### L'annotation `@Override`
 
-Always use `@Override` when overriding a method. It gives compile-time verification that you are actually overriding something (catches typos and signature mismatches).
+Toujours utiliser `@Override` lors de la redefinition d'une methode. Cela donne une verification a la compilation que vous redefinissez bien quelque chose (detecte les fautes de frappe et les erreurs de signature).
 
 ```java
 @Override
@@ -192,9 +192,9 @@ public void manger(Gland gland) {
 }
 ```
 
-## Pattern: Template Method
+## Patron : Methode Template (Template Method)
 
-The `Arbre` hierarchy uses the Template Method pattern: the base class defines the algorithm skeleton (`getPrix()` calls `getPrixM3()`) and subclasses fill in the varying steps.
+La hierarchie `Arbre` utilise le patron Template Method : la classe de base definit le squelette de l'algorithme (`getPrix()` appelle `getPrixM3()`) et les sous-classes remplissent les etapes variables.
 
 ```
 Arbre.getPrix()  -->  calls this.getPrixM3()  -->  dispatched to Chene.getPrixM3() or Pin.getPrixM3()
@@ -203,12 +203,12 @@ Arbre.getPrix()  -->  calls this.getPrixM3()  -->  dispatched to Chene.getPrixM3
  Algorithm skeleton                                        Variable step
 ```
 
-## Common Pitfalls
+## Pieges courants
 
-1. **Forgetting `super()` in subclass constructors**: if the parent has no no-arg constructor, you MUST explicitly call `super(args)`.
-2. **Casting without checking**: always use `instanceof` before casting: `if (arbre instanceof Chene c) { ... }`.
-3. **Confusing reference type and actual type**: `Arbre a = new Chene(...)` -- `a` is typed as `Arbre` but behaves as `Chene` for overridden methods.
-4. **Abstract method not implemented**: forgetting `@Override` and mistyping the method name creates a new method instead of overriding.
+1. **Oublier `super()` dans les constructeurs de sous-classes** : si le parent n'a pas de constructeur sans argument, il FAUT appeler explicitement `super(args)`.
+2. **Cast sans verification** : toujours utiliser `instanceof` avant un cast : `if (arbre instanceof Chene c) { ... }`.
+3. **Confondre type de reference et type reel** : `Arbre a = new Chene(...)` -- `a` est type comme `Arbre` mais se comporte comme `Chene` pour les methodes redefinies.
+4. **Methode abstraite non implementee** : oublier `@Override` et mal ecrire le nom de la methode cree une nouvelle methode au lieu de la redefinir.
 
 ---
 

@@ -239,7 +239,7 @@ CUDA_CHECK(cudaDeviceSynchronize());
 |--------|----------------|
 | Taille de bloc | Commencer avec 256 threads |
 | Garde `if (i < n)` | Toujours dans le kernel |
-| Acces coalescent | Threads consecutifs -> adresses consecutives |
+| Acces coalescent | Threads consecutifs → adresses consecutives |
 | Transferts CPU-GPU | Regrouper, garder les donnees sur le GPU |
 | `__syncthreads` | Obligatoire avant de lire du `__shared__` |
 | `cudaDeviceSynchronize` | Apres le kernel si on a besoin du resultat |

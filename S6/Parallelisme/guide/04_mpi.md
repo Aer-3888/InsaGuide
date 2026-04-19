@@ -208,12 +208,12 @@ MPI_Allreduce(&ma_valeur, &resultat, 1, MPI_DOUBLE,
 
 | Fonction | Direction | Description |
 |----------|-----------|-------------|
-| `MPI_Bcast` | 1 -> tous | Diffuser une valeur |
-| `MPI_Scatter` | 1 -> tous (portions) | Distribuer un tableau |
-| `MPI_Gather` | tous -> 1 | Rassembler les morceaux |
-| `MPI_Reduce` | tous -> 1 (operation) | Combiner (somme, max...) |
-| `MPI_Allreduce` | tous -> tous (operation) | Reduce + diffusion |
-| `MPI_Allgather` | tous -> tous | Gather + diffusion |
+| `MPI_Bcast` | 1 → tous | Diffuser une valeur |
+| `MPI_Scatter` | 1 → tous (portions) | Distribuer un tableau |
+| `MPI_Gather` | tous → 1 | Rassembler les morceaux |
+| `MPI_Reduce` | tous → 1 (operation) | Combiner (somme, max...) |
+| `MPI_Allreduce` | tous → tous (operation) | Reduce + diffusion |
+| `MPI_Allgather` | tous → tous | Gather + diffusion |
 | `MPI_Barrier` | synchronisation | Attendre tout le monde |
 
 ---

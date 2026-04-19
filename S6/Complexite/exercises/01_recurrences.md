@@ -418,79 +418,58 @@ u_n^{(h)} = (A + Bn) * 2^n + C * (-3)^n
 Alpha = 1 (constante), or 1 n'est pas racine de l'equation caracteristique.
 On essaie u_n^{(p)} = D (constante).
 
-```
-D = D + 8D - 12D + 4m + 1
-D = -3D + 4m + 1
-4D = 4m + 1
-D = m + 1/4
-```
-
-Hmm, verifions. La recurrence est u_n - u_{n-1} - 8u_{n-2} + 12u_{n-3} = 4m+1. Si u_n = D constant :
+La recurrence est u_n - u_{n-1} - 8u_{n-2} + 12u_{n-3} = 4m+1. Si u_n = D constant :
 
 ```
 D - D - 8D + 12D = 4D = 4m + 1
-D = (4m + 1)/4 = m + 1/4
+D = (4m + 1)/4
 ```
 
 **Etape 4 -- Solution generale et conditions initiales.**
 
 ```
-u_n = (A + Bn) * 2^n + C * (-3)^n + m + 1/4
+u_n = (A + Bn) * 2^n + C * (-3)^n + (4m + 1)/4
 ```
 
-n = 0 : A + C + m + 1/4 = m + 5 => A + C = 19/4
-n = 1 : (A + B)*2 + C*(-3) + m + 1/4 = 2m + 7 => 2A + 2B - 3C = m + 27/4
-n = 2 : (A + 2B)*4 + C*9 + m + 1/4 = 7m + 15 => 4A + 8B + 9C = 6m + 59/4
+n = 0 : A + C + (4m+1)/4 = m + 5 => A + C = 19/4
+n = 1 : (A + B)*2 - 3C + (4m+1)/4 = 2m + 7 => 2A + 2B - 3C = m + 27/4
+n = 2 : (A + 2B)*4 + 9C + (4m+1)/4 = 7m + 15 => 4A + 8B + 9C = 6m + 59/4
 
 De (I) : A = 19/4 - C.
 
 Substituons dans (II) : 2(19/4 - C) + 2B - 3C = m + 27/4
 19/2 - 2C + 2B - 3C = m + 27/4
-2B - 5C = m + 27/4 - 19/2 = m - 11/4
+2B - 5C = m - 11/4
 
 Substituons dans (III) : 4(19/4 - C) + 8B + 9C = 6m + 59/4
 19 - 4C + 8B + 9C = 6m + 59/4
-8B + 5C = 6m + 59/4 - 19 = 6m - 17/4
+8B + 5C = 6m - 17/4
 
 Systeme :
 2B - 5C = m - 11/4     ... (a)
 8B + 5C = 6m - 17/4    ... (b)
 
-(a) + (b) : 10B = 7m - 28/4 = 7m - 7. Donc B = (7m - 7)/10.
+(a) + (b) : 10B = 7m - 7. Donc B = 7(m - 1)/10.
+De (a) : 5C = 2B - m + 11/4 = (8m + 27)/20. Donc C = (8m + 27)/100.
+A = 19/4 - C = (448 - 8m)/100 = (112 - 2m)/25.
 
-Hmm, pour des valeurs entieres plus propres de m, posons m = 1 :
-
-u_0 = 6, u_1 = 9, u_2 = 22. Second membre = 5.
-
-```
-D = (4+1)/4 = 5/4
-A + C = 19/4
-2B - 5C = -7/4
-8B + 5C = -11/4
-
-10B = -18/4 = -9/2, B = -9/20
-
-2(-9/20) - 5C = -7/4
--9/10 - 5C = -7/4
-5C = -9/10 + 7/4 = (-18+35)/20 = 17/20
-C = 17/100
-```
-
-Ceci donne des fractions compliquees. La solution generale est :
+**Solution generale :**
 
 ```
-u_n = (A + Bn) * 2^n + C * (-3)^n + (4m+1)/4
+u_n = ((112 - 2m)/25 + 7(m-1)n/10) * 2^n + ((8m + 27)/100) * (-3)^n + (4m + 1)/4
 ```
 
-avec A, B, C determinees par le systeme lineaire ci-dessus pour chaque valeur de m.
-
-**Resultat en forme compacte (d'apres le cours) :**
+**Verification pour m = 1** (u_0 = 6, u_1 = 9, u_2 = 22) :
 
 ```
-u_n = (2m - 24/5) * 2^n - (1/5) * (-3)^n + m + 5
-```
+A = 110/25 = 22/5,  B = 0,  C = 35/100 = 7/20,  D = 5/4
 
-(A verifier avec les conditions initiales pour un m donne.)
+u_0 = 22/5 + 7/20 + 5/4 = (88 + 7 + 25)/20 = 120/20 = 6       -- correct
+u_1 = (22/5)*2 - (7/20)*3 + 5/4 = 44/5 - 21/20 + 25/20
+    = 176/20 - 21/20 + 25/20 = 180/20 = 9                      -- correct
+u_2 = (22/5)*4 + (7/20)*9 + 5/4 = 88/5 + 63/20 + 25/20
+    = 352/20 + 63/20 + 25/20 = 440/20 = 22                     -- correct
+```
 
 ---
 
@@ -657,7 +636,7 @@ B = -1/sqrt(5)
 F_n = (phi^n - psi^n) / sqrt(5)
 ```
 
-**Asymptotiquement :** |psi| < 1, donc psi^n -> 0. Donc F_n est environ phi^n / sqrt(5), et F_n = Theta(phi^n) = Theta(1.618^n).
+**Asymptotiquement :** |psi| &lt; 1, donc psi^n → 0. Donc F_n est environ phi^n / sqrt(5), et F_n = Theta(phi^n) = Theta(1.618^n).
 
 ---
 

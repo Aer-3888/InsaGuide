@@ -280,7 +280,7 @@ Stencil a 5 points sur grille 2D (TP2 INSA).
 #define M 100
 #define MAX 1000
 #define SEUIL 1
-#define IDX(i,j) ((i)*(N+2)+(j))
+#define IDX(i,j) ((i)*(M+2)+(j))
 
 double *T  = calloc((N+2)*(M+2), sizeof(double));
 double *T1 = calloc((N+2)*(M+2), sizeof(double));
@@ -290,10 +290,10 @@ do {
     delta = 0;
     #pragma omp parallel for reduction(+:delta)
     for (int i = 1; i <= N; i++) {
-        int off = i * (N + 2);
+        int off = i * (M + 2);
         for (int j = 1; j <= M; j++) {
             T1[off+j] = (T[off+j+1] + T[off+j-1] +
-                          T[off+j+(N+2)] + T[off+j-(N+2)] +
+                          T[off+j+(M+2)] + T[off+j-(M+2)] +
                           T[off+j]) / 5.0;
             delta += fabs(T1[off+j] - T[off+j]);
         }

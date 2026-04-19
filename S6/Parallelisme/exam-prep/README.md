@@ -73,7 +73,7 @@ Le DS dure generalement **2 heures** et couvre :
 2. Commencer par les questions de cours (rapides, points faciles)
 3. Pour les exercices de code : verifier systematiquement
    - Variables shared vs private ?
-   - Y a-t-il un accumulateur ? -> reduction
+   - Y a-t-il un accumulateur ? → reduction
    - Les iterations sont-elles independantes ?
    - Les collectives MPI sont-elles appelees par TOUS ?
    - Y a-t-il un risque de deadlock ?

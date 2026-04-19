@@ -14,9 +14,9 @@ Ce TP construit une application de chat multicast en C utilisant :
 
 ## Concepts multicast
 
-### Exercise 1: Understand IP multicast and how it differs from unicast and broadcast.
+### Exercice 1 : Comprendre le multicast IP et ses differences avec l'unicast et le broadcast.
 
-**Answer:**
+**Reponse :**
 
 ```
 Unicast (un-a-un)           Multicast (un-a-plusieurs)       Broadcast (un-a-tous)
@@ -57,9 +57,9 @@ Formule : 01:00:5E + 23 bits de poids faible de l'adresse IP
 
 ## Architecture de l'application
 
-### Exercise 2: Understand the two-thread architecture of the chat application and why a mutex is needed.
+### Exercice 2 : Comprendre l'architecture a deux threads de l'application de chat et pourquoi un mutex est necessaire.
 
-**Answer:**
+**Reponse :**
 
 ```
                           main()
@@ -127,9 +127,9 @@ unlock_mutex()                  |              <- DEBLOQUE
 
 ## Implementation complete : main.c
 
-### Exercise 3: Implement the headers, macros, data structures, and utility functions.
+### Exercice 3 : Implementer les en-tetes, macros, structures de donnees et fonctions utilitaires.
 
-**Answer:**
+**Reponse :**
 
 ```c
 /**
@@ -156,7 +156,7 @@ unlock_mutex()                  |              <- DEBLOQUE
 #define STRING_DEFAULT_CAPACITY 2
 ```
 
-**Macro-based argument definition** -- allows generic parsing and help generation:
+**Definition d'arguments par macros** -- permet un parsing generique et la generation de l'aide :
 
 ```c
 /**
@@ -195,7 +195,7 @@ typedef struct {
 } Args;
 ```
 
-**Data structures** -- shared state and thread parameter structs:
+**Structures de donnees** -- etat partage et parametres de threads :
 
 ```c
 /**
@@ -229,7 +229,7 @@ typedef struct {
 } ReceiveMessagesThread;
 ```
 
-**Utility functions** -- error handling, pthread checking, safe allocation:
+**Fonctions utilitaires** -- gestion d'erreurs, verification pthread, allocation securisee :
 
 ```c
 static const char *program_name = NULL;
@@ -278,9 +278,9 @@ void *safe_malloc(const size_t size) {
 }
 ```
 
-### Exercise 4: Implement the command-line argument parser using the macro system.
+### Exercice 4 : Implementer le parseur d'arguments en ligne de commande avec le systeme de macros.
 
-**Answer:**
+**Reponse :**
 
 ```c
 /**
@@ -379,7 +379,7 @@ static void args_parse(Args *args, char *argv[], const char *program_name) {
 }
 ```
 
-**Usage** :
+**Utilisation** :
 ```bash
 ./chat ADDRESS PORT NAME
 ./chat 224.0.0.10 10000 Alice
@@ -387,9 +387,9 @@ static void args_parse(Args *args, char *argv[], const char *program_name) {
 ./chat --version   # shows version
 ```
 
-### Exercise 5: Implement the InputString shared buffer with mutex protection.
+### Exercice 5 : Implementer le buffer partage InputString avec protection par mutex.
 
-**Answer:**
+**Reponse :**
 
 ```c
 /**
@@ -469,13 +469,13 @@ static void input_string_destroy(InputString *self) {
 }
 ```
 
-### Exercise 6: Implement terminal raw mode for character-by-character input.
+### Exercice 6 : Implementer le mode raw du terminal pour la saisie caractere par caractere.
 
-**Answer:**
+**Reponse :**
 
-In normal (canonical) mode, the terminal buffers input line by line: `fgetc()` only returns after the user presses Enter, and typed characters are echoed automatically.
+En mode normal (canonique), le terminal met en tampon l'entree ligne par ligne : `fgetc()` ne retourne qu'apres appui sur Entree, et les caracteres saisis sont affiches automatiquement.
 
-In raw mode, each character is available immediately (no need for Enter) and echo is disabled (we handle display ourselves via `input_string_draw`).
+En mode raw, chaque caractere est disponible immediatement (pas besoin d'Entree) et l'echo est desactive (on gere l'affichage nous-memes via `input_string_draw`).
 
 ```c
 /**
@@ -507,13 +507,13 @@ static void terminal_disable_raw_mode() {
 }
 ```
 
-### Exercise 7: Implement the message display function that parses the "username@content" protocol.
+### Exercice 7 : Implementer la fonction d'affichage des messages qui parse le protocole "username@contenu".
 
-**Answer:**
+**Reponse :**
 
-Message protocol format: `<username>@<message content>\n\0`
+Format du protocole de message : `username@message_content\n\0`
 
-Parsing on receive:
+Parsing a la reception :
 ```c
 char *at = strchr(buffer, '@');    /* Find the '@' */
 *at = '\0';                         /* Split the string */
@@ -558,11 +558,11 @@ static void print_message(char *message, const size_t message_length,
 }
 ```
 
-### Exercise 8: Implement the receive thread that listens for multicast messages.
+### Exercice 8 : Implementer le thread de reception qui ecoute les messages multicast.
 
-**Answer:**
+**Reponse :**
 
-The receive thread runs in an infinite loop. Since the socket has joined the multicast group (via `IP_ADD_MEMBERSHIP`) and is bound to the group port, `recv()` receives datagrams sent to the group. The thread is cancelled via `pthread_cancel()` when the send thread exits.
+Le thread de reception tourne en boucle infinie. Puisque le socket a rejoint le groupe multicast (via `IP_ADD_MEMBERSHIP`) et est lie au port du groupe, `recv()` recoit les datagrammes envoyes au groupe. Le thread est annule via `pthread_cancel()` quand le thread d'envoi se termine.
 
 ```c
 /**
@@ -595,15 +595,15 @@ static void *receive_messages_thread(void *data) {
 }
 ```
 
-### Exercise 9: Implement the send thread that reads keyboard input and sends messages to the multicast group.
+### Exercice 9 : Implementer le thread d'envoi qui lit le clavier et envoie les messages au groupe multicast.
 
-**Answer:**
+**Reponse :**
 
-The send thread handles:
-- Terminal raw mode activation (character-by-character reading)
-- Drawing the prompt after each keystroke
-- Special key handling: Backspace (127), Ctrl+L (12), Ctrl+D (4/EOF)
-- On Enter: format the message as `username@content\n\0`, send via `sendto()` to multicast group, clear the buffer
+Le thread d'envoi gere :
+- L'activation du mode raw du terminal (lecture caractere par caractere)
+- Le dessin du prompt apres chaque touche
+- La gestion des touches speciales : Backspace (127), Ctrl+L (12), Ctrl+D (4/EOF)
+- A l'appui sur Entree : formater le message en `username@contenu\n\0`, envoyer via `sendto()` au groupe multicast, vider le buffer
 
 ```c
 /**
@@ -705,22 +705,22 @@ static void *send_messages_thread(void *data) {
 }
 ```
 
-### Exercise 10: Implement the main function that sets up the multicast socket, spawns threads, and handles cleanup.
+### Exercice 10 : Implementer la fonction main qui configure le socket multicast, lance les threads et gere le nettoyage.
 
-**Answer:**
+**Reponse :**
 
-The main function follows these steps:
-1. Parse command-line arguments
-2. Create a UDP socket (`SOCK_DGRAM`)
-3. Join the multicast group (`IP_ADD_MEMBERSHIP`)
-4. Enable address reuse (`SO_REUSEADDR`) so multiple processes can bind to the same port
-5. Bind to the port
-6. Create the shared `InputString`
-7. Spawn the receive thread
-8. Spawn the send thread
-9. Wait for the send thread to exit (`pthread_join`)
-10. Cancel and join the receive thread (`pthread_cancel` + `pthread_join`)
-11. Cleanup resources
+La fonction main suit ces etapes :
+1. Parser les arguments en ligne de commande
+2. Creer un socket UDP (`SOCK_DGRAM`)
+3. Rejoindre le groupe multicast (`IP_ADD_MEMBERSHIP`)
+4. Activer la reutilisation d'adresse (`SO_REUSEADDR`) pour que plusieurs processus puissent se lier au meme port
+5. Lier le socket au port
+6. Creer le buffer partage `InputString`
+7. Lancer le thread de reception
+8. Lancer le thread d'envoi
+9. Attendre la fin du thread d'envoi (`pthread_join`)
+10. Annuler et rejoindre le thread de reception (`pthread_cancel` + `pthread_join`)
+11. Nettoyer les ressources
 
 ```c
 int main(const int argc, char *argv[]) {
@@ -878,11 +878,11 @@ int main(const int argc, char *argv[]) {
 
 ---
 
-## Compilation and execution
+## Compilation et execution
 
-### Exercise 11: Compile and run the multicast chat with multiple users.
+### Exercice 11 : Compiler et executer le chat multicast avec plusieurs utilisateurs.
 
-**Answer:**
+**Reponse :**
 
 #### Makefile
 
@@ -902,19 +902,19 @@ clean:
 .PHONY: all clean
 ```
 
-#### Direct compilation
+#### Compilation directe
 
 ```bash
 $ gcc -pthread -Wall -Wextra -std=c11 -D_POSIX_C_SOURCE=200809L -o chat main.c
 ```
 
-**Flags** :
+**Options de compilation** :
 - `-pthread` : link the pthreads library and define necessary macros
 - `-Wall -Wextra` : enable all useful warnings
 - `-std=c11` : C11 standard
 - `-D_POSIX_C_SOURCE=200809L` : enable POSIX extensions (pthreads, termios)
 
-#### Running with 3 users
+#### Execution avec 3 utilisateurs
 
 ```bash
 # Terminal 1
@@ -945,19 +945,19 @@ $ ./chat 224.0.0.10 10000 Charlie
 >>>
 ```
 
-**Special keys** :
+**Touches speciales** :
 - `Ctrl+D` : exit
 - `Backspace` : delete last character
 - `Ctrl+L` : clear screen
 
-#### Testing with netcat
+#### Test avec netcat
 
 ```bash
 # Send a message to the group (as "test")
 $ echo -n "test@Hello from nc" | nc -u 224.0.0.10 10000
 ```
 
-#### Check multicast group membership
+#### Verifier l'appartenance au groupe multicast
 
 ```bash
 $ netstat -gn
@@ -969,15 +969,15 @@ eth0            224.0.0.10      1
 
 ---
 
-## Network analysis (Wireshark)
+## Analyse reseau (Wireshark)
 
-### Exercise 12: Capture and analyze multicast traffic with Wireshark.
+### Exercice 12 : Capturer et analyser le trafic multicast avec Wireshark.
 
-**Answer:**
+**Reponse :**
 
-**Filter** : `ip.dst == 224.0.0.10 && udp.port == 10000`
+**Filtre** : `ip.dst == 224.0.0.10 && udp.port == 10000`
 
-**Packet structure** :
+**Structure du paquet** :
 
 ```
 Ethernet Header:
@@ -1000,30 +1000,30 @@ Data:
   "Alice@Hello world\n\0"                (25 bytes)
 ```
 
-**Key observations** :
-- The destination MAC `01:00:5E:00:00:0A` is a multicast MAC, not a unicast one
-- The destination IP is the multicast group `224.0.0.10`, not a specific host
-- TTL defaults to 1 (local network only)
-- The payload contains the raw `username@message` protocol
+**Observations cles** :
+- La MAC destination `01:00:5E:00:00:0A` est une MAC multicast, pas unicast
+- L'IP destination est le groupe multicast `224.0.0.10`, pas un hote specifique
+- Le TTL est a 1 par defaut (reseau local uniquement)
+- Le payload contient le protocole brut `username@message`
 
 ---
 
-## Socket options reference
+## Reference des options socket
 
-### Exercise 13: Understand the multicast socket options and when to use them.
+### Exercice 13 : Comprendre les options socket multicast et quand les utiliser.
 
-**Answer:**
+**Reponse :**
 
-| Option | Level | Description | Default |
-|--------|-------|-------------|---------|
-| `IP_ADD_MEMBERSHIP` | `IPPROTO_IP` | Join a multicast group | -- |
-| `IP_DROP_MEMBERSHIP` | `IPPROTO_IP` | Leave a multicast group | -- |
-| `IP_MULTICAST_TTL` | `IPPROTO_IP` | Number of router hops allowed | 1 |
-| `IP_MULTICAST_LOOP` | `IPPROTO_IP` | Receive own messages | 1 (enabled) |
-| `IP_MULTICAST_IF` | `IPPROTO_IP` | Choose outgoing interface | INADDR_ANY |
-| `SO_REUSEADDR` | `SOL_SOCKET` | Multiple processes on same port | 0 (disabled) |
+| Option | Niveau | Description | Defaut |
+|--------|--------|-------------|--------|
+| `IP_ADD_MEMBERSHIP` | `IPPROTO_IP` | Rejoindre un groupe multicast | -- |
+| `IP_DROP_MEMBERSHIP` | `IPPROTO_IP` | Quitter un groupe multicast | -- |
+| `IP_MULTICAST_TTL` | `IPPROTO_IP` | Nombre de sauts routeur autorises | 1 |
+| `IP_MULTICAST_LOOP` | `IPPROTO_IP` | Recevoir ses propres messages | 1 (active) |
+| `IP_MULTICAST_IF` | `IPPROTO_IP` | Choisir l'interface de sortie | INADDR_ANY |
+| `SO_REUSEADDR` | `SOL_SOCKET` | Plusieurs processus sur le meme port | 0 (desactive) |
 
-**Using additional options** :
+**Utilisation des options supplementaires** :
 
 ```c
 /* Set TTL (how many router hops the packet can cross) */
@@ -1043,14 +1043,14 @@ setsockopt(sock, IPPROTO_IP, IP_MULTICAST_IF,
 
 ---
 
-## Troubleshooting
+## Depannage
 
-| Problem | Cause | Solution |
+| Probleme | Cause | Solution |
 |---------|-------|----------|
-| "Address already in use" | Missing `SO_REUSEADDR` | Add `setsockopt(SO_REUSEADDR)` before `bind()` |
-| Messages not received | Not joined group | Verify `setsockopt(IP_ADD_MEMBERSHIP)` |
-| Own messages invisible | Multicast loopback disabled | `unsigned char loop = 1; setsockopt(sock, IPPROTO_IP, IP_MULTICAST_LOOP, &loop, sizeof(loop));` |
-| Messages local only | TTL = 1 (default) | `unsigned char ttl = 5; setsockopt(sock, IPPROTO_IP, IP_MULTICAST_TTL, &ttl, sizeof(ttl));` |
-| Terminal broken after crash | Raw mode not restored | Type `reset` in terminal |
-| Deadlock | Mutex locked twice by same thread | Never call a mutex-taking function from within a protected section |
-| Segfault in `realloc()` | Race condition on `InputString` | Ensure ALL buffer accesses are mutex-protected |
+| "Address already in use" | `SO_REUSEADDR` manquant | Ajouter `setsockopt(SO_REUSEADDR)` avant `bind()` |
+| Messages non recus | Groupe non rejoint | Verifier `setsockopt(IP_ADD_MEMBERSHIP)` |
+| Propres messages invisibles | Loopback multicast desactive | `unsigned char loop = 1; setsockopt(sock, IPPROTO_IP, IP_MULTICAST_LOOP, &loop, sizeof(loop));` |
+| Messages locaux uniquement | TTL = 1 (defaut) | `unsigned char ttl = 5; setsockopt(sock, IPPROTO_IP, IP_MULTICAST_TTL, &ttl, sizeof(ttl));` |
+| Terminal casse apres crash | Mode raw non restaure | Taper `reset` dans le terminal |
+| Deadlock | Mutex verrouille deux fois par le meme thread | Ne jamais appeler une fonction prenant le mutex depuis une section protegee |
+| Segfault dans `realloc()` | Race condition sur `InputString` | S'assurer que TOUS les acces au buffer sont proteges par le mutex |

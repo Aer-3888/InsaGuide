@@ -10,7 +10,7 @@
 
 Les tests parametriques (t-test, ANOVA) supposent que les donnees suivent une loi normale. Quand ce n'est pas le cas :
 
-- Petit echantillon ($n < 30$) et distribution tres asymetrique.
+- Petit echantillon ($n \lt 30$) et distribution tres asymetrique.
 - Donnees ordinales (rangs, scores subjectifs).
 - Valeurs aberrantes impossibles a supprimer.
 

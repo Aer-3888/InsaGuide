@@ -55,12 +55,12 @@ Verification ligne par ligne :
 | 2 | 3 | 1 |
 | 3 | 2 | 2 |
 | 4 | 3 | 1 |
-| 5 | 1 | 3 |
+| 5 | 1 | 2 |
 | 6 | 2 | 3 |
 | 7 | 1 | 1 |
-| 8 | 0 | 5 |
+| 8 | 0 | 4 |
 
-Verification : somme d+ = 3+3+2+3+1+2+1+0 = 15 arcs. Somme d- = 1+1+2+1+3+3+1+5 = 16. Attention, la boucle sur 6 compte +1 en d+ et +1 en d-. Total arcs = 15 (dont la boucle).
+Verification : somme d+ = 3+3+2+3+1+2+1+0 = 15 arcs. Somme d- = 1+1+2+1+2+3+1+4 = 15. La boucle sur 6 compte +1 en d+ et +1 en d-. Total arcs = 15 (dont la boucle).
 
 #### Representation 2 : Liste des successeurs (tableaux SUCC et VACCES)
 
@@ -170,7 +170,7 @@ Complexite : **O(d+(x))** -- proportionnel au nombre reel de successeurs.
 | Test arc (x,y) ? | **O(1)** | O(d+(x)) |
 | Espace memoire | O(n^2) | **O(n + m)** |
 
-**Conclusion :** La matrice est meilleure pour les acces aleatoires (test d'arc, suppression). La liste est meilleure pour le parcours des voisins et la memoire sur les graphes creux (m << n^2).
+**Conclusion :** La matrice est meilleure pour les acces aleatoires (test d'arc, suppression). La liste est meilleure pour le parcours des voisins et la memoire sur les graphes creux (m &lt;&lt; n^2).
 
 ---
 
@@ -188,7 +188,7 @@ Complexite : **O(d+(x))** -- proportionnel au nombre reel de successeurs.
 
 **Preuve (=>) :** Supposons G sans circuit. Soit G' un sous-graphe non vide quelconque. Prenons un sommet x0 dans G'. Considerons la suite : x0, x1 = pred(x0), x2 = pred(x1), ... ou xk est un predecesseur quelconque de x_{k-1} dans G'. Comme G est sans circuit et G' est fini, cette suite ne peut pas boucler, donc elle se termine sur un sommet sans predecesseur dans G' : c'est un point d'entree.
 
-**Preuve (<=) :** Par contraposee. Supposons que G contient un circuit C = (v1, v2, ..., vk, v1). Le sous-graphe G' induit par {v1, ..., vk} n'a aucun point d'entree car chaque vi a pour predecesseur v_{i-1} (et v1 a pour predecesseur vk). Cela contredit l'hypothese.
+**Preuve (&lt;=) :** Par contraposee. Supposons que G contient un circuit C = (v1, v2, ..., vk, v1). Le sous-graphe G' induit par {v1, ..., vk} n'a aucun point d'entree car chaque vi a pour predecesseur v_{i-1} (et v1 a pour predecesseur vk). Cela contredit l'hypothese.
 
 **(b) G est sans circuit ssi tout sous-graphe G' possede au moins un point de sortie.**
 
@@ -351,7 +351,7 @@ Rang 6 : {4}
 
 ### Question 2.4 -- Numerotation conforme
 
-**Definition :** Une application nu : X -> N est une **numerotation conforme** si :
+**Definition :** Une application nu : X → N est une **numerotation conforme** si :
 
 ```
 Pour tout (x, y) dans Gamma : nu(x) < nu(y)
@@ -360,9 +360,9 @@ Pour tout x != y dans X : x != y => nu(x) != nu(y)
 
 **Theoreme :** G admet une numerotation conforme ssi G est **sans circuit**.
 
-**Preuve (=>) :** Si G admet une numerotation conforme et contenait un circuit (x1, x2, ..., xk, x1), alors nu(x1) < nu(x2) < ... < nu(xk) < nu(x1), ce qui est absurde. Donc G est sans circuit.
+**Preuve (=>) :** Si G admet une numerotation conforme et contenait un circuit (x1, x2, ..., xk, x1), alors nu(x1) &lt; nu(x2) &lt; ... &lt; nu(xk) &lt; nu(x1), ce qui est absurde. Donc G est sans circuit.
 
-**Preuve (<=) :** Si G est sans circuit, l'algorithme de Marimont termine. On numerote les sommets par rang croissant, en cassant les egalites arbitrairement :
+**Preuve (&lt;=) :** Si G est sans circuit, l'algorithme de Marimont termine. On numerote les sommets par rang croissant, en cassant les egalites arbitrairement :
 
 ```
 Rang 0 : {9, 12}  => nu(9) = 1,  nu(12) = 2
@@ -387,7 +387,7 @@ Arc (3, 5)  : nu(3)=10 < nu(5)=11. OK.
 Arc (4, ?)  : nu(4)=12 -- 4 est le dernier, ses arcs arrivent a 4. OK.
 ```
 
-Tous les arcs satisfont nu(source) < nu(destination). La numerotation est **conforme**.
+Tous les arcs satisfont nu(source) &lt; nu(destination). La numerotation est **conforme**.
 
 ### Exercice supplementaire : Loup, chevre et chou
 

@@ -79,7 +79,7 @@ Pour resoudre une requete `?- G1, G2, ..., Gn.` :
 1. **Selectionner** le premier sous-but G1 (strategie de gauche a droite)
 2. **Chercher** une clause dans la base dont la tete s'unifie avec G1
 3. **Remplacer** G1 par le corps de la clause (avec la substitution)
-4. **Repeter** jusqu'a ce que tous les sous-buts soient resolus (succes) ou qu'il n'y ait plus de clause applicable (echec -> backtracking)
+4. **Repeter** jusqu'a ce que tous les sous-buts soient resolus (succes) ou qu'il n'y ait plus de clause applicable (echec → backtracking)
 
 ### Exemple detaille
 

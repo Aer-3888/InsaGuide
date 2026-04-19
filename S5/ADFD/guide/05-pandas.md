@@ -1,16 +1,16 @@
-# Chapter 5: Pandas & Data Manipulation
+# Chapitre 5 : Pandas et manipulation de donnees
 
-## Overview
+## Presentation
 
-Pandas is the Python library used throughout the ADFD course for data loading, exploration, cleaning, and transformation. Mastery of Pandas is essential for all TPs and for understanding the code in exam solutions.
+Pandas est la bibliotheque Python utilisee tout au long du cours ADFD pour le chargement, l'exploration, le nettoyage et la transformation des donnees. La maitrise de Pandas est essentielle pour tous les TP et pour comprendre le code des solutions d'examen.
 
-This chapter is based on the `pandas_intro.ipynb` notebook provided in the course.
+Ce chapitre est base sur le notebook `pandas_intro.ipynb` fourni dans le cours.
 
-## 1. Core Data Structures
+## 1. Structures de donnees principales
 
 ### DataFrame
 
-A 2D tabular data structure with labeled rows (index) and columns.
+Structure de donnees tabulaire 2D avec des lignes indexees et des colonnes nommees.
 
 ```python
 import pandas as pd
@@ -26,13 +26,13 @@ df = pd.DataFrame({
 
 ### Series
 
-A 1D labeled array (equivalent to a single column of a DataFrame).
+Tableau 1D indexe (equivalent a une seule colonne d'un DataFrame).
 
 ```python
 s = pd.Series([1, 2, 3], index=['a', 'b', 'c'])
 ```
 
-### Key Attributes
+### Attributs principaux
 
 ```python
 df.index        # Row labels
@@ -42,9 +42,9 @@ df.dtypes       # Data types per column
 len(df)         # Number of rows
 ```
 
-## 2. Loading Data
+## 2. Chargement des donnees
 
-### From CSV (the most common case in the course)
+### Depuis un CSV (le cas le plus courant dans le cours)
 
 ```python
 # Basic load
@@ -57,7 +57,7 @@ df = pd.read_csv("temperatures.csv", index_col=0)
 df = pd.read_csv("data.csv", sep=";")
 ```
 
-### Exploration
+### Exploration des donnees
 
 ```python
 df.head()           # First 5 rows
@@ -68,9 +68,9 @@ df.describe()       # Statistics for numerical columns (mean, std, min, max, qua
 df.shape            # (rows, columns)
 ```
 
-## 3. Selecting Data
+## 3. Selection des donnees
 
-### Column Selection (Projection)
+### Selection de colonnes (Projection)
 
 ```python
 # Single column --> returns Series
@@ -81,7 +81,7 @@ df.Region          # Alternative syntax (only for simple column names)
 df[["Moons", "Diameter"]]
 ```
 
-### Row Selection (Filtering)
+### Selection de lignes (Filtrage)
 
 ```python
 # Boolean mask
@@ -102,7 +102,7 @@ mask = df.apply(keep, axis=1)
 df_filtered = df[mask]
 ```
 
-### Selecting by Position
+### Selection par position
 
 ```python
 df.iloc[0]          # First row (by position)
@@ -111,9 +111,9 @@ df.iloc[0, 1]       # Row 0, Column 1
 df.loc["Coruscant"] # By label
 ```
 
-## 4. Modifying Data
+## 4. Modification des donnees
 
-### Adding/Modifying Columns
+### Ajout/Modification de colonnes
 
 ```python
 # Add new column
@@ -126,7 +126,7 @@ df["Moons"] = df["Moons"] * 2
 df["Log_Diameter"] = np.log1p(df["Diameter"])
 ```
 
-### Handling Missing Values
+### Gestion des valeurs manquantes
 
 ```python
 # Detect
@@ -144,7 +144,7 @@ df.fillna(df.mean())           # Replace with column mean
 df["tags"].fillna("")          # Replace NaN in specific column
 ```
 
-### Removing Duplicates
+### Suppression des doublons
 
 ```python
 # Remove exact duplicate rows
@@ -157,9 +157,9 @@ df = df.drop_duplicates(subset=['id_photo'])
 df = df.drop_duplicates(subset=['user_id', 'date'], keep='first')
 ```
 
-## 5. Aggregation and Grouping
+## 5. Agregation et regroupement
 
-### Unique Values and Counts
+### Valeurs uniques et comptages
 
 ```python
 # Number of unique values per column
@@ -174,7 +174,7 @@ df["Region"].value_counts()
 
 ### GroupBy
 
-The SQL-equivalent GROUP BY operation: split data into groups, apply a function, combine results.
+L'equivalent SQL du GROUP BY : separer les donnees en groupes, appliquer une fonction, combiner les resultats.
 
 ```python
 groups = df.groupby("Region")
@@ -195,9 +195,9 @@ photos.groupby(
 ).first()
 ```
 
-**The `as_index=False` parameter**: Prevents grouped columns from becoming the index (keeps them as regular columns).
+**Le parametre `as_index=False`** : Empeche les colonnes groupees de devenir l'index (les conserve comme colonnes normales).
 
-## 6. Iteration
+## 6. Iteration sur les donnees
 
 ```python
 # Iterate over column names
@@ -212,9 +212,9 @@ for index, row in df.iterrows():
 df.apply(lambda row: row["Moons"] * 2, axis=1)
 ```
 
-## 7. Data Types
+## 7. Types de donnees
 
-### Checking Types
+### Verifier les types
 
 ```python
 df.dtypes                          # Type of each column
@@ -223,14 +223,14 @@ df.select_dtypes(exclude=["object"])   # Only numeric columns
 (df.dtypes != "object").sum()          # Count non-object columns
 ```
 
-### Type Conversion
+### Conversion de types
 
 ```python
 df["Moons"] = df["Moons"].astype(float)
 df["date"] = pd.to_datetime(df["date_taken"])
 ```
 
-## 8. Visualization with Pandas
+## 8. Visualisation avec Pandas
 
 ```python
 # Histogram
@@ -246,9 +246,9 @@ df.boxplot(column="Diameter", by="Region")
 df["Region"].value_counts().plot.bar()
 ```
 
-## 9. Common Patterns from the Course
+## 9. Motifs courants du cours
 
-### Pattern 1: Missing Value Analysis Table
+### Motif 1 : Tableau d'analyse des valeurs manquantes
 
 ```python
 table_na = pd.DataFrame({
@@ -259,7 +259,7 @@ table_na = table_na.sort_values('pct_na', ascending=False)
 table_na.head(10)
 ```
 
-### Pattern 2: Select Numeric Columns for PCA
+### Motif 2 : Selectionner les colonnes numeriques pour l'ACP
 
 ```python
 cols_numeric = ["LotArea", "MasVnrArea", "BsmtFinSF1", "TotalBsmtSF",
@@ -267,7 +267,7 @@ cols_numeric = ["LotArea", "MasVnrArea", "BsmtFinSF1", "TotalBsmtSF",
 df_num = df[cols_numeric].copy()
 ```
 
-### Pattern 3: Photo Album Effect Removal
+### Motif 3 : Suppression de l'effet album photo
 
 ```python
 # Group by user + time, keep first photo per group
@@ -278,7 +278,7 @@ photos = photos.groupby(
 ).first()
 ```
 
-### Pattern 4: Add Cluster Labels to DataFrame
+### Motif 4 : Ajouter les labels de clusters au DataFrame
 
 ```python
 from sklearn.cluster import DBSCAN
@@ -287,7 +287,7 @@ dbscan = DBSCAN(eps=0.00030, min_samples=7)
 photos["cluster"] = dbscan.fit_predict(photos[["lat", "long"]])
 ```
 
-### Pattern 5: Analyze Clusters
+### Motif 5 : Analyser les clusters
 
 ```python
 for cluster_id in sorted(photos["cluster"].unique()):
@@ -298,19 +298,19 @@ for cluster_id in sorted(photos["cluster"].unique()):
           f"{cluster_photos['id_photographer'].nunique()} users")
 ```
 
-## Common Pitfalls
+## Pieges courants
 
-1. **Modifying a slice vs. a copy**: `df[mask]["col"] = value` does NOT modify df. Use `df.loc[mask, "col"] = value` instead.
-2. **Chained indexing warning**: `df["col1"]["col2"]` may produce SettingWithCopyWarning. Use `df.loc[:, "col"]` or `.copy()`.
-3. **forgetting `as_index=False`** in groupby: Creates a MultiIndex that can be confusing.
-4. **Using `==` with NaN**: `NaN == NaN` is False. Use `df.isnull()` or `pd.isna()`.
-5. **Iterating with for loops** when vectorized operations exist: `df["col"] * 2` is 100x faster than a loop.
+1. **Modifier une tranche vs. une copie** : `df[mask]["col"] = value` ne modifie PAS df. Utiliser `df.loc[mask, "col"] = value` a la place.
+2. **Avertissement d'indexation chainee** : `df["col1"]["col2"]` peut produire un SettingWithCopyWarning. Utiliser `df.loc[:, "col"]` ou `.copy()`.
+3. **Oublier `as_index=False`** dans groupby : Cree un MultiIndex qui peut etre deroutant.
+4. **Utiliser `==` avec NaN** : `NaN == NaN` est False. Utiliser `df.isnull()` ou `pd.isna()`.
+5. **Iterer avec des boucles for** quand des operations vectorisees existent : `df["col"] * 2` est 100x plus rapide qu'une boucle.
 
 ---
 
-## CHEAT SHEET
+## AIDE-MEMOIRE
 
-### Loading and Exploring
+### Chargement et exploration
 
 ```python
 df = pd.read_csv("file.csv")          # Load
@@ -320,7 +320,7 @@ df.describe()                           # Statistics
 df.shape                                # (rows, cols)
 ```
 
-### Selecting
+### Selection
 
 ```python
 df["col"]                    # Single column (Series)
@@ -330,7 +330,7 @@ df.loc["label"]              # By row label
 df.iloc[0]                   # By row position
 ```
 
-### Cleaning
+### Nettoyage
 
 ```python
 df.isnull().sum()            # Count NaN
@@ -340,7 +340,7 @@ df.drop_duplicates()         # Remove duplicates
 df.drop(columns=["col"])     # Drop column
 ```
 
-### Aggregating
+### Agregation
 
 ```python
 df.groupby("col").mean()     # Group and aggregate
@@ -349,7 +349,7 @@ df["col"].nunique()          # Count unique
 df["col"].unique()           # List unique values
 ```
 
-### Transforming
+### Transformation
 
 ```python
 df["new"] = df["old"] * 2               # New column
@@ -358,21 +358,21 @@ df["col"] = np.log1p(df["col"])         # Log transform
 df.apply(func, axis=1)                  # Apply to rows
 ```
 
-### Key Methods Reference
+### Reference des methodes cles
 
-| Method | Returns | Description |
-|--------|---------|-------------|
-| `head(n)` | DataFrame | First n rows |
-| `describe()` | DataFrame | Summary statistics |
-| `info()` | None (prints) | Column types and non-null counts |
-| `isnull()` | DataFrame (bool) | NaN mask |
-| `dropna()` | DataFrame | Without NaN rows |
-| `fillna(v)` | DataFrame | NaN replaced by v |
-| `drop_duplicates()` | DataFrame | Without duplicates |
-| `groupby(col)` | GroupBy object | Grouped data |
-| `value_counts()` | Series | Frequency of each value |
-| `nunique()` | int or Series | Count of unique values |
-| `unique()` | array | Unique values |
-| `apply(f)` | Series/DataFrame | Apply function |
-| `merge(df2)` | DataFrame | SQL-like join |
-| `sort_values(col)` | DataFrame | Sorted by column |
+| Methode | Retourne | Description |
+|---------|----------|-------------|
+| `head(n)` | DataFrame | Les n premieres lignes |
+| `describe()` | DataFrame | Statistiques descriptives |
+| `info()` | None (affiche) | Types de colonnes et nombre de non-nuls |
+| `isnull()` | DataFrame (bool) | Masque des NaN |
+| `dropna()` | DataFrame | Sans les lignes NaN |
+| `fillna(v)` | DataFrame | NaN remplaces par v |
+| `drop_duplicates()` | DataFrame | Sans doublons |
+| `groupby(col)` | Objet GroupBy | Donnees regroupees |
+| `value_counts()` | Series | Frequence de chaque valeur |
+| `nunique()` | int ou Series | Nombre de valeurs uniques |
+| `unique()` | array | Valeurs uniques |
+| `apply(f)` | Series/DataFrame | Appliquer une fonction |
+| `merge(df2)` | DataFrame | Jointure de type SQL |
+| `sort_values(col)` | DataFrame | Trie par colonne |

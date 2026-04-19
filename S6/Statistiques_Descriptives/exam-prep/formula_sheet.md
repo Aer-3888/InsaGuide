@@ -74,11 +74,11 @@ $$\frac{\bar{X}_n - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} \mathcal{N}(0,1) \quad
 |------|-------------------|
 | Bilateral | $|T| > t_{n-1, 1-\alpha/2}$ |
 | Unilateral droit | $T > t_{n-1, 1-\alpha}$ |
-| Unilateral gauche | $T < -t_{n-1, 1-\alpha}$ |
+| Unilateral gauche | $T \lt -t_{n-1, 1-\alpha}$ |
 
 ### Regle de decision par p-value
 
-$$\boxed{p\text{-value} < \alpha \Rightarrow \text{Rejeter } H_0}$$
+$$\boxed{p\text{-value} \lt \alpha \Rightarrow \text{Rejeter } H_0}$$
 
 ---
 

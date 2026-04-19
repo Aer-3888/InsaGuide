@@ -23,7 +23,7 @@
 
 | Log | Type | Justification |
 |-----|------|---------------|
-| `/search="<SCRipt>alert(42)</SCRipt>"` | **XSS** | Balise script avec casse mixte |
+| `/search="&lt;SCRipt&gt;alert(42)&lt;/SCRipt&gt;"` | **XSS** | Balise script avec casse mixte |
 | `/stuff.php?id=42 UNION SELECT 1, 1, null -` | **SQL** | Mot-cle UNION SELECT |
 | `/test.php?traceroute="\|\| echo reboot > /etc/rc.local"` | **CMD** | Separateur `\|\|` + commande `echo` |
 | `/set.php?WifiKey=ABC123` | **CSRF** | Action sur parametre sensible sans token |

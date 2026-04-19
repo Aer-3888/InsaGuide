@@ -30,7 +30,7 @@ Etape 4 : Unifier le 2eme argument : a et a.
 Resultat : MGU = {x <- b}
 ```
 
-Verification : P(x, a){x <- b} = P(b, a) et P(b, a){x <- b} = P(b, a). Identiques.
+Verification : P(x, a){x &lt;- b} = P(b, a) et P(b, a){x &lt;- b} = P(b, a). Identiques.
 
 **b) P(x, y) et P(a, f(b))**
 
@@ -54,8 +54,8 @@ Resultat : MGU = {x <- a, y <- f(b)}
 ```
 
 Verification :
-- P(x, y){x <- a, y <- f(b)} = P(a, f(b))
-- P(a, f(b)){x <- a, y <- f(b)} = P(a, f(b))
+- P(x, y){x &lt;- a, y &lt;- f(b)} = P(a, f(b))
+- P(a, f(b)){x &lt;- a, y &lt;- f(b)} = P(a, f(b))
 Identiques. OK.
 
 **c) P(a) et Q(a)**
@@ -105,8 +105,8 @@ Resultat : MGU = {x <- b, y <- a}
 ```
 
 Verification :
-- f(x, g(a)){x <- b, y <- a} = f(b, g(a))
-- f(b, g(y)){x <- b, y <- a} = f(b, g(a))
+- f(x, g(a)){x &lt;- b, y &lt;- a} = f(b, g(a))
+- f(b, g(y)){x &lt;- b, y &lt;- a} = f(b, g(a))
 Identiques. OK.
 
 ---
@@ -149,8 +149,8 @@ Resultat : MGU = sigma1 compose sigma2 compose sigma3 = {x <- a, z <- a, y <- a}
 ```
 
 Verification :
-- P(x, x, y){x <- a, z <- a, y <- a} = P(a, a, a)
-- P(a, z, z){x <- a, z <- a, y <- a} = P(a, a, a)
+- P(x, x, y){x &lt;- a, z &lt;- a, y &lt;- a} = P(a, a, a)
+- P(a, z, z){x &lt;- a, z &lt;- a, y &lt;- a} = P(a, a, a)
 Identiques. OK.
 
 **Point cle :** A l'etape 3, on DOIT appliquer sigma1 aux arguments restants AVANT de continuer l'unification. Si on oublie, on n'aurait pas "a" comme 2eme argument de la premiere expression, et le resultat serait faux.
@@ -300,31 +300,31 @@ On doit unifier x et y (deux variables).
 
 **Unificateurs possibles :**
 
-1. **sigma1 = {x <- y}**
+1. **sigma1 = {x &lt;- y}**
    - P(x) sigma1 = P(y)
    - P(y) sigma1 = P(y)
    - Resultat commun : P(y). **Correct.**
 
-2. **sigma2 = {y <- x}**
+2. **sigma2 = {y &lt;- x}**
    - P(x) sigma2 = P(x)
    - P(y) sigma2 = P(x)
    - Resultat commun : P(x). **Correct.**
 
-3. **sigma3 = {x <- a, y <- a}** (a est une constante)
+3. **sigma3 = {x &lt;- a, y &lt;- a}** (a est une constante)
    - P(x) sigma3 = P(a)
    - P(y) sigma3 = P(a)
    - Resultat commun : P(a). **Correct.**
 
-4. **sigma4 = {x <- f(z), y <- f(z)}** (f symbole de fonction, z variable)
+4. **sigma4 = {x &lt;- f(z), y &lt;- f(z)}** (f symbole de fonction, z variable)
    - P(x) sigma4 = P(f(z))
    - P(y) sigma4 = P(f(z))
    - Resultat commun : P(f(z)). **Correct.**
 
-**Le MGU est sigma1 = {x <- y} (ou de facon equivalente sigma2 = {y <- x}).**
+**Le MGU est sigma1 = {x &lt;- y} (ou de facon equivalente sigma2 = {y &lt;- x}).**
 
 Pourquoi ? Le MGU fait le **minimum de specialisation necessaire**. Il ne fixe pas de constante ni de terme compose, il dit simplement "x et y sont la meme chose". Toute autre substitution est une specialisation de sigma1 :
-- sigma3 est obtenu en composant sigma1 avec {y <- a}
-- sigma4 est obtenu en composant sigma1 avec {y <- f(z)}
+- sigma3 est obtenu en composant sigma1 avec {y &lt;- a}
+- sigma4 est obtenu en composant sigma1 avec {y &lt;- f(z)}
 
 Les sigma3 et sigma4 ne sont PAS des MGU car ils ajoutent des contraintes inutiles.
 

@@ -14,9 +14,9 @@ $\sigma^2 = 4$ connu, donc $\sigma = 2$.
 
 $$Z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}} = \frac{7.2 - 7}{2/\sqrt{16}} = \frac{0.2}{0.5} = 0.4$$
 
-Region de rejet bilatérale : $|Z| > z_{0.975} = 1.96$.
+Region de rejet bilaterale : $|Z| > z_{0.975} = 1.96$.
 
-$|0.4| = 0.4 < 1.96$ : **on ne rejette pas $H_0$**.
+$|0.4| = 0.4 \lt 1.96$ : **on ne rejette pas $H_0$**.
 
 Au risque de 5%, on ne peut pas conclure que la moyenne differe de 7.
 
@@ -28,7 +28,7 @@ Au risque de 5%, on ne peut pas conclure que la moyenne differe de 7.
 
 Region de rejet : $Z > z_{0.95} = 1.645$.
 
-$0.4 < 1.645$ : **on ne rejette pas $H_0$**.
+$0.4 \lt 1.645$ : **on ne rejette pas $H_0$**.
 
 ### 1c) Test sur la variance
 
@@ -40,7 +40,7 @@ $$\chi^2 = \frac{(n-1)s^2}{\sigma_0^2} = \frac{15 \times 5.1}{4} = 19.125$$
 
 Region de rejet (unilateral a droite) : $\chi^2 > \chi^2_{15, 0.95} = 25.00$.
 
-$19.125 < 25.00$ : **on ne rejette pas $H_0$**.
+$19.125 \lt 25.00$ : **on ne rejette pas $H_0$**.
 
 Au risque de 5%, on ne peut pas conclure que la variance est superieure a 4.
 
@@ -60,7 +60,7 @@ $$Z = \frac{\bar{X} - 1/\lambda_0}{\sqrt{1/(\lambda_0^2 n)}} = \frac{3.2 - 3}{\s
 
 Region de rejet : $|Z| > 1.96$.
 
-$0.471 < 1.96$ : **on ne rejette pas $H_0$**.
+$0.471 \lt 1.96$ : **on ne rejette pas $H_0$**.
 
 ---
 
@@ -79,7 +79,7 @@ Peut-on conclure a une difference au seuil 5% ?
 
 $$F = \frac{s_A^2}{s_B^2} = \frac{11.2^2}{10.5^2} = \frac{125.44}{110.25} = 1.138$$
 
-$F_{7,7,0.975} = 4.99$. Comme $1.138 < 4.99$, on ne rejette pas $H_0: \sigma_A^2 = \sigma_B^2$.
+$F_{7,7,0.975} = 4.99$. Comme $1.138 \lt 4.99$, on ne rejette pas $H_0: \sigma_A^2 = \sigma_B^2$.
 
 **Etape 2 : Test t (variances egales)**
 
@@ -117,7 +117,7 @@ $$Z = \frac{\hat{p} - p_0}{\sqrt{p_0(1-p_0)/n}} = \frac{0.14 - 0.10}{\sqrt{0.10 
 
 Region de rejet bilateral : $|Z| > 1.96$.
 
-$1.886 < 1.96$ : **on ne rejette pas $H_0$** (de justesse).
+$1.886 \lt 1.96$ : **on ne rejette pas $H_0$** (de justesse).
 
 Au risque de 5%, on ne peut pas rejeter l'affirmation de l'auditeur.
 
@@ -174,7 +174,7 @@ $$F = \frac{s_A^2}{s_B^2} = \frac{3.2^2}{2.1^2} = \frac{10.24}{4.41} = 2.322$$
 
 $F_{19, 14, 0.975} \approx 2.86$.
 
-$2.322 < 2.86$ : **on ne rejette pas** l'egalite des variances.
+$2.322 \lt 2.86$ : **on ne rejette pas** l'egalite des variances.
 
 ### 6c) Comparaison des moyennes
 
@@ -188,7 +188,7 @@ $$T = \frac{41.5 - 39.8}{\sqrt{7.766 \times (1/20 + 1/15)}} = \frac{1.7}{\sqrt{7
 
 $t_{33, 0.975} \approx 2.035$.
 
-$1.786 < 2.035$ : **on ne rejette pas $H_0$**.
+$1.786 \lt 2.035$ : **on ne rejette pas $H_0$**.
 
 Au risque de 5%, on ne peut pas conclure a une difference significative entre les moyennes.
 

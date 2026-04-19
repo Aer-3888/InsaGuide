@@ -1,6 +1,6 @@
 # TP3 - Tableaux et Chaines de Caracteres
 
-> Following teacher instructions from: `S5/Langage_C/data/moodle/tp/tp3/README.md`
+> Instructions de l'enseignant depuis : `S5/Langage_C/data/moodle/tp/tp3/README.md`
 
 ## Exercice 1
 
@@ -19,7 +19,7 @@ Pour chaque valeur v dans le tableau source:
 
 ### Etape 1 : Le fichier d'en-tete tableau.h
 
-**Answer:**
+**Solution :**
 
 ```c
 /*!
@@ -80,7 +80,7 @@ void affiche_histo(int tab[], int taille, int showZ);
 
 ### Etape 2 : Implementation tableau.c
 
-**Answer:**
+**Solution :**
 
 ```c
 /*!
@@ -152,7 +152,7 @@ void affiche_histo(int tab[], int taille, int showZ) {
 
 ### Etape 3 : Programme principal histogram.c
 
-**Answer:**
+**Solution :**
 
 ```c
 /*!
@@ -190,7 +190,7 @@ int main() {
 }
 ```
 
-**Compilation:**
+**Compilation :**
 
 ```bash
 cd tp3/src
@@ -198,7 +198,7 @@ make histogram
 ./histogram
 ```
 
-**Expected output:**
+**Sortie attendue :**
 
 ```
 Generation de 50 valeurs aleatoires entre 0 et 19:
@@ -256,7 +256,7 @@ C'est le MEME tableau, pas une copie.
 
 ### Etape 1 : Le fichier d'en-tete login.h
 
-**Answer:**
+**Solution :**
 
 ```c
 /*!
@@ -303,7 +303,7 @@ void identifiant2(char prenom[], char nom[], char id[]);
 
 ### Etape 2 : Implementation login.c
 
-**Answer:**
+**Solution :**
 
 ```c
 /*!
@@ -358,7 +358,7 @@ void identifiant2(char *prenom, char *nom, char *id) {
 
 ### Etape 3 : Programme principal login_main.c
 
-**Answer:**
+**Solution :**
 
 ```c
 /*!
@@ -397,14 +397,14 @@ int main() {
 }
 ```
 
-**Compilation:**
+**Compilation :**
 
 ```bash
 make login
 ./login
 ```
 
-**Expected output:**
+**Sortie attendue :**
 
 ```
 Entrez un nom : 

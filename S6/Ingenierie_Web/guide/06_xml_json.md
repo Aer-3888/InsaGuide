@@ -133,10 +133,10 @@ A partir d'un objet Java et de son diagramme UML, ecrire le JSON correspondant.
 
 **Regles** :
 1. Chaque attribut Java devient une cle JSON
-2. String -> `"valeur"`, int/double -> nombre, boolean -> true/false
-3. null -> `null`
-4. List/Set -> `[ ]` (tableau JSON)
-5. Objet imbrique -> `{ }` (objet JSON)
+2. String → `"valeur"`, int/double → nombre, boolean → true/false
+3. null → `null`
+4. List/Set → `[ ]` (tableau JSON)
+5. Objet imbrique → `{ }` (objet JSON)
 6. Les associations deviennent des objets ou tableaux imbriques
 
 ### Exemple DS 2021-2022
@@ -166,7 +166,7 @@ JSON :
 ]
 ```
 
-XML (attributs de classe -> attributs XML) :
+XML (attributs de classe → attributs XML) :
 ```xml
 <arrets>
     <arret id="1" nom="INSA" gps="" abris="true"/>
@@ -200,7 +200,7 @@ Un Examen avec deux etudiants, sans copie :
 |-------|---------------|
 | **Bien forme** (well-formed) | La syntaxe est correcte |
 | **Valide** | Bien forme ET conforme a un schema (DTD/XSD) |
-| **Pas bien forme** | Erreur de syntaxe -> automatiquement pas valide |
+| **Pas bien forme** | Erreur de syntaxe → automatiquement pas valide |
 
 ### Decision rapide
 

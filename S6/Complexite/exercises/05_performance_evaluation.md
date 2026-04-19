@@ -70,7 +70,7 @@ Gain = 12.00 - 10.32 = 1.68 s.
 
 **Intuition :** Meme si func2 occupe 70% du temps total, l'amelioration de seulement 1.25x est trop faible. La loi d'Amdahl montre qu'une petite fraction (17%) enormement acceleree (10x) peut produire un meilleur speedup qu'une grosse fraction (70%) faiblement acceleree (1.25x).
 
-**Speedup maximal theorique (S -> inf) :**
+**Speedup maximal theorique (S → inf) :**
 
 ```
 Pour func1 : Speedup_max = 1 / (1 - 0.17) = 1.205
@@ -428,7 +428,7 @@ Avec Gustafson, le speedup croit lineairement avec P (pas de limite fixe).
 | Amdahl | 1 / ((1-p) + p/S) | Speedup d'une optimisation locale |
 | Amdahl parallele | 1 / ((1-p) + p/P) | Speedup avec P processeurs |
 | Gustafson | P - alpha*(P-1) | Speedup en scalant le probleme |
-| Limite Amdahl | 1 / (1-p) | Speedup max (S -> inf) |
+| Limite Amdahl | 1 / (1-p) | Speedup max (S → inf) |
 
 | Outil | Usage |
 |-------|-------|

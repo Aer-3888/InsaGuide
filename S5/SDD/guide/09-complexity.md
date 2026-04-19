@@ -1,29 +1,29 @@
 # Complexity Analysis (Analyse de Complexite)
 
-## Asymptotic Notation
+## Notation asymptotique
 
-### Big-O: O(f(n)) -- Upper Bound
+### Grand-O : O(f(n)) -- Borne superieure
 
 f(n) = O(g(n)) means there exist constants c > 0 and n0 such that:
-  f(n) <= c * g(n) for all n >= n0
+  f(n) &lt;= c * g(n) for all n >= n0
 
-"f grows no faster than g"
+"f ne croit pas plus vite que g"
 
-### Big-Omega: Omega(f(n)) -- Lower Bound
+### Grand-Omega : Omega(f(n)) -- Borne inferieure
 
 f(n) = Omega(g(n)) means there exist constants c > 0 and n0 such that:
   f(n) >= c * g(n) for all n >= n0
 
-"f grows at least as fast as g"
+"f croit au moins aussi vite que g"
 
-### Big-Theta: Theta(f(n)) -- Tight Bound
+### Grand-Theta : Theta(f(n)) -- Borne exacte
 
 f(n) = Theta(g(n)) means f(n) = O(g(n)) AND f(n) = Omega(g(n))
 
-"f grows at the same rate as g"
+"f croit au meme rythme que g"
 
 
-## Common Complexity Classes
+## Classes de complexite courantes
 
 ```
 O(1) < O(log n) < O(n) < O(n log n) < O(n^2) < O(n^3) < O(2^n) < O(n!)
@@ -39,9 +39,9 @@ n=1000:
 ```
 
 
-## Complexity of SDD Data Structures
+## Complexite des structures de donnees SDD
 
-### Linked List
+### Liste chainee
 
 | Operation | Singly Linked | Doubly Linked (at cursor) |
 |-----------|--------------|---------------------------|
@@ -52,10 +52,10 @@ n=1000:
 | Insert at head | O(1) | O(1) |
 | Insert at tail | O(n)** | O(1) |
 
-*Need predecessor for singly linked.
-**O(1) if you maintain a tail pointer.
+*Necessite le predecesseur en simplement chainee.
+**O(1) si on maintient un pointeur de queue.
 
-### Hash Table
+### Table de hachage
 
 | Operation | Average | Worst Case |
 |-----------|---------|------------|
@@ -63,10 +63,10 @@ n=1000:
 | Search | O(1) | O(n) |
 | Delete | O(1) | O(n) |
 
-Worst case: all keys hash to same bucket.
-Average case assumes uniform hashing and load factor alpha < 1.
+Pire cas : toutes les cles hashent vers le meme bucket.
+Cas moyen suppose un hachage uniforme et un facteur de charge alpha &lt; 1.
 
-### Binary Search Tree
+### Arbre binaire de recherche
 
 | Operation | Balanced (AVL) | Worst (degenerate) |
 |-----------|---------------|-------------------|
@@ -75,7 +75,7 @@ Average case assumes uniform hashing and load factor alpha < 1.
 | Delete | O(log n) | O(n) |
 | Traversal | O(n) | O(n) |
 
-### Heap / Priority Queue
+### Tas / File de priorite
 
 | Operation | Binary Heap |
 |-----------|------------|
@@ -85,7 +85,7 @@ Average case assumes uniform hashing and load factor alpha < 1.
 | Build heap (heapify) | O(n) |
 | Heap sort | O(n log n) |
 
-### Graph Algorithms
+### Algorithmes de graphes
 
 | Algorithm | Time | Space |
 |-----------|------|-------|
@@ -94,15 +94,15 @@ Average case assumes uniform hashing and load factor alpha < 1.
 | Dijkstra (heap) | O((V + E) log V) | O(V + E) |
 
 
-## Amortized Analysis
+## Analyse amortie
 
 ### Concept
 
-Some operations are expensive occasionally but cheap most of the time. Amortized analysis gives the **average cost per operation** over a worst-case sequence.
+Certaines operations sont couteuses occasionnellement mais bon marche la plupart du temps. L'analyse amortie donne le **cout moyen par operation** sur une sequence de pire cas.
 
-### Example: Dynamic Array (ArrayList)
+### Exemple : Tableau dynamique (ArrayList)
 
-When the array is full, double its capacity (copy all elements).
+Quand le tableau est plein, doubler sa capacite (copier tous les elements).
 
 ```
 Operation costs for n insertions:
@@ -118,7 +118,7 @@ Total for n insertions: n + (1 + 2 + 4 + ... + n) = n + 2n - 1 < 3n
 Amortized cost per insertion: O(3n/n) = O(1)
 ```
 
-### Example: Hash Table Rehashing
+### Exemple : Rehachage de table de hachage
 
 When load factor exceeds threshold, create 2x larger table and rehash all entries.
 
@@ -129,36 +129,36 @@ n insertions with doubling at alpha = 1:
 ```
 
 
-## Proof Techniques
+## Techniques de preuve
 
-### Proving O(f(n))
+### Prouver O(f(n))
 
-1. Find constants c and n0 such that T(n) <= c * f(n) for all n >= n0
-2. Often: identify the dominant term and show it bounds T(n)
+1. Trouver des constantes c et n0 telles que T(n) &lt;= c * f(n) pour tout n >= n0
+2. Souvent : identifier le terme dominant et montrer qu'il borne T(n)
 
-**Example**: T(n) = 3n^2 + 5n + 7 is O(n^2)
+**Exemple** : T(n) = 3n^2 + 5n + 7 est O(n^2)
 
-Proof: For n >= 1: 3n^2 + 5n + 7 <= 3n^2 + 5n^2 + 7n^2 = 15n^2
-So c = 15, n0 = 1.
+Preuve : Pour n >= 1 : 3n^2 + 5n + 7 &lt;= 3n^2 + 5n^2 + 7n^2 = 15n^2
+Donc c = 15, n0 = 1.
 
-### Proving Theta(f(n))
+### Prouver Theta(f(n))
 
-Must prove both O(f(n)) and Omega(f(n)).
+Il faut prouver a la fois O(f(n)) et Omega(f(n)).
 
-**Example**: T(n) = 3n^2 + 5n + 7 is Theta(n^2)
+**Exemple** : T(n) = 3n^2 + 5n + 7 est Theta(n^2)
 
-Upper: shown above, O(n^2)
-Lower: For n >= 1: 3n^2 + 5n + 7 >= 3n^2, so Omega(n^2) with c = 3.
+Borne superieure : montre ci-dessus, O(n^2)
+Borne inferieure : Pour n >= 1 : 3n^2 + 5n + 7 >= 3n^2, donc Omega(n^2) avec c = 3.
 
-### Recurrence Relations
+### Relations de recurrence
 
-Many tree algorithms have recurrences:
+De nombreux algorithmes d'arbre ont des recurrences :
 
-**Binary search**: T(n) = T(n/2) + O(1) -> T(n) = O(log n)
-**Merge sort**: T(n) = 2T(n/2) + O(n) -> T(n) = O(n log n)
-**Tree traversal**: T(n) = T(k) + T(n-1-k) + O(1) -> T(n) = O(n)
+**Binary search**: T(n) = T(n/2) + O(1) → T(n) = O(log n)
+**Merge sort**: T(n) = 2T(n/2) + O(n) → T(n) = O(n log n)
+**Tree traversal**: T(n) = T(k) + T(n-1-k) + O(1) → T(n) = O(n)
 
-### Master Theorem
+### Theoreme maitre
 
 For T(n) = aT(n/b) + O(n^d):
 
@@ -166,34 +166,34 @@ For T(n) = aT(n/b) + O(n^d):
 |-----------|--------|
 | d > log_b(a) | T(n) = O(n^d) |
 | d = log_b(a) | T(n) = O(n^d * log n) |
-| d < log_b(a) | T(n) = O(n^(log_b(a))) |
+| d &lt; log_b(a) | T(n) = O(n^(log_b(a))) |
 
 
-## Sorting Algorithms Comparison
+## Comparaison des algorithmes de tri
 
-| Algorithm | Best | Average | Worst | Space | Stable? |
-|-----------|------|---------|-------|-------|---------|
-| Bubble sort | O(n) | O(n^2) | O(n^2) | O(1) | Yes |
-| Selection sort | O(n^2) | O(n^2) | O(n^2) | O(1) | No |
-| Insertion sort | O(n) | O(n^2) | O(n^2) | O(1) | Yes |
-| Merge sort | O(n log n) | O(n log n) | O(n log n) | O(n) | Yes |
-| Quick sort | O(n log n) | O(n log n) | O(n^2) | O(log n) | No |
-| Heap sort | O(n log n) | O(n log n) | O(n log n) | O(1) | No |
-| Counting sort | O(n+k) | O(n+k) | O(n+k) | O(k) | Yes |
+| Algorithme | Meilleur | Moyen | Pire | Espace | Stable ? |
+|-----------|----------|-------|------|--------|----------|
+| Tri bulle | O(n) | O(n^2) | O(n^2) | O(1) | Oui |
+| Tri selection | O(n^2) | O(n^2) | O(n^2) | O(1) | Non |
+| Tri insertion | O(n) | O(n^2) | O(n^2) | O(1) | Oui |
+| Tri fusion | O(n log n) | O(n log n) | O(n log n) | O(n) | Oui |
+| Tri rapide | O(n log n) | O(n log n) | O(n^2) | O(log n) | Non |
+| Tri par tas | O(n log n) | O(n log n) | O(n log n) | O(1) | Non |
+| Tri comptage | O(n+k) | O(n+k) | O(n+k) | O(k) | Oui |
 
-Lower bound for comparison-based sorting: Omega(n log n).
-
-
-## Common Mistakes
-
-1. **Confusing O and Theta**: O(n^2) does NOT mean exactly n^2 steps
-2. **Dropping constants too early**: 100n is O(n) but matters in practice
-3. **Ignoring amortization**: ArrayList.add is O(1) amortized, not worst case
-4. **Wrong recurrence**: counting only recursive calls, forgetting the work at each level
-5. **Assuming balanced BST**: unbalanced BST can be O(n) for all operations
+Borne inferieure pour le tri par comparaison : Omega(n log n).
 
 
-## CHEAT SHEET
+## Erreurs courantes
+
+1. **Confondre O et Theta** : O(n^2) ne signifie PAS exactement n^2 etapes
+2. **Supprimer les constantes trop tot** : 100n est O(n) mais compte en pratique
+3. **Ignorer l'amortissement** : ArrayList.add est O(1) amorti, pas pire cas
+4. **Mauvaise recurrence** : ne compter que les appels recursifs en oubliant le travail a chaque niveau
+5. **Supposer un ABR equilibre** : un ABR desequilibre peut etre O(n) pour toutes les operations
+
+
+## AIDE-MEMOIRE
 
 ```
 NOTATION:

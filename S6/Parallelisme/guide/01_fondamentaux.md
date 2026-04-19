@@ -26,7 +26,7 @@ Les programmes paralleles de ce cours sont en general **MIMD**. Les GPU fonction
 | Aspect | Memoire partagee | Memoire distribuee | GPU |
 |--------|------------------|--------------------|-----|
 | Memoire | Commune a tous les coeurs | Propre a chaque noeud | Propre au GPU + memoire partagee interne |
-| Communication | Lecture/ecriture en RAM | Envoi de messages reseau | Transferts CPU <-> GPU |
+| Communication | Lecture/ecriture en RAM | Envoi de messages reseau | Transferts CPU &lt;-> GPU |
 | Scalabilite | 1 machine (quelques coeurs) | Cluster (centaines de noeuds) | 1 GPU (milliers de coeurs) |
 | Outils | Pthreads, OpenMP | MPI | CUDA, OpenCL |
 | Difficulte | Moyenne (synchronisation) | Elevee (messages explicites) | Elevee (modele different) |

@@ -1,18 +1,18 @@
-# Graphs & Dijkstra's Algorithm
+# Graphes et Algorithme de Dijkstra
 
-## Theory
+## Theorie
 
-### Graph Definitions
+### Definitions
 
-A **graph** G = (V, E) consists of:
-- **V**: set of vertices (sommets)
-- **E**: set of edges (aretes/arcs)
+Un **graphe** G = (V, E) est compose de :
+- **V** : ensemble de sommets (vertices)
+- **E** : ensemble d'aretes/arcs (edges)
 
-Types:
-- **Directed** (oriente): edges have direction (u -> v)
-- **Undirected** (non oriente): edges go both ways
-- **Weighted** (pondere): edges have costs/weights
-- **Unweighted**: all edges have equal cost
+Types :
+- **Oriente** (directed) : les arcs ont une direction (u → v)
+- **Non oriente** (undirected) : les aretes vont dans les deux sens
+- **Pondere** (weighted) : les aretes ont des couts/poids
+- **Non pondere** (unweighted) : toutes les aretes ont un cout egal
 
 ```
 Directed weighted graph:
@@ -31,9 +31,9 @@ Directed weighted graph:
 
 ### Representations
 
-#### Adjacency List (Liste d'adjacence)
+#### Liste d'adjacence (Adjacency List)
 
-Each vertex stores a list of its neighbors.
+Chaque sommet stocke une liste de ses voisins.
 
 ```
 0: [(1, 3), (3, 10)]      <- vertex 0 has edges to 1 (weight 3) and 3 (weight 10)
@@ -43,13 +43,13 @@ Each vertex stores a list of its neighbors.
 4: [(3, 2)]
 ```
 
-- Space: O(V + E)
-- Check edge exists: O(degree)
-- Iterate neighbors: O(degree)
+- Espace : O(V + E)
+- Verifier l'existence d'une arete : O(degre)
+- Iterer les voisins : O(degre)
 
-#### Adjacency Matrix (Matrice d'adjacence)
+#### Matrice d'adjacence (Adjacency Matrix)
 
-2D array where matrix[u][v] = weight of edge u->v (infinity if no edge).
+Tableau 2D ou matrice[u][v] = poids de l'arete u->v (infini si pas d'arete).
 
 ```
      0    1    2    3    4
@@ -60,14 +60,14 @@ Each vertex stores a list of its neighbors.
 4  [inf  inf  inf   2    0]
 ```
 
-- Space: O(V^2)
-- Check edge exists: O(1)
-- Iterate neighbors: O(V)
+- Espace : O(V^2)
+- Verifier l'existence d'une arete : O(1)
+- Iterer les voisins : O(V)
 
 
-## Java Implementation (from TP8)
+## Implementation Java (du TP8)
 
-### Graph Interface
+### Interface Graph
 
 ```java
 public interface Graph<T> {
@@ -79,7 +79,7 @@ public interface Graph<T> {
 }
 ```
 
-### IndexedGraph (adjacency list with integer vertices)
+### IndexedGraph (liste d'adjacence avec sommets entiers)
 
 ```java
 public class IndexedGraph implements Graph<Integer> {
@@ -123,11 +123,11 @@ public class VertexAndWeight<T> {
 ```
 
 
-## BFS and DFS
+## BFS et DFS
 
-### BFS (Breadth-First Search)
+### BFS (Parcours en largeur)
 
-Uses a **queue**. Explores level by level.
+Utilise une **file**. Explore niveau par niveau.
 
 ```java
 void bfs(Graph<T> g, T source) {
@@ -149,11 +149,11 @@ void bfs(Graph<T> g, T source) {
 }
 ```
 
-Complexity: O(V + E)
+Complexite : O(V + E)
 
-### DFS (Depth-First Search)
+### DFS (Parcours en profondeur)
 
-Uses a **stack** (or recursion). Goes deep first.
+Utilise une **pile** (ou la recursion). Va en profondeur d'abord.
 
 ```java
 void dfs(Graph<T> g, T source) {
@@ -173,18 +173,18 @@ void dfs(Graph<T> g, T source) {
 }
 ```
 
-Complexity: O(V + E)
+Complexite : O(V + E)
 
 
-## Dijkstra's Algorithm
+## Algorithme de Dijkstra
 
-### Principle
+### Principe
 
-Finds the **shortest path** from a source vertex to all other vertices in a weighted graph with **non-negative weights**.
+Trouve le **plus court chemin** depuis un sommet source vers tous les autres sommets dans un graphe pondere avec des **poids non negatifs**.
 
-Uses a **priority queue** (min-heap) to always process the closest unvisited vertex.
+Utilise une **file de priorite** (tas min) pour toujours traiter le sommet non visite le plus proche.
 
-### Algorithm (Lazy Dijkstra -- from TP8)
+### Algorithme (Lazy Dijkstra -- du TP8)
 
 ```
 1. Insert source into PQ with distance 0
@@ -196,7 +196,7 @@ Uses a **priority queue** (min-heap) to always process the closest unvisited ver
       7. Add new node (cost = n.cost + edge_weight) to PQ
 ```
 
-### Java Implementation (from TP8)
+### Implementation Java (du TP8)
 
 ```java
 public class Dijkstra<T> {
@@ -237,7 +237,7 @@ public class Dijkstra<T> {
         }
     }
 
-    // Reconstruct path from source to v
+    // Reconstruire le chemin de la source vers v
     public Deque<T> getPathTo(T v) {
         Deque<T> path = new ArrayDeque<>();
         path.push(v);
@@ -270,7 +270,7 @@ public class DijkstraNode<T> implements Comparable<DijkstraNode<T>> {
 }
 ```
 
-### Trace Example
+### Exemple de trace
 
 ```
 Graph (directed, weighted):
@@ -309,31 +309,31 @@ Path to 4: 0 -> 1 -> 3 -> 4
 ```
 
 
-## Complexity
+## Complexite
 
-| Algorithm | Time Complexity | Space |
-|-----------|----------------|-------|
+| Algorithme | Complexite temps | Espace |
+|-----------|-----------------|--------|
 | BFS | O(V + E) | O(V) |
 | DFS | O(V + E) | O(V) |
 | Dijkstra (binary heap) | O((V + E) log V) | O(V) |
 | Dijkstra (sorted array PQ) | O(V^2 + E) | O(V) |
 | Dijkstra (Fibonacci heap) | O(V log V + E) | O(V) |
 
-Note: Dijkstra requires **non-negative weights**. For negative weights, use Bellman-Ford.
+Note : Dijkstra necessite des **poids non negatifs**. Pour des poids negatifs, utiliser Bellman-Ford.
 
 
-## Applications in TP8
+## Applications dans le TP8
 
-### Seam Carving
+### Seam Carving (Recadrage intelligent)
 
-Convert an image's energy map into a grid graph, use Dijkstra to find the minimum-energy path (seam), and remove it to resize the image.
+Convertir la carte d'energie d'une image en un graphe grille, utiliser Dijkstra pour trouver le chemin d'energie minimale (seam), et le supprimer pour redimensionner l'image.
 
 ### Le Compte est Bon
 
-Model the arithmetic game as a graph where states are calculation stacks (Reverse Polish Notation). Use Dijkstra to find the optimal sequence of operations.
+Modeliser le jeu arithmetique comme un graphe ou les etats sont des piles de calcul (Notation Polonaise Inverse). Utiliser Dijkstra pour trouver la sequence optimale d'operations.
 
 
-## CHEAT SHEET
+## AIDE-MEMOIRE
 
 ```
 GRAPH REPRESENTATIONS:

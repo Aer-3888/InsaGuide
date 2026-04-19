@@ -130,7 +130,7 @@ C'est souvent la question la plus simple et rapide. Methode :
 ### Reponses type
 
 - **Stockage** : hash sale avec bcrypt/Argon2, JAMAIS en clair
-- **Cracking** : brute force < masques < dictionnaire < dictionnaire + regles
+- **Cracking** : brute force &lt; masques &lt; dictionnaire &lt; dictionnaire + regles
 - **72%** crackables en 10^12 essais
 - **Top 1** : 123456 (37M occurrences)
 

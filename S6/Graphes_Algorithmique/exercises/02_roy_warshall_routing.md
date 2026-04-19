@@ -241,20 +241,20 @@ Ligne 4 : ajout 5 (deja), 6
 
 ### Solution
 
-Si G est sans circuit et a une numerotation conforme, alors pour tout arc (x, y) : nu(x) < nu(y).
+Si G est sans circuit et a une numerotation conforme, alors pour tout arc (x, y) : nu(x) &lt; nu(y).
 
 **Consequence pour Roy-Warshall :** Dans une numerotation conforme, si on renummerote les sommets selon nu, la matrice d'adjacence est **triangulaire superieure** (tous les 1 sont au-dessus de la diagonale).
 
 **Simplification :** A l'iteration k (pivot k), on cherche i tel que M[i][k]=1 et j tel que M[k][j]=1. Avec la numerotation conforme :
-- M[i][k] = 1 => i < k (arc de i vers k)
-- M[k][j] = 1 => k < j (arc de k vers j)
+- M[i][k] = 1 => i &lt; k (arc de i vers k)
+- M[k][j] = 1 => k &lt; j (arc de k vers j)
 
 Donc a l'iteration k :
-- On ne modifie que les lignes i < k
+- On ne modifie que les lignes i &lt; k
 - On ne modifie que les colonnes j > k
 - Pas de boucles possibles (la diagonale reste a 0)
 
-**Complexite amelioree :** L'algorithme ne considere que les paires (i, j) avec i < k < j. Cela divise environ par 4 le nombre d'operations (on travaille sur un quart de la matrice au lieu de toute la matrice).
+**Complexite amelioree :** L'algorithme ne considere que les paires (i, j) avec i &lt; k &lt; j. Cela divise environ par 4 le nombre d'operations (on travaille sur un quart de la matrice au lieu de toute la matrice).
 
 La complexite reste O(n^3) dans le pire cas, mais avec un facteur constant plus petit.
 
@@ -281,7 +281,7 @@ SI M[i][j] == 1 ALORS R1[i][j] = j    // arc direct, aller directement a j
 SINON R1[i][j] = -1                    // pas de chemin connu
 ```
 
-**Mise a jour (iteration k) :** Quand on decouvre un nouveau chemin i -> k -> j :
+**Mise a jour (iteration k) :** Quand on decouvre un nouveau chemin i → k → j :
 
 ```
 SI M(k-1)[i][j] == 0 ET M(k-1)[i][k] == 1 ET M(k-1)[k][j] == 1 ALORS
@@ -411,5 +411,5 @@ Chemin de 4 a 5 :
 | Roy-Warshall (existence) | M adjacence | M* fermeture transitive | O(n^3) |
 | Roy-Warshall + routage intermediaire | M adjacence | M*, R1 | O(n^3) |
 | Roy-Warshall + routage successeurs | M adjacence | M*, R2 | O(n^3) |
-| Reconstruction chemin | R2, (i, j) | chemin i -> j | O(longueur chemin) |
+| Reconstruction chemin | R2, (i, j) | chemin i → j | O(longueur chemin) |
 | Version conforme | M triangulaire | M* | O(n^3) mais facteur /4 |

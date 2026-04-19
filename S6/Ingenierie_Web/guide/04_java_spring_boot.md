@@ -165,7 +165,7 @@ public void replaceUser(@RequestBody final User newUser) {
 | Methode | Annotation | Exemple |
 |---------|-----------|---------|
 | **Body** | `@RequestBody` | `POST /api/exam` body: `{ "nom": "Web" }` |
-| **URI** | `@PathVariable("id")` | `GET /api/exam/{id}` -> `/api/exam/42` |
+| **URI** | `@PathVariable("id")` | `GET /api/exam/{id}` → `/api/exam/42` |
 | **Query** | `@RequestParam("name")` | `GET /api/exam?name=Web` |
 
 ```java

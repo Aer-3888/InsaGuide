@@ -9,9 +9,9 @@ Ce TP porte les programmes Java des TPs precedents en C avec l'API POSIX sockets
 
 ---
 
-## Cross-Platform Skeleton (Linux/Windows)
+## Squelette multi-plateforme (Linux/Windows)
 
-Tous les fichiers C de ce TP commencent par le meme squelette de portabilite :
+Tous les fichiers C de ce TP commencent par le meme squelette de portabilite Linux/Windows :
 
 ```c
 #ifdef WIN32
@@ -47,15 +47,15 @@ static void end(void) {
 
 ---
 
-## Part 1: TCP Client/Server
+## Partie 1 : Client/Serveur TCP
 
-### Exercise 1: Write a TCP server in C that accepts connections, exchanges 3 messages with each client, then closes the connection.
+### Exercice 1 : Ecrire un serveur TCP en C qui accepte les connexions, echange 3 messages avec chaque client, puis ferme la connexion.
 
-**Answer:**
+**Reponse :**
 
-The TCP server follows these steps: socket() -> bind() -> listen() -> accept() -> recv()/send() -> close().
+Le serveur TCP suit ces etapes : socket() → bind() → listen() → accept() → recv()/send() → close().
 
-#### Complete code: ServeurTCP.c
+#### Code complet : ServeurTCP.c
 
 ```c
 /* serveur_TCP.c (serveur TCP) */
@@ -172,11 +172,11 @@ int main(int argc, char **argv) {
 }
 ```
 
-### Exercise 2: Write a TCP client in C that connects to the server, exchanges 3 messages, then closes.
+### Exercice 2 : Ecrire un client TCP en C qui se connecte au serveur, echange 3 messages, puis ferme.
 
-**Answer:**
+**Reponse :**
 
-#### Complete code: ClientTCP.c
+#### Code complet : ClientTCP.c
 
 ```c
 /* Client_TCP.c (Client TCP) */
@@ -290,7 +290,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-**How to test:**
+**Comment tester :**
 
 ```bash
 # Compile
@@ -313,15 +313,15 @@ gcc -o client_tcp ClientTCP.c
 
 ---
 
-## Part 2: UDP Client/Server
+## Partie 2 : Client/Serveur UDP
 
-### Exercise 3: Write a UDP echo server in C.
+### Exercice 3 : Ecrire un serveur echo UDP en C.
 
-**Answer:**
+**Reponse :**
 
-Key differences from TCP: no listen()/accept(), use recvfrom()/sendto() which include sender/destination address, one socket for all clients.
+Differences cles avec TCP : pas de listen()/accept(), utilisation de recvfrom()/sendto() qui incluent l'adresse emetteur/destinataire, un seul socket pour tous les clients.
 
-#### Complete code: serveur_UDP2_et.c
+#### Code complet : serveur_UDP2_et.c
 
 ```c
 /* serveur_UDP.c (serveur UDP) */
@@ -421,11 +421,11 @@ int main(int argc, char **argv) {
 }
 ```
 
-### Exercise 4: Write a UDP client in C that sends 20 messages then receives 20 responses.
+### Exercice 4 : Ecrire un client UDP en C qui envoie 20 messages puis recoit 20 reponses.
 
-**Answer:**
+**Reponse :**
 
-#### Complete code: client_UDP2_et.c
+#### Code complet : client_UDP2_et.c
 
 ```c
 /* client_UDP.c (client UDP) */
@@ -543,7 +543,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-**How to test:**
+**Comment tester :**
 
 ```bash
 gcc -o serveur_udp serveur_UDP2_et.c
@@ -558,13 +558,13 @@ gcc -o client_udp client_UDP2_et.c
 
 ---
 
-## Part 3: "Plus ou Moins" Game in C
+## Partie 3 : Jeu "Plus ou Moins" en C
 
-### Exercise 5: Port the guessing game server from TP3 (Java) to C.
+### Exercice 5 : Porter le serveur de devinette du TP3 (Java) en C.
 
-**Answer:**
+**Reponse :**
 
-#### Complete code: ServeurPlusMoins.c
+#### Code complet : ServeurPlusMoins.c
 
 ```c
 /* ServeurPlusMoins.c */
@@ -709,11 +709,11 @@ int main(int argc, char **argv) {
 }
 ```
 
-### Exercise 6: Write the interactive client for the guessing game in C.
+### Exercice 6 : Ecrire le client interactif du jeu de devinette en C.
 
-**Answer:**
+**Reponse :**
 
-#### Complete code: ClientPlusMoins.c
+#### Code complet : ClientPlusMoins.c
 
 ```c
 /* ClientPlusMoins.c */
@@ -842,7 +842,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-**How to test:**
+**Comment tester :**
 
 ```bash
 gcc -o pm_serveur ServeurPlusMoins.c
@@ -873,11 +873,11 @@ nc localhost 9000
 
 ---
 
-## Exercise 7: Compare TCP and UDP packet counts in Wireshark.
+## Exercice 7 : Comparer le nombre de paquets TCP et UDP dans Wireshark.
 
-**Answer:**
+**Reponse :**
 
-Capture both TCP and UDP exchanges with 3 messages each:
+Capturer les echanges TCP et UDP avec 3 messages chacun :
 
 **TCP (3 message exchanges):**
 ```
@@ -903,4 +903,4 @@ Capture both TCP and UDP exchanges with 3 messages each:
                               Total = 6 packets
 ```
 
-TCP uses ~3x more packets than UDP for the same exchange. This is the cost of reliability (handshake, ACKs, termination).
+TCP utilise environ 3 fois plus de paquets qu'UDP pour le meme echange. C'est le cout de la fiabilite (handshake, ACKs, terminaison).

@@ -1,18 +1,18 @@
-# TP3 - Graph Algorithms in ARM Assembly
+# TP3 - Algorithmes de graphes en assembleur ARM
 
-> Following teacher instructions from: S5/CLP/data/moodle/tp/tp3/README.md
+> D'apres les instructions enseignant de : S5/CLP/data/moodle/tp/tp3/README.md
 
-This TP implements graph algorithms in ARM assembly: depth-first search (DFS), vertex search, and entry point detection. Four files work together: `main.s` (graph data definition), `rechercheSommet.s` (find vertex index by name), `estPointEntree.s` (entry point check), and `dfs.s` (DFS traversal).
+Ce TP implemente des algorithmes de graphes en assembleur ARM : parcours en profondeur (DFS), recherche de sommet et detection de point d'entree. Quatre fichiers travaillent ensemble : `main.s` (definition des donnees du graphe), `rechercheSommet.s` (trouver l'indice d'un sommet par son nom), `estPointEntree.s` (verification de point d'entree), et `dfs.s` (parcours DFS).
 
 ---
 
-## Exercise 1: Graph Data Structure (main.s)
+## Exercice 1 : Structure de donnees du graphe (main.s)
 
 ### Define the graph structure and its memory layout
 
-**Question:** Define the C-equivalent graph structure, its assembly constants, and the complete data definition.
+**Question :** Define the C-equivalent graph structure, its assembly constants, and the complete data definition.
 
-**Answer:**
+**Reponse :**
 
 **C equivalent:**
 ```c
@@ -80,15 +80,15 @@ marquer:
 
 Edges: a->b, b->c, b->d, c->d, d->e, e->b, e->c
 
-**How it works:** The graph structure uses 4 pointers stored as 4 consecutive words. The vertex names are stored as raw ASCII bytes (NOT null-terminated). The successor lists use an array-of-pointers pattern: `lesSuccs[i]` is a pointer to a character array, and `lesSuccs[i][j]` is the j-th successor of vertex i.
+**Fonctionnement :** The graph structure uses 4 pointers stored as 4 consecutive words. The vertex names are stored as raw ASCII bytes (NOT null-terminated). The successor lists use an array-of-pointers pattern: `lesSuccs[i]` is a pointer to a character array, and `lesSuccs[i][j]` is the j-th successor of vertex i.
 
 ---
 
 ### Set up the _start entry point for DFS
 
-**Question:** How does `_start` prepare the parameters and call DFS?
+**Question :** How does `_start` prepare the parameters and call DFS?
 
-**Answer:**
+**Reponse :**
 
 ```arm
 .text
@@ -107,17 +107,17 @@ end:
   b end                         @ Infinite loop - halt execution
 ```
 
-**How it works:** Three parameters are pushed onto the stack. The DFS function modifies the `marquer` array in place -- after DFS from 'a', all reachable vertices will have `marquer[i] = 1`.
+**Fonctionnement :** Three parameters are pushed onto the stack. The DFS function modifies the `marquer` array in place -- after DFS from 'a', all reachable vertices will have `marquer[i] = 1`.
 
 ---
 
-## Exercise 2: rechercheSommet.s -- Vertex Search
+## Exercice 2 : rechercheSommet.s -- Recherche de sommet
 
 ### Implement linear search through vertex names
 
-**Question:** Implement `rechercheSommet(sommet, g)` that returns the index of a vertex given its character name.
+**Question :** Implement `rechercheSommet(sommet, g)` that returns the index of a vertex given its character name.
 
-**Answer:**
+**Reponse :**
 
 **Algorithm:**
 ```
@@ -183,7 +183,7 @@ endloop:
   bx lr                       @ Return
 ```
 
-**How it works:** The key pattern is the three-level dereference to access `g.nom[i]`:
+**Fonctionnement :** The key pattern is the three-level dereference to access `g.nom[i]`:
 1. `ldr r1, [fp, #offsetG]` -- load graph struct address
 2. `add r1, #offsetGrapheNom` then `ldr r1, [r1]` -- load the nom field (a pointer)
 3. `ldrb r1, [r1, r0]` -- load byte at pointer + index i
@@ -192,13 +192,13 @@ endloop:
 
 ---
 
-## Exercise 3: estPointEntree.s -- Entry Point Detection
+## Exercice 3 : estPointEntree.s -- Detection de point d'entree
 
 ### Check if a vertex has no incoming edges
 
-**Question:** Implement `estPointEntree(sommet, g)` that returns 1 if the vertex is an entry point (no incoming edges), 0 otherwise.
+**Question :** Implement `estPointEntree(sommet, g)` that returns 1 if the vertex is an entry point (no incoming edges), 0 otherwise.
 
-**Answer:**
+**Reponse :**
 
 **Algorithm:**
 ```
@@ -270,7 +270,7 @@ return:
   bx lr
 ```
 
-**How it works:** The critical pattern for accessing `lesSuccs[i][j]` is:
+**Fonctionnement :** The critical pattern for accessing `lesSuccs[i][j]` is:
 - `ldr r5, [r5, r0, lsl #2]` -- load pointer from word array (scale by 4 because pointers are 4 bytes)
 - `ldrb r5, [r5, r3]` -- load byte from character array (no scaling, characters are 1 byte)
 
@@ -287,13 +287,13 @@ Return 1 -- 'a' IS an entry point
 
 ---
 
-## Exercise 4: dfs.s -- Depth-First Search
+## Exercice 4 : dfs.s -- Parcours en profondeur
 
 ### Implement recursive DFS traversal
 
-**Question:** Implement `dfs(v, g, marquer)` that performs a depth-first search marking visited vertices.
+**Question :** Implement `dfs(v, g, marquer)` that performs a depth-first search marking visited vertices.
 
-**Answer:**
+**Reponse :**
 
 **Stack frame:**
 ```
@@ -402,11 +402,11 @@ endLoop:
 
 ---
 
-### Complete DFS execution trace from vertex 'a'
+### Trace d'execution DFS complete depuis le sommet 'a'
 
-**Question:** Trace the full DFS starting from `dfs('a', g, marquer)` with marquer = [0,0,0,0,0].
+**Question :** Trace the full DFS starting from `dfs('a', g, marquer)` with marquer = [0,0,0,0,0].
 
-**Answer:**
+**Reponse :**
 
 **Call 1: dfs('a', g, marquer)**
 ```
@@ -456,13 +456,13 @@ Call 2 returns -> Call 1: j=1 >= nbSucc[0]=1, exit, RETURN
 
 **Final state:** `marquer = [1, 1, 1, 1, 1]` -- all vertices visited.
 
-**DFS traversal order:** a -> b -> c -> d -> e
+**DFS traversal order:** a → b → c → d → e
 
 **Maximum recursion depth:** 5 (equal to number of vertices).
 
 ---
 
-## Key Concepts Summary
+## Resume des concepts cles
 
 ### Byte vs Word Access
 
@@ -478,7 +478,7 @@ Call 2 returns -> Call 1: j=1 >= nbSucc[0]=1, exit, RETURN
 - `lsl #0` -- byte array (no scaling)
 - `lsl #2` -- word array (multiply index by 4)
 
-### Common Mistakes
+### Erreurs courantes
 
 - **Using LDR for characters:** Loads 4 bytes instead of 1, contaminating the register with adjacent memory
 - **Forgetting `lsl #2` for word arrays:** Reads from wrong address (offset is in bytes, not words)

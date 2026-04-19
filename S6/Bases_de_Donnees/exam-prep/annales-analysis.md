@@ -28,30 +28,30 @@
 
 #### Type A : Calcul de fermeture (presente dans 9/9 DS)
 
-**Enonce typique :** Soit R(A, B, C, D, E) avec F = { AB -> C, C -> D, D -> E, B -> D }. Calculer {AB}+.
+**Enonce typique :** Soit R(A, B, C, D, E) avec F = { AB → C, C → D, D → E, B → D }. Calculer {AB}+.
 
 **Solution methodique :**
 
 | Etape | Resultat | DF | Ajout |
 |-------|----------|-----|-------|
 | Init | {A, B} | -- | -- |
-| 1 | {A, B} | AB -> C | C |
-| 2 | {A, B, C} | C -> D | D |
-| 3 | {A, B, C, D} | D -> E | E |
-| 4 | {A, B, C, D, E} | B -> D | (deja present) |
+| 1 | {A, B} | AB → C | C |
+| 2 | {A, B, C} | C → D | D |
+| 3 | {A, B, C, D} | D → E | E |
+| 4 | {A, B, C, D, E} | B → D | (deja present) |
 | Final | {A, B, C, D, E} | stable | -- |
 
 **Attention :** toujours iterer jusqu'a stabilite. Montrer chaque etape.
 
 #### Type B : Cles candidates (presente dans 9/9 DS)
 
-**Enonce typique :** Trouver toutes les cles candidates de R(A, B, C, D, E) avec F = { A -> BC, D -> E, BC -> A }.
+**Enonce typique :** Trouver toutes les cles candidates de R(A, B, C, D, E) avec F = { A → BC, D → E, BC → A }.
 
 **Solution :**
 
 1. Attributs jamais en partie droite : **D** (obligatoire dans toute cle).
-2. {A, D}+ : A -> BC, D -> E. {A, D}+ = {A, B, C, D, E}. Super-cle. Minimale ? A seul : {A}+ = {A, B, C}. Pas tous. D seul : {D}+ = {D, E}. Non. **{A, D} est cle candidate.**
-3. Chercher d'autres : {B, C, D}+ : BC -> A, A -> BC (deja), D -> E. {B, C, D}+ = {A, B, C, D, E}. Super-cle. {B, D}+ : pas de DF qui part de B seul. {B, D}+ = {B, D, E}. Non. {C, D}+ : pas de DF depuis C seul. {C, D}+ = {C, D, E}. Non. {B, C, D} minimale ? {B, C}+ sans D = {A, B, C}. Pas tous. **{B, C, D} est cle candidate.**
+2. {A, D}+ : A → BC, D → E. {A, D}+ = {A, B, C, D, E}. Super-cle. Minimale ? A seul : {A}+ = {A, B, C}. Pas tous. D seul : {D}+ = {D, E}. Non. **{A, D} est cle candidate.**
+3. Chercher d'autres : {B, C, D}+ : BC → A, A → BC (deja), D → E. {B, C, D}+ = {A, B, C, D, E}. Super-cle. {B, D}+ : pas de DF qui part de B seul. {B, D}+ = {B, D, E}. Non. {C, D}+ : pas de DF depuis C seul. {C, D}+ = {C, D, E}. Non. {B, C, D} minimale ? {B, C}+ sans D = {A, B, C}. Pas tous. **{B, C, D} est cle candidate.**
 
 **Cles candidates : {A, D} et {B, C, D}**
 
@@ -64,7 +64,7 @@
 
 #### Type D : Decomposition 3NF par synthese (presente dans ~7/9 DS)
 
-**Methode :** couverture minimale -> une relation par partie gauche -> verifier la cle.
+**Methode :** couverture minimale → une relation par partie gauche → verifier la cle.
 
 #### Type E : BCNF avec perte de DF (presente dans ~4/9 DS)
 
@@ -215,7 +215,7 @@ Le sujet 2024 (BD-3INFO-mai24.pdf) suit la structure classique :
 |--------|-----------|---------------|
 | Arreter la fermeture trop tot | Tres haute | Toujours iterer jusqu'a stabilite |
 | Oublier les attributs jamais a droite dans la cle | Haute | Les lister systematiquement |
-| Couverture minimale dans le mauvais ordre | Haute | Decomposer -> Reduire -> Supprimer |
+| Couverture minimale dans le mauvais ordre | Haute | Decomposer → Reduire → Supprimer |
 | NULL = NULL dans SQL | Haute | Utiliser IS NULL |
 | NOT IN avec NULL dans la sous-requete | Moyenne | Ajouter WHERE ... IS NOT NULL |
 | Oublier DISTINCT | Moyenne | Verifier si les doublons sont possibles |

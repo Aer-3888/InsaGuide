@@ -72,9 +72,9 @@ for (int i = 0; i < N; i++) {
 ### Solution
 
 **Analyse des variables :**
-- `total` : accumulateur -> `reduction(+:total)`
-- `val` : variable temporaire locale -> `private` (ou declaree dans la boucle)
-- `tab` : tableau en lecture seule -> `shared` (defaut)
+- `total` : accumulateur → `reduction(+:total)`
+- `val` : variable temporaire locale → `private` (ou declaree dans la boucle)
+- `tab` : tableau en lecture seule → `shared` (defaut)
 - `max_idx` : problematique -- on ne peut pas faire de reduction sur un index
 
 **Approche en deux passes :**
@@ -192,7 +192,7 @@ if (rang == 0) {
 
 - P0 fait Send(buf_a) vers P1, qui peut bloquer si le buffer est plein
 - P1 fait Send(buf_d) vers P0, qui peut bloquer si le buffer est plein
-- Ni P0 ni P1 ne fait de Recv -> les deux bloquent
+- Ni P0 ni P1 ne fait de Recv → les deux bloquent
 
 **Correction avec Sendrecv :**
 
@@ -302,7 +302,7 @@ On parallelise une boucle ou l'iteration i a un cout proportionnel a i^2. Quel s
 
 **`schedule(dynamic)`** ou **`schedule(guided)`**.
 
-- `static` : les dernieres iterations (les plus couteuses) seraient toutes sur le meme thread -> desequilibre massif.
+- `static` : les dernieres iterations (les plus couteuses) seraient toutes sur le meme thread → desequilibre massif.
 - `dynamic` : les threads prennent des iterations a la demande, equilibrant la charge.
 - `guided` : blocs de taille decroissante, bon compromis entre static et dynamic.
 

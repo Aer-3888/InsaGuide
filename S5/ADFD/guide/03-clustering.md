@@ -1,16 +1,14 @@
-# Chapter 3: Clustering Methods (Methodes de Classification Non Supervisee)
+# Chapitre 3 : Methodes de classification non supervisee
 
-## Overview
+## Presentation
 
-Clustering is the task of grouping a set of objects so that objects within the same group (cluster) are more similar to each other than to objects in other groups. This chapter covers the three methods studied in the course: **CAH (Classification Ascendante Hierarchique)**, **K-means**, and **DBSCAN**.
+Le clustering est la tache consistant a regrouper un ensemble d'objets de sorte que les objets d'un meme groupe (cluster) soient plus similaires entre eux qu'avec les objets des autres groupes. Ce chapitre couvre les trois methodes etudiees dans le cours : **CAH (Classification Ascendante Hierarchique)**, **K-means** et **DBSCAN**.
 
-**French terms**: Classification non supervisee, Clustering, Partitionnement
+## 1. Classification Ascendante Hierarchique (CAH)
 
-## 1. Hierarchical Agglomerative Clustering (CAH)
+### Algorithme
 
-### Algorithm (Classification Ascendante Hierarchique)
-
-The CAH builds a hierarchy of clusters by successively merging the two closest clusters.
+La CAH construit une hierarchie de clusters en fusionnant successivement les deux clusters les plus proches.
 
 ```
 1. Start: each individual is its own cluster (n clusters)
@@ -21,36 +19,36 @@ The CAH builds a hierarchy of clusters by successively merging the two closest c
 6. Cut the dendrogram at the desired level
 ```
 
-### Linkage Criteria (Criteres de Liaison)
+### Criteres de liaison
 
-The key decision is how to define the "distance" between two clusters:
+La decision cle est comment definir la "distance" entre deux clusters :
 
-| Criterion | French | Formula | Properties |
-|-----------|--------|---------|------------|
-| **Ward** | Critere de Ward | Minimizes increase in total within-cluster variance | Best for continuous data, forms compact clusters of similar size |
-| **Complete** | Lien complet | Max distance between any two points in the two clusters | Forms compact clusters, sensitive to outliers |
-| **Average** | Lien moyen | Average of all pairwise distances | Compromise between single and complete |
-| **Single** | Lien simple | Min distance between any two points | Finds elongated clusters, suffers from "chaining effect" |
+| Critere | Formule | Proprietes |
+|---------|---------|------------|
+| **Ward** | Minimise l'augmentation de la variance intra-cluster totale | Ideal pour les donnees continues, forme des clusters compacts de taille similaire |
+| **Lien complet** | Distance maximale entre deux points des deux clusters | Forme des clusters compacts, sensible aux valeurs aberrantes |
+| **Lien moyen** | Moyenne de toutes les distances deux a deux | Compromis entre lien simple et complet |
+| **Lien simple** | Distance minimale entre deux points | Trouve des clusters allonges, souffre de l'"effet de chaine" |
 
-**Ward's criterion** (the one used in this course):
+**Critere de Ward** (celui utilise dans ce cours) :
 
 ```
 Delta(A, B) = (n_A * n_B) / (n_A + n_B) * ||center_A - center_B||^2
 ```
 
-This measures the increase in total intra-cluster variance when merging clusters A and B.
+Ceci mesure l'augmentation de la variance intra-cluster totale lors de la fusion des clusters A et B.
 
-### The Dendrogram (Dendrogramme)
+### Le dendrogramme
 
-A tree-like visualization of the merging process:
-- **X-axis**: Individual labels
-- **Y-axis**: Distance/dissimilarity at which merges occur
-- **Height of merge**: The larger the height, the more dissimilar the merged clusters
+Visualisation arborescente du processus de fusion :
+- **Axe X** : Etiquettes des individus
+- **Axe Y** : Distance/dissimilarite a laquelle les fusions ont lieu
+- **Hauteur de fusion** : Plus la hauteur est grande, plus les clusters fusionnes sont dissimilaires
 
-**Reading a dendrogram**:
-1. Large vertical jumps indicate natural cluster boundaries
-2. A horizontal cut at any level produces a partition
-3. The "right" number of clusters is where there are significant jumps
+**Lecture d'un dendrogramme** :
+1. Les grands sauts verticaux indiquent des frontieres naturelles de clusters
+2. Une coupe horizontale a tout niveau produit une partition
+3. Le "bon" nombre de clusters correspond aux sauts significatifs
 
 ```python
 from scipy.cluster.hierarchy import dendrogram, linkage, fcluster
@@ -68,9 +66,9 @@ plt.ylabel('Distance')
 clusters = fcluster(Z, t=3, criterion='maxclust')
 ```
 
-### CAH-MIXTE Method (from TP2)
+### Methode CAH-MIXTE (TP2)
 
-This is the method taught in the course: combine PCA + CAH.
+C'est la methode enseignee dans le cours : combiner ACP + CAH.
 
 ```
 1. Run PCA on standardized data
@@ -80,9 +78,9 @@ This is the method taught in the course: combine PCA + CAH.
 5. Identify paragons and interpret clusters
 ```
 
-### Paragons (Parangons)
+### Parangons
 
-A **paragon** is the individual closest to the center of gravity (barycentre) of its cluster -- the most representative member.
+Un **parangon** est l'individu le plus proche du centre de gravite (barycentre) de son cluster -- le membre le plus representatif.
 
 ```python
 from scipy.spatial.distance import cdist
@@ -95,21 +93,21 @@ for cluster_id in unique_clusters:
     print(f"Cluster {cluster_id} paragon: {names[paragon_idx]}")
 ```
 
-### Results from TP2 (French Cities)
+### Resultats du TP2 (Villes francaises)
 
-**Optimal classification**: 3 clusters on 2 principal components
+**Classification optimale** : 3 clusters sur 2 composantes principales
 
-| Cluster | Climate Type | Cities | Paragon |
-|---------|-------------|--------|---------|
+| Cluster | Type de climat | Villes | Parangon |
+|---------|---------------|--------|----------|
 | 1 | Continental (Centre/Nord) | Strasbourg, Lille, Grenoble, Lyon, Vichy, Clermont-Ferrand, Paris | Vichy |
-| 2 | Oceanic (Ouest) | Brest, Rennes, Nantes | Rennes |
-| 3 | Mediterranean (Sud) | Nice, Marseille, Montpellier, Toulouse, Bordeaux | Toulouse |
+| 2 | Oceanique (Ouest) | Brest, Rennes, Nantes | Rennes |
+| 3 | Mediterraneen (Sud) | Nice, Marseille, Montpellier, Toulouse, Bordeaux | Toulouse |
 
 ## 2. K-Means
 
-### Algorithm
+### Algorithme
 
-K-means partitions data into K clusters by minimizing within-cluster variance (inertie intra-classe).
+K-means partitionne les donnees en K clusters en minimisant la variance intra-cluster (inertie intra-classe).
 
 ```
 1. Choose K (number of clusters)
@@ -119,19 +117,19 @@ K-means partitions data into K clusters by minimizing within-cluster variance (i
 5. Repeat steps 3-4 until convergence (assignments don't change)
 ```
 
-### Key Properties
+### Proprietes cles
 
-| Property | Detail |
-|----------|--------|
-| **Complexity** | O(n * k * d * iterations) -- fast, linear |
-| **Cluster shape** | Always convex (spherical/ellipsoidal) |
-| **Requires** | K must be specified in advance |
-| **Sensitivity** | Sensitive to initialization and outliers |
-| **Determinism** | Different runs may give different results |
+| Propriete | Detail |
+|-----------|--------|
+| **Complexite** | O(n * k * d * iterations) -- rapide, lineaire |
+| **Forme des clusters** | Toujours convexe (spherique/ellipsoidal) |
+| **Necessite** | K doit etre specifie a l'avance |
+| **Sensibilite** | Sensible a l'initialisation et aux valeurs aberrantes |
+| **Determinisme** | Differentes executions peuvent donner des resultats differents |
 
-### Choosing K
+### Choix de K
 
-**Elbow method (Methode du coude)**:
+**Methode du coude** :
 ```python
 inertias = []
 for k in range(2, 11):
@@ -145,7 +143,7 @@ plt.ylabel('Inertia (WCSS)')
 plt.title('Elbow Method')
 ```
 
-Look for the "elbow" where the rate of decrease slows.
+Chercher le "coude" ou le taux de decroissance ralentit.
 
 ### Implementation
 
@@ -164,22 +162,22 @@ inertia = kmeans.inertia_
 
 ## 3. DBSCAN
 
-### Algorithm (Density-Based Spatial Clustering of Applications with Noise)
+### Algorithme (Density-Based Spatial Clustering of Applications with Noise)
 
-DBSCAN finds clusters as regions of high point density separated by regions of low density.
+DBSCAN trouve des clusters comme des regions de forte densite de points separees par des regions de faible densite.
 
-**Parameters**:
-- **eps (epsilon)**: Maximum distance between two points to be considered neighbors
-- **min_samples (minPts)**: Minimum number of points to form a dense region (core point)
+**Parametres** :
+- **eps (epsilon)** : Distance maximale entre deux points pour etre consideres comme voisins
+- **min_samples (minPts)** : Nombre minimum de points pour former une region dense (point noyau)
 
-**Point types**:
+**Types de points** :
 | Type | Definition |
 |------|-----------|
-| **Core point** (point noyau) | Has >= min_samples neighbors within eps radius |
-| **Border point** (point frontiere) | Within eps of a core point, but < min_samples own neighbors |
-| **Noise point** (bruit) | Neither core nor border -- label = -1 |
+| **Point noyau** (core point) | A >= min_samples voisins dans le rayon eps |
+| **Point frontiere** (border point) | Dans le rayon eps d'un point noyau, mais &lt; min_samples propres voisins |
+| **Bruit** (noise) | Ni noyau ni frontiere -- label = -1 |
 
-### Step-by-step Algorithm
+### Algorithme etape par etape
 
 ```
 For each unvisited point p:
@@ -198,9 +196,9 @@ For each unvisited point p:
          - If q is not in any cluster: add q to C
 ```
 
-### Choosing Parameters
+### Choix des parametres
 
-**eps**: Use the k-distance graph:
+**eps** : Utiliser le graphe des k-distances :
 1. For each point, compute distance to its k-th nearest neighbor (k = min_samples - 1)
 2. Sort distances and plot
 3. Choose eps at the "elbow" of the curve
@@ -219,7 +217,7 @@ plt.ylabel('5th neighbor distance')
 plt.title('K-Distance Graph')
 ```
 
-**min_samples**: Rule of thumb is 2 * dimensions, or domain-specific (e.g., 7-10 for spatial photo data).
+**min_samples** : Regle empirique : 2 * dimensions, ou specifique au domaine (ex. 7-10 pour des donnees spatiales de photos).
 
 ### Implementation
 
@@ -236,87 +234,87 @@ n_clusters = len(set(labels)) - (1 if -1 in labels else 0)
 n_noise = list(labels).count(-1)
 ```
 
-### Key Properties
+### Proprietes cles
 
-| Property | Detail |
-|----------|--------|
-| **Complexity** | O(n * log n) with spatial index, O(n^2) without |
-| **Cluster shape** | Arbitrary -- any shape including concave |
-| **Requires** | eps and min_samples (but NOT K) |
-| **Handles noise** | Yes -- noise points labeled as -1 |
-| **Determinism** | Deterministic for core and noise points (border points may vary) |
+| Propriete | Detail |
+|-----------|--------|
+| **Complexite** | O(n * log n) avec index spatial, O(n^2) sans |
+| **Forme des clusters** | Arbitraire -- toute forme y compris concave |
+| **Necessite** | eps et min_samples (mais PAS K) |
+| **Gestion du bruit** | Oui -- points de bruit etiquetes -1 |
+| **Determinisme** | Deterministe pour les points noyaux et le bruit (les points frontieres peuvent varier) |
 
-## 4. Comparison: CAH vs K-means vs DBSCAN
+## 4. Comparaison : CAH vs K-means vs DBSCAN
 
-| Feature | CAH (Ward) | K-means | DBSCAN |
-|---------|-----------|---------|--------|
-| **Input parameter** | None (cut dendrogramme) | K (number of clusters) | eps, min_samples |
-| **Cluster shape** | Compact, spherical | Convex, spherical | Arbitrary |
-| **Handles noise** | No | No | Yes |
-| **Scalability** | O(n^3) -- small data only | O(n) -- very scalable | O(n log n) -- medium |
-| **Hierarchical** | Yes (dendrogram) | No | No |
-| **Deterministic** | Yes | No (depends on init) | Mostly yes |
-| **Best for** | Small data, hierarchical structure | Large data, known K | Spatial data with noise |
+| Caracteristique | CAH (Ward) | K-means | DBSCAN |
+|----------------|-----------|---------|--------|
+| **Parametre d'entree** | Aucun (coupe du dendrogramme) | K (nombre de clusters) | eps, min_samples |
+| **Forme des clusters** | Compacts, spheriques | Convexes, spheriques | Arbitraire |
+| **Gestion du bruit** | Non | Non | Oui |
+| **Passage a l'echelle** | O(n^3) -- petites donnees uniquement | O(n) -- tres scalable | O(n log n) -- moyen |
+| **Hierarchique** | Oui (dendrogramme) | Non | Non |
+| **Deterministe** | Oui | Non (depend de l'initialisation) | Quasiment oui |
+| **Ideal pour** | Petites donnees, structure hierarchique | Grandes donnees, K connu | Donnees spatiales avec bruit |
 
-### When to Use What
+### Quand utiliser quoi
 
-- **CAH**: Small datasets (<1000 points), you want to explore different numbers of clusters, data has hierarchical structure. Used in TP1/TP2.
-- **K-means**: Large datasets, roughly spherical clusters, K is known or can be estimated. Good as a baseline.
-- **DBSCAN**: Spatial/geographic data, clusters of varying shapes, presence of noise/outliers. Used in TP3-4.
+- **CAH** : Petits jeux de donnees (&lt;1000 points), on veut explorer differents nombres de clusters, les donnees ont une structure hierarchique. Utilise dans TP1/TP2.
+- **K-means** : Grands jeux de donnees, clusters approximativement spheriques, K est connu ou estimable. Bon comme reference de base.
+- **DBSCAN** : Donnees spatiales/geographiques, clusters de formes variees, presence de bruit/valeurs aberrantes. Utilise dans TP3-4.
 
-## 5. Evaluation Metrics
+## 5. Metriques d'evaluation
 
-### Silhouette Score (Score de Silhouette)
+### Score de silhouette
 
-Measures how similar an object is to its own cluster compared to other clusters.
+Mesure a quel point un objet est similaire a son propre cluster par rapport aux autres clusters.
 
-For each point i:
+Pour chaque point i :
 ```
 a(i) = mean distance to other points in same cluster (cohesion)
 b(i) = mean distance to points in nearest other cluster (separation)
 s(i) = (b(i) - a(i)) / max(a(i), b(i))
 ```
 
-| Score Range | Interpretation |
-|------------|----------------|
-| s close to 1 | Point is well-assigned |
-| s close to 0 | Point is on the boundary between clusters |
-| s < 0 | Point is probably mis-assigned |
-| Average > 0.5 | Good clustering |
-| Average 0.25-0.5 | Moderate clustering |
-| Average < 0.25 | Poor clustering |
+| Plage de score | Interpretation |
+|---------------|----------------|
+| s proche de 1 | Point bien assigne |
+| s proche de 0 | Point a la frontiere entre clusters |
+| s &lt; 0 | Point probablement mal assigne |
+| Moyenne > 0.5 | Bon clustering |
+| Moyenne 0.25-0.5 | Clustering moyen |
+| Moyenne &lt; 0.25 | Mauvais clustering |
 
 ```python
 from sklearn.metrics import silhouette_score
 score = silhouette_score(X, labels)
 ```
 
-### Davies-Bouldin Index (Indice de Davies-Bouldin)
+### Indice de Davies-Bouldin
 
-Ratio of within-cluster scatter to between-cluster separation.
+Rapport entre la dispersion intra-cluster et la separation inter-cluster.
 
 ```
 DB = (1/K) * sum_i max_{j!=i} (sigma_i + sigma_j) / d(c_i, c_j)
 ```
 
-- **Lower is better** (minimum = 0)
-- Does not require ground truth
+- **Plus bas = meilleur** (minimum = 0)
+- Ne necessite pas de verite terrain
 
 ```python
 from sklearn.metrics import davies_bouldin_score
 score = davies_bouldin_score(X, labels)
 ```
 
-### Inertia / WCSS (Inertie Intra-Classe)
+### Inertie / WCSS (Inertie Intra-Classe)
 
-Within-Cluster Sum of Squares: sum of squared distances from each point to its cluster center.
+Somme des carres intra-cluster : somme des distances au carre de chaque point a son centre de cluster.
 
 ```
 WCSS = sum_k sum_{i in C_k} ||x_i - center_k||^2
 ```
 
-- **Lower is better** for a fixed K
-- Always decreases as K increases -- use elbow method
+- **Plus bas = meilleur** pour un K fixe
+- Decroit toujours quand K augmente -- utiliser la methode du coude
 
 ```python
 # For K-means
@@ -330,15 +328,15 @@ for k in unique_clusters:
     inertia += np.sum((cluster_points - center) ** 2)
 ```
 
-## 6. Spatial Clustering Considerations (TP3-4)
+## 6. Considerations pour le clustering spatial (TP3-4)
 
-### GPS to Cartesian Conversion
+### Conversion GPS vers coordonnees cartesiennes
 
-DBSCAN uses Euclidean distance, but GPS coordinates are not in meters. There are two approaches used in the course:
+DBSCAN utilise la distance euclidienne, mais les coordonnees GPS ne sont pas en metres. Deux approches sont utilisees dans le cours :
 
-**Approach 1 (used in the TP notebook)**: Apply DBSCAN directly on raw GPS coordinates with a very small eps (e.g., 0.00030 degrees). This is an approximation that works for small regions but is not metrically precise.
+**Approche 1 (utilisee dans le notebook du TP)** : Appliquer DBSCAN directement sur les coordonnees GPS brutes avec un eps tres petit (ex. 0.00030 degres). C'est une approximation qui fonctionne pour de petites regions mais n'est pas metriquement precise.
 
-**Approach 2 (used in the TP source code)**: Convert GPS to approximate Cartesian coordinates first:
+**Approche 2 (utilisee dans le code source du TP)** : Convertir d'abord les GPS en coordonnees cartesiennes approximatives :
 ```python
 # 1 degree latitude ~ 111 km
 # 1 degree longitude ~ 71 km (at 48 degrees N, cos(48) ~ 0.67)
@@ -346,16 +344,16 @@ df['x'] = (df['longitude'] + 1.7) * 71000   # meters
 df['y'] = (df['latitude'] - 48.0) * 111000   # meters
 ```
 
-**Proper method** (Lambert 93):
+**Methode propre** (Lambert 93) :
 ```python
 from pyproj import Transformer
 transformer = Transformer.from_crs("EPSG:4326", "EPSG:2154")
 x, y = transformer.transform(lat, lon)
 ```
 
-### "Album Photo" Effect
+### Effet "Album Photo"
 
-A single user taking many photos at the same location inflates density without indicating true interest. Solution:
+Un seul utilisateur prenant de nombreuses photos au meme endroit gonfle la densite sans indiquer un veritable interet. Solution :
 
 ```python
 # Keep only one photo per user per hour
@@ -366,32 +364,32 @@ photos = photos.groupby(
 ).first()
 ```
 
-This reduces the Flickr dataset from 29,541 rows to ~1,232.
+Cela reduit le jeu de donnees Flickr de 29 541 lignes a ~1 232.
 
-## Common Pitfalls
+## Pieges courants
 
-1. **Using DBSCAN on raw GPS coordinates**: Always convert to meters first.
-2. **Forgetting to remove noise when computing metrics**: Filter out label=-1 before silhouette_score.
-3. **Comparing K-means with different K values using inertia**: Inertia always decreases with K -- compare using silhouette instead.
-4. **Using CAH on large datasets**: Ward linkage is O(n^3) -- impractical for >5000 points.
-5. **Choosing eps by trial-and-error**: Use the k-distance graph for a principled choice.
-6. **Not standardizing before CAH**: If variables have different scales, standardize first (or use PCA coordinates).
+1. **Utiliser DBSCAN sur des coordonnees GPS brutes** : Toujours convertir en metres d'abord.
+2. **Oublier de retirer le bruit pour calculer les metriques** : Filtrer label=-1 avant silhouette_score.
+3. **Comparer K-means avec differentes valeurs de K en utilisant l'inertie** : L'inertie decroit toujours avec K -- comparer avec la silhouette plutot.
+4. **Utiliser la CAH sur de grands jeux de donnees** : Le lien de Ward est O(n^3) -- impraticable pour >5000 points.
+5. **Choisir eps par essai-erreur** : Utiliser le graphe des k-distances pour un choix raisonne.
+6. **Ne pas standardiser avant la CAH** : Si les variables ont des echelles differentes, standardiser d'abord (ou utiliser les coordonnees ACP).
 
 ---
 
-## CHEAT SHEET
+## AIDE-MEMOIRE
 
-### Algorithm Comparison Quick Reference
+### Comparaison rapide des algorithmes
 
 ```
-Need hierarchical structure?     --> CAH
-Large dataset, know K?           --> K-means
-Spatial data with noise?         --> DBSCAN
-Don't know number of clusters?   --> DBSCAN or CAH
-Clusters of arbitrary shape?     --> DBSCAN
+Besoin d'une structure hierarchique ?     --> CAH
+Grand jeu de donnees, K connu ?           --> K-means
+Donnees spatiales avec bruit ?            --> DBSCAN
+Nombre de clusters inconnu ?              --> DBSCAN ou CAH
+Clusters de forme arbitraire ?            --> DBSCAN
 ```
 
-### Code Templates
+### Modeles de code
 
 **CAH**:
 ```python
@@ -415,25 +413,25 @@ db = DBSCAN(eps=100, min_samples=10)
 labels = db.fit_predict(coords)
 ```
 
-### Metrics Quick Reference
+### Reference rapide des metriques
 
-| Metric | Good Value | Python |
-|--------|-----------|--------|
+| Metrique | Bonne valeur | Python |
+|----------|-------------|--------|
 | Silhouette | > 0.5 | `silhouette_score(X, labels)` |
-| Davies-Bouldin | < 1.0 | `davies_bouldin_score(X, labels)` |
-| WCSS / Inertia | Use elbow | `kmeans.inertia_` |
+| Davies-Bouldin | &lt; 1.0 | `davies_bouldin_score(X, labels)` |
+| WCSS / Inertie | Methode du coude | `kmeans.inertia_` |
 
-### Key French Terms
+### Termes cles (Francais/Anglais)
 
-| French | English |
-|--------|---------|
+| Francais | Anglais |
+|----------|---------|
 | Classification ascendante hierarchique (CAH) | Hierarchical Agglomerative Clustering |
 | Dendrogramme | Dendrogram |
 | Critere de Ward | Ward's criterion |
 | Inertie intra-classe | Within-cluster inertia (WCSS) |
 | Inertie inter-classe | Between-cluster inertia |
-| Parangon | Paragon (most representative individual) |
-| Barycentre | Centroid / Center of gravity |
+| Parangon | Paragon (individu le plus representatif) |
+| Barycentre | Centroid / Centre de gravite |
 | Point noyau | Core point (DBSCAN) |
 | Point frontiere | Border point (DBSCAN) |
 | Bruit | Noise |

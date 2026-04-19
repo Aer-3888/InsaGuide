@@ -1,6 +1,6 @@
 # TP3 : Formats de donnees -- XML, DTD, XSD, JSON
 
-> Following teacher instructions from: `S6/Ingenierie_Web/data/moodle/tp/tp3_data_formats/README.md`, `S6/Ingenierie_Web/data/moodle/tp/tp3_data_formats/xml/README.md` et `S6/Ingenierie_Web/data/moodle/tp/tp3_data_formats/json/README.md`
+> Source : `S6/Ingenierie_Web/data/moodle/tp/tp3_data_formats/README.md`, `S6/Ingenierie_Web/data/moodle/tp/tp3_data_formats/xml/README.md` et `S6/Ingenierie_Web/data/moodle/tp/tp3_data_formats/json/README.md`
 
 Ce TP couvre les formats de donnees utilises en ingenierie web :
 1. **XML** : syntaxe, bien-forme, validation avec DTD/XSD/Relax NG
@@ -16,7 +16,7 @@ Technologies : XML, DTD, XSD, Relax NG Compact, JSON, JavaScript (Node.js), Java
 
 > Lire et comprendre `person.xml`.
 
-**Answer:**
+**Reponse :**
 
 ```xml
 <!-- Fichier : xml/person.xml (fourni) -->
@@ -42,7 +42,7 @@ Analyse :
 
 > Ecrire ou analyser la DTD correspondant a `person.xml`.
 
-**Answer:**
+**Reponse :**
 
 ```dtd
 <!-- Fichier : xml/person.dtd (fourni) -->
@@ -90,7 +90,7 @@ xmllint --noout --dtdvalid person.dtd person.xml
 
 > Ecrire ou analyser le XSD correspondant a `person.xml`.
 
-**Answer:**
+**Reponse :**
 
 ```xml
 <!-- Fichier : xml/person.xsd (fourni) -->
@@ -133,7 +133,7 @@ xmllint --noout --schema person.xsd person.xml
 
 > Comprendre le schema Relax NG.
 
-**Answer:**
+**Reponse :**
 
 ```
 # Fichier : xml/person.rnc (fourni)
@@ -163,7 +163,7 @@ Operateurs RNC :
 
 > Identifier toutes les erreurs de syntaxe dans le fichier `illformedDoc.xml`.
 
-**Answer:**
+**Reponse :**
 
 ```xml
 <!-- Fichier : xml/illformedDoc.xml (fourni, avec erreurs) -->
@@ -207,7 +207,7 @@ xmllint --noout illformedDoc.xml
 
 > Comparer avec le document corrige.
 
-**Answer:**
+**Reponse :**
 
 ```xml
 <!-- Fichier : xml/validdoc.xml (fourni, correct) -->
@@ -248,7 +248,7 @@ Methode de verification systematique :
 
 > Lire et comprendre `person.json`.
 
-**Answer:**
+**Reponse :**
 
 ```json
 {
@@ -287,7 +287,7 @@ Analyse :
 
 > Executer et comprendre `person.js`.
 
-**Answer:**
+**Reponse :**
 
 ```javascript
 // Fichier : json/js/person.js (fourni)
@@ -330,8 +330,8 @@ Operations essentielles :
 
 | Operation | Code |
 |-----------|------|
-| Parser (string -> objet) | `JSON.parse(jsonString)` |
-| Serialiser (objet -> string) | `JSON.stringify(objet)` |
+| Parser (string → objet) | `JSON.parse(jsonString)` |
+| Serialiser (objet → string) | `JSON.stringify(objet)` |
 | Serialiser formatte | `JSON.stringify(objet, null, 2)` |
 | Propriete | `objet.propriete` ou `objet["propriete"]` |
 | Element de tableau | `objet.tableau[0]` |
@@ -343,7 +343,7 @@ Operations essentielles :
 
 > Executer et comprendre `App.java`.
 
-**Answer:**
+**Reponse :**
 
 ```java
 // Fichier : json/java/web.json/src/main/java/fr/insa/rennes/info/App.java (fourni)
@@ -403,7 +403,7 @@ mvn compile exec:java -Dexec.mainClass="fr.insa.rennes.info.App"
 
 ### Exercice 10 : Verifier si un XML est bien forme
 
-**Answer:**
+**Reponse :**
 
 | XML | Bien forme ? | Pourquoi |
 |-----|-------------|----------|
@@ -432,7 +432,7 @@ mvn compile exec:java -Dexec.mainClass="fr.insa.rennes.info.App"
 > </carnet>
 > ```
 
-**Answer:**
+**Reponse :**
 
 ```dtd
 <!ELEMENT carnet (personne*)>
@@ -450,7 +450,7 @@ mvn compile exec:java -Dexec.mainClass="fr.insa.rennes.info.App"
 
 ### Exercice 12 : Ecrire un XSD a partir du meme XML
 
-**Answer:**
+**Reponse :**
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -494,7 +494,7 @@ mvn compile exec:java -Dexec.mainClass="fr.insa.rennes.info.App"
 
 ### Exercice 13 : JSON bien forme ou non
 
-**Answer:**
+**Reponse :**
 
 Regles JSON :
 1. Cles TOUJOURS entre guillemets doubles `"key"`

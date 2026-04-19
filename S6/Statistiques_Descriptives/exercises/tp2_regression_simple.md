@@ -610,7 +610,7 @@ Multiple R-squared:  0.5434
 **Interpretation :**
 - $\hat{\beta}_0 = 69.01$, $\hat{\beta}_1 = 3.34$.
 - $R^2 = 0.54$ : seulement **54%** de la variabilite expliquee. C'est **moyen**.
-- $p\text{-value} = 0.00033 < 0.05$ : on peut affirmer que l'ingestion journaliere a un effet significatif sur le gain journalier en proteines au risque de 5%.
+- $p\text{-value} = 0.00033 \lt 0.05$ : on peut affirmer que l'ingestion journaliere a un effet significatif sur le gain journalier en proteines au risque de 5%.
 
 ### Q4 : Tracer la droite de regression en rouge
 

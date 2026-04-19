@@ -1,8 +1,8 @@
 # Binary Trees (Arbres Binaires)
 
-## Theory
+## Theorie
 
-A **binary tree** is a hierarchical structure where each node has at most two children (left and right).
+Un **arbre binaire** est une structure hierarchique ou chaque noeud a au plus deux enfants (gauche et droit).
 
 ```
          [A]           <- root (racine)
@@ -12,19 +12,19 @@ A **binary tree** is a hierarchical structure where each node has at most two ch
     [D] [E]   [F]      <- leaves (feuilles) = no children
 ```
 
-Terminology:
-- **Root** (racine): top node, has no parent
-- **Leaf** (feuille): node with no children
-- **Internal node**: node with at least one child
-- **Height** (hauteur): length of longest path from root to leaf
-- **Depth** of a node: distance from root to that node
-- **Subtree** (sous-arbre): any node + all its descendants
+Terminologie :
+- **Racine** (root) : noeud sommet, sans parent
+- **Feuille** (leaf) : noeud sans enfants
+- **Noeud interne** : noeud avec au moins un enfant
+- **Hauteur** (height) : longueur du plus long chemin de la racine a une feuille
+- **Profondeur** d'un noeud : distance de la racine a ce noeud
+- **Sous-arbre** (subtree) : un noeud + tous ses descendants
 
-### Binary Search Tree (BST / ABR)
+### Arbre Binaire de Recherche (ABR / BST)
 
-A BST satisfies: for every node N,
-- All values in left subtree < N.value
-- All values in right subtree > N.value
+Un ABR satisfait : pour chaque noeud N,
+- Toutes les valeurs du sous-arbre gauche &lt; N.value
+- Toutes les valeurs du sous-arbre droit > N.value
 
 ```
          [7]
@@ -36,20 +36,20 @@ A BST satisfies: for every node N,
        [4]
 ```
 
-Note: Inserting 7 again -- since the BST uses `>=` for left placement (see `placer()` in exam code), a duplicate 7 would go to the left subtree of 10. The exact placement depends on the BST's duplicate-handling policy.
+Note : Inserer 7 a nouveau -- puisque l'ABR utilise `>=` pour le placement a gauche (voir `placer()` dans le code d'examen), un doublon 7 irait dans le sous-arbre gauche de 10. Le placement exact depend de la politique de gestion des doublons de l'ABR.
 
-**Search**: follow left if target < node, right if target > node.
+**Recherche** : suivre a gauche si cible &lt; noeud, a droite si cible > noeud.
 
-### AVL Tree
+### Arbre AVL
 
-A **self-balancing BST** where for every node, the heights of left and right subtrees differ by at most 1.
+Un **ABR auto-equilibrant** ou pour chaque noeud, les hauteurs des sous-arbres gauche et droit different d'au plus 1.
 
-**Balance factor** = height(left) - height(right)
-- If |balance factor| > 1: rebalance with rotations
+**Facteur d'equilibre** = hauteur(gauche) - hauteur(droite)
+- Si |facteur d'equilibre| > 1 : reequilibrer avec des rotations
 
 #### Rotations
 
-**Right rotation** (rotation droite) -- when left-heavy:
+**Rotation droite** (right rotation) -- quand lourd a gauche :
 ```
 Before:        After:
     [C]          [B]
@@ -59,7 +59,7 @@ Before:        After:
 [A]
 ```
 
-**Left rotation** (rotation gauche) -- when right-heavy:
+**Rotation gauche** (left rotation) -- quand lourd a droite :
 ```
 Before:        After:
 [A]              [B]
@@ -69,7 +69,7 @@ Before:        After:
     [C]
 ```
 
-**Left-Right rotation** (double rotation):
+**Double rotation gauche-droite** :
 ```
 Before:          After left on B:     After right on C:
     [C]              [C]                  [B]
@@ -79,12 +79,12 @@ Before:          After left on B:     After right on C:
     [B]          [A]
 ```
 
-**Right-Left rotation**: mirror of left-right.
+**Double rotation droite-gauche** : miroir de la gauche-droite.
 
 
-## Traversals (Parcours)
+## Parcours (Traversals)
 
-Four fundamental tree traversals:
+Quatre parcours fondamentaux d'arbre :
 
 ```
          [+]
@@ -94,30 +94,30 @@ Four fundamental tree traversals:
     [2] [4]
 ```
 
-### Inorder (Infixe) -- Left, Root, Right
+### Infixe (Inorder) -- Gauche, Racine, Droit
 ```
-2, *, 4, +, 3     (gives sorted order for BST)
-Infix expression: (2 * 4) + 3
+2, *, 4, +, 3     (donne l'ordre trie pour un ABR)
+Expression infixe : (2 * 4) + 3
 ```
 
-### Preorder (Prefixe) -- Root, Left, Right
+### Prefixe (Preorder) -- Racine, Gauche, Droit
 ```
 +, *, 2, 4, 3
 Prefix expression: + * 2 4 3
 ```
 
-### Postorder (Postfixe) -- Left, Right, Root
+### Postfixe (Postorder) -- Gauche, Droit, Racine
 ```
 2, 4, *, 3, +
 Postfix (RPN): 2 4 * 3 +
 ```
 
-### BFS / Level-order (Parcours en largeur)
+### Parcours en largeur (BFS / Level-order)
 ```
 +, *, 3, 2, 4     (level by level, using a queue)
 ```
 
-### Recursive traversal template
+### Modele de parcours recursif
 
 ```java
 void inorder(Node n) {
@@ -143,9 +143,9 @@ void postorder(Node n) {
 ```
 
 
-## Java Implementation (from TP6)
+## Implementation Java (du TP6)
 
-### Interface: Arbre
+### Interface : Arbre
 
 ```java
 public interface Arbre {
@@ -162,7 +162,7 @@ public interface Arbre {
 }
 ```
 
-### Implementation: TreeTwo
+### Implementation : TreeTwo
 
 ```java
 public class TreeTwo implements Arbre {
@@ -196,7 +196,7 @@ public class TreeTwo implements Arbre {
     }
 ```
 
-### Postfix Traversal (toString)
+### Parcours postfixe (toString)
 
 ```java
     private String postfixTraversal(Noeud r) {
@@ -211,7 +211,7 @@ public class TreeTwo implements Arbre {
     }
 ```
 
-### Count occurrences (iterative BFS with stack)
+### Compter les occurrences (parcours iteratif avec pile)
 
 ```java
     public int denombrer(String n) {
@@ -229,7 +229,7 @@ public class TreeTwo implements Arbre {
     }
 ```
 
-### Arithmetic Expression Tree (ExprArith, TP6)
+### Arbre d'expression arithmetique (ExprArith, TP6)
 
 ```
 Expression: (3 + 4) * 2
@@ -281,9 +281,9 @@ public class ExprArith {
 ```
 
 
-## BST Operations
+## Operations ABR
 
-### Search in BST
+### Recherche dans un ABR
 
 ```java
 Node search(Node root, int key) {
@@ -293,7 +293,7 @@ Node search(Node root, int key) {
 }
 ```
 
-### Insert in BST (from exam 2020)
+### Insertion dans un ABR (extrait examen 2020)
 
 ```java
 public void placer(int i) {
@@ -308,12 +308,12 @@ public void placer(int i) {
 }
 ```
 
-### Delete from BST (from exam 2020)
+### Suppression dans un ABR (extrait examen 2020)
 
-To delete a node with two children:
-1. Find the **largest value** in the left subtree (rightmost node in left subtree)
-2. Replace the node's value with that value
-3. Delete the found node (which has at most one child)
+Pour supprimer un noeud avec deux enfants :
+1. Trouver la **plus grande valeur** dans le sous-arbre gauche (noeud le plus a droite du sous-arbre gauche)
+2. Remplacer la valeur du noeud par cette valeur
+3. Supprimer le noeud trouve (qui a au plus un enfant)
 
 ```java
 public void supprimerEc() {
@@ -326,17 +326,17 @@ public void supprimerEc() {
 ```
 
 
-## Complexity
+## Complexite
 
-| Operation | BST (balanced) | BST (worst) | AVL |
-|-----------|---------------|-------------|-----|
-| Search | O(log n) | O(n) | O(log n) |
-| Insert | O(log n) | O(n) | O(log n) |
-| Delete | O(log n) | O(n) | O(log n) |
-| Traversal | O(n) | O(n) | O(n) |
-| Height | O(log n) | O(n) | O(log n) |
+| Operation | ABR (equilibre) | ABR (pire cas) | AVL |
+|-----------|----------------|---------------|-----|
+| Recherche | O(log n) | O(n) | O(log n) |
+| Insertion | O(log n) | O(n) | O(log n) |
+| Suppression | O(log n) | O(n) | O(log n) |
+| Parcours | O(n) | O(n) | O(n) |
+| Hauteur | O(log n) | O(n) | O(log n) |
 
-Worst case for BST: inserting sorted data creates a "linked list" tree.
+Pire cas pour un ABR : inserer des donnees triees cree un arbre "liste chainee".
 
 ```
 Insert: 1, 2, 3, 4, 5
@@ -355,7 +355,7 @@ Height = n-1 = 4   (all operations O(n))
 ```
 
 
-## CHEAT SHEET
+## AIDE-MEMOIRE
 
 ```
 BINARY TREE

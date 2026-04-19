@@ -10,15 +10,15 @@ On construit un serveur echo UDP, un serveur HTTP basique en TCP, et un client H
 
 ---
 
-## Part 1: UDP Echo Server
+## Partie 1 : Serveur echo UDP
 
-### Exercise 1: Implement a UDP echo server that listens on port 5674, receives a datagram and echoes it back to the sender.
+### Exercice 1 : Implementer un serveur echo UDP qui ecoute sur le port 5674, recoit un datagramme et le renvoie a l'emetteur.
 
-**Answer:**
+**Reponse :**
 
 Le serveur UDP fonctionne en boucle : il attend un datagramme, puis le renvoie a l'emetteur. Il n'y a pas de connexion, chaque datagramme est independant.
 
-#### Complete code: Serveur_UDP.java
+#### Code complet : Serveur_UDP.java
 
 ```java
 import java.net.*;
@@ -81,13 +81,13 @@ public class Serveur_UDP {
 }
 ```
 
-### Exercise 2: Implement a UDP client with a graphical interface (AWT) that sends a message and displays the response.
+### Exercice 2 : Implementer un client UDP avec interface graphique (AWT) qui envoie un message et affiche la reponse.
 
-**Answer:**
+**Reponse :**
 
 Le client GUI permet de saisir le hostname et le port, puis envoie un datagramme et affiche la reponse.
 
-#### Complete code: Client_UDP.java
+#### Code complet : Client_UDP.java
 
 ```java
 import java.awt.*;
@@ -229,7 +229,7 @@ class Comm_UDP_1 {
 }
 ```
 
-#### Complete code: UtilitaireRepartition.java
+#### Code complet : UtilitaireRepartition.java
 
 ```java
 import java.awt.*;
@@ -262,7 +262,7 @@ class UtilitaireRepartition {
 }
 ```
 
-**How to test:**
+**Comment tester :**
 
 ```bash
 # Terminal 1: start the server
@@ -280,9 +280,9 @@ java Client_UDP
 #   -> The label displays the echoed response
 ```
 
-### Exercise 3: Capture and analyze the UDP exchange in Wireshark.
+### Exercice 3 : Capturer et analyser l'echange UDP dans Wireshark.
 
-**Answer:**
+**Reponse :**
 
 Filtre Wireshark : `udp.port == 5674`
 
@@ -317,15 +317,15 @@ Observations :
 
 ---
 
-## Part 2: TCP HTTP Server
+## Partie 2 : Serveur HTTP TCP
 
-### Exercise 4: Implement an HTTP server that listens on port 8888, parses GET requests, and serves files from the current directory.
+### Exercice 4 : Implementer un serveur HTTP qui ecoute sur le port 8888, parse les requetes GET et sert les fichiers du repertoire courant.
 
-**Answer:**
+**Reponse :**
 
 Le serveur HTTP ecoute sur un port TCP, accepte les connexions, parse la requete "GET /fichier HTTP/1.0", et sert le fichier demande ou renvoie une erreur.
 
-#### Complete code: ServeurHttp.java
+#### Code complet : ServeurHttp.java
 
 ```java
 import java.net.*;
@@ -478,7 +478,7 @@ public class ServeurHttp {
 }
 ```
 
-**How to test:**
+**Comment tester :**
 
 ```bash
 # Compile and run
@@ -491,7 +491,7 @@ java ServeurHttp 9000     # custom port
 curl -v http://localhost:8888/index.html
 ```
 
-Create a test file `index.html` in the server's working directory:
+Creer un fichier de test `index.html` dans le repertoire de travail du serveur :
 ```html
 <!DOCTYPE html>
 <html>
@@ -503,11 +503,11 @@ Create a test file `index.html` in the server's working directory:
 </html>
 ```
 
-### Exercise 5: Implement an HTTP client that sends GET requests and displays responses.
+### Exercice 5 : Implementer un client HTTP qui envoie des requetes GET et affiche les reponses.
 
-**Answer:**
+**Reponse :**
 
-#### Complete code: ClientHttp.java
+#### Code complet : ClientHttp.java
 
 ```java
 import java.net.*;
@@ -580,7 +580,7 @@ public class ClientHttp {
 }
 ```
 
-**How to test:**
+**Comment tester :**
 
 ```bash
 # Terminal 1: start the HTTP server
@@ -595,9 +595,9 @@ java ClientHttp
 # Expected output for nonexistent: HTTP/1.0 404 Not Found
 ```
 
-### Exercise 6: Measure response time for 50 requests.
+### Exercice 6 : Mesurer le temps de reponse pour 50 requetes.
 
-**Answer:**
+**Reponse :**
 
 ```java
 // Add to ClientHttp.main():
@@ -611,33 +611,33 @@ System.out.println("Total: " + (end - start) + " ms");
 System.out.println("Average: " + (end - start) / 50.0 + " ms/request");
 ```
 
-Observation : le serveur est sequentiel (un seul client a la fois). Avec 5 clients simultanes de 10 requetes chacun, le temps total est ~50 x temps_par_requete. Pour gerer la concurrence, il faudrait utiliser du multithreading (un thread par client) ou du NIO (non-blocking I/O).
+Observation : le serveur est sequentiel (un seul client a la fois). Avec 5 clients simultanes de 10 requetes chacun, le temps total est environ 50 x temps_par_requete. Pour gerer la concurrence, il faudrait utiliser du multithreading (un thread par client) ou du NIO (non-blocking I/O).
 
-### Exercise 7: Compare UDP and TCP exchanges in Wireshark.
+### Exercice 7 : Comparer les echanges UDP et TCP dans Wireshark.
 
-**Answer:**
+**Reponse :**
 
-**UDP session** (filter `udp.port == 5674`):
+**Session UDP** (filtre `udp.port == 5674`) :
 ```
-1. Client -> Server: UDP datagram with data
-2. Server -> Client: UDP datagram with echo
-Total: 2 packets
+1. Client -> Serveur : datagramme UDP avec donnees
+2. Serveur -> Client : datagramme UDP avec echo
+Total : 2 paquets
 ```
 
-**TCP session** (filter `tcp.port == 8888`):
+**Session TCP** (filtre `tcp.port == 8888`) :
 ```
- 1. Client -> Server: SYN
- 2. Server -> Client: SYN-ACK
- 3. Client -> Server: ACK
- 4. Client -> Server: PSH,ACK  "GET /index.html HTTP/1.1"
- 5. Server -> Client: ACK
- 6. Server -> Client: PSH,ACK  "HTTP/1.0 200 OK..." + file content
- 7. Client -> Server: ACK
- 8. Server -> Client: FIN,ACK
- 9. Client -> Server: ACK
-10. Client -> Server: FIN,ACK
-11. Server -> Client: ACK
-Total: ~11 packets
+ 1. Client -> Serveur : SYN
+ 2. Serveur -> Client : SYN-ACK
+ 3. Client -> Serveur : ACK
+ 4. Client -> Serveur : PSH,ACK  "GET /index.html HTTP/1.1"
+ 5. Serveur -> Client : ACK
+ 6. Serveur -> Client : PSH,ACK  "HTTP/1.0 200 OK..." + contenu fichier
+ 7. Client -> Serveur : ACK
+ 8. Serveur -> Client : FIN,ACK
+ 9. Client -> Serveur : ACK
+10. Client -> Serveur : FIN,ACK
+11. Serveur -> Client : ACK
+Total : ~11 paquets
 ```
 
 | Critere | UDP (echo) | TCP (HTTP) |

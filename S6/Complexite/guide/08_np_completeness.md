@@ -54,7 +54,7 @@ Si un seul probleme NP-complet est dans P, alors P = NP.
 
 ### Definition
 
-A <=_p B (A se reduit polynomialement a B) signifie :
+A &lt;=_p B (A se reduit polynomialement a B) signifie :
 - Il existe une fonction f calculable en temps polynomial
 - Telle que x est dans A ssi f(x) est dans B
 
@@ -87,16 +87,16 @@ C'est le premier probleme prouve NP-complet. Tous les autres sont prouves par re
 | Probleme | Description | Reduction typique |
 |----------|------------|-------------------|
 | SAT | Satisfiabilite d'une formule CNF | (premier NP-complet, Cook-Levin) |
-| 3-SAT | SAT ou chaque clause a exactement 3 litteraux | SAT <=_p 3-SAT |
-| CLIQUE | Existe-t-il un sous-graphe complet de taille k ? | 3-SAT <=_p CLIQUE |
-| VERTEX COVER | Peut-on couvrir toutes les aretes avec <= k sommets ? | CLIQUE <=_p VERTEX COVER |
-| INDEPENDENT SET | Existe-t-il un ensemble independant de taille k ? | CLIQUE <=_p INDEPENDENT SET |
-| HAMILTONIAN CYCLE | Existe-t-il un cycle passant par tous les sommets ? | VERTEX COVER <=_p HAM. CYCLE |
-| TSP (decision) | Existe-t-il un tour de longueur <= k ? | HAM. CYCLE <=_p TSP |
-| SUBSET SUM | Existe-t-il un sous-ensemble dont la somme = S ? | 3-SAT <=_p SUBSET SUM |
-| KNAPSACK | Peut-on atteindre une valeur >= V avec poids <= W ? | SUBSET SUM <=_p KNAPSACK |
-| GRAPH COLORING | Peut-on colorer le graphe avec <= k couleurs ? | 3-SAT <=_p 3-COLORING |
-| PARTITION | Peut-on partitionner un ensemble en 2 de meme somme ? | SUBSET SUM <=_p PARTITION |
+| 3-SAT | SAT ou chaque clause a exactement 3 litteraux | SAT &lt;=_p 3-SAT |
+| CLIQUE | Existe-t-il un sous-graphe complet de taille k ? | 3-SAT &lt;=_p CLIQUE |
+| VERTEX COVER | Peut-on couvrir toutes les aretes avec &lt;= k sommets ? | CLIQUE &lt;=_p VERTEX COVER |
+| INDEPENDENT SET | Existe-t-il un ensemble independant de taille k ? | CLIQUE &lt;=_p INDEPENDENT SET |
+| HAMILTONIAN CYCLE | Existe-t-il un cycle passant par tous les sommets ? | VERTEX COVER &lt;=_p HAM. CYCLE |
+| TSP (decision) | Existe-t-il un tour de longueur &lt;= k ? | HAM. CYCLE &lt;=_p TSP |
+| SUBSET SUM | Existe-t-il un sous-ensemble dont la somme = S ? | 3-SAT &lt;=_p SUBSET SUM |
+| KNAPSACK | Peut-on atteindre une valeur >= V avec poids &lt;= W ? | SUBSET SUM &lt;=_p KNAPSACK |
+| GRAPH COLORING | Peut-on colorer le graphe avec &lt;= k couleurs ? | 3-SAT &lt;=_p 3-COLORING |
+| PARTITION | Peut-on partitionner un ensemble en 2 de meme somme ? | SUBSET SUM &lt;=_p PARTITION |
 
 ---
 
@@ -131,7 +131,7 @@ Quand un probleme est NP-complet, on ne peut pas esperer un algorithme polynomia
      (les deux directions !)
 ```
 
-### Exemple : 3-SAT <=_p CLIQUE
+### Exemple : 3-SAT &lt;=_p CLIQUE
 
 **Transformation :** Pour une formule 3-SAT a m clauses :
 - Pour chaque clause C_i = (l_1 v l_2 v l_3), creer 3 sommets v_{i,1}, v_{i,2}, v_{i,3}
@@ -159,7 +159,7 @@ Le cours de Maud Marchal traite surtout de l'exploration d'arbres et du Branch &
 
 2. **Confondre NP-dur et NP-complet** : Tout NP-complet est NP-dur, mais pas l'inverse. Un probleme NP-dur peut ne pas etre dans NP (ex: probleme d'arret).
 
-3. **Sens de la reduction** : Pour montrer que B est NP-dur, il faut reduire un probleme NP-complet A **vers** B (pas l'inverse !). A <=_p B.
+3. **Sens de la reduction** : Pour montrer que B est NP-dur, il faut reduire un probleme NP-complet A **vers** B (pas l'inverse !). A &lt;=_p B.
 
 4. **Oublier une direction de la preuve** : Une reduction doit marcher dans les deux sens : OUI => OUI et NON => NON.
 

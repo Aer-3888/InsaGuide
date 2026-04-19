@@ -1,8 +1,8 @@
-# TP4 - Hypothesis Testing
+# TP4 - Tests d'hypotheses
 
-> Following teacher instructions from: `S5/Probabilites/data/moodle/tp/tp4/README.md`
+> En suivant les instructions de : `S5/Probabilites/data/moodle/tp/tp4/README.md`
 
-## Setup
+## Preparation
 
 ```r
 # No special packages needed
@@ -20,11 +20,11 @@
 - $H_0$: $\mu = \mu_0$ (population mean equals hypothesized value)
 - $H_1$: $\mu \neq \mu_0$ (two-sided alternative)
 - Test statistic ($\sigma$ unknown): $T = \frac{\bar{X} - \mu_0}{S'/\sqrt{n}} \sim t(n-1)$ under $H_0$
-- Decision: reject $H_0$ if $|T| > t_{n-1,\,\alpha/2}$ or if p-value $< \alpha$
+- Decision: reject $H_0$ if $|T| > t_{n-1,\,\alpha/2}$ or if p-value $\lt \alpha$
 
 ### Step 1: Compute sample statistics
 
-**Answer:**
+**Reponse :**
 ```r
 poids_poulpe <- c(1150, 1500, 1700, 1800, 1800, 1850, 2200, 2700,
                    2900, 3000, 3100, 3500, 3900, 4000, 5400)
@@ -41,7 +41,7 @@ cat("Mean:", round(mean_empirical, 2), "g\n")
 cat("SD:", round(sd_empirical, 2), "g\n\n")
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 Octopus weight statistics:
 Sample size: 15
@@ -49,14 +49,14 @@ Mean: 2700 g
 SD: 1158.39 g
 ```
 
-**Explanation:**
+**Explication :**
 The sample mean (2700g) is 300g below the hypothesized value (3000g). The hypothesis test determines whether this difference is statistically significant or just sampling variability.
 
 ---
 
 ### Step 2: Calculate CI for mean
 
-**Answer:**
+**Reponse :**
 ```r
 t_crit <- qt(1 - alpha/2, df = n - 1)
 se <- sd_empirical / sqrt(n)
@@ -70,7 +70,7 @@ cat("Standard error: S'/sqrt(n) =", round(se, 2), "\n")
 cat("CI: [", round(CI_lower, 2), ",", round(CI_upper, 2), "]\n\n")
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 90% Confidence Interval for mean:
 t critical value: qt(0.95, df=14) = 1.7613
@@ -78,7 +78,7 @@ Standard error: S'/sqrt(n) = 299.14
 CI: [ 2173.15 , 3226.85 ]
 ```
 
-**Mathematical explanation:**
+**Explication mathematique :**
 $$\text{CI} = \left[\bar{X} - t_{n-1,\,\alpha/2} \times \frac{S'}{\sqrt{n}},\; \bar{X} + t_{n-1,\,\alpha/2} \times \frac{S'}{\sqrt{n}}\right]$$
 $$= [2700 - 1.761 \times 299.14,\; 2700 + 1.761 \times 299.14] = [2173.15,\; 3226.85]$$
 
@@ -88,7 +88,7 @@ Since $\mu_0 = 3000$ falls INSIDE the 90% CI, we will NOT reject $H_0$ at $\alph
 
 ### Step 3: Perform conformity test (manual)
 
-**Answer:**
+**Reponse :**
 ```r
 mu_0 <- 3000
 
@@ -117,7 +117,7 @@ p_value_manual <- 2 * pt(abs(test_statistic), df = n - 1, lower.tail = FALSE)
 cat("\np-value:", round(p_value_manual, 4), "\n")
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 Conformity test: H0: mu = 3000g
 Test statistic: T = -1.0029
@@ -129,10 +129,10 @@ Decision: FAIL TO REJECT H0
 p-value: 0.3328
 ```
 
-**Mathematical explanation:**
+**Explication mathematique :**
 $$T = \frac{\bar{X} - \mu_0}{S'/\sqrt{n}} = \frac{2700 - 3000}{1158.39 / \sqrt{15}} = \frac{-300}{299.14} = -1.003$$
 
-Since $|T| = 1.003 < t_{14,\,0.05} = 1.761$, the test statistic falls in the acceptance region.
+Since $|T| = 1.003 \lt t_{14,\,0.05} = 1.761$, the test statistic falls in the acceptance region.
 
 The p-value = 0.333 is $2 \times P(T > 1.003)$ where $T \sim t(14)$. Since p-value $= 0.333 > \alpha = 0.10$, we fail to reject $H_0$.
 
@@ -140,14 +140,14 @@ The p-value = 0.333 is $2 \times P(T > 1.003)$ where $T \sim t(14)$. Since p-val
 
 ### Step 4: Use `t.test()` function
 
-**Answer:**
+**Reponse :**
 ```r
 test_result <- t.test(poids_poulpe, mu = mu_0, conf.level = 1 - alpha)
 cat("Using t.test():\n")
 print(test_result)
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 Using t.test():
 
@@ -187,7 +187,7 @@ mean of x
 
 ### Step 1: Compute pooled variance and test statistic
 
-**Answer:**
+**Reponse :**
 ```r
 na <- 12
 nb <- 8
@@ -231,7 +231,7 @@ if (abs(t_stat) > t_critical) {
 }
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 Two-sample t-test (equal variances assumed):
 Group A: n=12, mean=1.5, sd=0.95
@@ -250,18 +250,18 @@ Critical value t_{18, 0.025}: 2.1009
 Decision: FAIL TO REJECT H0 (no significant difference)
 ```
 
-**Mathematical explanation:**
+**Explication mathematique :**
 $$S_p^2 = \frac{11 \times 0.95^2 + 7 \times 1.35^2}{18} = \frac{9.9275 + 12.7575}{18} = 1.2614$$
 
 $$T = \frac{1.5 - 2.35}{1.1231 \times \sqrt{1/12 + 1/8}} = \frac{-0.85}{0.5125} = -1.659$$
 
-Since $|T| = 1.659 < 2.101$, we cannot reject $H_0$. The small samples ($n = 12$ and $n = 8$) combined with high variability prevent detecting the difference.
+Since $|T| = 1.659 \lt 2.101$, we cannot reject $H_0$. The small samples ($n = 12$ and $n = 8$) combined with high variability prevent detecting the difference.
 
 ---
 
 ### Step 2: Examine effect of larger sample size (na=120, nb=80)
 
-**Answer:**
+**Reponse :**
 ```r
 na_large <- 120
 nb_large <- 80
@@ -284,7 +284,7 @@ cat("Decision:", ifelse(abs(t_stat_large) > t_critical_large,
                         "REJECT H0", "FAIL TO REJECT H0"), "\n")
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 With larger samples (na=120, nb=80):
 Pooled SD: 1.1231
@@ -295,7 +295,7 @@ Critical value t_{198, 0.025}: 1.9720
 Decision: REJECT H0
 ```
 
-**Mathematical explanation:**
+**Explication mathematique :**
 With 10x more data, the SAME means and SDs produce a significant result. The SE decreases by $\sqrt{10} \approx 3.16$: from 0.5125 to 0.1625. The test statistic jumps from $-1.66$ to $-5.23$.
 
 Statistical significance depends on three factors:
@@ -322,7 +322,7 @@ For a $z$-test ($\sigma$ known):
 
 ### Step 1: Compute standardized effect and power
 
-**Answer:**
+**Reponse :**
 ```r
 sigma <- 1
 mu_0 <- 1000
@@ -350,7 +350,7 @@ cat("Power (n=40):", round(power, 4), "\n")
 cat("Interpretation:", round(power*100, 1), "% chance of detecting 0.2ml shift\n")
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 Power analysis setup:
 H0: mu = 1000 ml
@@ -364,7 +364,7 @@ Power (n=40): 0.2445
 Interpretation: 24.4 % chance of detecting 0.2ml shift
 ```
 
-**Mathematical explanation:**
+**Explication mathematique :**
 $$\delta = \frac{\mu_1 - \mu_0}{\sigma/\sqrt{n}} = \frac{0.2}{1/\sqrt{40}} = 1.265$$
 
 $$\text{Power} = 1 - \Phi(z_{\alpha/2} - \delta) = 1 - \Phi(1.96 - 1.265) = 1 - \Phi(0.695) = 0.244$$
@@ -375,7 +375,7 @@ Power of 24.4% is very poor -- the test will miss the shift about 3 out of 4 tim
 
 ### Step 2: Determine $n$ needed for 90% power
 
-**Answer:**
+**Reponse :**
 ```r
 target_power <- 0.90
 n_needed <- 40
@@ -392,13 +392,13 @@ cat("Verification: power at n =", n_needed, "is",
     round(1 - pnorm(z_crit, mean = effect / (sigma / sqrt(n_needed)), sd = 1), 4), "\n")
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 Sample size for 90% power: 263 bottles
 Verification: power at n = 263 is 0.9003
 ```
 
-**Mathematical explanation:**
+**Explication mathematique :**
 Setting power $= 0.90$ and solving for $n$:
 
 $$1 - \Phi(z_{\alpha/2} - \delta) = 0.90$$
@@ -411,7 +411,7 @@ $$\sqrt{n} = 16.21,\quad n = 263$$
 
 ### Step 3: Power curve
 
-**Answer:**
+**Reponse :**
 ```r
 n_range <- seq(40, 300, by = 1)
 powers <- numeric(length(n_range))
@@ -437,14 +437,14 @@ legend("bottomright",
 grid()
 ```
 
-**Expected output:**
+**Sortie attendue :**
 S-shaped curve starting around 0.24 at $n = 40$, crossing 80% around $n = 197$, and reaching 90% at $n = 263$.
 
 ---
 
 ### Step 4: Power summary table
 
-**Answer:**
+**Reponse :**
 ```r
 key_n <- c(40, 100, 150, 200, 263, 300, 400, 500)
 
@@ -459,7 +459,7 @@ for (n_val in key_n) {
 }
 ```
 
-**Expected output:**
+**Sortie attendue :**
 ```
 Power Summary Table:
 n        | Standardized effect  | Power
@@ -474,7 +474,7 @@ n        | Standardized effect  | Power
      500 |                4.472 |    99.4%
 ```
 
-**Mathematical explanation:**
+**Explication mathematique :**
 Required sample size scales as:
 
 $$n = \left(\frac{z_{\alpha/2} + z_\beta}{\delta_{\text{raw}}/\sigma}\right)^2$$
@@ -483,18 +483,18 @@ where $\delta_{\text{raw}} = \mu_1 - \mu_0$ and $z_\beta$ is the quantile for th
 
 ---
 
-## Summary: Hypothesis Testing Decision Framework
+## Resume : Cadre decisionnaire des tests d'hypotheses
 
-### Test Procedure
+### Procedure de test
 
 1. State hypotheses: $H_0$: $\mu = \mu_0$ vs $H_1$: $\mu \neq \mu_0$
 2. Choose $\alpha$ (typically 0.05 or 0.10)
 3. Compute test statistic: $T = (\bar{X} - \mu_0) / (S'/\sqrt{n})$
 4. Find critical value: $t_{n-1,\,\alpha/2}$ from `qt()`
-5. Decision: reject $H_0$ if $|T| >$ critical value (equivalently, p-value $< \alpha$)
+5. Decision: reject $H_0$ if $|T| >$ critical value (equivalently, p-value $\lt \alpha$)
 6. Interpret: state conclusion in context
 
-### Common Mistakes
+### Erreurs courantes
 
 | Mistake | Correction |
 |---------|-----------|
@@ -503,7 +503,7 @@ where $\delta_{\text{raw}} = \mu_1 - \mu_0$ and $z_\beta$ is the quantile for th
 | Small p means large effect | Small p means unlikely under $H_0$; effect size is separate |
 | Non-significant $=$ no difference | May just be underpowered (Type II error) |
 
-### Formulas Reference
+### Reference des formules
 
 | Test | Statistic | Distribution under $H_0$ | R function |
 |------|-----------|--------------------------|------------|

@@ -77,13 +77,13 @@ resume <- summary(modele)
 | Section | Que regarder |
 |---------|-------------|
 | `Coefficients: Estimate` | Valeurs de $\hat{\beta}_0$ et $\hat{\beta}_1$ |
-| `Coefficients: Pr(>|t|)` | p-value du test $H_0: \beta_i = 0$. Si $p < 0.05$, la variable est significative |
+| `Coefficients: Pr(>|t|)` | p-value du test $H_0: \beta_i = 0$. Si $p \lt 0.05$, la variable est significative |
 | `Residual standard error` | Estimation de $\sigma$ (precision des predictions) |
 | `Multiple R-squared` | Proportion de variabilite expliquee |
 | `Adjusted R-squared` | $R^2$ corrige pour le nombre de variables |
 | `F-statistic` | Test global : au moins un $\beta_i \neq 0$ ? |
 
-**Codes de signification :** `***` ($p<0.001$), `**` ($p<0.01$), `*` ($p<0.05$), `.` ($p<0.1$)
+**Codes de signification :** `***` ($p\lt 0.001$), `**` ($p\lt 0.01$), `*` ($p\lt 0.05$), `.` ($p\lt 0.1$)
 
 ---
 
@@ -215,9 +215,9 @@ ou $R_j^2$ est le $R^2$ de la regression de $X_j$ sur toutes les autres variable
 
 | VIF | Interpretation |
 |-----|---------------|
-| $< 5$ | Pas de probleme |
-| $5 - 10$ | Multicolinearite moderee |
-| $> 10$ | Multicolinearite severe -- a traiter |
+| &lt; 5 | Pas de probleme |
+| 5 -- 10 | Multicolinearite moderee |
+| &gt; 10 | Multicolinearite severe -- a traiter |
 
 ```r
 library(car)

@@ -1,10 +1,10 @@
 # TP2 - Structures de Controle et Calculs Numeriques
 
-> Following teacher instructions from: `S5/Langage_C/data/moodle/tp/tp2/README.md`
+> Instructions de l'enseignant depuis : `S5/Langage_C/data/moodle/tp/tp2/README.md`
 
 ## Exercice 1
 
-### Implementer une fonction `myfact(n)` qui calcule n! -- Gerer les erreurs (n < 0), detecter le depassement de capacite (`INT_MAX`), identifier le plus grand n calculable correctement
+### Implementer une fonction `myfact(n)` qui calcule n! -- Gerer les erreurs (n &lt; 0), detecter le depassement de capacite (`INT_MAX`), identifier le plus grand n calculable correctement
 
 **Rappel mathematique :**
 ```
@@ -14,7 +14,7 @@ n! = 1 x 2 x 3 x ... x n
 
 **Probleme :** La factorielle croit tres rapidement. A partir de n=13, le resultat depasse `INT_MAX` (2147483647).
 
-**Answer:**
+**Solution :**
 
 ```c
 /*!
@@ -99,7 +99,7 @@ int main() {
 }
 ```
 
-**Compilation:**
+**Compilation :**
 
 ```bash
 cd tp2/src
@@ -107,7 +107,7 @@ make factorial
 ./factorial
 ```
 
-**Expected output:**
+**Sortie attendue :**
 
 ```
 Rentrez n 
@@ -167,7 +167,7 @@ sin(x) = x - x^3/3! + x^5/5! - x^7/7! + ...
 terme_suivant = terme_precedent * x^2 / (n * (n-1))
 ```
 
-**Answer:**
+**Solution :**
 
 ```c
 /*!
@@ -315,14 +315,14 @@ int main() {
 }
 ```
 
-**Compilation:**
+**Compilation :**
 
 ```bash
 make sinus
 ./sinus
 ```
 
-**Expected output:**
+**Sortie attendue :**
 
 ```
 Rentrez x puis n : 
@@ -354,7 +354,7 @@ u_n = e - n x u_{n-1}
 
 **Probleme de stabilite :** La version recursive amplifie les erreurs d'arrondi a chaque iteration (erreur multipliee par n). La version descendante les reduit (erreur divisee par n).
 
-**Answer:**
+**Solution :**
 
 ```c
 /*!
@@ -447,14 +447,14 @@ int main() {
 }
 ```
 
-**Compilation:**
+**Compilation :**
 
 ```bash
 make suite
 ./suite
 ```
 
-**Expected output:**
+**Sortie attendue :**
 
 ```
 === Methode Recursive Ascendante (INSTABLE) ===

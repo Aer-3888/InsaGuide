@@ -38,7 +38,7 @@ Arcs et capacites :
 
 ### Question 1.1 -- Verifier que phi est un flot
 
-**Contrainte de capacite :** Pour chaque arc, 0 <= phi <= C.
+**Contrainte de capacite :** Pour chaque arc, 0 &lt;= phi &lt;= C.
 
 ```
 (s,a) : 0 <= 7 <= 9.  OK.     (s,b) : 0 <= 6 <= 9.  OK.     (s,c) : 0 <= 5 <= 8.  OK.
@@ -79,13 +79,13 @@ Arcs arriere (phi > 0) :
   e->c:2  f->c:3  g->d:8  g->e:4  f->e:3  p->f:6  p->g:12
 ```
 
-**Chemin augmentant :** s -> a -> d -> g -> p avec capacites min(2, 3, 4, 2) = 2.
+**Chemin augmentant :** s → a → d → g → p avec capacites min(2, 3, 4, 2) = 2.
 
 Le flot n'est **PAS complet (pas maximal)**.
 
 ### Question 1.3 -- Flot maximal par Ford-Fulkerson
 
-**Iteration 1 :** Chemin s -> a -> d -> g -> p, goulot = 2.
+**Iteration 1 :** Chemin s → a → d → g → p, goulot = 2.
 
 ```
 phi(s,a) : 7 + 2 = 9  (sature)
@@ -95,7 +95,7 @@ phi(g,p) : 12 + 2 = 14 (sature)
 |phi| = 18 + 2 = 20
 ```
 
-**Iteration 2 :** s->a et g->p sont satures. Chemin s -> c -> f -> p, goulot = min(3, 2, 5) = 2.
+**Iteration 2 :** s->a et g->p sont satures. Chemin s → c → f → p, goulot = min(3, 2, 5) = 2.
 
 ```
 phi(s,c) : 5 + 2 = 7
@@ -104,7 +104,7 @@ phi(f,p) : 6 + 2 = 8
 |phi| = 20 + 2 = 22
 ```
 
-**Iteration 3 :** Chemin s -> b -> e -> f -> p, goulot = min(3, 4, 1, 3) = 1.
+**Iteration 3 :** Chemin s → b → e → f → p, goulot = min(3, 4, 1, 3) = 1.
 
 ```
 phi(s,b) : 6 + 1 = 7
@@ -244,9 +244,9 @@ Il faut soustraire le flot des arcs de T vers S :
 
 ### Question 1.5 -- Saturer les arcs de sortie et d'entree
 
-**Saturer les arcs de sortie de s :** Necessite |phi| >= 9 + 9 + 8 = 26. Le flot max = 23 < 26. **Impossible.**
+**Saturer les arcs de sortie de s :** Necessite |phi| >= 9 + 9 + 8 = 26. Le flot max = 23 &lt; 26. **Impossible.**
 
-**Saturer les arcs d'entree de p :** Necessite |phi| >= 11 + 14 = 25. Le flot max = 23 < 25. **Impossible.**
+**Saturer les arcs d'entree de p :** Necessite |phi| >= 11 + 14 = 25. Le flot max = 23 &lt; 25. **Impossible.**
 
 ---
 
@@ -305,7 +305,7 @@ K_min = ceil((nA + nB + nC) / P) + (nombre de villes - 1)
 | Concept | Definition |
 |---------|-----------|
 | Reseau de transport | Graphe oriente avec source s, puits p, capacites c(u,v) |
-| Flot | Fonction f : A -> R+ respectant capacite et conservation |
+| Flot | Fonction f : A → R+ respectant capacite et conservation |
 | Valeur du flot | Quantite nette sortant de s (= entrant dans p) |
 | Graphe residuel | Arcs avant (C-f) et arriere (f) |
 | Chemin augmentant | Chemin de s a p dans le graphe residuel |

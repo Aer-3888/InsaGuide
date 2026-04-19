@@ -81,11 +81,11 @@ Length of message: 11
 | Syntax | Meaning | Example |
 |--------|---------|---------|
 | `var="value"` | Assignment (no spaces around `=`) | `name="Alice"` |
-| `"$var"` | Expansion inside double quotes | `"Hello, $name"` -> `"Hello, Alice"` |
-| `'$var'` | Literal (no expansion) | `'Hello, $name'` -> `Hello, $name` |
-| `$(cmd)` | Command substitution | `$(pwd)` -> `/home/user` |
+| `"$var"` | Expansion inside double quotes | `"Hello, $name"` → `"Hello, Alice"` |
+| `'$var'` | Literal (no expansion) | `'Hello, $name'` → `Hello, $name` |
+| `$(cmd)` | Command substitution | `$(pwd)` → `/home/user` |
 | `${var:-default}` | Use default if var is unset/empty | `${USER:-"nobody"}` |
-| `${#var}` | Length of string | `${#name}` -> `5` |
+| `${#var}` | Length of string | `${#name}` → `5` |
 
 ---
 

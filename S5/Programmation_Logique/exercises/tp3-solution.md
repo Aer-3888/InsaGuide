@@ -1,6 +1,6 @@
 # TP3 - Listes
 
-> Following teacher instructions from: `S5/Programmation_Logique/data/moodle/tp/tp3/README.md`
+> Instructions du TP : `S5/Programmation_Logique/data/moodle/tp/tp3/README.md`
 
 ---
 
@@ -10,7 +10,7 @@
 
 **A est element de la liste X.**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 membre(A, [A | _]).
@@ -19,7 +19,7 @@ membre(A, [_ | R]) :- membre(A, R).
 
 Deux cas suivant la structure inductive de la liste : A est la tete, ou A est dans le reste.
 
-**Query test:**
+**Test :**
 
 ```
 ?- membre(b, [a, b, c]).
@@ -38,7 +38,7 @@ false.
 
 **N = nombre d'occurrences de A dans X.**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 compte(_, [], 0).
@@ -52,7 +52,7 @@ compte(A, [B | R], N) :-
 
 Trois cas : liste vide (0), tete = A (incrementer), tete != A (continuer sans incrementer). Le `\==` dans la troisieme clause empeche le chevauchement avec la deuxieme.
 
-**Query test:**
+**Test :**
 
 ```
 ?- compte(a, [a, c, a, b, a, c, b], N).
@@ -68,7 +68,7 @@ N = 0.
 
 **Y est X a l'envers (accumulateur O(n)).**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 renverser(X, Y) :- renverser_acc(X, [], Y).
@@ -80,7 +80,7 @@ renverser_acc([X | R], Acc, Res) :-
 
 L'accumulateur construit le resultat en un seul parcours. A chaque etape, la tete de X est placee en tete de l'accumulateur.
 
-**Query test:**
+**Test :**
 
 ```
 ?- renverser([a, b, c], Y).
@@ -96,7 +96,7 @@ Y = [4, 2, 2, 1].
 
 **X est un palindrome.**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 palind(X) :- renverser(X, X).
@@ -104,7 +104,7 @@ palind(X) :- renverser(X, X).
 
 L'unification verifie que X et son inverse sont la meme liste.
 
-**Query test:**
+**Test :**
 
 ```
 ?- palind([a, b, b, a]).
@@ -120,7 +120,7 @@ false.
 
 **A est le N-ieme element de X (indexe a partir de 1).**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 enieme(1, [A | _], A).
@@ -132,7 +132,7 @@ enieme(N, [_ | X], Res) :-
 
 Mode (+, +, -) : on decremente N a chaque appel recursif et on avance dans la liste.
 
-**Query test:**
+**Test :**
 
 ```
 ?- enieme(3, [a, b, c, d], A).
@@ -148,7 +148,7 @@ A = a.
 
 **A n'est pas dans X.**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 hors_de(_, []).
@@ -159,7 +159,7 @@ hors_de(A, [Y | X]) :-
 
 Reussit si on parcourt toute la liste sans trouver A. La clause recursive verifie que la tete est differente de A avant de continuer.
 
-**Query test:**
+**Test :**
 
 ```
 ?- hors_de(d, [a, b, c]).
@@ -175,7 +175,7 @@ false.
 
 **Tous les elements de X sont differents.**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 tous_diff([]).
@@ -186,7 +186,7 @@ tous_diff([X | R]) :-
 
 Pour chaque element, on verifie qu'il n'apparait pas dans le reste de la liste.
 
-**Query test:**
+**Test :**
 
 ```
 ?- tous_diff([1, 2, 3, 4, 5, 9, 7]).
@@ -202,7 +202,7 @@ false.
 
 **T = X ++ Y ++ Z.**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 conc3([], [], Z, Z).
@@ -214,7 +214,7 @@ conc3([A | X], Y, Z, [A | Res]) :-
 
 On vide X puis Y dans le resultat, et Z est le reste. Trois clauses : X et Y vides (T=Z), X vide mais pas Y, et X non vide.
 
-**Query test:**
+**Test :**
 
 ```
 ?- conc3([1, 2], [3], [4, 5], T).
@@ -230,14 +230,14 @@ T = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].
 
 **X commence par Y.**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 debute_par(_, []).
 debute_par([A | RX], [A | RY]) :- debute_par(RX, RY).
 ```
 
-**Query test:**
+**Test :**
 
 ```
 ?- debute_par([1, 2, 3, 4, 5, 6], [1, 2, 3]).
@@ -256,7 +256,7 @@ X = [] ; X = [1] ; X = [1, 2] ; X = [1, 2, 3] ; X = [1, 2, 3, 4] ; false.
 
 **Y est une sous-liste contigue de X.**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 sous_liste(_, []).
@@ -268,7 +268,7 @@ sous_liste([_ | RX], Y) :-
 
 Clause 1 : la liste vide est sous-liste de tout. Clause 2 : si les tetes correspondent, on verifie que le reste de Y est un debut de RX. Clause 3 : on avance dans X. La garde `Y = [_ | _]` empeche de trouver la liste vide en boucle.
 
-**Query test:**
+**Test :**
 
 ```
 ?- sous_liste([1, 2, 3, 4, 5, 6], [3, 4]).
@@ -287,7 +287,7 @@ false.
 
 **Y = X sans doublons (garde la derniere occurrence).**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 elim([], []).
@@ -301,7 +301,7 @@ elim([X | RX], Y) :-
 
 Si A n'est plus dans le reste, on le garde. Sinon (A apparait encore plus loin), on le supprime.
 
-**Query test:**
+**Test :**
 
 ```
 ?- elim([a, b, a, b, a], Y).
@@ -314,7 +314,7 @@ Y = [b, a].    % garde la derniere occurrence de chaque element
 
 **Y = tri par insertion de X.**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 tri([], []).
@@ -329,7 +329,7 @@ inserer(E, [X | L1], [X | L2]) :- E > X, inserer(E, L1, L2).
 
 On trie recursivement le reste, puis on insere l'element courant a la bonne position dans la liste triee.
 
-**Query test:**
+**Test :**
 
 ```
 ?- tri([5, 3, 1, 4, 2], Y).
@@ -347,7 +347,7 @@ Y = [1, 2, 3, 4].
 
 **Trouve le rang N de A dans X (mode inverse).**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 enieme2(1, [A | _], A).
@@ -358,7 +358,7 @@ enieme2(N, [_ | R], A) :-
 
 On parcourt la liste et quand on trouve A, on calcule N en remontant de la recursion. L'appel recursif qui calcule M est fait AVANT `N is M + 1` car `is` exige M instancie.
 
-**Query test:**
+**Test :**
 
 ```
 ?- enieme2(N, [p, a, p, a], a).
@@ -374,7 +374,7 @@ true.
 
 **Combine les deux modes (+,+,-) et (-,+,+).**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 eniemefinal(N, X, A) :-
@@ -386,7 +386,7 @@ eniemefinal(N, X, A) :-
 
 Si N est instancie (`nonvar(N)`), on utilise `enieme` (decompte direct). Sinon, `enieme2` (parcours). Le cut empeche d'essayer la deuxieme clause quand N est connu.
 
-**Query test:**
+**Test :**
 
 ```
 ?- eniemefinal(2, [a, b, c], A).
@@ -402,7 +402,7 @@ N = 2 ; N = 4 ; false.
 
 **conc3 avec mode (-,-,-,+).**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 conc3final(X, Y, Z, T) :-
@@ -412,7 +412,7 @@ conc3final(X, Y, Z, T) :-
 
 Utilise `append/3` (qui supporte le mode inverse) en deux etapes : decouper T en X et YZ, puis decouper YZ en Y et Z.
 
-**Query test:**
+**Test :**
 
 ```
 ?- conc3final(X, Y, Z, [1, 2, 3]).
@@ -435,7 +435,7 @@ false.
 
 **compte avec mode (-,+,-).**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 comptefinal(A, X, N) :-
@@ -449,7 +449,7 @@ comptefinal(A, X, N) :-
 
 Si A est connu : `compte` classique. Si A est inconnu : `membre(A, X)` genere chaque element possible de X, puis `compte` calcule son nombre d'occurrences.
 
-**Query test:**
+**Test :**
 
 ```
 ?- comptefinal(a, [a, c, a, b, a, c, b], N).
@@ -469,7 +469,7 @@ Les ensembles sont representes par des listes sans doublons. On utilise uniqueme
 
 **Tous les elements de X sont dans Y.**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 inclus([], _).
@@ -478,7 +478,7 @@ inclus([A | R], Y) :-
     inclus(R, Y).
 ```
 
-**Query test:**
+**Test :**
 
 ```
 ?- inclus([3, 2], [1, 2, 3, 4]).
@@ -494,7 +494,7 @@ false.
 
 **Au moins un element de X n'est pas dans Y.**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 non_inclus([A | _], Y) :-
@@ -506,7 +506,7 @@ non_inclus([A | R], Y) :-
 
 On cherche un temoin : un element de X absent de Y. Si la tete est absente, c'est immediatement vrai. Sinon, on continue dans le reste.
 
-**Query test:**
+**Test :**
 
 ```
 ?- non_inclus([3, 55], [1, 2, 3, 4]).
@@ -522,7 +522,7 @@ false.
 
 **Z = union ensembliste de X et Y.**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 union_ens([], Y, Y).
@@ -536,7 +536,7 @@ union_ens([A | R], Y, [A | Z]) :-
 
 On parcourt X. Si un element est deja dans Y, on le saute. Sinon, on l'ajoute au resultat.
 
-**Query test:**
+**Test :**
 
 ```
 ?- union_ens([1, 2], [2, 3], Z).
@@ -552,7 +552,7 @@ Z = [1, 2, 3, 4].
 
 **Version de inclus supportant le mode (?, +) -- genere tous les sous-ensembles inclus dans Y.**
 
-**Answer:**
+**Reponse :**
 
 ```prolog
 inclus2([], _).
@@ -564,7 +564,7 @@ inclus2([A | R], Y) :-
 
 `hors_de(A, R)` a la fin evite les doublons dans le sous-ensemble genere. Sans cette condition, `[a, a]` serait genere comme sous-ensemble de `[a, b]`.
 
-**Query test:**
+**Test :**
 
 ```
 ?- inclus2([3, 2], [1, 2, 3, 4]).

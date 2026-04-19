@@ -8,13 +8,13 @@ Ce TP construit deux services TCP interactifs en Java :
 
 ---
 
-## Part 1: Uppercase Service (ServeurMajuscule)
+## Partie 1 : Service Majuscule (ServeurMajuscule)
 
-### Exercise 1: Write a TCP server that accepts connections, sends a welcome message, then converts each received line to uppercase. The client sends "." to terminate.
+### Exercice 1 : Ecrire un serveur TCP qui accepte les connexions, envoie un message de bienvenue, puis convertit chaque ligne recue en majuscules. Le client envoie "." pour terminer.
 
-**Answer:**
+**Reponse :**
 
-Protocol:
+Protocole :
 ```
 Server -> Client: "Hello. Please behave."
 Client -> Server: "hello world"
@@ -25,7 +25,7 @@ Client -> Server: "."
 [Connection closes]
 ```
 
-#### Complete code: ServeurMajuscule.java
+#### Code complet : ServeurMajuscule.java
 
 ```java
 import java.net.*;
@@ -113,11 +113,11 @@ public class ServeurMajuscule {
 }
 ```
 
-### Exercise 2: Write a TCP client for the uppercase service.
+### Exercice 2 : Ecrire un client TCP pour le service majuscule.
 
-**Answer:**
+**Reponse :**
 
-#### Complete code: ClientMajuscule.java
+#### Code complet : ClientMajuscule.java
 
 ```java
 import java.net.*;
@@ -198,7 +198,7 @@ public class ClientMajuscule {
 }
 ```
 
-**How to test:**
+**Comment tester :**
 
 ```bash
 # Terminal 1: start the server
@@ -224,7 +224,7 @@ BONJOUR A TOUS
 # (connection closed)
 ```
 
-**Expected Wireshark capture** (filter `tcp.port == 8987`):
+**Capture Wireshark attendue** (filtre `tcp.port == 8987`) :
 ```
  1  Client -> Server      SYN
  2  Server -> Client      SYN,ACK
@@ -244,13 +244,13 @@ BONJOUR A TOUS
 
 ---
 
-## Part 2: Guessing Game (Plus ou Moins)
+## Partie 2 : Jeu de devinette (Plus ou Moins)
 
-### Exercise 3: Write a TCP server that picks a random number (0 to 65534) and responds to guesses with +, -, = or ~.
+### Exercice 3 : Ecrire un serveur TCP qui choisit un nombre aleatoire (0 a 65534) et repond aux propositions avec +, -, = ou ~.
 
-**Answer:**
+**Reponse :**
 
-Protocol:
+Protocole :
 ```
 Server picks random number (0 to 65534)
 Server -> Client: "Hello. Please behave."
@@ -266,16 +266,16 @@ Server -> Client: "="     (correct!)
 [Connection closes]
 ```
 
-Response codes:
+Codes de reponse :
 
-| Code | Meaning |
-|------|---------|
-| `+` | The target number is HIGHER than the guess |
-| `-` | The target number is LOWER than the guess |
-| `=` | Correct, the number has been found |
-| `~` | Invalid input (not a number) |
+| Code | Signification |
+|------|---------------|
+| `+` | Le nombre cible est PLUS GRAND que la proposition |
+| `-` | Le nombre cible est PLUS PETIT que la proposition |
+| `=` | Correct, le nombre a ete trouve |
+| `~` | Entree invalide (pas un nombre) |
 
-#### Complete code: ServeurPlusMoins.java
+#### Code complet : ServeurPlusMoins.java
 
 ```java
 import java.net.*;
@@ -382,11 +382,11 @@ public class ServeurPlusMoins {
 }
 ```
 
-### Exercise 4: Write an interactive TCP client for the guessing game.
+### Exercice 4 : Ecrire un client TCP interactif pour le jeu de devinette.
 
-**Answer:**
+**Reponse :**
 
-#### Complete code: ClientPlusMoins.java
+#### Code complet : ClientPlusMoins.java
 
 ```java
 import java.net.*;
@@ -492,7 +492,7 @@ public class ClientPlusMoins {
 }
 ```
 
-**How to test:**
+**Comment tester :**
 
 ```bash
 # Terminal 1: start the server
@@ -525,11 +525,11 @@ Hello. Please behave.
 =
 ```
 
-### Exercise 5: Implement a binary search strategy for the client (optimal play).
+### Exercice 5 : Implementer une strategie de recherche dichotomique pour le client (jeu optimal).
 
-**Answer:**
+**Reponse :**
 
-The optimal strategy is binary search: each guess halves the search space. For a range of 0 to 65534, this takes at most ceil(log2(65535)) = 16 guesses.
+La strategie optimale est la recherche dichotomique : chaque proposition divise l'espace de recherche par deux. Pour un intervalle de 0 a 65534, cela prend au maximum ceil(log2(65535)) = 16 propositions.
 
 ```java
 /**
@@ -566,9 +566,9 @@ public void binarySearchStrategy() {
 }
 ```
 
-Complexity: log2(65535) = 15.99, so at most **16 guesses** to find any number between 0 and 65534.
+Complexite : log2(65535) = 15.99, donc au plus **16 propositions** pour trouver n'importe quel nombre entre 0 et 65534.
 
-**Expected Wireshark capture** (filter `tcp.port == 8988`):
+**Capture Wireshark attendue** (filtre `tcp.port == 8988`) :
 ```
  1  Client -> Server      SYN
  2  Server -> Client      SYN,ACK

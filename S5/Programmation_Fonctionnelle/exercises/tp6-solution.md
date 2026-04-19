@@ -1,10 +1,10 @@
-# TP6 - Binary Trees
+# TP6 - Arbres binaires
 
-> Following teacher instructions from: `data/moodle/tp/tp6/README.md`
+> D'apres les instructions du TP : `data/moodle/tp/tp6/README.md`
 
 ---
 
-## Type Definition
+## Definition de type
 
 ```ocaml
 type 'a arbin =
@@ -14,20 +14,20 @@ type 'a arbin =
 
 ---
 
-## Exercise 1
+## Exercice 1
 
-### Tree construction: `feuille` and `noeud`
+### Construction d'arbres : `feuille` et `noeud`
 
-**Answer:**
+**Reponse :**
 ```ocaml
-(* Create a leaf node *)
+(* Creer une feuille *)
 let feuille v = Feuille v
 
-(* Create a node with value v, left child g, right child d *)
+(* Creer un noeud avec valeur v, fils gauche g, fils droit d *)
 let noeud v g d = Noeud (g, v, d)
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # feuille 42;;
 - : int arbin = Feuille 42
@@ -37,18 +37,18 @@ let noeud v g d = Noeud (g, v, d)
 
 ---
 
-## Exercise 2
+## Exercice 2
 
-### Count the number of leaf nodes in a tree (`compter`)
+### Compter le nombre de feuilles dans un arbre (`compter`)
 
-**Answer:**
+**Reponse :**
 ```ocaml
 let rec compter a = match a with
   | Feuille b -> 1
   | Noeud (g, _, d) -> compter g + compter d
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # let arbre_test = noeud 12 (feuille 5) (noeud 7 (feuille 6) (feuille 8));;
 # compter arbre_test;;
@@ -59,20 +59,20 @@ let rec compter a = match a with
 
 ---
 
-## Exercise 3
+## Exercice 3
 
-### Convert tree to list using inorder traversal (`to_list`)
+### Convertir un arbre en liste par parcours infixe (`to_list`)
 
-Inorder: left subtree, root, right subtree.
+Parcours infixe : sous-arbre gauche, racine, sous-arbre droit.
 
-**Answer:**
+**Reponse :**
 ```ocaml
 let rec to_list a = match a with
   | Feuille b -> [b]
   | Noeud (g, c, d) -> to_list g @ [c] @ to_list d
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # to_list arbre_test;;
 - : int list = [5; 12; 6; 7; 8]
@@ -82,28 +82,28 @@ let rec to_list a = match a with
 
 ---
 
-## Exercise 4
+## Exercice 4
 
-### Binary search tree: `ajoutArbre` and `constr`
+### Arbre binaire de recherche : `ajoutArbre` et `constr`
 
-Insert elements maintaining BST property (left < root, right >= root). Construct BST from list.
+Insertion en maintenant la propriete ABR (gauche &lt; racine, droite >= racine). Construction d'un ABR a partir d'une liste.
 
-**Answer:**
+**Reponse :**
 ```ocaml
-(* Insert element e into BST a *)
+(* Inserer l'element e dans l'ABR a *)
 let rec ajoutArbre e a = match a with
   | Noeud (g, c, d) ->
       if e < c then Noeud (ajoutArbre e g, c, d)
       else Noeud (g, c, ajoutArbre e d)
   | Feuille b -> Noeud (Feuille "Nil", e, Feuille "Nil")
 
-(* Construct BST from list *)
+(* Construire un ABR a partir d'une liste *)
 let rec constr l = match l with
   | [] -> Feuille "Nil"
   | e1 :: tl -> ajoutArbre e1 (constr tl)
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # let l = ["celeri"; "orge"; "mais"; "ble"; "tomate"; "soja"; "poisson"];;
 # List.filter (fun s -> s <> "Nil") (to_list (constr l)) = List.sort compare l;;
@@ -114,26 +114,26 @@ let rec constr l = match l with
 
 ---
 
-## Exercise 5
+## Exercice 5
 
-### Assign (x, y) coordinates to each node for graphical display (`placer`)
+### Assigner des coordonnees (x, y) a chaque noeud pour l'affichage graphique (`placer`)
 
-Uses inorder traversal for x-coordinates and depth for y-coordinates.
+Utilise le parcours infixe pour les coordonnees x et la profondeur pour les coordonnees y.
 
-**Answer:**
+**Reponse :**
 ```ocaml
 type coord = int * int
 type 'a arbinp = (coord * 'a) arbin
 
-let d = 5  (* Vertical spacing *)
-let e = 4  (* Horizontal spacing *)
+let d = 5  (* Espacement vertical *)
+let e = 4  (* Espacement horizontal *)
 
-(* Count all nodes (leaves and internal) *)
+(* Compter tous les noeuds (feuilles et internes) *)
 let rec compterter a = match a with
   | Feuille f -> 1
   | Noeud (g, c, d) -> compterter g + compterter d + 1
 
-(* Assign coordinates: x from inorder position, y from depth *)
+(* Assigner les coordonnees : x selon la position infixe, y selon la profondeur *)
 let placer a =
   let rec aux a h l = match a with
     | Feuille v -> (Feuille ((l + e, h + d), v), l + e)
@@ -146,7 +146,7 @@ let placer a =
   a
 ```
 
-**utop test:**
+**Test utop :**
 ```
 # let t =
     noeud 'a'

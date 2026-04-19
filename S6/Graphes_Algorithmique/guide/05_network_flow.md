@@ -15,9 +15,9 @@ Graphe oriente G = (S, A) avec :
 
 ### Flot
 
-Fonction f : A -> R+ respectant :
+Fonction f : A → R+ respectant :
 
-**Contrainte de capacite :** 0 <= f(u,v) <= c(u,v)
+**Contrainte de capacite :** 0 &lt;= f(u,v) &lt;= c(u,v)
 
 **Conservation (Kirchhoff) :** Pour tout v different de s et t :
 ```
